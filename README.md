@@ -65,5 +65,5 @@ void loop() {
 The output goes now to the DAC pins G26/G27.
 
 ## Installation
-You can Download the project as zip and call include Library -> zip library.
+You can download the library as zip and call include Library -> zip library.
 Or you can git clone this project into the Arduino libraries folder

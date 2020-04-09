@@ -65,7 +65,28 @@ BlootoothA2DSink::BlootoothA2DSink() {
 }
 
 BlootoothA2DSink::~BlootoothA2DSink() {
-  i2s_driver_uninstall(i2s_port); 
+    app_task_shut_down();
+
+    if (i2s_driver_uninstall(i2s_port)!=!= ESP_OK){
+	    ESP_LOGE(BT_AV_TAG,"Failed to uninstall i2s");
+    } 
+    
+    if (esp_a2d_sink_deinit()!=ESP_OK){
+	    ESP_LOGE(BT_AV_TAG,"Failed to deinit a2d sink");
+    }
+    
+    if (esp_a2d_sink_disconnect!= ESP_OK){
+	    ESP_LOGE(BT_AV_TAG,"Failed to disconnect a2d sink");
+    }
+
+    if (esp_bluedroid_deinit()!= ESP_OK){
+	    ESP_LOGE(BT_AV_TAG,"Failed to deinit bluetooth");
+    }
+    
+    if (esp_bluedroid_disable()!= ESP_OK){
+	    ESP_LOGE(BT_AV_TAG,"Failed to disable bluetooth");
+    }
+
 }
 
 

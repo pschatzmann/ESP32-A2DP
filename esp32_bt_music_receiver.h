@@ -78,6 +78,7 @@ class BlootoothA2DSink {
     void set_pin_config(i2s_pin_config_t pin_config);
     void set_i2s_port(i2s_port_t i2s_num);
     void set_i2s_config(i2s_config_t i2s_config);
+    void set_data_notifier(std::function<void> );
     
     void start(char* name);
     esp_a2d_audio_state_t get_audio_state();
@@ -97,7 +98,7 @@ class BlootoothA2DSink {
     void av_hdl_a2d_evt(uint16_t event, void *p_param);
     // avrc event handler 
     void av_hdl_avrc_evt(uint16_t event, void *p_param);
-    
+        
   private:
     // private data
     xQueueHandle app_task_queue;
@@ -111,8 +112,9 @@ class BlootoothA2DSink {
     const char *m_a2d_audio_state_str[3] = {"Suspended", "Stopped", "Started"};
     esp_a2d_audio_state_t audio_state;
     esp_a2d_mct_t audio_type;
+    auto dataNotifier;
 
-    // priate methods
+    // private methods
     int init_bluetooth();
     void app_task_start_up(void);
     void app_task_shut_down(void);

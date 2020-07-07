@@ -67,7 +67,7 @@ BlootoothA2DSink::BlootoothA2DSink() {
 BlootoothA2DSink::~BlootoothA2DSink() {
     app_task_shut_down();
 
-    if (i2s_driver_uninstall(i2s_port)!=!= ESP_OK){
+    if (i2s_driver_uninstall(i2s_port)!= ESP_OK){
 	    ESP_LOGE(BT_AV_TAG,"Failed to uninstall i2s");
     } 
     
@@ -136,6 +136,11 @@ void BlootoothA2DSink::start(char* name)
     }
 
 }
+
+void BlootoothA2DSink::set_data_notifier(std::function<void> ){
+	dataNotifier = function;
+}
+
 
 esp_a2d_audio_state_t BlootoothA2DSink::get_audio_state() {
   return audio_state;

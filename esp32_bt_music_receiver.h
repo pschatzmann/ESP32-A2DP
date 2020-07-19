@@ -78,7 +78,6 @@ class BlootoothA2DSink {
     void set_pin_config(i2s_pin_config_t pin_config);
     void set_i2s_port(i2s_port_t i2s_num);
     void set_i2s_config(i2s_config_t i2s_config);
-    void set_data_notifier(std::function<void> );
     
     void start(char* name);
     esp_a2d_audio_state_t get_audio_state();
@@ -112,7 +111,6 @@ class BlootoothA2DSink {
     const char *m_a2d_audio_state_str[3] = {"Suspended", "Stopped", "Started"};
     esp_a2d_audio_state_t audio_state;
     esp_a2d_mct_t audio_type;
-    auto dataNotifier;
 
     // private methods
     int init_bluetooth();

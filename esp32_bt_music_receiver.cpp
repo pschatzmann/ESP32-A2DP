@@ -137,10 +137,6 @@ void BlootoothA2DSink::start(char* name)
 
 }
 
-void BlootoothA2DSink::set_data_notifier(std::function<void> ){
-	dataNotifier = function;
-}
-
 
 esp_a2d_audio_state_t BlootoothA2DSink::get_audio_state() {
   return audio_state;

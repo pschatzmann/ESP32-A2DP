@@ -14,13 +14,13 @@
 // Copyright 2015-2016 Espressif Systems (Shanghai) PTE LTD
 
 
-#include "esp32_bt_music_receiver.h"
+#include "BluetoothA2DPSink.h"
 
 /**
  * Some data that must be avaliable for C calls
  */
 // to support static callback functions
-BlootoothA2DSink* actualBlootoothA2DSink;
+BluetoothA2DPSink* actualBluetoothA2DPSink;
 i2s_port_t i2s_port; 
 
 // Forward declarations for C Callback functions for ESP32 Framework
@@ -28,16 +28,12 @@ extern "C" void app_task_handler_2(void *arg);
 extern "C" void audio_data_callback_2(const uint8_t *data, uint32_t len);
 extern "C" void app_a2d_callback_2(esp_a2d_cb_event_t event, esp_a2d_cb_param_t *param);
 extern "C" void app_rc_ct_callback_2(esp_avrc_ct_cb_event_t event, esp_avrc_ct_cb_param_t *param);
-static void av_hdl_stack_evt_2(uint16_t event, void *p_param);
-static void av_hdl_a2d_evt_2(uint16_t event, void *p_param);
-static void av_hdl_avrc_evt_2(uint16_t event, void *p_param);
-
 
 /**
  * Constructor
  */
-BlootoothA2DSink::BlootoothA2DSink() {
-  actualBlootoothA2DSink = this;
+BluetoothA2DPSink::BluetoothA2DPSink() {
+  actualBluetoothA2DPSink = this;
   // default i2s port is 0
   i2s_port = (i2s_port_t) 0;
 
@@ -64,49 +60,59 @@ BlootoothA2DSink::BlootoothA2DSink() {
 
 }
 
-BlootoothA2DSink::~BlootoothA2DSink() {
+BluetoothA2DPSink::~BluetoothA2DPSink() {
     app_task_shut_down();
-
-    if (i2s_driver_uninstall(i2s_port)!= ESP_OK){
-	    ESP_LOGE(BT_AV_TAG,"Failed to uninstall i2s");
-    } 
     
-    if (esp_a2d_sink_deinit()!=ESP_OK){
-	    ESP_LOGE(BT_AV_TAG,"Failed to deinit a2d sink");
+    ESP_LOGI(BT_AV_TAG,"disable bluetooth");
+    if (esp_bluedroid_disable() != ESP_OK){
+        ESP_LOGE(BT_AV_TAG,"Failed to disable bluetooth");
     }
     
-    if (esp_a2d_sink_disconnect!= ESP_OK){
-	    ESP_LOGE(BT_AV_TAG,"Failed to disconnect a2d sink");
+    ESP_LOGI(BT_AV_TAG,"deinit bluetooth");
+    if (esp_bluedroid_deinit() != ESP_OK){
+        ESP_LOGE(BT_AV_TAG,"Failed to deinit bluetooth");
     }
 
-    if (esp_bluedroid_deinit()!= ESP_OK){
-	    ESP_LOGE(BT_AV_TAG,"Failed to deinit bluetooth");
+    ESP_LOGI(BT_AV_TAG,"uninstall its");
+    if (i2s_driver_uninstall(i2s_port) != ESP_OK){
+        ESP_LOGE(BT_AV_TAG,"Failed to uninstall i2s");
     }
     
-    if (esp_bluedroid_disable()!= ESP_OK){
-	    ESP_LOGE(BT_AV_TAG,"Failed to disable bluetooth");
+    ESP_LOGI(BT_AV_TAG,"esp_bt_controller_deinit");
+	if (esp_bt_controller_deinit()!= ESP_OK){
+    	ESP_LOGE(BT_AV_TAG,"esp_bt_controller_deinit failed");
+	}
+	
+    ESP_LOGI(BT_AV_TAG,"esp_bt_controller_mem_release");
+    if (esp_bt_controller_mem_release(ESP_BT_MODE_CLASSIC_BT)!= ESP_OK){
+	    ESP_LOGE(BT_AV_TAG,"esp_bt_controller_mem_release failed");
     }
 
 }
 
 
-void BlootoothA2DSink::set_pin_config(i2s_pin_config_t pin_config){
+void BluetoothA2DPSink::set_pin_config(i2s_pin_config_t pin_config){
   this->pin_config = pin_config;
 }
 
-void BlootoothA2DSink::set_i2s_port(i2s_port_t i2s_num) {
+void BluetoothA2DPSink::set_i2s_port(i2s_port_t i2s_num) {
   i2s_port = i2s_num;
 }
 
-void BlootoothA2DSink::set_i2s_config(i2s_config_t i2s_config){
+void BluetoothA2DPSink::set_i2s_config(i2s_config_t i2s_config){
   this->i2s_config = i2s_config;
 }
+
+void BluetoothA2DPSink::set_on_data_received(void (*callBack)()){
+  this->data_received = callBack;
+}
+
 
 
 /**
  * Main function to start the Bluetooth Processing
  */
-void BlootoothA2DSink::start(char* name)
+void BluetoothA2DPSink::start(char* name)
 {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
     //store parameters
@@ -120,6 +126,14 @@ void BlootoothA2DSink::start(char* name)
     
     // create application task 
     app_task_start_up();
+
+    //Lambda for callback
+    auto av_hdl_stack_evt_2 = [](uint16_t event, void *p_param) {
+        ESP_LOGD(BT_AV_TAG, "%s", __func__);
+        if (actualBluetoothA2DPSink) {
+            actualBluetoothA2DPSink->av_hdl_stack_evt(event,p_param);
+        }
+    };
 
     // Bluetooth device name, connection mode and profile set up 
     app_work_dispatch(av_hdl_stack_evt_2, BT_APP_EVT_STACK_UP, NULL, 0);
@@ -137,17 +151,16 @@ void BlootoothA2DSink::start(char* name)
 
 }
 
-
-esp_a2d_audio_state_t BlootoothA2DSink::get_audio_state() {
+esp_a2d_audio_state_t BluetoothA2DPSink::get_audio_state() {
   return audio_state;
 }
 
-esp_a2d_mct_t BlootoothA2DSink::get_audio_type() {
+esp_a2d_mct_t BluetoothA2DPSink::get_audio_type() {
   return audio_type;
 }
 
 
-int BlootoothA2DSink::init_bluetooth()
+int BluetoothA2DPSink::init_bluetooth()
 {
   ESP_LOGD(BT_AV_TAG, "%s", __func__);
   if (!btStart()) {
@@ -170,7 +183,7 @@ int BlootoothA2DSink::init_bluetooth()
  
 }
 
-bool BlootoothA2DSink::app_work_dispatch(app_callback_t p_cback, uint16_t event, void *p_params, int param_len)
+bool BluetoothA2DPSink::app_work_dispatch(app_callback_t p_cback, uint16_t event, void *p_params, int param_len)
 {
     ESP_LOGD(BT_APP_CORE_TAG, "%s event 0x%x, param len %d", __func__, event, param_len);
     
@@ -193,7 +206,7 @@ bool BlootoothA2DSink::app_work_dispatch(app_callback_t p_cback, uint16_t event,
     return false;
 }
 
-void BlootoothA2DSink::app_work_dispatched(app_msg_t *msg)
+void BluetoothA2DPSink::app_work_dispatched(app_msg_t *msg)
 {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
     if (msg->cb) {
@@ -202,7 +215,7 @@ void BlootoothA2DSink::app_work_dispatched(app_msg_t *msg)
 }
 
 
-bool BlootoothA2DSink::app_send_msg(app_msg_t *msg)
+bool BluetoothA2DPSink::app_send_msg(app_msg_t *msg)
 {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
     if (msg == NULL) {
@@ -217,7 +230,7 @@ bool BlootoothA2DSink::app_send_msg(app_msg_t *msg)
 }
 
 
-void BlootoothA2DSink::app_task_handler()
+void BluetoothA2DPSink::app_task_handler()
 {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
     app_msg_t msg;
@@ -241,7 +254,7 @@ void BlootoothA2DSink::app_task_handler()
     }
 }
 
-void BlootoothA2DSink::app_task_start_up(void)
+void BluetoothA2DPSink::app_task_start_up(void)
 {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
     app_task_queue = xQueueCreate(10, sizeof(app_msg_t));
@@ -249,7 +262,7 @@ void BlootoothA2DSink::app_task_start_up(void)
     return;
 }
 
-void  BlootoothA2DSink::app_task_shut_down(void)
+void  BluetoothA2DPSink::app_task_shut_down(void)
 {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
     if (app_task_handle) {
@@ -263,7 +276,7 @@ void  BlootoothA2DSink::app_task_shut_down(void)
 }
 
 
-void  BlootoothA2DSink::app_alloc_meta_buffer(esp_avrc_ct_cb_param_t *param)
+void  BluetoothA2DPSink::app_alloc_meta_buffer(esp_avrc_ct_cb_param_t *param)
 {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
     esp_avrc_ct_cb_param_t *rc = (esp_avrc_ct_cb_param_t *)(param);
@@ -274,9 +287,17 @@ void  BlootoothA2DSink::app_alloc_meta_buffer(esp_avrc_ct_cb_param_t *param)
     rc->meta_rsp.attr_text = attr_text;
 }
 
-void  BlootoothA2DSink::app_rc_ct_callback(esp_avrc_ct_cb_event_t event, esp_avrc_ct_cb_param_t *param)
+void  BluetoothA2DPSink::app_rc_ct_callback(esp_avrc_ct_cb_event_t event, esp_avrc_ct_cb_param_t *param)
 {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
+
+    // lambda for callback
+    auto av_hdl_avrc_evt_2 = [](uint16_t event, void *p_param){
+        ESP_LOGD(BT_AV_TAG, "%s", __func__);
+        if (actualBluetoothA2DPSink) {
+            actualBluetoothA2DPSink->av_hdl_avrc_evt(event,p_param);    
+        }
+    };
 
     switch (event) {
     case ESP_AVRC_CT_METADATA_RSP_EVT:
@@ -307,7 +328,7 @@ void  BlootoothA2DSink::app_rc_ct_callback(esp_avrc_ct_cb_event_t event, esp_avr
     }
 }
 
-void  BlootoothA2DSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
+void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
 {
     ESP_LOGD(BT_AV_TAG, "%s evt %d", __func__, event);
     esp_a2d_cb_param_t *a2d = NULL;
@@ -365,7 +386,7 @@ void  BlootoothA2DSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
     }
 }
 
-void  BlootoothA2DSink::av_new_track()
+void  BluetoothA2DPSink::av_new_track()
 {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
     //Register notifications and request metadata
@@ -373,7 +394,7 @@ void  BlootoothA2DSink::av_new_track()
     esp_avrc_ct_send_register_notification_cmd(1, ESP_AVRC_RN_TRACK_CHANGE, 0);
 }
 
-void  BlootoothA2DSink::av_notify_evt_handler(uint8_t event_id, uint32_t event_parameter)
+void  BluetoothA2DPSink::av_notify_evt_handler(uint8_t event_id, uint32_t event_parameter)
 {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
     switch (event_id) {
@@ -387,7 +408,7 @@ void  BlootoothA2DSink::av_notify_evt_handler(uint8_t event_id, uint32_t event_p
     }
 }
 
-void  BlootoothA2DSink::av_hdl_avrc_evt(uint16_t event, void *p_param)
+void  BluetoothA2DPSink::av_hdl_avrc_evt(uint16_t event, void *p_param)
 {
     ESP_LOGD(BT_AV_TAG, "%s evt %d", __func__, event);
     esp_avrc_ct_cb_param_t *rc = (esp_avrc_ct_cb_param_t *)(p_param);
@@ -427,7 +448,7 @@ void  BlootoothA2DSink::av_hdl_avrc_evt(uint16_t event, void *p_param)
 }
 
 
-void  BlootoothA2DSink::av_hdl_stack_evt(uint16_t event, void *p_param)
+void  BluetoothA2DPSink::av_hdl_stack_evt(uint16_t event, void *p_param)
 {
     switch (event) {
     case BT_APP_EVT_STACK_UP: {
@@ -456,8 +477,17 @@ void  BlootoothA2DSink::av_hdl_stack_evt(uint16_t event, void *p_param)
 
 
 /* callback for A2DP sink */
-void  BlootoothA2DSink::app_a2d_callback(esp_a2d_cb_event_t event, esp_a2d_cb_param_t *param)
+void  BluetoothA2DPSink::app_a2d_callback(esp_a2d_cb_event_t event, esp_a2d_cb_param_t *param)
 {
+
+    // lambda for callback
+    auto av_hdl_a2d_evt_2=[](uint16_t event, void *p_param){
+        ESP_LOGD(BT_AV_TAG, "%s", __func__);
+        if (actualBluetoothA2DPSink) {
+            actualBluetoothA2DPSink->av_hdl_a2d_evt(event,p_param);  
+        }
+    };
+
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
     switch (event) {
     case ESP_A2D_CONNECTION_STATE_EVT:
@@ -480,7 +510,7 @@ void  BlootoothA2DSink::app_a2d_callback(esp_a2d_cb_event_t event, esp_a2d_cb_pa
     }
 }
 
-void  BlootoothA2DSink::audio_data_callback(const uint8_t *data, uint32_t len) {
+void  BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) {
    ESP_LOGD(BT_AV_TAG, "%s", __func__);
 
    size_t i2s_bytes_written;
@@ -491,26 +521,11 @@ void  BlootoothA2DSink::audio_data_callback(const uint8_t *data, uint32_t len) {
    if (i2s_bytes_written<len){
       ESP_LOGE(BT_AV_TAG, "Timeout: not all bytes were written to I2S");
    } 
-}
-
-
-/**
- * Static methods as internal callbacks
- */
-void av_hdl_stack_evt_2(uint16_t event, void *p_param) {
-  ESP_LOGD(BT_AV_TAG, "%s", __func__);
-  if (actualBlootoothA2DSink)
-    actualBlootoothA2DSink->av_hdl_stack_evt(event,p_param);
-}
-void av_hdl_a2d_evt_2(uint16_t event, void *p_param){
-  ESP_LOGD(BT_AV_TAG, "%s", __func__);
-  if (actualBlootoothA2DSink)
-    actualBlootoothA2DSink->av_hdl_a2d_evt(event,p_param);  
-}
-void av_hdl_avrc_evt_2(uint16_t event, void *p_param){
-  ESP_LOGD(BT_AV_TAG, "%s", __func__);
-  if (actualBlootoothA2DSink)
-    actualBlootoothA2DSink->av_hdl_avrc_evt(event,p_param);    
+   
+   if (data_received!=NULL){
+   	  data_received();
+   }
+   
 }
 
 
@@ -519,24 +534,24 @@ void av_hdl_avrc_evt_2(uint16_t event, void *p_param){
  */
 extern "C" void app_task_handler_2(void *arg) {
   ESP_LOGD(BT_AV_TAG, "%s", __func__);
-  if (actualBlootoothA2DSink)
-    actualBlootoothA2DSink->app_task_handler();
+  if (actualBluetoothA2DPSink)
+    actualBluetoothA2DPSink->app_task_handler();
 }
 
 extern "C" void audio_data_callback_2(const uint8_t *data, uint32_t len) {
   //ESP_LOGD(BT_AV_TAG, "%s", __func__);
-  if (actualBlootoothA2DSink)
-    actualBlootoothA2DSink->audio_data_callback(data,len);
+  if (actualBluetoothA2DPSink)
+    actualBluetoothA2DPSink->audio_data_callback(data,len);
 }
 
 extern "C" void app_a2d_callback_2(esp_a2d_cb_event_t event, esp_a2d_cb_param_t *param){
   ESP_LOGD(BT_AV_TAG, "%s", __func__);
-  if (actualBlootoothA2DSink)
-    actualBlootoothA2DSink->app_a2d_callback(event, param);
+  if (actualBluetoothA2DPSink)
+    actualBluetoothA2DPSink->app_a2d_callback(event, param);
 }
 
 extern "C" void app_rc_ct_callback_2(esp_avrc_ct_cb_event_t event, esp_avrc_ct_cb_param_t *param){
   ESP_LOGD(BT_AV_TAG, "%s", __func__);
-  if (actualBlootoothA2DSink)
-    actualBlootoothA2DSink->app_rc_ct_callback(event, param);
+  if (actualBluetoothA2DPSink)
+    actualBluetoothA2DPSink->app_rc_ct_callback(event, param);
 }

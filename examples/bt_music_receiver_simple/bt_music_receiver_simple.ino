@@ -13,13 +13,12 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include <Arduino.h>
-#include "esp32_bt_music_receiver.h"
+#include "BluetoothA2DPSink.h"
 
-BlootoothA2DSink a2d_sink;
+BluetoothA2DPSink a2dp_sink;
 
 void setup() {
-  a2d_sink.start("MyMusic");  
+  a2dp_sink.start("MyMusic");  
 
 }
 

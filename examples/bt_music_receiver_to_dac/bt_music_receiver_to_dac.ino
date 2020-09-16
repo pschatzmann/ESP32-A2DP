@@ -13,10 +13,9 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include <Arduino.h>
-#include "esp32_bt_music_receiver.h"
+#include "BluetoothA2DPSink.h"
 
-BlootoothA2DSink a2d_sink;
+BluetoothA2DPSink a2dp_sink;
 
 void setup() {
   static const i2s_config_t i2s_config = {
@@ -31,8 +30,8 @@ void setup() {
       .use_apll = false
   };
 
-  a2d_sink.set_i2s_config(i2s_config);  
-  a2d_sink.start("MyMusic");  
+  a2dp_sink.set_i2s_config(i2s_config);  
+  a2dp_sink.start("MyMusic");  
 
 }
 

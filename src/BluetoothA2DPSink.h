@@ -13,8 +13,8 @@
 // Copyright 2020 Phil Schatzmann
 // Copyright 2015-2016 Espressif Systems (Shanghai) PTE LTD
 
-#ifndef A2D_SINK
-#define A2D_SINK
+#ifndef __A2DP_SINK_H__
+#define __A2DP_SINK_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -50,6 +50,7 @@ extern "C" {
  */
 typedef void (* app_callback_t) (uint16_t event, void *param);
 
+
 /* message to be sent */
 typedef struct {
     uint16_t             sig;      /*!< signal to app_task */
@@ -66,15 +67,15 @@ enum {
 
 
 /**
- * Bloothooth Sink - We iniitialize and start the Bluetooth A2DP Sink. 
+ * Bluethooth Sink - We iniitialize and start the Bluetooth A2DP Sink. 
  * The example https://github.com/espressif/esp-idf/tree/master/examples/bluetooth/bluedroid/classic_bt/a2dp_sink
  * was refactered into a C++ class 
  */
 
-class BlootoothA2DSink {
+class BluetoothA2DPSink {
   public: 
-    BlootoothA2DSink();
-    ~BlootoothA2DSink();
+    BluetoothA2DPSink();
+    ~BluetoothA2DPSink();
     void set_pin_config(i2s_pin_config_t pin_config);
     void set_i2s_port(i2s_port_t i2s_num);
     void set_i2s_config(i2s_config_t i2s_config);
@@ -82,6 +83,7 @@ class BlootoothA2DSink {
     void start(char* name);
     esp_a2d_audio_state_t get_audio_state();
     esp_a2d_mct_t get_audio_type();
+    void set_on_data_received(void (*callBack)());
 
     /**
      * Wrappbed methods called from callbacks
@@ -97,7 +99,7 @@ class BlootoothA2DSink {
     void av_hdl_a2d_evt(uint16_t event, void *p_param);
     // avrc event handler 
     void av_hdl_avrc_evt(uint16_t event, void *p_param);
-        
+    
   private:
     // private data
     xQueueHandle app_task_queue;
@@ -111,8 +113,9 @@ class BlootoothA2DSink {
     const char *m_a2d_audio_state_str[3] = {"Suspended", "Stopped", "Started"};
     esp_a2d_audio_state_t audio_state;
     esp_a2d_mct_t audio_type;
+    void (*data_received)() = NULL;
 
-    // private methods
+    // priate methods
     int init_bluetooth();
     void app_task_start_up(void);
     void app_task_shut_down(void);

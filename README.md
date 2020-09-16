@@ -6,7 +6,7 @@ I2S is an electrical serial bus interface standard used for connecting digital a
 
 So we can just feed the input from Bluetooth to the I2S output: An example for this from Expressive can be found on [Github](http://https://github.com/espressif/esp-idf/tree/master/examples/bluetooth/bluedroid/classic_bt/a2dp_sink).
 
-Unfortunately this example did not make me happy so I decided to convert it into a simple C++ class that is very easy to use from an Arduino Software IDE.
+Unfortunately this example did not make me happy so I decided to convert it into a simple __Arduino Library__ that is very easy to use from an Arduino Software IDE.
 
 ## A Simple I2S Example (A2DS Sink)
 Here is the simplest example which just uses the proper default settings:

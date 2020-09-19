@@ -5,6 +5,8 @@
 #define BT_APP_SIG_WORK_DISPATCH            (0x01)
 #define BT_AV_TAG                           "BT_AV"
 #define BT_RC_CT_TAG                        "RCCT"
+#define BT_APP_TAG                          "BT_API"
+
 #define APP_RC_CT_TL_GET_CAPS               (0)
 #define APP_RC_CT_TL_RN_VOLUME_CHANGE       (1)
 #define BT_APP_HEART_BEAT_EVT               (0xff00)
@@ -34,48 +36,65 @@ enum {
 };
 
 
-BluetoothA2DPSource *ext;
+BluetoothA2DPSource *self_BluetoothA2DPSource;
 
 extern "C" void ccall_bt_av_hdl_stack_evt(uint16_t event, void *p_param){
-    if (ext) ext->bt_av_hdl_stack_evt(event,p_param);
+    if (self_BluetoothA2DPSource) self_BluetoothA2DPSource->bt_av_hdl_stack_evt(event,p_param);
 }
 
 extern "C"  void ccall_bt_app_task_handler(void *arg){
-    if (ext) ext->bt_app_task_handler(arg);
+    if (self_BluetoothA2DPSource) self_BluetoothA2DPSource->bt_app_task_handler(arg);
 }
 
 extern "C" void ccall_bt_app_gap_cb(esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *param){
-    if (ext) ext->bt_app_gap_cb(event,param);
+    if (self_BluetoothA2DPSource) self_BluetoothA2DPSource->bt_app_gap_cb(event,param);
 }
 
 extern "C" void ccall_bt_app_rc_ct_cb(esp_avrc_ct_cb_event_t event, esp_avrc_ct_cb_param_t *param){
-    if (ext) ext->bt_app_rc_ct_cb(event, param);
+    if (self_BluetoothA2DPSource) self_BluetoothA2DPSource->bt_app_rc_ct_cb(event, param);
 }
 
 extern "C" void ccall_a2d_app_heart_beat(void *arg) {
-    if(ext) ext->a2d_app_heart_beat(arg);
+    if(self_BluetoothA2DPSource) self_BluetoothA2DPSource->a2d_app_heart_beat(arg);
 }
 
 extern "C" void ccall_bt_app_a2d_cb(esp_a2d_cb_event_t event, esp_a2d_cb_param_t *param){
-    if (ext) ext->bt_app_a2d_cb(event, param);
+    if (self_BluetoothA2DPSource) self_BluetoothA2DPSource->bt_app_a2d_cb(event, param);
 }
     
-extern "C" int32_t ccall_bt_app_a2d_data_cb(uint8_t *data, int32_t len){
-    if (ext) return (*(ext->data_stream_callback))(data, len);
-    return 0;
-}
-
 extern "C" void ccall_bt_app_av_sm_hdlr(uint16_t event, void *param){
-    if (ext) ext->bt_app_av_sm_hdlr(event, param);
+    if (self_BluetoothA2DPSource) self_BluetoothA2DPSource->bt_app_av_sm_hdlr(event, param);
 }
 
 extern "C" void ccall_bt_av_hdl_avrc_ct_evt(uint16_t event, void *param) {
-    if (ext) ext->bt_av_hdl_avrc_ct_evt(event, param);
-
+    if (self_BluetoothA2DPSource) self_BluetoothA2DPSource->bt_av_hdl_avrc_ct_evt(event, param);
 }
 
+extern "C" int32_t ccall_bt_app_a2d_data_cb(uint8_t *data, int32_t len){
+    //ESP_LOGD(APP, "x%x - len: %d", __func__, len);
+    if (len < 0 || data == NULL || self_BluetoothA2DPSource==NULL || self_BluetoothA2DPSource->data_stream_callback==NULL) {
+        return 0;
+    }
+    return (*(self_BluetoothA2DPSource->data_stream_callback))(data, len);
+}
+
+extern "C" int32_t ccall_get_channel_data_wrapper(uint8_t *data, int32_t len) {
+    //ESP_LOGD(APP, "x%x - len: %d", __func__, len);
+    if (len < 0 || data == NULL || self_BluetoothA2DPSource==NULL || self_BluetoothA2DPSource->data_stream_channels_callback==NULL) {
+        return 0;
+    }
+    memset(data,0,len);
+    return (*(self_BluetoothA2DPSource->data_stream_channels_callback))((Channels*)data, len / 4) * 4 ;
+}
+
+extern "C" int32_t ccall_get_data_default(uint8_t *data, int32_t len) {
+    return self_BluetoothA2DPSource->get_data_default(data, len);   
+}
+
+
 BluetoothA2DPSource::BluetoothA2DPSource() {
-    ext = this;
+    ESP_LOGD(APP, "x%x, ", __func__);
+    self_BluetoothA2DPSource = this;
     this->ssp_enabled = false;
     this->pin_type = ESP_BT_PIN_TYPE_VARIABLE;
     // default pin code
@@ -92,18 +111,37 @@ BluetoothA2DPSource::BluetoothA2DPSource() {
     
     s_bt_app_task_queue = NULL;
     s_bt_app_task_handle = NULL;
+
+}
+
+bool BluetoothA2DPSource::isConnected(){
+    return s_a2d_state == APP_AV_STATE_CONNECTED;
 }
 
 void BluetoothA2DPSource::setPinCode(char *pin_code, esp_bt_pin_type_t pin_type){
+    ESP_LOGD(APP, "x%x, ", __func__);
     this->pin_type = pin_type;
     this->pin_code_len = strlen(pin_code);
     strcpy((char*)this->pin_code, pin_code);
 }
 
-void BluetoothA2DPSource::start(char* name, music_data_cb_t callback, bool is_ssp_enabled) {
+void BluetoothA2DPSource::start(char* name, music_data_channels_cb_t callback, bool is_ssp_enabled) {
+    ESP_LOGD(APP, "x%x, ", __func__);
+    if (callback!=NULL){
+        // we use the indicated callback
+        this->data_stream_channels_callback = callback;
+        startRaw(name, ccall_get_channel_data_wrapper, is_ssp_enabled);
+    } else {
+        // we use the callback which supports writeData
+        startRaw(name, ccall_get_data_default, is_ssp_enabled);
+    }
+}
+
+void BluetoothA2DPSource::startRaw(char* name, music_data_cb_t callback, bool is_ssp_enabled) {
+    ESP_LOGD(APP, "x%x, ", __func__);
     this->ssp_enabled = is_ssp_enabled;
-    this->data_stream_callback = callback;
     this->bt_name = name;
+    this->data_stream_callback = callback;
 
     // Initialize NVS.
     esp_err_t ret = nvs_flash_init();
@@ -563,6 +601,7 @@ void BluetoothA2DPSource::bt_app_av_state_connecting(uint16_t event, void *param
     }
 }
 
+
 void BluetoothA2DPSource::bt_app_av_media_proc(uint16_t event, void *param)
 {
     esp_a2d_cb_param_t *a2d = NULL;
@@ -599,14 +638,15 @@ void BluetoothA2DPSource::bt_app_av_media_proc(uint16_t event, void *param)
         break;
     }
     case APP_AV_MEDIA_STATE_STARTED: {
-        if (event == BT_APP_HEART_BEAT_EVT) {
-            if (++s_intv_cnt >= 10) {
-                ESP_LOGI(BT_AV_TAG, "a2dp media stopping...");
-                esp_a2d_media_ctrl(ESP_A2D_MEDIA_CTRL_STOP);
-                s_media_state = APP_AV_MEDIA_STATE_STOPPING;
-                s_intv_cnt = 0;
-            }
-        }
+        // The demo is automatically disconnecting after 10 heat beats: we dont want to do that!
+        // if (event == BT_APP_HEART_BEAT_EVT) {
+        //     if (++s_intv_cnt >= 10) {
+        //         ESP_LOGI(BT_AV_TAG, "a2dp media stopping...");
+        //         esp_a2d_media_ctrl(ESP_A2D_MEDIA_CTRL_STOP);
+        //         s_media_state = APP_AV_MEDIA_STATE_STOPPING;
+        //         s_intv_cnt = 0;
+        //     }
+        // }
         break;
     }
     case APP_AV_MEDIA_STATE_STOPPING: {
@@ -739,13 +779,13 @@ void BluetoothA2DPSource::bt_av_hdl_avrc_ct_evt(uint16_t event, void *p_param)
         ESP_LOGI(BT_RC_CT_TAG, "AVRC conn_state evt: state %d, [%02x:%02x:%02x:%02x:%02x:%02x]",
                  rc->conn_stat.connected, bda[0], bda[1], bda[2], bda[3], bda[4], bda[5]);
 
-        // if (rc->conn_stat.connected) {
-        //     // get remote supported event_ids of peer AVRCP Target
-        //     esp_avrc_ct_send_get_rn_capabilities_cmd(APP_RC_CT_TL_GET_CAPS);
-        // } else {
-        //     // clear peer notification capability record
-        //     s_avrc_peer_rn_cap.bits = 0;
-        // }
+         if (rc->conn_stat.connected) {
+             // get remote supported event_ids of peer AVRCP Target
+             //esp_avrc_ct_send_get_rn_capabilities_cmd(APP_RC_CT_TL_GET_CAPS);
+         } else {
+             // clear peer notification capability record
+             //s_avrc_peer_rn_cap.bits = 0;
+         }
         break;
     }
     case ESP_AVRC_CT_PASSTHROUGH_RSP_EVT: {
@@ -785,5 +825,48 @@ void BluetoothA2DPSource::bt_av_hdl_avrc_ct_evt(uint16_t event, void *p_param)
         break;
     }
 }
+
+
+
+bool BluetoothA2DPSource::hasSoundData() {
+    return this->has_sound_data;
+}
+
+bool BluetoothA2DPSource::writeData(SoundData *data){
+    this->sound_data = data;
+    this->sound_data_current_pos = 0;
+    this->has_sound_data = true;
+    return true;
+}
+
+int32_t BluetoothA2DPSource::get_data_default(uint8_t *data, int32_t len) {
+    uint32_t result_len;
+    if (hasSoundData()) {
+        result_len = sound_data->get2ChannelData(sound_data_current_pos, len, data);
+        if (result_len!=512)
+            ESP_LOGD(BT_APP_TAG, "=> len: %d / result_len: %d", len, result_len);
+        
+        // calculate next position
+        sound_data_current_pos+=result_len;
+        if (result_len<=0){
+            if (sound_data->doLoop()){
+                ESP_LOGD(BT_APP_TAG, "x%x - end of data: restarting", __func__);
+                sound_data_current_pos = 0;            
+            } else {
+                ESP_LOGD(BT_APP_TAG, "x%x - end of data: stopping", __func__);
+                has_sound_data = false;
+            }
+        }
+    } else {
+        // return silence 
+        memset(data,0,len);
+        result_len = len;
+    }
+
+    return result_len;
+}
+
+
+
 
 

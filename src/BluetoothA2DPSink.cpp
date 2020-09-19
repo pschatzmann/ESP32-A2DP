@@ -479,7 +479,6 @@ void  BluetoothA2DPSink::av_hdl_stack_evt(uint16_t event, void *p_param)
 /* callback for A2DP sink */
 void  BluetoothA2DPSink::app_a2d_callback(esp_a2d_cb_event_t event, esp_a2d_cb_param_t *param)
 {
-
     // lambda for callback
     auto av_hdl_a2d_evt_2=[](uint16_t event, void *p_param){
         ESP_LOGD(BT_AV_TAG, "%s", __func__);
@@ -525,7 +524,6 @@ void  BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) 
    if (data_received!=NULL){
    	  data_received();
    }
-   
 }
 
 

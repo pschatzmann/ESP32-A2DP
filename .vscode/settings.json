@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "queue": "cpp",
+        "__locale": "cpp",
+        "functional": "cpp",
+        "ios": "cpp",
+        "algorithm": "cpp",
+        "chrono": "cpp",
+        "limits": "cpp",
+        "random": "cpp",
+        "ranges": "cpp"
+    }
+}

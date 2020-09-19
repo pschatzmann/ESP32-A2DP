@@ -63,7 +63,7 @@ void loop() {
 The output goes now to the DAC pins G26/G27.
 
 
-## Sending Data from a A2DS Data Source
+## Sending Data from a A2DS Data Source with a Callback
 
 We can also generate sound and send it e.g. to a Bluetooth Speaker.  
 
@@ -78,7 +78,7 @@ function' that generates the sound data:
 BluetoothA2DPSource a2dp_source;
 
 // callback 
-int32_t get_sound_data(uint8_t *data, int32_t len) {
+int32_t get_sound_data(Channels *data, int32_t len) {
     // generate your sound data 
     // return the length of the generated sound - which usually is identical with len
     return len;
@@ -94,6 +94,53 @@ void loop() {
 ```
 In the examples you can find an impelentation that generates sound with the help of the sine function.
 
+## Sending Data from a A2DS Data Source with prerecorded data
+
+You can also provide the data directly as simple array of uint8_t that can be prepared e.g. in the following way
+
+  - Open any sound file in Audacity. 
+    - Select Tracks -> Resample and select 44100
+    - Export -> Export Audio -> Header Raw ; Signed 16 bit PCM
+  - Convert to c file e.g. with "xxd -i file_example_WAV_1MG.raw file_example_WAV_1MG.c"
+    - add the const qualifier to the generated array definition. E.g const unsigned char file_example_WAV_1MG_raw[] = {
+
+You might want to compile with the Partition Scheme: Huge App!
+
+```
+#include "BluetoothA2DPSource.h"
+
+extern const uint8_t StarWars10_raw[];
+extern const unsigned int StarWars10_raw_len;
+
+BluetoothA2DPSource a2dp_source;
+SoundData *music = new OneChannelSoundData((int16_t*)StarWars30_raw, StarWars30_raw_len/2);
+
+void setup() {
+  a2dp_source.start("RadioPlayer");  
+  a2dp_source.writeData(music);
+}
+
+void loop() {
+}
+```
+In the example above we provide the data with one channel. This has the advantage that it uses much less space then 
+a 2 channel recording, which you could use in the following way: 
+
+```
+SoundData *data = new TwoChannelSoundData((Channels*)StarWars10_raw,StarWars10_raw_len/4);
+
+```
+
+In the constructor you can pass additional parameters:
+
+```
+    TwoChannelSoundData(Channels *data, int32_t len, bool loop=false);
+    OneChannelSoundData(int16_t *data, int32_t len, bool loop=false, ChannelInfo channelInfo=Both);
+
+```
+
+
+
 ## Installation
 
 You can download the library as zip and call include Library -> zip library. Or you can git clone this project into the Arduino libraries folder e.g. with
@@ -103,6 +150,10 @@ git clone pschatzmann/ESP32-A2DP.git
 ```
 
 ## Change History
+
+Master
+- Error Corrections in BluetoothA2DPSource
+- Support for writeData in BluetoothA2DPSource
 
 V.1.1.0 
 - New functionality: BluetoothA2DPSource

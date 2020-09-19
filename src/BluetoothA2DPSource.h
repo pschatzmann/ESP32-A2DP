@@ -19,6 +19,7 @@
 #ifndef __A2DP_SOURCE_H__
 #define __A2DP_SOURCE_H__
 
+#include "arduino.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/timers.h"
 #include "freertos/xtensa_api.h"
@@ -41,14 +42,14 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#ifdef ARDUINO_ARCH_ESP32
 #include "esp32-hal-log.h"
 #include "esp32-hal-bt.h"
-#endif
+#include "SoundData.h"
 
 
 typedef void (* bt_app_cb_t) (uint16_t event, void *param);
 typedef  int32_t (* music_data_cb_t) (uint8_t *data, int32_t len);
+typedef  int32_t (* music_data_channels_cb_t) (Channels *data, int32_t len);
 
 /* message to be sent */
 typedef struct {
@@ -60,13 +61,6 @@ typedef struct {
 
 typedef void (* bt_app_copy_cb_t) (bt_app_msg_t *msg, void *p_dest, void *p_src);
 
-/**
- *  Utility structure that can be used to split a int32_t up into 2 separate channels with int16_t data.
- */
-struct Channels {
-  int16_t channel1;
-  int16_t channel2;
-};
 
 class BluetoothA2DPSource {
   public: 
@@ -74,6 +68,13 @@ class BluetoothA2DPSource {
      * Constructor
      */
     BluetoothA2DPSource();
+
+    /**
+     * name: Bluetooth name of the device to connect to
+     * callback: function that provides the audio stream as array of Channels
+     */
+    void start(char* name, music_data_channels_cb_t callback = NULL, bool is_ssp_enabled = false);
+
     /**
      * name: Bluetooth name of the device to connect to
      * callback: function that provides the audio stream -
@@ -81,11 +82,29 @@ class BluetoothA2DPSource {
      * from PCM data normally formatted as 44.1kHz sampling rate, two-channel 16-bit sample data
      * is_ssp_enabled: Flag to activate Secure Simple Pairing 
      */ 
+    void startRaw(char* name, music_data_cb_t callback = NULL, bool is_ssp_enabled = false);
 
-    void start(char* name, music_data_cb_t callback, bool is_ssp_enabled = false);
-
+    /**
+     * Defines the pin code. If nothing is defined we use "1234"
+     */ 
     void setPinCode(char* pin_code, esp_bt_pin_type_t pin_type=ESP_BT_PIN_TYPE_VARIABLE);
 
+    /**
+     * In some cases it is very difficult to use the callback function. As an alternative we provide
+     * this method where you can just send the data to a queue. It is your responsibility however that
+     * you handle the situation if the queue is full.
+     */
+    bool writeData(SoundData *data);
+
+    /**
+     *  Returns true if the bluetooth device is connected
+     */
+    bool isConnected();
+
+    /**
+     *  Returns true if writeDataRaw has been called with any valid data
+     */
+    bool hasSoundData();
 
     /**
      *  The following mthods are called by the framework. They are public so that they can
@@ -106,11 +125,14 @@ class BluetoothA2DPSource {
     void bt_app_av_sm_hdlr(uint16_t event, void *param);
     /// avrc CT event handler
     void bt_av_hdl_avrc_ct_evt(uint16_t event, void *p_param);
-    // callback for data
-    music_data_cb_t data_stream_callback;
 
+    // callback for data
+    int32_t get_data_default(uint8_t *data, int32_t len);
+    music_data_cb_t data_stream_callback;
+    music_data_channels_cb_t data_stream_channels_callback;
 
   private:
+  
     bool ssp_enabled;
     char* bt_name;
     esp_bt_pin_type_t pin_type;
@@ -150,7 +172,10 @@ class BluetoothA2DPSource {
     bool get_name_from_eir(uint8_t *eir, uint8_t *bdname, uint8_t *bdname_len);
     void filter_inquiry_scan_result(esp_bt_gap_cb_param_t *param);
 
-
+    // support for raw data
+    SoundData *sound_data;
+    int32_t sound_data_current_pos;
+    bool has_sound_data;
 };
 
 #endif

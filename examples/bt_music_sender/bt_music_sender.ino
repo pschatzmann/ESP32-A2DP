@@ -18,34 +18,31 @@
 #include <math.h> 
 
 #define c3_frequency  130.81
-#define c4_frequency  261.63 
 
 BluetoothA2DPSource a2dp_source;
 
 // The supported audio codec in ESP32 A2DP is SBC. SBC audio stream is encoded
 // from PCM data normally formatted as 44.1kHz sampling rate, two-channel 16-bit sample data
-int32_t get_data(uint8_t *data, int32_t len) {
-    if (len < 0 || data == NULL) {
-        return 0;
-    }
-
+int32_t get_data_channels(Channels *channels, int32_t channel_len) {
     static double m_time = 0.0;
-    double m_amplitude = 10000;  // max -32,768 to 32,767
-    double m_deltaTime = 1.0 / 44100;
+    double m_amplitude = 10000.0;  // -32,768 to 32,767
+    double m_deltaTime = 1.0 / 44100.0;
     double m_phase = 0.0;
     double double_Pi = PI * 2.0;
-    Channels *channel_ptr;
-    for (int sample = 0; sample < len; ++sample) {
-        channel_ptr = (Channels*) &data[sample];
-        channel_ptr->channel1 = m_amplitude * sin(double_Pi * c3_frequency * m_time + m_phase);
-        channel_ptr->channel2 = m_amplitude * sin(double_Pi * c4_frequency * m_time + m_phase);
+    // fill the channel data
+    for (int sample = 0; sample < channel_len; ++sample) {
+        double angle = double_Pi * c3_frequency * m_time + m_phase;
+        channels[sample].channel1 = m_amplitude * sin(angle);
+        channels[sample].channel2 = channels[sample].channel1;
         m_time += m_deltaTime;
     }
-    return len;
+
+    return channel_len;
 }
 
+
 void setup() {
-  a2dp_source.start("MyMusic", get_data);  
+  a2dp_source.start("RadioPlayer", get_data_channels);  
 }
 
 void loop() {

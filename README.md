@@ -94,17 +94,9 @@ void loop() {
 ```
 In the examples you can find an impelentation that generates sound with the help of the sine function.
 
-## Sending Data from a A2DS Data Source with prerecorded data
+## Sending Data from a A2DS Data Source with recorded data
 
-You can also provide the data directly as simple array of uint8_t that can be prepared e.g. in the following way
-
-  - Open any sound file in Audacity. 
-    - Select Tracks -> Resample and select 44100
-    - Export -> Export Audio -> Header Raw ; Signed 16 bit PCM
-  - Convert to c file e.g. with "xxd -i file_example_WAV_1MG.raw file_example_WAV_1MG.c"
-    - add the const qualifier to the generated array definition. E.g const unsigned char file_example_WAV_1MG_raw[] = {
-
-You might want to compile with the Partition Scheme: Huge App!
+You can also provide the data directly as simple array of uint8_t:
 
 ```
 #include "BluetoothA2DPSource.h"
@@ -122,7 +114,19 @@ void setup() {
 
 void loop() {
 }
+
 ```
+
+The array can be prepared e.g. in the following way:
+
+  - Open any sound file in Audacity. 
+    - Select Tracks -> Resample and select 44100
+    - Export -> Export Audio -> Header Raw ; Signed 16 bit PCM
+  - Convert to c file e.g. with "xxd -i file_example_WAV_1MG.raw file_example_WAV_1MG.c"
+    - add the const qualifier to the generated array definition. E.g const unsigned char file_example_WAV_1MG_raw[] = {
+
+You might want to compile with the Partition Scheme: Huge App!
+
 In the example above we provide the data with one channel. This has the advantage that it uses much less space then 
 a 2 channel recording, which you could use in the following way: 
 
@@ -134,8 +138,8 @@ SoundData *data = new TwoChannelSoundData((Channels*)StarWars10_raw,StarWars10_r
 In the constructor you can pass additional parameters:
 
 ```
-    TwoChannelSoundData(Channels *data, int32_t len, bool loop=false);
-    OneChannelSoundData(int16_t *data, int32_t len, bool loop=false, ChannelInfo channelInfo=Both);
+TwoChannelSoundData(Channels *data, int32_t len, bool loop=false);
+OneChannelSoundData(int16_t *data, int32_t len, bool loop=false, ChannelInfo channelInfo=Both);
 
 ```
 

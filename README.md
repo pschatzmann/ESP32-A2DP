@@ -100,7 +100,8 @@ which is available:
 ```
 void setup() {
   static std::vector<char*> bt_names = {"MyMusic","RadioPlayer","MusicPlayer"};
-  a2dp_source.start(bt_names, get_sound_data);  
+  a2dp_source.start(bt_names, get_sound_data); 
+} 
 
 ```
 

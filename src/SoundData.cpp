@@ -17,10 +17,25 @@ void SoundData::setLoop(bool loop) {
  *  Constructor for Data containing 2 channels
  */
 TwoChannelSoundData::TwoChannelSoundData(Channels *data, int32_t len, bool loop) {
-    this->len = len;
-    this->data = data;
+    setData(data, len);
     setLoop(loop);
 }
+
+TwoChannelSoundData::TwoChannelSoundData(bool loop) {
+    setLoop(loop);
+}
+
+
+void TwoChannelSoundData::setData(Channels *data, int32_t len){
+    this->len = len;
+    this->data = data;
+}
+
+void TwoChannelSoundData::setDataRaw(uint8_t *data, int32_t len){
+    this->len = len*4;
+    this->data = (Channels *)data;
+}
+
 
 int32_t TwoChannelSoundData::getData(int32_t pos, int32_t len, Channels *data) {
     //ESP_LOGD(SOUND_DATA, "x%x - pos: %d / len: %d", __func__, pos, len);
@@ -55,10 +70,24 @@ int32_t TwoChannelSoundData::get2ChannelData(int32_t pos, int32_t len, uint8_t *
  * Constructor for data conisting only of one Channel 
  */
 OneChannelSoundData::OneChannelSoundData(int16_t *data, int32_t len, bool loop, ChannelInfo channelInfo) {
-    this->len = len;
-    this->data = data;
+    this->channelInfo = channelInfo;
+    setData(data, len);
+    setLoop(loop);
+}
+
+OneChannelSoundData::OneChannelSoundData(bool loop, ChannelInfo channelInfo) {
     this->channelInfo = channelInfo;
     setLoop(loop);
+}
+
+void OneChannelSoundData::setData(int16_t *data, int32_t len){
+    this->len = len;
+    this->data = data;
+}
+
+void OneChannelSoundData::setDataRaw(uint8_t *data, int32_t len){
+    this->len = len*2;
+    this->data = (int16_t *)data;
 }
 
 int32_t OneChannelSoundData::getData(int32_t pos, int32_t len, int16_t *data) {

@@ -92,7 +92,18 @@ void loop() {
 }
 
 ```
-In the examples you can find an impelentation that generates sound with the help of the sine function.
+
+In the examples you can find an impelentation that generates sound with the help of the sin() function.
+You can also inticate multiple alternative Bluetooth names. The system just connects to the first one
+which is available:
+
+```
+void setup() {
+  static std::vector<char*> bt_names = {"MyMusic","RadioPlayer","MusicPlayer"};
+  a2dp_source.start(bt_names, get_sound_data);  
+
+```
+
 
 ## Sending Data from a A2DS Data Source with recorded data
 
@@ -116,6 +127,7 @@ void loop() {
 }
 
 ```
+
 
 The array can be prepared e.g. in the following way:
 
@@ -158,6 +170,8 @@ git clone pschatzmann/ESP32-A2DP.git
 Master
 - Error Corrections in BluetoothA2DPSource
 - Support for writeData in BluetoothA2DPSource
+- Support for multiple alternative BT names in BluetoothA2DPSource
+
 
 V.1.1.0 
 - New functionality: BluetoothA2DPSource

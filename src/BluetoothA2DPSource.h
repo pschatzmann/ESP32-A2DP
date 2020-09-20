@@ -41,6 +41,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include <vector> 
 
 #include "esp32-hal-log.h"
 #include "esp32-hal-bt.h"
@@ -74,6 +75,7 @@ class BluetoothA2DPSource {
      * callback: function that provides the audio stream as array of Channels
      */
     void start(char* name, music_data_channels_cb_t callback = NULL, bool is_ssp_enabled = false);
+    void start(std::vector<char*> names, music_data_channels_cb_t callback = NULL, bool is_ssp_enabled = false);
 
     /**
      * name: Bluetooth name of the device to connect to
@@ -83,6 +85,7 @@ class BluetoothA2DPSource {
      * is_ssp_enabled: Flag to activate Secure Simple Pairing 
      */ 
     void startRaw(char* name, music_data_cb_t callback = NULL, bool is_ssp_enabled = false);
+    void startRaw(std::vector<char*> names, music_data_cb_t callback = NULL, bool is_ssp_enabled = false);
 
     /**
      * Defines the pin code. If nothing is defined we use "1234"
@@ -135,6 +138,8 @@ class BluetoothA2DPSource {
   
     bool ssp_enabled;
     char* bt_name;
+    std::vector<char*> bt_names;
+
     esp_bt_pin_type_t pin_type;
     esp_bt_pin_code_t pin_code;
     uint32_t pin_code_len;

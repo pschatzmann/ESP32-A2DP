@@ -97,6 +97,7 @@ BluetoothA2DPSource::BluetoothA2DPSource() {
     self_BluetoothA2DPSource = this;
     this->ssp_enabled = false;
     this->pin_type = ESP_BT_PIN_TYPE_VARIABLE;
+    
     // default pin code
     strcpy((char*)pin_code, "1234");
     pin_code_len = 4;
@@ -126,21 +127,31 @@ void BluetoothA2DPSource::setPinCode(char *pin_code, esp_bt_pin_type_t pin_type)
 }
 
 void BluetoothA2DPSource::start(char* name, music_data_channels_cb_t callback, bool is_ssp_enabled) {
+    std::vector<char*> names = {name};
+    start(names, callback, is_ssp_enabled);
+}
+
+void BluetoothA2DPSource::start(std::vector<char*> names, music_data_channels_cb_t callback, bool is_ssp_enabled) {
     ESP_LOGD(APP, "x%x, ", __func__);
     if (callback!=NULL){
         // we use the indicated callback
         this->data_stream_channels_callback = callback;
-        startRaw(name, ccall_get_channel_data_wrapper, is_ssp_enabled);
+        startRaw(names, ccall_get_channel_data_wrapper, is_ssp_enabled);
     } else {
         // we use the callback which supports writeData
-        startRaw(name, ccall_get_data_default, is_ssp_enabled);
+        startRaw(names, ccall_get_data_default, is_ssp_enabled);
     }
 }
 
 void BluetoothA2DPSource::startRaw(char* name, music_data_cb_t callback, bool is_ssp_enabled) {
+    std::vector<char*> names = {name};
+    startRaw(names, callback, is_ssp_enabled);
+}
+
+void BluetoothA2DPSource::startRaw(std::vector<char*> names, music_data_cb_t callback, bool is_ssp_enabled) {
     ESP_LOGD(APP, "x%x, ", __func__);
     this->ssp_enabled = is_ssp_enabled;
-    this->bt_name = name;
+    this->bt_names = names;
     this->data_stream_callback = callback;
 
     // Initialize NVS.
@@ -372,15 +383,24 @@ void BluetoothA2DPSource::filter_inquiry_scan_result(esp_bt_gap_cb_param_t *para
     /* search for device name in its extended inqury response */
     if (eir) {
         get_name_from_eir(eir, s_peer_bdname, NULL);
-        if (strcmp((char *)s_peer_bdname, bt_name) != 0) {
-            return;
-        }
+        ESP_LOGI(BT_AV_TAG, "Device discovery found: %s", s_peer_bdname);
 
-        ESP_LOGI(BT_AV_TAG, "Found a target device, address %s, name %s", bda_str, s_peer_bdname);
-        s_a2d_state = APP_AV_STATE_DISCOVERED;
-        memcpy(s_peer_bda, param->disc_res.bda, ESP_BD_ADDR_LEN);
-        ESP_LOGI(BT_AV_TAG, "Cancel device discovery ...");
-        esp_bt_gap_cancel_discovery();
+        bool found = false;
+        for (char* name : bt_names){
+            ESP_LOGI(BT_AV_TAG, "Checking name: %s", name);
+            if (strcmp((char *)s_peer_bdname, name) == 0) {
+                this->bt_name = (char *) s_peer_bdname;
+                found = true;
+                break;
+            }
+        }
+        if (found){
+            ESP_LOGI(BT_AV_TAG, "Found a target device, address %s, name %s", bda_str, s_peer_bdname);
+            s_a2d_state = APP_AV_STATE_DISCOVERED;
+            memcpy(s_peer_bda, param->disc_res.bda, ESP_BD_ADDR_LEN);
+            ESP_LOGI(BT_AV_TAG, "Cancel device discovery ...");
+            esp_bt_gap_cancel_discovery();
+        }
     }
 }
 

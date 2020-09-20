@@ -40,6 +40,7 @@ class SoundData {
   public:
      virtual int32_t get2ChannelData(int32_t pos, int32_t len, uint8_t *data);
      virtual int32_t getData(int32_t pos, Channels &channels);
+     virtual void setDataRaw( uint8_t* data, int32_t len);
      /**
       * Automatic restart playing on end
       */
@@ -58,7 +59,10 @@ class SoundData {
  */
 class TwoChannelSoundData : public SoundData {
 public:
+    TwoChannelSoundData(bool loop=false);
     TwoChannelSoundData(Channels *data, int32_t len, bool loop=false);
+    void setData( Channels *data, int32_t len);
+    void setDataRaw( uint8_t* data, int32_t len);
     int32_t getData(int32_t pos, int32_t len, Channels *data);
     int32_t getData(int32_t pos, Channels &channels);
     int32_t get2ChannelData(int32_t pos, int32_t len, uint8_t *data);
@@ -74,7 +78,10 @@ private:
  */
 class OneChannelSoundData : public SoundData {
   public:
+    OneChannelSoundData(bool loop=false, ChannelInfo channelInfo=Both);
     OneChannelSoundData(int16_t *data, int32_t len, bool loop=false, ChannelInfo channelInfo=Both);
+    void setData( int16_t *data, int32_t len);
+    void setDataRaw( uint8_t* data, int32_t len);
     int32_t getData(int32_t pos, int32_t len, int16_t *data);
     int32_t getData(int32_t pos, Channels &channels);
     int32_t get2ChannelData(int32_t pos, int32_t len, uint8_t *data);

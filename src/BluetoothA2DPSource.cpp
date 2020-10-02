@@ -154,15 +154,18 @@ void BluetoothA2DPSource::startRaw(std::vector<char*> names, music_data_cb_t cal
     this->bt_names = names;
     this->data_stream_callback = callback;
 
-    // Initialize NVS.
-    esp_err_t ret = nvs_flash_init();
-    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
-        ESP_ERROR_CHECK(nvs_flash_erase());
-        ret = nvs_flash_init();
+    if (nvs_init){
+        // Initialize NVS (Non-volatile storage library).
+        esp_err_t ret = nvs_flash_init();
+        if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+            ESP_ERROR_CHECK(nvs_flash_erase());
+            ret = nvs_flash_init();
+        }
+        ESP_ERROR_CHECK( ret );
     }
-    ESP_ERROR_CHECK( ret );
 
-    ESP_ERROR_CHECK(esp_bt_controller_mem_release(ESP_BT_MODE_BLE));
+    if (reset_ble) {
+        ESP_ERROR_CHECK(esp_bt_controller_mem_release(ESP_BT_MODE_BLE));
 
     // esp_bt_controller_config_t bt_cfg = BT_CONTROLLER_INIT_CONFIG_DEFAULT();
 
@@ -176,20 +179,22 @@ void BluetoothA2DPSource::startRaw(std::vector<char*> names, music_data_cb_t cal
     //     return;
     // }
 
-    if (!btStart()) {
-        ESP_LOGE(BT_AV_TAG,"Failed to initialize controller");
-        return;
+        if (!btStart()) {
+            ESP_LOGE(BT_AV_TAG,"Failed to initialize controller");
+            return;
+        }
+
+        if (esp_bluedroid_init() != ESP_OK) {
+            ESP_LOGE(BT_AV_TAG, "%s initialize bluedroid failed\n", __func__);
+            return;
+        }
+
+        if (esp_bluedroid_enable() != ESP_OK) {
+            ESP_LOGE(BT_AV_TAG, "%s enable bluedroid failed\n", __func__);
+            return;
+        }
     }
 
-    if (esp_bluedroid_init() != ESP_OK) {
-        ESP_LOGE(BT_AV_TAG, "%s initialize bluedroid failed\n", __func__);
-        return;
-    }
-
-    if (esp_bluedroid_enable() != ESP_OK) {
-        ESP_LOGE(BT_AV_TAG, "%s enable bluedroid failed\n", __func__);
-        return;
-    }
 
     /* create application task */
     bt_app_task_start_up();
@@ -884,6 +889,15 @@ int32_t BluetoothA2DPSource::get_data_default(uint8_t *data, int32_t len) {
     }
 
     return result_len;
+}
+
+
+void BluetoothA2DPSource::setNVSInit(bool doInit){
+    nvs_init = doInit;
+}
+
+void BluetoothA2DPSource::setResetBLE(bool doInit){
+    reset_ble = doInit;
 }
 
 

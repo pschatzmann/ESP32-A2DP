@@ -110,6 +110,16 @@ class BluetoothA2DPSource {
     bool hasSoundData();
 
     /**
+     *  Defines if the Flash NVS should be reset on start
+     */
+    void setNVSInit(bool doInit);
+
+    /**
+     *  Defines if the BLE should be reset on start
+     */
+    void setResetBLE(bool doInit);
+
+    /**
      *  The following mthods are called by the framework. They are public so that they can
      *  be executed from a extern "C" function.
      */
@@ -181,6 +191,10 @@ class BluetoothA2DPSource {
     SoundData *sound_data;
     int32_t sound_data_current_pos;
     bool has_sound_data;
+
+    // initialization
+    bool nvs_init = true;
+    bool reset_ble = true;
 };
 
 #endif

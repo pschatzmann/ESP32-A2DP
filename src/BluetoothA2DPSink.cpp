@@ -21,7 +21,7 @@
  */
 // to support static callback functions
 BluetoothA2DPSink* actualBluetoothA2DPSink;
-i2s_port_t i2s_port; 
+//i2s_port_t i2s_port; 
 
 // Forward declarations for C Callback functions for ESP32 Framework
 extern "C" void app_task_handler_2(void *arg);
@@ -34,6 +34,9 @@ extern "C" void app_rc_ct_callback_2(esp_avrc_ct_cb_event_t event, esp_avrc_ct_c
  */
 BluetoothA2DPSink::BluetoothA2DPSink() {
   actualBluetoothA2DPSink = this;
+  output = NULL;
+  
+  /*
   // default i2s port is 0
   i2s_port = (i2s_port_t) 0;
 
@@ -57,7 +60,7 @@ BluetoothA2DPSink::BluetoothA2DPSink() {
       .data_out_num = 22,
       .data_in_num = I2S_PIN_NO_CHANGE
   };
-
+  */
 }
 
 BluetoothA2DPSink::~BluetoothA2DPSink() {
@@ -73,10 +76,10 @@ BluetoothA2DPSink::~BluetoothA2DPSink() {
         ESP_LOGE(BT_AV_TAG,"Failed to deinit bluetooth");
     }
 
-    ESP_LOGI(BT_AV_TAG,"uninstall its");
-    if (i2s_driver_uninstall(i2s_port) != ESP_OK){
-        ESP_LOGE(BT_AV_TAG,"Failed to uninstall i2s");
-    }
+    //ESP_LOGI(BT_AV_TAG,"uninstall its");
+    //if (i2s_driver_uninstall(i2s_port) != ESP_OK){
+    //    ESP_LOGE(BT_AV_TAG,"Failed to uninstall i2s");
+    //}
     
     ESP_LOGI(BT_AV_TAG,"esp_bt_controller_deinit");
 	if (esp_bt_controller_deinit()!= ESP_OK){
@@ -91,17 +94,17 @@ BluetoothA2DPSink::~BluetoothA2DPSink() {
 }
 
 
-void BluetoothA2DPSink::set_pin_config(i2s_pin_config_t pin_config){
-  this->pin_config = pin_config;
-}
+//void BluetoothA2DPSink::set_pin_config(i2s_pin_config_t pin_config){
+//  this->pin_config = pin_config;
+//}
 
-void BluetoothA2DPSink::set_i2s_port(i2s_port_t i2s_num) {
-  i2s_port = i2s_num;
-}
+//void BluetoothA2DPSink::set_i2s_port(i2s_port_t i2s_num) {
+//  i2s_port = i2s_num;
+//}
 
-void BluetoothA2DPSink::set_i2s_config(i2s_config_t i2s_config){
-  this->i2s_config = i2s_config;
-}
+//void BluetoothA2DPSink::set_i2s_config(i2s_config_t i2s_config){
+//  this->i2s_config = i2s_config;
+//}
 
 void BluetoothA2DPSink::set_on_data_received(void (*callBack)()){
   this->data_received = callBack;
@@ -112,7 +115,7 @@ void BluetoothA2DPSink::set_on_data_received(void (*callBack)()){
 /**
  * Main function to start the Bluetooth Processing
  */
-void BluetoothA2DPSink::start(char* name)
+void BluetoothA2DPSink::start(char* name, SPDIFOut *output)
 {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
     //store parameters
@@ -121,6 +124,14 @@ void BluetoothA2DPSink::start(char* name)
     }
     ESP_LOGI(BT_AV_TAG,"Device name will be set to '%s'",this->bt_name);
     
+	this->output = output;
+	output->SetBitsPerSample(32); //było 16
+    output->SetChannels(2);
+
+    if (!output->begin()){
+		ESP_LOGE(BT_AV_TAG,"SPDIF output begin error!");
+	}
+	
     // setup bluetooth
     init_bluetooth();
     
@@ -138,7 +149,8 @@ void BluetoothA2DPSink::start(char* name)
     // Bluetooth device name, connection mode and profile set up 
     app_work_dispatch(av_hdl_stack_evt_2, BT_APP_EVT_STACK_UP, NULL, 0);
 
-    // setup i2s
+    /*
+	// setup i2s
     i2s_driver_install(i2s_port, &i2s_config, 0, NULL);
 
     // pins are only relevant when music is not sent to internal DAC
@@ -148,7 +160,7 @@ void BluetoothA2DPSink::start(char* name)
     } else {
       i2s_set_pin(i2s_port, &pin_config);
     }
-
+	*/
 }
 
 esp_a2d_audio_state_t BluetoothA2DPSink::get_audio_state() {
@@ -359,24 +371,28 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
         ESP_LOGI(BT_AV_TAG, "a2dp audio_cfg_cb , codec type %d", a2d->audio_cfg.mcc.type);
         // for now only SBC stream is supported
         if (a2d->audio_cfg.mcc.type == ESP_A2D_MCT_SBC) {
-            i2s_config.sample_rate = 16000;
+            //i2s_config.sample_rate = 16000;
+			ESP_LOGI(BT_AV_TAG,"Sample rate: 16000");
             char oct0 = a2d->audio_cfg.mcc.cie.sbc[0];
             if (oct0 & (0x01 << 6)) {
-                i2s_config.sample_rate = 32000;
+                //i2s_config.sample_rate = 32000;
+				ESP_LOGI(BT_AV_TAG,"Sample rate: 32000");
             } else if (oct0 & (0x01 << 5)) {
-                i2s_config.sample_rate = 44100;
+                //i2s_config.sample_rate = 44100;
+				ESP_LOGI(BT_AV_TAG,"Sample rate: 44100");
             } else if (oct0 & (0x01 << 4)) {
-                i2s_config.sample_rate = 48000;
+                //i2s_config.sample_rate = 48000;
+				ESP_LOGI(BT_AV_TAG,"Sample rate: 48000");
             }
             
-            i2s_set_clk(i2s_port, i2s_config.sample_rate, i2s_config.bits_per_sample, (i2s_channel_t)2);
+            //i2s_set_clk(i2s_port, i2s_config.sample_rate, i2s_config.bits_per_sample, (i2s_channel_t)2);
 
             ESP_LOGI(BT_AV_TAG, "configure audio player %x-%x-%x-%x\n",
                      a2d->audio_cfg.mcc.cie.sbc[0],
                      a2d->audio_cfg.mcc.cie.sbc[1],
                      a2d->audio_cfg.mcc.cie.sbc[2],
                      a2d->audio_cfg.mcc.cie.sbc[3]);
-            ESP_LOGI(BT_AV_TAG, "audio player configured, samplerate=%d", i2s_config.sample_rate);
+            //ESP_LOGI(BT_AV_TAG, "audio player configured, samplerate=%d", i2s_config.sample_rate);
         }
         break;
     }
@@ -510,8 +526,17 @@ void  BluetoothA2DPSink::app_a2d_callback(esp_a2d_cb_event_t event, esp_a2d_cb_p
 }
 
 void  BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) {
-   ESP_LOGD(BT_AV_TAG, "%s", __func__);
-
+   while (len>0){
+	   memcpy(&sample[0],data,2);
+	   data += 2;
+	   memcpy(&sample[1],data,2);
+	   data += 2;
+	   len -= 4;
+	   output->ConsumeSample(sample);
+   }
+   
+   //ESP_LOGD(BT_AV_TAG, "%s", __func__);
+   /*
    size_t i2s_bytes_written;
    if (i2s_write(i2s_port,(void*) data, len, &i2s_bytes_written, portMAX_DELAY)!=ESP_OK){
       ESP_LOGE(BT_AV_TAG, "i2s_write has failed");    
@@ -520,10 +545,11 @@ void  BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) 
    if (i2s_bytes_written<len){
       ESP_LOGE(BT_AV_TAG, "Timeout: not all bytes were written to I2S");
    } 
+   */
    
-   if (data_received!=NULL){
-   	  data_received();
-   }
+   //if (data_received!=NULL){
+   //	  data_received();
+   //}
 }
 
 

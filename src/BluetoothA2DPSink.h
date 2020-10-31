@@ -36,6 +36,7 @@ extern "C" {
 #include "esp_a2dp_api.h"
 #include "driver/i2s.h"
 #include "esp_avrc_api.h"
+#include "SPDIFOut.h"
 
 #ifdef ARDUINO_ARCH_ESP32
 #include "esp32-hal-log.h"
@@ -76,11 +77,11 @@ class BluetoothA2DPSink {
   public: 
     BluetoothA2DPSink();
     ~BluetoothA2DPSink();
-    void set_pin_config(i2s_pin_config_t pin_config);
-    void set_i2s_port(i2s_port_t i2s_num);
-    void set_i2s_config(i2s_config_t i2s_config);
+    //void set_pin_config(i2s_pin_config_t pin_config);
+    //void set_i2s_port(i2s_port_t i2s_num);
+    //void set_i2s_config(i2s_config_t i2s_config);
     
-    void start(char* name);
+    void start(char* name, SPDIFOut *output);
     esp_a2d_audio_state_t get_audio_state();
     esp_a2d_mct_t get_audio_type();
     void set_on_data_received(void (*callBack)());
@@ -104,9 +105,10 @@ class BluetoothA2DPSink {
     // private data
     xQueueHandle app_task_queue;
     xTaskHandle app_task_handle;
-    i2s_config_t i2s_config;
-    i2s_pin_config_t pin_config;    
+    //i2s_config_t i2s_config;
+    //i2s_pin_config_t pin_config;    
     char * bt_name;
+	int16_t sample[2];
     uint32_t m_pkt_cnt = 0;
     esp_a2d_audio_state_t m_audio_state = ESP_A2D_AUDIO_STATE_STOPPED;
     const char *m_a2d_conn_state_str[4] = {"Disconnected", "Connecting", "Connected", "Disconnecting"};
@@ -115,7 +117,7 @@ class BluetoothA2DPSink {
     esp_a2d_mct_t audio_type;
     void (*data_received)() = NULL;
 
-    // priate methods
+    // private methods
     int init_bluetooth();
     void app_task_start_up(void);
     void app_task_shut_down(void);
@@ -126,6 +128,8 @@ class BluetoothA2DPSink {
     void av_new_track();
     void av_notify_evt_handler(uint8_t event_id, uint32_t event_parameter);
     
+  protected:
+    SPDIFOut *output;
   
 };
 

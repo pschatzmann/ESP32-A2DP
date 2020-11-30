@@ -83,6 +83,7 @@ class BluetoothA2DPSink {
     void start(char* name);
     esp_a2d_audio_state_t get_audio_state();
     esp_a2d_mct_t get_audio_type();
+    void set_stream_reader(void (*callBack)(const uint8_t*, uint32_t));
     void set_on_data_received(void (*callBack)());
 
     /**
@@ -114,6 +115,7 @@ class BluetoothA2DPSink {
     esp_a2d_audio_state_t audio_state;
     esp_a2d_mct_t audio_type;
     void (*data_received)() = NULL;
+    void (*stream_reader)(const uint8_t*, uint32_t) = NULL;
 
     // priate methods
     int init_bluetooth();

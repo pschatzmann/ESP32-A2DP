@@ -199,7 +199,9 @@ Master
 - Error Corrections in BluetoothA2DPSource
 - Support for writeData in BluetoothA2DPSource
 - Support for multiple alternative BT names in BluetoothA2DPSource
-
+- The data is rescaled to when written to the internal DAC
+- Corrected wrong case of include to Arduino.h
+- Added callback to received packets
 
 V.1.1.0 
 - New functionality: BluetoothA2DPSource

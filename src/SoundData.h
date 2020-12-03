@@ -1,7 +1,7 @@
 #ifndef __SOUND_DATA_H__
 #define __SOUND_DATA_H__
 
-#include "arduino.h"
+#include "Arduino.h"
 
 /**
  * Sound data as byte stream. We support TwoChannelSoundData (uint16_t + uint16_t) and 

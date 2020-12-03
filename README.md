@@ -62,6 +62,33 @@ void loop() {
 
 The output goes now to the DAC pins G26/G27.
 
+## Accessing the sink data stream with callbacks
+You can be notified when a packet is received:
+
+```
+// In the setup function:
+a2dp_sink.set_on_data_received(data_received_callback);
+
+
+// Then somewhere in your sketch:
+void data_received_callback() {
+  Serial.println("Data packet received");
+}
+```
+
+Or you can access the packet:
+
+```
+// In the setup function:
+a2dp_sink.set_stream_reader(read_data_stream);
+
+// Then somewhere in your sketch:
+void read_data_stream(const uint8_t *data, uint32_t length)
+{
+  // Do something with the data packet
+}
+```
+
 
 ## Sending Data from a A2DS Data Source with a Callback
 

@@ -103,6 +103,10 @@ void BluetoothA2DPSink::set_i2s_config(i2s_config_t i2s_config){
   this->i2s_config = i2s_config;
 }
 
+void BluetoothA2DPSink::set_stream_reader(void (*callBack)(const uint8_t*, uint32_t)){
+  this->stream_reader = callBack;
+}
+
 void BluetoothA2DPSink::set_on_data_received(void (*callBack)()){
   this->data_received = callBack;
 }
@@ -537,7 +541,11 @@ void  BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) 
 
    if (i2s_bytes_written<len){
       ESP_LOGE(BT_AV_TAG, "Timeout: not all bytes were written to I2S");
-   } 
+   }
+   
+   if (stream_reader!=NULL){
+   	  stream_reader(data, len);
+   }
    
    if (data_received!=NULL){
    	  data_received();

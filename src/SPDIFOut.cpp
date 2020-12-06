@@ -70,6 +70,7 @@ SPDIFOut::SPDIFOut(int dout_pin, int port, int dma_buf_count)
   SetGain(1.0);
   hertz = 0;
   SetRate(44100);
+  ESP_LOGD(BT_AV_TAG,"DMA BUFF COUNT: %d DMA BUFF LEN: %d",dma_buf_count, DMA_BUF_SIZE_DEFAULT);
 }
 
 SPDIFOut::~SPDIFOut()
@@ -147,13 +148,13 @@ bool SPDIFOut::begin()
 bool SPDIFOut::ConsumeSample(int16_t sample[2])
 {
   if (!i2sOn) return true; // Sink the data
-  int16_t ms[2];
-  uint16_t hi, lo, aux;
-  uint32_t buf[4];
+  //int16_t ms[2];
+  //uint16_t hi, lo, aux;
+  //uint32_t buf[4];
 
-  ms[0] = sample[0];
-  ms[1] = sample[1];
-  MakeSampleStereo16(ms);
+  //ms[0] = sample[0];
+  //ms[1] = sample[1];
+  //MakeSampleStereo16(ms);
 
   // S/PDIF encoding: 
   //   http://www.hardwarebook.info/S/PDIF
@@ -167,10 +168,10 @@ bool SPDIFOut::ConsumeSample(int16_t sample[2])
   // This requires a bit less shifting as 16 sample bits align and can be 
   // BMC encoded with two table lookups (and at the same time flipped to LSB first).
   // There is no separate word-clock, so hopefully the receiver won't notice.
-  uint16_t sample_left = Amplify(ms[LEFTCHANNEL]);
+  uint16_t sample_left = Amplify(sample[LEFTCHANNEL]);
   // BMC encode and flip left channel bits
-  hi = pgm_read_word(&spdif_bmclookup[(uint8_t)(sample_left >> 8)]);
-  lo = pgm_read_word(&spdif_bmclookup[(uint8_t)sample_left]);
+  hi = pgm_read_word(&spdif_bmclookup[(uint8_t)(sample_left >> 8)]); //sample_left
+  lo = pgm_read_word(&spdif_bmclookup[(uint8_t)sample_left]); //sample_left
   // Low word is inverted depending on first bit of high word
   lo ^= (~((int16_t)hi) >> 16);
   buf[0] = ((uint32_t)lo << 16) | hi;
@@ -184,20 +185,24 @@ bool SPDIFOut::ConsumeSample(int16_t sample[2])
     buf[1] = VUCP_PREAMBLE_M | aux;
   }
 
-  uint16_t sample_right = Amplify(ms[RIGHTCHANNEL]); 
+  uint16_t sample_right = Amplify(sample[RIGHTCHANNEL]);
   // BMC encode right channel, similar as above
-  hi = pgm_read_word(&spdif_bmclookup[(uint8_t)(sample_right >> 8)]);
-  lo = pgm_read_word(&spdif_bmclookup[(uint8_t)sample_right]);
+  hi = pgm_read_word(&spdif_bmclookup[(uint8_t)(sample_right >> 8)]); //sample_right
+  lo = pgm_read_word(&spdif_bmclookup[(uint8_t)sample_right]); //sample_right
   lo ^= (~((int16_t)hi) >> 16);
   buf[2] = ((uint32_t)lo << 16) | hi;
   aux = 0xb333 ^ (((uint32_t)((int16_t)lo)) >> 17);
   buf[3] = VUCP_PREAMBLE_W | aux;
 
   // Assume DMA buffers are multiples of 16 bytes. Either we write all bytes or none.
-  uint32_t bytes_written;
-  esp_err_t ret = i2s_write((i2s_port_t)portNo, (const char*)&buf, 8 * channels, &bytes_written, 0);
+  //uint32_t bytes_written;
+  esp_err_t ret = i2s_write((i2s_port_t)portNo, (const char*)&buf, 8 * channels, &bytes_written, portMAX_DELAY);
   // If we didn't write all bytes, return false early and do not increment frame_num
-  if ((ret != ESP_OK) || (bytes_written != (8 * channels))) return false;  
+  if ((ret != ESP_OK) || (bytes_written != (8 * channels))){
+	  ESP_LOGE(BT_AV_TAG,"I2S Write error. Bytes written: %d, frame: %d", bytes_written, frame_num);
+	  return false;
+  }
+  
   // Increment and rotate frame number
   if (++frame_num > 191) frame_num = 0;
   return true;

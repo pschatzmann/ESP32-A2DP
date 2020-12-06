@@ -1,11 +1,9 @@
 #ifndef _SPDIFOUT_H
 #define _SPDIFOUT_H
 
-//#include "AudioOutput.h"
-
 #define SPDIF_OUT_PIN_DEFAULT  22
-#define DMA_BUF_COUNT_DEFAULT  32 //8
-#define DMA_BUF_SIZE_DEFAULT   256 //256
+#define DMA_BUF_COUNT_DEFAULT  24 //8 max:128
+#define DMA_BUF_SIZE_DEFAULT   1024 //256 max:1024
 
 
 class SPDIFOut
@@ -59,6 +57,9 @@ class SPDIFOut
 	uint8_t bps;
 	uint8_t channels;
 	uint8_t gainF2P6;
+	uint32_t bytes_written;
+	uint16_t hi, lo, aux;
+	uint32_t buf[4];
 };
 
 #endif

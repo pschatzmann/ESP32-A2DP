@@ -65,7 +65,13 @@ enum {
     BT_APP_EVT_STACK_UP = 0,
 };
 
-
+typedef enum {
+	PLAY,
+	PAUSE,
+	STOP,
+	NEXT,
+	PREV
+} BT_CMND;
 
 /**
  * Bluethooth Sink - We iniitialize and start the Bluetooth A2DP Sink. 
@@ -77,9 +83,6 @@ class BluetoothA2DPSink {
   public: 
     BluetoothA2DPSink();
     ~BluetoothA2DPSink();
-    //void set_pin_config(i2s_pin_config_t pin_config);
-    //void set_i2s_port(i2s_port_t i2s_num);
-    //void set_i2s_config(i2s_config_t i2s_config);
     
     void start(char* name, SPDIFOut *output);
     esp_a2d_audio_state_t get_audio_state();
@@ -100,13 +103,13 @@ class BluetoothA2DPSink {
     void av_hdl_a2d_evt(uint16_t event, void *p_param);
     // avrc event handler 
     void av_hdl_avrc_evt(uint16_t event, void *p_param);
+	
+	void sendCommand(BT_CMND cmnd);
     
   private:
     // private data
     xQueueHandle app_task_queue;
     xTaskHandle app_task_handle;
-    //i2s_config_t i2s_config;
-    //i2s_pin_config_t pin_config;    
     char * bt_name;
 	int16_t sample[2];
     uint32_t m_pkt_cnt = 0;

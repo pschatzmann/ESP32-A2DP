@@ -2,8 +2,8 @@
 #define _SPDIFOUT_H
 
 #define SPDIF_OUT_PIN_DEFAULT  22
-#define DMA_BUF_COUNT_DEFAULT  24 //8 max:128
-#define DMA_BUF_SIZE_DEFAULT   1024 //256 max:1024
+#define DMA_BUF_COUNT_DEFAULT  8 //8 max:128 //last:24
+#define DMA_BUF_SIZE_DEFAULT   256 //256 max:1024 //last:1024
 
 
 class SPDIFOut
@@ -21,6 +21,10 @@ class SPDIFOut
     virtual bool ConsumeSample(int16_t sample[2]);
     virtual bool stop();
 
+	bool i2sStatus(){return i2sOn;}
+	void i2sTurnOff();
+	void i2sTurnOn();
+	
     bool SetOutputModeMono(bool mono);  // Force mono output no matter the input
 
     const uint32_t VUCP_PREAMBLE_B = 0xCCE80000; // 11001100 11101000

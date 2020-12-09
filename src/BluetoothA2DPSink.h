@@ -46,6 +46,8 @@ extern "C" {
 #define APP_CORE_TAG  "BT_APP_CORE"
 #define APP_SIG_WORK_DISPATCH (0x01)
 
+#define AUTOCONNECT_TRY_NUM (5)
+
 /**
  * @brief     handler for the dispatched work
  */
@@ -105,6 +107,11 @@ class BluetoothA2DPSink {
     void av_hdl_avrc_evt(uint16_t event, void *p_param);
 	
 	void sendCommand(BT_CMND cmnd);
+	
+	void connectToLastDevice();
+	
+	//Security
+	void bt_app_gap_cb(esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *param);
     
   private:
     // private data
@@ -119,6 +126,11 @@ class BluetoothA2DPSink {
     esp_a2d_audio_state_t audio_state;
     esp_a2d_mct_t audio_type;
     void (*data_received)() = NULL;
+	
+	esp_bd_addr_t lastBda = {NULL};
+	void init_nvs();
+	void getLastBda();
+	void setLastBda(esp_bd_addr_t bda, size_t size);
 
     // private methods
     int init_bluetooth();

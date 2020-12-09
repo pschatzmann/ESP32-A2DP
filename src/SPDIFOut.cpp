@@ -98,6 +98,16 @@ bool SPDIFOut::SetPinout(int bclk, int wclk, int dout)
   return true;
 }
 
+void SPDIFOut::i2sTurnOn(){
+	if (i2sOn) return;
+	if (ESP_OK == i2s_start((i2s_port_t)portNo)) i2sOn = true;
+}
+
+void SPDIFOut::i2sTurnOff(){
+	if (!i2sOn) return;
+	if ( (ESP_OK == i2s_stop((i2s_port_t)portNo)) && (ESP_OK == i2s_zero_dma_buffer((i2s_port_t)portNo)) ) i2sOn = false;
+}
+
 bool SPDIFOut::SetRate(int hz)
 {
   if (!i2sOn) return false;

@@ -168,8 +168,7 @@ void BluetoothA2DPSink::setLastBda(esp_bd_addr_t bda, size_t size){
 	if (err == ESP_OK) err = nvs_commit(my_handle);
 	else ESP_LOGE(BT_AV_TAG, "NVS WRITE ERROR");
 	if (err != ESP_OK) ESP_LOGE(BT_AV_TAG, "NVS COMMIT ERROR");
-	err = nvs_close(my_handle);
-	if (err != ESP_OK) ESP_LOGE(BT_AV_TAG, "NVS CLOSE ERROR");
+	nvs_close(my_handle);
 	memcpy(lastBda,bda,size);
 }
 

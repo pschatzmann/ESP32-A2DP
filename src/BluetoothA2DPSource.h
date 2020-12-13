@@ -19,7 +19,7 @@
 #ifndef __A2DP_SOURCE_H__
 #define __A2DP_SOURCE_H__
 
-#include "arduino.h"
+#include "Arduino.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/timers.h"
 #include "freertos/xtensa_api.h"

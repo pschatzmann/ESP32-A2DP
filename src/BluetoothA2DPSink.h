@@ -36,7 +36,6 @@ extern "C" {
 #include "esp_a2dp_api.h"
 #include "driver/i2s.h"
 #include "esp_avrc_api.h"
-#include "SPDIFOut.h"
 
 #ifdef ARDUINO_ARCH_ESP32
 #include "esp32-hal-log.h"
@@ -45,8 +44,6 @@ extern "C" {
 
 #define APP_CORE_TAG  "BT_APP_CORE"
 #define APP_SIG_WORK_DISPATCH (0x01)
-
-#define AUTOCONNECT_TRY_NUM (5)
 
 /**
  * @brief     handler for the dispatched work
@@ -67,13 +64,7 @@ enum {
     BT_APP_EVT_STACK_UP = 0,
 };
 
-typedef enum {
-	PLAY,
-	PAUSE,
-	STOP,
-	NEXT,
-	PREV
-} BT_CMND;
+
 
 /**
  * Bluethooth Sink - We iniitialize and start the Bluetooth A2DP Sink. 
@@ -85,10 +76,14 @@ class BluetoothA2DPSink {
   public: 
     BluetoothA2DPSink();
     ~BluetoothA2DPSink();
+    void set_pin_config(i2s_pin_config_t pin_config);
+    void set_i2s_port(i2s_port_t i2s_num);
+    void set_i2s_config(i2s_config_t i2s_config);
     
-    void start(char* name, SPDIFOut *output);
+    void start(char* name);
     esp_a2d_audio_state_t get_audio_state();
     esp_a2d_mct_t get_audio_type();
+    void set_stream_reader(void (*callBack)(const uint8_t*, uint32_t));
     void set_on_data_received(void (*callBack)());
 
     /**
@@ -105,20 +100,14 @@ class BluetoothA2DPSink {
     void av_hdl_a2d_evt(uint16_t event, void *p_param);
     // avrc event handler 
     void av_hdl_avrc_evt(uint16_t event, void *p_param);
-	
-	void sendCommand(BT_CMND cmnd);
-	
-	void connectToLastDevice();
-	
-	//Security
-	void bt_app_gap_cb(esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *param);
     
   private:
     // private data
     xQueueHandle app_task_queue;
     xTaskHandle app_task_handle;
+    i2s_config_t i2s_config;
+    i2s_pin_config_t pin_config;    
     char * bt_name;
-	int16_t sample[2];
     uint32_t m_pkt_cnt = 0;
     esp_a2d_audio_state_t m_audio_state = ESP_A2D_AUDIO_STATE_STOPPED;
     const char *m_a2d_conn_state_str[4] = {"Disconnected", "Connecting", "Connected", "Disconnecting"};
@@ -126,13 +115,9 @@ class BluetoothA2DPSink {
     esp_a2d_audio_state_t audio_state;
     esp_a2d_mct_t audio_type;
     void (*data_received)() = NULL;
-	
-	esp_bd_addr_t lastBda = {NULL};
-	void init_nvs();
-	void getLastBda();
-	void setLastBda(esp_bd_addr_t bda, size_t size);
+    void (*stream_reader)(const uint8_t*, uint32_t) = NULL;
 
-    // private methods
+    // priate methods
     int init_bluetooth();
     void app_task_start_up(void);
     void app_task_shut_down(void);
@@ -143,8 +128,6 @@ class BluetoothA2DPSink {
     void av_new_track();
     void av_notify_evt_handler(uint8_t event_id, uint32_t event_parameter);
     
-  protected:
-    SPDIFOut *output;
   
 };
 

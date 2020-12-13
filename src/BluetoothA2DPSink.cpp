@@ -22,6 +22,7 @@
 // to support static callback functions
 BluetoothA2DPSink* actualBluetoothA2DPSink;
 i2s_port_t i2s_port; 
+int connectionTries = 0;
 
 // Forward declarations for C Callback functions for ESP32 Framework
 extern "C" void app_task_handler_2(void *arg);
@@ -125,6 +126,10 @@ void BluetoothA2DPSink::start(char* name)
     }
     ESP_LOGI(BT_AV_TAG,"Device name will be set to '%s'",this->bt_name);
     
+	// Initialize NVS
+	init_nvs();
+	getLastBda();
+	
     // setup bluetooth
     init_bluetooth();
     
@@ -343,6 +348,25 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
         uint8_t *bda = a2d->conn_stat.remote_bda;
         ESP_LOGI(BT_AV_TAG, "A2DP connection state: %s, [%02x:%02x:%02x:%02x:%02x:%02x]",
              m_a2d_conn_state_str[a2d->conn_stat.state], bda[0], bda[1], bda[2], bda[3], bda[4], bda[5]);
+		if (a2d->conn_stat.state == ESP_A2D_CONNECTION_STATE_DISCONNECTED) {
+            ESP_LOGI(BT_AV_TAG, "ESP_A2D_CONNECTION_STATE_DISCONNECTED");
+			i2s_stop(i2s_port);
+			i2s_zero_dma_buffer(i2s_port);
+			if ( ( *lastBda != NULL ) && connectionTries < AUTOCONNECT_TRY_NUM ){
+				ESP_LOGI(BT_AV_TAG,"Connection try number: %d", connectionTries);
+				connectToLastDevice();
+			}
+			else esp_bt_gap_set_scan_mode(ESP_BT_SCAN_MODE_CONNECTABLE_DISCOVERABLE);
+        } else if (a2d->conn_stat.state == ESP_A2D_CONNECTION_STATE_CONNECTED){
+			ESP_LOGI(BT_AV_TAG, "ESP_A2D_CONNECTION_STATE_CONNECTED");
+            esp_bt_gap_set_scan_mode(ESP_BT_SCAN_MODE_NONE);
+			connectionTries = 0;
+			i2s_start(i2s_port);
+			setLastBda(a2d->conn_stat.remote_bda, sizeof(a2d->conn_stat.remote_bda));
+        } else if (a2d->conn_stat.state == ESP_A2D_CONNECTION_STATE_CONNECTING){
+			ESP_LOGI(BT_AV_TAG, "ESP_A2D_CONNECTION_STATE_CONNECTING");
+			connectionTries++;
+        }
         break;
     }
     case ESP_A2D_AUDIO_STATE_EVT: {
@@ -465,6 +489,8 @@ void  BluetoothA2DPSink::av_hdl_stack_evt(uint16_t event, void *p_param)
         esp_a2d_sink_register_data_callback(audio_data_callback_2);
         esp_a2d_sink_init();
 
+		if ( *lastBda != NULL ) connectToLastDevice();
+		
         /* initialize AVRCP controller */
         esp_avrc_ct_init();
         esp_avrc_ct_register_callback(app_rc_ct_callback_2);
@@ -552,6 +578,50 @@ void  BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) 
    }
 }
 
+void BluetoothA2DPSink::init_nvs(){
+    esp_err_t err = nvs_flash_init();
+    if (err == ESP_ERR_NVS_NO_FREE_PAGES || err == ESP_ERR_NVS_NEW_VERSION_FOUND){
+        ESP_ERROR_CHECK(nvs_flash_erase());
+        err = nvs_flash_init();
+	}
+    ESP_ERROR_CHECK( err );
+}
+
+void BluetoothA2DPSink::getLastBda(){
+    nvs_handle my_handle;
+    esp_err_t err;
+    
+    err = nvs_open("connected_bda", NVS_READWRITE, &my_handle);
+    if (err != ESP_OK) ESP_LOGE("NVS OPEN ERROR");
+
+    esp_bd_addr_t bda;
+    size_t size = sizeof(bda);
+    err = nvs_get_blob(my_handle, "last_bda", bda, &size);
+    if ( err != ESP_OK) ESP_LOGE(BT_AV_TAG, "ERROR GETTING NVS BLOB");
+    if ( err == ESP_ERR_NVS_NOT_FOUND ) ESP_LOGE(BT_AV_TAG, "NVS NOT FOUND");
+    nvs_close(my_handle);
+    if (err == ESP_OK) memcpy(lastBda,bda,size);
+}
+
+void BluetoothA2DPSink::setLastBda(esp_bd_addr_t bda, size_t size){
+	if ( memcmp(bda, lastBda, size) == 0 ) return; //same value, nothing to store
+	nvs_handle my_handle;
+	esp_err_t err;
+	
+	err = nvs_open("connected_bda", NVS_READWRITE, &my_handle);
+	if (err != ESP_OK) ESP_LOGE("NVS OPEN ERROR");
+	err = nvs_set_blob(my_handle, "last_bda", bda, size);
+	if (err == ESP_OK) err = nvs_commit(my_handle);
+	else ESP_LOGE(BT_AV_TAG, "NVS WRITE ERROR");
+	if (err != ESP_OK) ESP_LOGE(BT_AV_TAG, "NVS COMMIT ERROR");
+	nvs_close(my_handle);
+	memcpy(lastBda,bda,size);
+}
+
+void BluetoothA2DPSink::connectToLastDevice(){
+	esp_err_t status = esp_a2d_sink_connect(lastBda);
+	if ( status == ESP_FAIL ) ESP_LOGE(BT_AV_TAG,"Failed connecting to device!");
+}
 
 /**
  * C Callback Functions needed for the ESP32 API

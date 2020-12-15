@@ -62,7 +62,7 @@ void loop() {
 
 The output goes now to the DAC pins G26/G27.
 
-## Accessing the sink data stream with callbacks
+## Accessing the Sink Data Stream with Callbacks
 You can be notified when a packet is received:
 
 ```

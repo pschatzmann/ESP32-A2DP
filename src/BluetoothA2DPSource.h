@@ -132,8 +132,6 @@ class BluetoothA2DPSource {
     virtual void a2d_app_heart_beat(void *arg);
     /// callback function for A2DP source
     virtual void bt_app_a2d_cb(esp_a2d_cb_event_t event, esp_a2d_cb_param_t *param);
-    /// callback function for A2DP source audio data stream
-    virtual int32_t bt_app_a2d_data_cb(uint8_t *data, int32_t len);
     /// A2DP application state machine
     virtual void bt_app_av_sm_hdlr(uint16_t event, void *param);
     /// avrc CT event handler

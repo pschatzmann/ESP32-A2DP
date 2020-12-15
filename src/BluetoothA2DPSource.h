@@ -74,8 +74,8 @@ class BluetoothA2DPSource {
      * name: Bluetooth name of the device to connect to
      * callback: function that provides the audio stream as array of Channels
      */
-    void start(char* name, music_data_channels_cb_t callback = NULL, bool is_ssp_enabled = false);
-    void start(std::vector<char*> names, music_data_channels_cb_t callback = NULL, bool is_ssp_enabled = false);
+    virtual void start(char* name, music_data_channels_cb_t callback = NULL, bool is_ssp_enabled = false);
+    virtual void start(std::vector<char*> names, music_data_channels_cb_t callback = NULL, bool is_ssp_enabled = false);
 
     /**
      * name: Bluetooth name of the device to connect to
@@ -84,67 +84,67 @@ class BluetoothA2DPSource {
      * from PCM data normally formatted as 44.1kHz sampling rate, two-channel 16-bit sample data
      * is_ssp_enabled: Flag to activate Secure Simple Pairing 
      */ 
-    void startRaw(char* name, music_data_cb_t callback = NULL, bool is_ssp_enabled = false);
-    void startRaw(std::vector<char*> names, music_data_cb_t callback = NULL, bool is_ssp_enabled = false);
+    virtual void startRaw(char* name, music_data_cb_t callback = NULL, bool is_ssp_enabled = false);
+    virtual void startRaw(std::vector<char*> names, music_data_cb_t callback = NULL, bool is_ssp_enabled = false);
 
     /**
      * Defines the pin code. If nothing is defined we use "1234"
      */ 
-    void setPinCode(char* pin_code, esp_bt_pin_type_t pin_type=ESP_BT_PIN_TYPE_VARIABLE);
+    virtual  void setPinCode(char* pin_code, esp_bt_pin_type_t pin_type=ESP_BT_PIN_TYPE_VARIABLE);
 
     /**
      * In some cases it is very difficult to use the callback function. As an alternative we provide
      * this method where you can just send the data to a queue. It is your responsibility however that
      * you handle the situation if the queue is full.
      */
-    bool writeData(SoundData *data);
+    virtual bool writeData(SoundData *data);
 
     /**
      *  Returns true if the bluetooth device is connected
      */
-    bool isConnected();
+    virtual  bool isConnected();
 
     /**
      *  Returns true if writeDataRaw has been called with any valid data
      */
-    bool hasSoundData();
+    virtual  bool hasSoundData();
 
     /**
      *  Defines if the Flash NVS should be reset on start
      */
-    void setNVSInit(bool doInit);
+    virtual  void setNVSInit(bool doInit);
 
     /**
      *  Defines if the BLE should be reset on start
      */
-    void setResetBLE(bool doInit);
+    virtual void setResetBLE(bool doInit);
 
     /**
      *  The following mthods are called by the framework. They are public so that they can
      *  be executed from a extern "C" function.
      */
      // handler for bluetooth stack enabled events
-    void bt_av_hdl_stack_evt(uint16_t event, void *p_param);
-    void bt_app_task_handler(void *arg);
-    void bt_app_gap_cb(esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *param);
+    virtual void bt_av_hdl_stack_evt(uint16_t event, void *p_param);
+    virtual void bt_app_task_handler(void *arg);
+    virtual void bt_app_gap_cb(esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *param);
     /// callback function for AVRCP controller
-    void bt_app_rc_ct_cb(esp_avrc_ct_cb_event_t event, esp_avrc_ct_cb_param_t *param);
-    void a2d_app_heart_beat(void *arg);
+    virtual void bt_app_rc_ct_cb(esp_avrc_ct_cb_event_t event, esp_avrc_ct_cb_param_t *param);
+    virtual void a2d_app_heart_beat(void *arg);
     /// callback function for A2DP source
-    void bt_app_a2d_cb(esp_a2d_cb_event_t event, esp_a2d_cb_param_t *param);
+    virtual void bt_app_a2d_cb(esp_a2d_cb_event_t event, esp_a2d_cb_param_t *param);
     /// callback function for A2DP source audio data stream
-    int32_t bt_app_a2d_data_cb(uint8_t *data, int32_t len);
+    virtual int32_t bt_app_a2d_data_cb(uint8_t *data, int32_t len);
     /// A2DP application state machine
-    void bt_app_av_sm_hdlr(uint16_t event, void *param);
+    virtual void bt_app_av_sm_hdlr(uint16_t event, void *param);
     /// avrc CT event handler
-    void bt_av_hdl_avrc_ct_evt(uint16_t event, void *p_param);
+    virtual void bt_av_hdl_avrc_ct_evt(uint16_t event, void *p_param);
 
     // callback for data
-    int32_t get_data_default(uint8_t *data, int32_t len);
+    virtual int32_t get_data_default(uint8_t *data, int32_t len);
     music_data_cb_t data_stream_callback;
     music_data_channels_cb_t data_stream_channels_callback;
 
-  private:
+  protected:
   
     bool ssp_enabled;
     char* bt_name;
@@ -165,28 +165,6 @@ class BluetoothA2DPSource {
     TimerHandle_t s_tmr;
     xQueueHandle s_bt_app_task_queue;
     xTaskHandle s_bt_app_task_handle;
-
-    bool bt_app_work_dispatch(bt_app_cb_t p_cback, uint16_t event, void *p_params, int param_len, bt_app_copy_cb_t p_copy_cback);
-    void bt_app_task_start_up(void);
-    void bt_app_task_shut_down(void);
-    void bt_app_av_media_proc(uint16_t event, void *param);
-
-    /* A2DP application state machine handler for each state */
-    void bt_app_av_state_unconnected(uint16_t event, void *param);
-    void bt_app_av_state_connecting(uint16_t event, void *param);
-    void bt_app_av_state_connected(uint16_t event, void *param);
-    void bt_app_av_state_disconnecting(uint16_t event, void *param);
-     //void bt_av_notify_evt_handler(uint8_t event, esp_avrc_rn_param_t *param);
-
-    // void bt_av_volume_changed(void);
-
-    bool bt_app_send_msg(bt_app_msg_t *msg);
-    void bt_app_work_dispatched(bt_app_msg_t *msg);
-
-    char *bda2str(esp_bd_addr_t bda, char *str, size_t size);
-    bool get_name_from_eir(uint8_t *eir, uint8_t *bdname, uint8_t *bdname_len);
-    void filter_inquiry_scan_result(esp_bt_gap_cb_param_t *param);
-
     // support for raw data
     SoundData *sound_data;
     int32_t sound_data_current_pos;
@@ -195,6 +173,28 @@ class BluetoothA2DPSource {
     // initialization
     bool nvs_init = true;
     bool reset_ble = true;
+
+    virtual bool bt_app_work_dispatch(bt_app_cb_t p_cback, uint16_t event, void *p_params, int param_len, bt_app_copy_cb_t p_copy_cback);
+    virtual void bt_app_task_start_up(void);
+    virtual void bt_app_task_shut_down(void);
+    virtual void bt_app_av_media_proc(uint16_t event, void *param);
+
+    /* A2DP application state machine handler for each state */
+    virtual void bt_app_av_state_unconnected(uint16_t event, void *param);
+    virtual void bt_app_av_state_connecting(uint16_t event, void *param);
+    virtual void bt_app_av_state_connected(uint16_t event, void *param);
+    virtual void bt_app_av_state_disconnecting(uint16_t event, void *param);
+     //void bt_av_notify_evt_handler(uint8_t event, esp_avrc_rn_param_t *param);
+
+    // void bt_av_volume_changed(void);
+
+    virtual bool bt_app_send_msg(bt_app_msg_t *msg);
+    virtual void bt_app_work_dispatched(bt_app_msg_t *msg);
+
+    virtual char *bda2str(esp_bd_addr_t bda, char *str, size_t size);
+    virtual bool get_name_from_eir(uint8_t *eir, uint8_t *bdname, uint8_t *bdname_len);
+    virtual void filter_inquiry_scan_result(esp_bt_gap_cb_param_t *param);
+
 };
 
 #endif

@@ -8,7 +8,9 @@ So we can just feed the input from Bluetooth to the I2S output: An example for t
 
 Unfortunately this example did not make me happy so I decided to convert it into a simple __Arduino Library__ that is very easy to use from an Arduino Software IDE.
 
-## A Simple I2S Example (A2DS Sink)
+## A2DP Sink
+
+### A Simple I2S Example (A2DS Sink)
 Here is the simplest example which just uses the proper default settings:
 
 ```
@@ -30,7 +32,7 @@ This creates a new Bluetooth device with the name “MyMusic” and the output w
 
 which need to be conected to an external DAC. You can define your own pins easily by calling the set_pin_config method.
 
-## Output to the Internal DAC
+### Output to the Internal DAC
 You can also send the output directly to the internal DAC of the ESP32 by providing the corresponding i2s_config:
 
 ```
@@ -62,7 +64,8 @@ void loop() {
 
 The output goes now to the DAC pins G26/G27.
 
-## Accessing the Sink Data Stream with Callbacks
+### Accessing the Sink Data Stream with Callbacks
+
 You can be notified when a packet is received:
 
 ```
@@ -89,8 +92,9 @@ void read_data_stream(const uint8_t *data, uint32_t length)
 }
 ```
 
+## A2DP Source
 
-## Sending Data from a A2DS Data Source with a Callback
+### Sending Data from a A2DS Data Source with a Callback
 
 We can also generate sound and send it e.g. to a Bluetooth Speaker.  
 
@@ -133,7 +137,7 @@ void setup() {
 ```
 
 
-## Sending Data from a A2DS Data Source with recorded data
+### Sending Data from a A2DS Data Source with Recorded Data
 
 You can also provide the data directly as simple array of uint8_t:
 
@@ -155,7 +159,6 @@ void loop() {
 }
 
 ```
-
 
 The array can be prepared e.g. in the following way:
 
@@ -184,7 +187,6 @@ OneChannelSoundData(int16_t *data, int32_t len, bool loop=false, ChannelInfo cha
 ```
 
 
-
 ## Installation
 
 You can download the library as zip and call include Library -> zip library. Or you can git clone this project into the Arduino libraries folder e.g. with
@@ -196,7 +198,9 @@ git clone pschatzmann/ESP32-A2DP.git
 ## Change History
 
 Master
+- Made all methods virtual to enable flexible subclassing
 - Automatically reconnect to last source (Thanks to (JohnyMielony)[https://github.com/JohnyMielony]!)
+- Support for data callback (Thanks to (Mike Mishaux)[https://github.com/Mishaux])
 - Error Corrections in BluetoothA2DPSource
 - Support for writeData in BluetoothA2DPSource
 - Support for multiple alternative BT names in BluetoothA2DPSource

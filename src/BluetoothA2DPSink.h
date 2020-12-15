@@ -78,35 +78,35 @@ class BluetoothA2DPSink {
   public: 
     BluetoothA2DPSink();
     ~BluetoothA2DPSink();
-    void set_pin_config(i2s_pin_config_t pin_config);
-    void set_i2s_port(i2s_port_t i2s_num);
-    void set_i2s_config(i2s_config_t i2s_config);
+    virtual void set_pin_config(i2s_pin_config_t pin_config);
+    virtual void set_i2s_port(i2s_port_t i2s_num);
+    virtual void set_i2s_config(i2s_config_t i2s_config);
     
-    void start(char* name);
-    esp_a2d_audio_state_t get_audio_state();
-    esp_a2d_mct_t get_audio_type();
-    void set_stream_reader(void (*callBack)(const uint8_t*, uint32_t));
-    void set_on_data_received(void (*callBack)());
+    virtual void start(char* name);
+    virtual esp_a2d_audio_state_t get_audio_state();
+    virtual esp_a2d_mct_t get_audio_type();
+    virtual void set_stream_reader(void (*callBack)(const uint8_t*, uint32_t));
+    virtual void set_on_data_received(void (*callBack)());
 
     /**
      * Wrappbed methods called from callbacks
      */
-    void app_a2d_callback(esp_a2d_cb_event_t event, esp_a2d_cb_param_t *param);
-    void app_rc_ct_callback(esp_avrc_ct_cb_event_t event, esp_avrc_ct_cb_param_t *param);
-    void app_task_handler();
+    virtual void app_a2d_callback(esp_a2d_cb_event_t event, esp_a2d_cb_param_t *param);
+    virtual void app_rc_ct_callback(esp_avrc_ct_cb_event_t event, esp_avrc_ct_cb_param_t *param);
+    virtual void app_task_handler();
     // Callback for music stream 
-    void audio_data_callback(const uint8_t *data, uint32_t len);
+    virtual void audio_data_callback(const uint8_t *data, uint32_t len);
     // av event handler
-    void av_hdl_stack_evt(uint16_t event, void *p_param);
+    virtual void av_hdl_stack_evt(uint16_t event, void *p_param);
     // a2dp event handler 
-    void av_hdl_a2d_evt(uint16_t event, void *p_param);
+    virtual void av_hdl_a2d_evt(uint16_t event, void *p_param);
     // avrc event handler 
-    void av_hdl_avrc_evt(uint16_t event, void *p_param);
+    virtual void av_hdl_avrc_evt(uint16_t event, void *p_param);
 	
 	void connectToLastDevice();
     
-  private:
-    // private data
+  protected:
+    // protected data
     xQueueHandle app_task_queue;
     xTaskHandle app_task_handle;
     i2s_config_t i2s_config;
@@ -122,20 +122,20 @@ class BluetoothA2DPSink {
     void (*stream_reader)(const uint8_t*, uint32_t) = NULL;
 	  esp_bd_addr_t lastBda = {NULL};
 
-    // priate methods
-    int init_bluetooth();
-    void app_task_start_up(void);
-    void app_task_shut_down(void);
-    bool app_send_msg(app_msg_t *msg);
-    bool app_work_dispatch(app_callback_t p_cback, uint16_t event, void *p_params, int param_len);
-    void app_work_dispatched(app_msg_t *msg);
-    void app_alloc_meta_buffer(esp_avrc_ct_cb_param_t *param);
-    void av_new_track();
-    void av_notify_evt_handler(uint8_t event_id, uint32_t event_parameter);
+    // protected methods
+    virtual int init_bluetooth();
+    virtual void app_task_start_up(void);
+    virtual void app_task_shut_down(void);
+    virtual bool app_send_msg(app_msg_t *msg);
+    virtual bool app_work_dispatch(app_callback_t p_cback, uint16_t event, void *p_params, int param_len);
+    virtual void app_work_dispatched(app_msg_t *msg);
+    virtual void app_alloc_meta_buffer(esp_avrc_ct_cb_param_t *param);
+    virtual void av_new_track();
+    virtual void av_notify_evt_handler(uint8_t event_id, uint32_t event_parameter);
     
-    void init_nvs();
-    void getLastBda();
-    void setLastBda(esp_bd_addr_t bda, size_t size);
+    virtual void init_nvs();
+    virtual void getLastBda();
+    virtual void setLastBda(esp_bd_addr_t bda, size_t size);
 };
 
 

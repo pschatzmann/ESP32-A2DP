@@ -45,6 +45,8 @@ extern "C" {
 #define APP_CORE_TAG  "BT_APP_CORE"
 #define APP_SIG_WORK_DISPATCH (0x01)
 
+#define AUTOCONNECT_TRY_NUM (5)
+
 /**
  * @brief     handler for the dispatched work
  */
@@ -100,6 +102,8 @@ class BluetoothA2DPSink {
     void av_hdl_a2d_evt(uint16_t event, void *p_param);
     // avrc event handler 
     void av_hdl_avrc_evt(uint16_t event, void *p_param);
+	
+	void connectToLastDevice();
     
   private:
     // private data
@@ -116,6 +120,7 @@ class BluetoothA2DPSink {
     esp_a2d_mct_t audio_type;
     void (*data_received)() = NULL;
     void (*stream_reader)(const uint8_t*, uint32_t) = NULL;
+	  esp_bd_addr_t lastBda = {NULL};
 
     // priate methods
     int init_bluetooth();
@@ -128,7 +133,9 @@ class BluetoothA2DPSink {
     void av_new_track();
     void av_notify_evt_handler(uint8_t event_id, uint32_t event_parameter);
     
-  
+    void init_nvs();
+    void getLastBda();
+    void setLastBda(esp_bd_addr_t bda, size_t size);
 };
 
 

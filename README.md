@@ -4,7 +4,7 @@ The ESP32 provides a Bluetooth A2DP API that receives sound data e.g. from your 
 
 I2S is an electrical serial bus interface standard used for connecting digital audio devices together. It is used to communicate PCM audio data between integrated circuits in an electronic device.
 
-So we can just feed the input from Bluetooth to the I2S output: An example for this from Expressive can be found on [Github](http://https://github.com/espressif/esp-idf/tree/master/examples/bluetooth/bluedroid/classic_bt/a2dp_sink).
+So we can just feed the input from Bluetooth to the I2S output: An example for this from Expressive can be found on [Github](https://github.com/espressif/esp-idf/tree/master/examples/bluetooth/bluedroid/classic_bt/a2dp_sink).
 
 Unfortunately this example did not make me happy so I decided to convert it into a simple __Arduino Library__ that is very easy to use from an Arduino Software IDE.
 
@@ -61,6 +61,33 @@ void loop() {
 ```
 
 The output goes now to the DAC pins G26/G27.
+
+## Accessing the sink data stream with callbacks
+You can be notified when a packet is received:
+
+```
+// In the setup function:
+a2dp_sink.set_on_data_received(data_received_callback);
+
+
+// Then somewhere in your sketch:
+void data_received_callback() {
+  Serial.println("Data packet received");
+}
+```
+
+Or you can access the packet:
+
+```
+// In the setup function:
+a2dp_sink.set_stream_reader(read_data_stream);
+
+// Then somewhere in your sketch:
+void read_data_stream(const uint8_t *data, uint32_t length)
+{
+  // Do something with the data packet
+}
+```
 
 
 ## Sending Data from a A2DS Data Source with a Callback
@@ -172,7 +199,9 @@ Master
 - Error Corrections in BluetoothA2DPSource
 - Support for writeData in BluetoothA2DPSource
 - Support for multiple alternative BT names in BluetoothA2DPSource
-
+- The data is rescaled to when written to the internal DAC
+- Corrected wrong case of include to Arduino.h
+- Added callback to received packets
 
 V.1.1.0 
 - New functionality: BluetoothA2DPSource

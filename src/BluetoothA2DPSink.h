@@ -120,7 +120,7 @@ class BluetoothA2DPSink {
     esp_a2d_mct_t audio_type;
     void (*data_received)() = NULL;
     void (*stream_reader)(const uint8_t*, uint32_t) = NULL;
-	esp_bd_addr_t lastBda = {NULL};
+	  esp_bd_addr_t lastBda = {NULL};
 
     // priate methods
     int init_bluetooth();

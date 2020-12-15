@@ -199,8 +199,8 @@ git clone pschatzmann/ESP32-A2DP.git
 
 Master
 - Made all methods virtual to enable flexible subclassing
-- Automatically reconnect to last source (Thanks to (JohnyMielony)[https://github.com/JohnyMielony]!)
-- Support for data callback (Thanks to (Mike Mishaux)[https://github.com/Mishaux])
+- Automatically reconnect to last source - Thanks to (JohnyMielony)[https://github.com/JohnyMielony]
+- Support for data callback - Thanks to (Mike Mishaux)[https://github.com/Mishaux]
 - Error Corrections in BluetoothA2DPSource
 - Support for writeData in BluetoothA2DPSource
 - Support for multiple alternative BT names in BluetoothA2DPSource

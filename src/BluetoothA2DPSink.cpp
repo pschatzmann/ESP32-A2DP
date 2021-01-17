@@ -357,7 +357,7 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
 				connectToLastDevice();
 			}
 			else{
-                if ( *lastBda != NULL ){
+                if ( *lastBda != NULL && a2d->conn_stat.disc_rsn == ESP_A2D_DISC_RSN_NORMAL ){
                     esp_bd_addr_t cleanBda = {NULL};
                     setLastBda(cleanBda, sizeof(cleanBda));
                     ESP_LOGI(BT_AV_TAG,"Cleanly disconnected");

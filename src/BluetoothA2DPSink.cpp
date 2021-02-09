@@ -177,19 +177,25 @@ int BluetoothA2DPSink::init_bluetooth()
     return false;
   }
   ESP_LOGI(BT_AV_TAG,"controller initialized");
- 
-  if (esp_bluedroid_init() != ESP_OK) {
-    ESP_LOGE(BT_AV_TAG,"Failed to initialize bluedroid");
-    return false;
+
+  esp_bluedroid_status_t bt_stack_status = esp_bluedroid_get_status();
+
+  if(bt_stack_status == ESP_BLUEDROID_STATUS_UNINITIALIZED){
+    if (esp_bluedroid_init() != ESP_OK) {
+        ESP_LOGE(BT_AV_TAG,"Failed to initialize bluedroid");
+        return false;
+    }
+    ESP_LOGI(BT_AV_TAG,"bluedroid initialized");
   }
-  ESP_LOGI(BT_AV_TAG,"bluedroid initialized");
  
-  if (esp_bluedroid_enable() != ESP_OK) {
-    ESP_LOGE(BT_AV_TAG,"Failed to enable bluedroid");
-    return false;
+  if(bt_stack_status != ESP_BLUEDROID_STATUS_ENABLED){
+    if (esp_bluedroid_enable() != ESP_OK) {
+        ESP_LOGE(BT_AV_TAG,"Failed to enable bluedroid");
+        return false;
+    }
+    ESP_LOGI(BT_AV_TAG,"bluedroid enabled"); 
   }
-  ESP_LOGI(BT_AV_TAG,"bluedroid enabled");
- 
+
 }
 
 bool BluetoothA2DPSink::app_work_dispatch(app_callback_t p_cback, uint16_t event, void *p_params, int param_len)

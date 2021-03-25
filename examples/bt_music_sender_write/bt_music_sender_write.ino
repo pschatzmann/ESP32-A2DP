@@ -25,9 +25,6 @@
 #include "BluetoothA2DPSource.h"
 #include "StarWars30.h"
 
-extern const uint8_t StarWars10_raw[];
-extern const unsigned int StarWars10_raw_len;
-
 BluetoothA2DPSource a2dp_source;
 //SoundData *data = new TwoChannelSoundData((Channels*)StarWars10_raw,StarWars10_raw_len/4);
 SoundData *data = new OneChannelSoundData((int16_t*)StarWars30_raw, StarWars30_raw_len/2);

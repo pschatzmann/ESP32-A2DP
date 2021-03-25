@@ -356,7 +356,14 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
 				ESP_LOGI(BT_AV_TAG,"Connection try number: %d", connectionTries);
 				connectToLastDevice();
 			}
-			else esp_bt_gap_set_scan_mode(ESP_BT_SCAN_MODE_CONNECTABLE_DISCOVERABLE);
+			else{
+                if ( *lastBda != NULL && a2d->conn_stat.disc_rsn == ESP_A2D_DISC_RSN_NORMAL ){
+                    esp_bd_addr_t cleanBda = {NULL};
+                    setLastBda(cleanBda, sizeof(cleanBda));
+                    ESP_LOGI(BT_AV_TAG,"Cleanly disconnected");
+                }
+                esp_bt_gap_set_scan_mode(ESP_BT_SCAN_MODE_CONNECTABLE_DISCOVERABLE);
+            }
         } else if (a2d->conn_stat.state == ESP_A2D_CONNECTION_STATE_CONNECTED){
 			ESP_LOGI(BT_AV_TAG, "ESP_A2D_CONNECTION_STATE_CONNECTED");
             esp_bt_gap_set_scan_mode(ESP_BT_SCAN_MODE_NONE);

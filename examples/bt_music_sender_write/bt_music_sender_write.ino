@@ -23,6 +23,7 @@
 */
 
 #include "BluetoothA2DPSource.h"
+#include "StarWars30.h"
 
 extern const uint8_t StarWars10_raw[];
 extern const unsigned int StarWars10_raw_len;

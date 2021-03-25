@@ -92,6 +92,19 @@ void read_data_stream(const uint8_t *data, uint32_t length)
 }
 ```
 
+### Support for Metadata
+
+You can register a method which will be called when the system receives any AVRC metadata. Here is an example
+```
+void avrc_metadata_callback(uint8_t data1, const uint8_t *data2) {
+  Serial.printf("AVRC metadata rsp: attribute id 0x%x, %s\n", data1, data2);
+}
+a2dp_sink.set_avrc_metadata_callback(avrc_metadata_callback);
+a2dp_sink.start("BT");
+```
+
+
+
 ## A2DP Source
 
 ### Sending Data from a A2DS Data Source with a Callback
@@ -198,6 +211,9 @@ git clone pschatzmann/ESP32-A2DP.git
 ## Change History
 
 Master
+- Metadata support
+- Improved init_bluetooth checks, in case bluedroid was already initialized elsewhere
+- No auto reconnect after clean disconnect
 - Made all methods virtual to enable flexible subclassing
 - Automatically reconnect to last source - Thanks to [JohnyMielony](https://github.com/JohnyMielony)
 - Support for data callback - Thanks to [Mike Mishaux](https://github.com/Mishaux)

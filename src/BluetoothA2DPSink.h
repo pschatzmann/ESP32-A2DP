@@ -81,6 +81,10 @@ class BluetoothA2DPSink {
     virtual void set_pin_config(i2s_pin_config_t pin_config);
     virtual void set_i2s_port(i2s_port_t i2s_num);
     virtual void set_i2s_config(i2s_config_t i2s_config);
+    virtual void set_avrc_metadata_callback(void (*callback)(uint8_t, const uint8_t*)) {
+      this->avrc_metadata_callback = callback;
+    }
+
     
     virtual void start(char* name);
     virtual esp_a2d_audio_state_t get_audio_state();
@@ -121,6 +125,8 @@ class BluetoothA2DPSink {
     void (*data_received)() = NULL;
     void (*stream_reader)(const uint8_t*, uint32_t) = NULL;
 	  esp_bd_addr_t lastBda = {NULL};
+    void (*avrc_metadata_callback)(uint8_t, const uint8_t*) = NULL;
+
 
     // protected methods
     virtual int init_bluetooth();

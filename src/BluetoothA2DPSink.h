@@ -91,6 +91,13 @@ class BluetoothA2DPSink {
     virtual esp_a2d_mct_t get_audio_type();
     virtual void set_stream_reader(void (*callBack)(const uint8_t*, uint32_t));
     virtual void set_on_data_received(void (*callBack)());
+    virtual void play();
+    virtual void pause();
+    virtual void stop();
+    virtual void next();
+    virtual void previous();
+
+
 
     /**
      * Wrappbed methods called from callbacks
@@ -142,6 +149,9 @@ class BluetoothA2DPSink {
     virtual void init_nvs();
     virtual void getLastBda();
     virtual void setLastBda(esp_bd_addr_t bda, size_t size);
+    // execute AVRC command
+    virtual void executeAVRCCommand(int cmd);
+
 };
 
 

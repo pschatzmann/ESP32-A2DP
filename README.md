@@ -103,6 +103,15 @@ a2dp_sink.set_avrc_metadata_callback(avrc_metadata_callback);
 a2dp_sink.start("BT");
 ```
 
+### Support for AVRC Commands
+
+Thanks to [PeterPark](https://github.com/KIdon-Park), I have added the following AVRC commmands:
+
+- play();
+- pause();
+- stop();
+- next();
+- previours();
 
 
 ## A2DP Source
@@ -223,6 +232,9 @@ Master
 - The data is rescaled to when written to the internal DAC
 - Corrected wrong case of include to Arduino.h
 - Added callback to received packets
+- Added AVRC command support Thanks to [PeterPark](https://github.com/KIdon-Park) 
+- Improved init_bluetooth checks, in case bluedroid was already initialized elsewhere [Antonis Katzourakis](https://github.com/ant0nisk)
+- No auto reconnect after clean disconnect thanks to [Bajczi Levente](https://github.com/leventeBajczi)
 
 V.1.1.0 
 - New functionality: BluetoothA2DPSource

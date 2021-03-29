@@ -387,8 +387,15 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
         a2d = (esp_a2d_cb_param_t *)(p_param);
         ESP_LOGI(BT_AV_TAG, "A2DP audio state: %s", m_a2d_audio_state_str[a2d->audio_stat.state]);
         m_audio_state = a2d->audio_stat.state;
-        if (ESP_A2D_AUDIO_STATE_STARTED == a2d->audio_stat.state) {
-            m_pkt_cnt = 0;
+        // if (ESP_A2D_AUDIO_STATE_STARTED == a2d->audio_stat.state) { 
+        //      m_pkt_cnt = 0; 
+        // } 
+
+        if (ESP_A2D_AUDIO_STATE_STARTED == a2d->audio_stat.state) { 
+            m_pkt_cnt = 0; 
+            i2s_start(i2s_port); 
+        } else if ( ESP_A2D_AUDIO_STATE_REMOTE_SUSPEND == a2d->audio_stat.state ){ 
+            i2s_stop(i2s_port);
         }
         break;
     }
@@ -640,6 +647,32 @@ void BluetoothA2DPSink::connectToLastDevice(){
 	esp_err_t status = esp_a2d_sink_connect(lastBda);
 	if ( status == ESP_FAIL ) ESP_LOGE(BT_AV_TAG,"Failed connecting to device!");
 }
+
+void BluetoothA2DPSink::executeAVRCCommand(int cmd){
+    esp_avrc_ct_send_passthrough_cmd(0, cmd, ESP_AVRC_PT_CMD_STATE_PRESSED);
+    esp_avrc_ct_send_passthrough_cmd(0, cmd, ESP_AVRC_PT_CMD_STATE_RELEASED);
+}
+
+void BluetoothA2DPSink::play(){
+    executeAVRCCommand(ESP_AVRC_PT_CMD_PLAY);
+}
+
+void BluetoothA2DPSink::pause(){
+    executeAVRCCommand(ESP_AVRC_PT_CMD_PAUSE);
+}
+
+void BluetoothA2DPSink::stop(){
+    executeAVRCCommand(ESP_AVRC_PT_CMD_STOP);
+}
+
+void BluetoothA2DPSink::next(){
+    executeAVRCCommand(ESP_AVRC_PT_CMD_FORWARD);
+}
+void BluetoothA2DPSink::previous(){
+    executeAVRCCommand(ESP_AVRC_PT_CMD_BACKWARD);
+}
+
+
 
 /**
  * C Callback Functions needed for the ESP32 API

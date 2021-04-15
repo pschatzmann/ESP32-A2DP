@@ -138,7 +138,7 @@ void BluetoothA2DPSink::start(char* name)
 
     //Lambda for callback
     auto av_hdl_stack_evt_2 = [](uint16_t event, void *p_param) {
-        ESP_LOGD(BT_AV_TAG, "%s", __func__);
+        ESP_LOGD(BT_AV_TAG, "av_hdl_stack_evt_2");
         if (actualBluetoothA2DPSink) {
             actualBluetoothA2DPSink->av_hdl_stack_evt(event,p_param);
         }
@@ -308,7 +308,7 @@ void  BluetoothA2DPSink::app_rc_ct_callback(esp_avrc_ct_cb_event_t event, esp_av
 
     // lambda for callback
     auto av_hdl_avrc_evt_2 = [](uint16_t event, void *p_param){
-        ESP_LOGD(BT_AV_TAG, "%s", __func__);
+        ESP_LOGD(BT_AV_TAG, "av_hdl_avrc_evt_2");
         if (actualBluetoothA2DPSink) {
             actualBluetoothA2DPSink->av_hdl_avrc_evt(event,p_param);    
         }
@@ -361,8 +361,7 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
 			if ( ( *lastBda != NULL ) && connectionTries < AUTOCONNECT_TRY_NUM ){
 				ESP_LOGI(BT_AV_TAG,"Connection try number: %d", connectionTries);
 				connectToLastDevice();
-			}
-			else{
+			} else {
                 if ( *lastBda != NULL && a2d->conn_stat.disc_rsn == ESP_A2D_DISC_RSN_NORMAL ){
                     esp_bd_addr_t cleanBda = {NULL};
                     setLastBda(cleanBda, sizeof(cleanBda));
@@ -503,23 +502,39 @@ void  BluetoothA2DPSink::av_hdl_avrc_evt(uint16_t event, void *p_param)
 
 void  BluetoothA2DPSink::av_hdl_stack_evt(uint16_t event, void *p_param)
 {
+    esp_err_t result;
+
     switch (event) {
     case BT_APP_EVT_STACK_UP: {
         ESP_LOGD(BT_AV_TAG, "%s av_hdl_stack_evt %s", __func__, "BT_APP_EVT_STACK_UP");
         /* set up device name */
         esp_bt_dev_set_device_name(bt_name);
 
+        // initialize AVRCP controller 
+        result = esp_avrc_ct_init();
+        if (result == ESP_OK){
+            result = esp_avrc_ct_register_callback(app_rc_ct_callback_2);
+            if (result == ESP_OK){
+                ESP_LOGD(BT_AV_TAG, "AVRCP controller initialized!");
+            } else {
+                ESP_LOGE(BT_AV_TAG,"esp_avrc_ct_register_callback: %d",result);
+            }
+        } else {
+            ESP_LOGE(BT_AV_TAG,"esp_avrc_ct_init: %d",result);
+        }
+
+
         /* initialize A2DP sink */
         esp_a2d_register_callback(app_a2d_callback_2);
         esp_a2d_sink_register_data_callback(audio_data_callback_2);
         esp_a2d_sink_init();
 
-		if ( *lastBda != NULL ) connectToLastDevice();
-		
-        /* initialize AVRCP controller */
-        esp_avrc_ct_init();
-        esp_avrc_ct_register_callback(app_rc_ct_callback_2);
+		if ( *lastBda != NULL ) {
+            ESP_LOGD(BT_AV_TAG, "connectToLastDevice");
+            connectToLastDevice();
+        }
 
+ 
         /* set discoverable and connectable mode, wait to be connected */
         esp_bt_gap_set_scan_mode(ESP_BT_SCAN_MODE_CONNECTABLE_DISCOVERABLE);
         break;
@@ -536,7 +551,7 @@ void  BluetoothA2DPSink::app_a2d_callback(esp_a2d_cb_event_t event, esp_a2d_cb_p
 {
     // lambda for callback
     auto av_hdl_a2d_evt_2=[](uint16_t event, void *p_param){
-        ESP_LOGD(BT_AV_TAG, "%s", __func__);
+        ESP_LOGD(BT_AV_TAG, "av_hdl_a2d_evt_2");
         if (actualBluetoothA2DPSink) {
             actualBluetoothA2DPSink->av_hdl_a2d_evt(event,p_param);  
         }
@@ -649,8 +664,19 @@ void BluetoothA2DPSink::connectToLastDevice(){
 }
 
 void BluetoothA2DPSink::executeAVRCCommand(int cmd){
-    esp_avrc_ct_send_passthrough_cmd(0, cmd, ESP_AVRC_PT_CMD_STATE_PRESSED);
-    esp_avrc_ct_send_passthrough_cmd(0, cmd, ESP_AVRC_PT_CMD_STATE_RELEASED);
+    ESP_LOGD(BT_AV_TAG, "executeAVRCCommand: %d",cmd);    
+    esp_err_t ok = esp_avrc_ct_send_passthrough_cmd(0, cmd, ESP_AVRC_PT_CMD_STATE_PRESSED);
+    if (ok==ESP_OK){
+        delay(100);
+        ok = esp_avrc_ct_send_passthrough_cmd(0, cmd, ESP_AVRC_PT_CMD_STATE_RELEASED);
+        if (ok==ESP_OK){
+            ESP_LOGD(BT_AV_TAG, "executeAVRCCommand: %d -> OK", cmd);    
+        } else {
+            ESP_LOGE(BT_AV_TAG,"executeAVRCCommand ESP_AVRC_PT_CMD_STATE_PRESSED FAILED: %d",ok);
+        }
+    } else {
+        ESP_LOGE(BT_AV_TAG,"executeAVRCCommand ESP_AVRC_PT_CMD_STATE_RELEASED FAILED: %d",ok);
+    }
 }
 
 void BluetoothA2DPSink::play(){
@@ -671,7 +697,6 @@ void BluetoothA2DPSink::next(){
 void BluetoothA2DPSink::previous(){
     executeAVRCCommand(ESP_AVRC_PT_CMD_BACKWARD);
 }
-
 
 
 /**

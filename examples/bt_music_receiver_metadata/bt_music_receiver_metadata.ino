@@ -18,14 +18,29 @@
 BluetoothA2DPSink a2dp_sink;
 
 void avrc_metadata_callback(uint8_t data1, const uint8_t *data2) {
-  Serial.printf("AVRC metadata rsp: attribute id 0x%x, %s\n", data1, data2);
+  // if we receive any metadata -> display it
+  Serial.printf("==> AVRC metadata rsp: attribute id 0x%x, %s\n", data1, data2);
 }
 
 void setup() {
+  Serial.begin(115200);
   a2dp_sink.set_avrc_metadata_callback(avrc_metadata_callback);
   a2dp_sink.start("MyMusic");  
 }
 
 
 void loop() {
+  // pause / play ever 10 seconds 
+  if (a2dp_sink.get_audio_state()==ESP_A2D_AUDIO_STATE_STARTED){
+    Serial.println("ESP_A2D_AUDIO_STATE_STARTED");
+    delay(10000);
+    is_active = !is_active;
+    if (is_active){
+      Serial.println("play");
+      a2dp_sink.play();
+    } else {
+      Serial.println("pause");
+      a2dp_sink.pause();
+    }
+  } 
 }

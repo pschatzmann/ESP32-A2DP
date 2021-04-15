@@ -17,9 +17,8 @@
 
 BluetoothA2DPSink a2dp_sink;
 
-void avrc_metadata_callback(uint8_t data1, const uint8_t *data2) {
-  // if we receive any metadata -> display it
-  Serial.printf("==> AVRC metadata rsp: attribute id 0x%x, %s\n", data1, data2);
+void avrc_metadata_callback(uint8_t id, const uint8_t *text) {
+  Serial.printf("==> AVRC metadata rsp: attribute id 0x%x, %s\n", id, text);
 }
 
 void setup() {

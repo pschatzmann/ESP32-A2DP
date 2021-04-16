@@ -22,11 +22,12 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+// ==> complie with Partition Scheme - Huge APP !
+
 #include "BluetoothA2DPSource.h"
 #include "StarWars30.h"
 
 BluetoothA2DPSource a2dp_source;
-//SoundData *data = new TwoChannelSoundData((Channels*)StarWars10_raw,StarWars10_raw_len/4);
 SoundData *data = new OneChannelSoundData((int16_t*)StarWars30_raw, StarWars30_raw_len/2);
 
 void setup() {

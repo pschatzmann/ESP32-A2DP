@@ -235,8 +235,8 @@ bool BluetoothA2DPSource::bt_app_work_dispatch(bt_app_cb_t p_cback, uint16_t eve
 {
     ESP_LOGD(BT_APP_CORE_TAG, "%s event 0x%x, param len %d", __func__, event, param_len);
 
-    bt_app_msg_t msg;
-    memset(&msg, 0, sizeof(bt_app_msg_t));
+    app_msg_t msg;
+    memset(&msg, 0, sizeof(app_msg_t));
 
     msg.sig = BT_APP_SIG_WORK_DISPATCH;
     msg.event = event;
@@ -258,7 +258,7 @@ bool BluetoothA2DPSource::bt_app_work_dispatch(bt_app_cb_t p_cback, uint16_t eve
     return false;
 }
 
-bool BluetoothA2DPSource::bt_app_send_msg(bt_app_msg_t *msg)
+bool BluetoothA2DPSource::bt_app_send_msg(app_msg_t *msg)
 {
     if (msg == NULL) {
         return false;
@@ -271,7 +271,7 @@ bool BluetoothA2DPSource::bt_app_send_msg(bt_app_msg_t *msg)
     return true;
 }
 
-void BluetoothA2DPSource::bt_app_work_dispatched(bt_app_msg_t *msg)
+void BluetoothA2DPSource::bt_app_work_dispatched(app_msg_t *msg)
 {
     if (msg->cb) {
         msg->cb(msg->event, msg->param);
@@ -280,7 +280,7 @@ void BluetoothA2DPSource::bt_app_work_dispatched(bt_app_msg_t *msg)
 
 void BluetoothA2DPSource::bt_app_task_handler(void *arg)
 {
-    bt_app_msg_t msg;
+    app_msg_t msg;
     for (;;) {
         if (pdTRUE == xQueueReceive(s_bt_app_task_queue, &msg, (portTickType)portMAX_DELAY)) {
             ESP_LOGD(BT_APP_CORE_TAG, "%s, sig 0x%x, 0x%x", __func__, msg.sig, msg.event);
@@ -302,7 +302,7 @@ void BluetoothA2DPSource::bt_app_task_handler(void *arg)
 
 void BluetoothA2DPSource::bt_app_task_start_up(void)
 {
-    s_bt_app_task_queue = xQueueCreate(10, sizeof(bt_app_msg_t));
+    s_bt_app_task_queue = xQueueCreate(10, sizeof(app_msg_t));
     xTaskCreate(ccall_bt_app_task_handler, "BtAppT", 2048, NULL, configMAX_PRIORITIES - 3, &s_bt_app_task_handle);
     return;
 }

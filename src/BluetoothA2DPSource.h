@@ -42,6 +42,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <vector> 
+#include "BluetoothA2DPCommon.h"
 
 #include "esp32-hal-log.h"
 #include "esp32-hal-bt.h"
@@ -52,16 +53,13 @@ typedef void (* bt_app_cb_t) (uint16_t event, void *param);
 typedef  int32_t (* music_data_cb_t) (uint8_t *data, int32_t len);
 typedef  int32_t (* music_data_channels_cb_t) (Channels *data, int32_t len);
 
-/* message to be sent */
-typedef struct {
-    uint16_t             sig;      /*!< signal to bt_app_task */
-    uint16_t             event;    /*!< message event id */
-    bt_app_cb_t          cb;       /*!< context switch callback */
-    void                 *param;   /*!< parameter area needs to be last */
-} bt_app_msg_t;
 
-typedef void (* bt_app_copy_cb_t) (bt_app_msg_t *msg, void *p_dest, void *p_src);
+typedef void (* bt_app_copy_cb_t) (app_msg_t *msg, void *p_dest, void *p_src);
 
+/**
+ * @brief A2DP Bluetooth Source
+ * 
+ */
 
 class BluetoothA2DPSource {
   public: 
@@ -186,8 +184,8 @@ class BluetoothA2DPSource {
 
     // void bt_av_volume_changed(void);
 
-    virtual bool bt_app_send_msg(bt_app_msg_t *msg);
-    virtual void bt_app_work_dispatched(bt_app_msg_t *msg);
+    virtual bool bt_app_send_msg(app_msg_t *msg);
+    virtual void bt_app_work_dispatched(app_msg_t *msg);
 
     virtual char *bda2str(esp_bd_addr_t bda, char *str, size_t size);
     virtual bool get_name_from_eir(uint8_t *eir, uint8_t *bdname, uint8_t *bdname_len);

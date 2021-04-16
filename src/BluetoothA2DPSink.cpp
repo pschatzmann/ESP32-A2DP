@@ -117,7 +117,7 @@ void BluetoothA2DPSink::set_on_data_received(void (*callBack)()){
 /**
  * Main function to start the Bluetooth Processing
  */
-void BluetoothA2DPSink::start(char* name)
+void BluetoothA2DPSink::start(char* name, bool auto_reconnect)
 {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
     //store parameters
@@ -128,8 +128,12 @@ void BluetoothA2DPSink::start(char* name)
     
 	// Initialize NVS
 	init_nvs();
-	getLastBda();
-	
+
+    is_auto_reconnect = auto_reconnect;
+    if (is_auto_reconnect){
+	    getLastBda();
+	}
+
     // setup bluetooth
     init_bluetooth();
     
@@ -245,7 +249,7 @@ bool BluetoothA2DPSink::app_send_msg(app_msg_t *msg)
 }
 
 
-void BluetoothA2DPSink::app_task_handler()
+void BluetoothA2DPSink::app_task_handler(void *arg)
 {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
     app_msg_t msg;
@@ -315,32 +319,32 @@ void  BluetoothA2DPSink::app_rc_ct_callback(esp_avrc_ct_cb_event_t event, esp_av
     };
 
     switch (event) {
-    case ESP_AVRC_CT_METADATA_RSP_EVT:
-        ESP_LOGD(BT_AV_TAG, "%s ESP_AVRC_CT_METADATA_RSP_EVT", __func__);
-        app_alloc_meta_buffer(param);
-        app_work_dispatch(av_hdl_avrc_evt_2, event, param, sizeof(esp_avrc_ct_cb_param_t));
-        break;
-    case ESP_AVRC_CT_CONNECTION_STATE_EVT:
-        ESP_LOGD(BT_AV_TAG, "%s ESP_AVRC_CT_CONNECTION_STATE_EVT", __func__);
-        app_work_dispatch(av_hdl_avrc_evt_2, event, param, sizeof(esp_avrc_ct_cb_param_t));
-        break;
-    case ESP_AVRC_CT_PASSTHROUGH_RSP_EVT:
-        ESP_LOGD(BT_AV_TAG, "%s ESP_AVRC_CT_PASSTHROUGH_RSP_EVT", __func__);
-        app_work_dispatch(av_hdl_avrc_evt_2, event, param, sizeof(esp_avrc_ct_cb_param_t));
-        break;
-    case ESP_AVRC_CT_CHANGE_NOTIFY_EVT:
-        ESP_LOGD(BT_AV_TAG, "%s ESP_AVRC_CT_CHANGE_NOTIFY_EVT", __func__);
-        app_work_dispatch(av_hdl_avrc_evt_2, event, param, sizeof(esp_avrc_ct_cb_param_t));
-        break;
-    case ESP_AVRC_CT_REMOTE_FEATURES_EVT: {
-        ESP_LOGD(BT_AV_TAG, "%s ESP_AVRC_CT_REMOTE_FEATURES_EVT", __func__);
-        app_work_dispatch(av_hdl_avrc_evt_2, event, param, sizeof(esp_avrc_ct_cb_param_t));
-        break;
-    }
-    default:
-        ESP_LOGE(BT_AV_TAG, "Invalid AVRC event: %d", event);
-        break;
-    }
+        case ESP_AVRC_CT_METADATA_RSP_EVT:
+            ESP_LOGD(BT_AV_TAG, "%s ESP_AVRC_CT_METADATA_RSP_EVT", __func__);
+            app_alloc_meta_buffer(param);
+            app_work_dispatch(av_hdl_avrc_evt_2, event, param, sizeof(esp_avrc_ct_cb_param_t));
+            break;
+        case ESP_AVRC_CT_CONNECTION_STATE_EVT:
+            ESP_LOGD(BT_AV_TAG, "%s ESP_AVRC_CT_CONNECTION_STATE_EVT", __func__);
+            app_work_dispatch(av_hdl_avrc_evt_2, event, param, sizeof(esp_avrc_ct_cb_param_t));
+            break;
+        case ESP_AVRC_CT_PASSTHROUGH_RSP_EVT:
+            ESP_LOGD(BT_AV_TAG, "%s ESP_AVRC_CT_PASSTHROUGH_RSP_EVT", __func__);
+            app_work_dispatch(av_hdl_avrc_evt_2, event, param, sizeof(esp_avrc_ct_cb_param_t));
+            break;
+        case ESP_AVRC_CT_CHANGE_NOTIFY_EVT:
+            ESP_LOGD(BT_AV_TAG, "%s ESP_AVRC_CT_CHANGE_NOTIFY_EVT", __func__);
+            app_work_dispatch(av_hdl_avrc_evt_2, event, param, sizeof(esp_avrc_ct_cb_param_t));
+            break;
+        case ESP_AVRC_CT_REMOTE_FEATURES_EVT: {
+            ESP_LOGD(BT_AV_TAG, "%s ESP_AVRC_CT_REMOTE_FEATURES_EVT", __func__);
+            app_work_dispatch(av_hdl_avrc_evt_2, event, param, sizeof(esp_avrc_ct_cb_param_t));
+            break;
+        }
+        default:
+            ESP_LOGE(BT_AV_TAG, "Invalid AVRC event: %d", event);
+            break;
+        }
 }
 
 void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
@@ -348,88 +352,91 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
     ESP_LOGD(BT_AV_TAG, "%s evt %d", __func__, event);
     esp_a2d_cb_param_t *a2d = NULL;
     switch (event) {
-    case ESP_A2D_CONNECTION_STATE_EVT: {
-        ESP_LOGD(BT_AV_TAG, "%s ESP_A2D_CONNECTION_STATE_EVT", __func__);
-        a2d = (esp_a2d_cb_param_t *)(p_param);
-        uint8_t *bda = a2d->conn_stat.remote_bda;
-        ESP_LOGI(BT_AV_TAG, "A2DP connection state: %s, [%02x:%02x:%02x:%02x:%02x:%02x]",
-             m_a2d_conn_state_str[a2d->conn_stat.state], bda[0], bda[1], bda[2], bda[3], bda[4], bda[5]);
-		if (a2d->conn_stat.state == ESP_A2D_CONNECTION_STATE_DISCONNECTED) {
-            ESP_LOGI(BT_AV_TAG, "ESP_A2D_CONNECTION_STATE_DISCONNECTED");
-			i2s_stop(i2s_port);
-			i2s_zero_dma_buffer(i2s_port);
-			if ( ( *lastBda != NULL ) && connectionTries < AUTOCONNECT_TRY_NUM ){
-				ESP_LOGI(BT_AV_TAG,"Connection try number: %d", connectionTries);
-				connectToLastDevice();
-			} else {
-                if ( *lastBda != NULL && a2d->conn_stat.disc_rsn == ESP_A2D_DISC_RSN_NORMAL ){
-                    esp_bd_addr_t cleanBda = {NULL};
-                    setLastBda(cleanBda, sizeof(cleanBda));
-                    ESP_LOGI(BT_AV_TAG,"Cleanly disconnected");
+        case ESP_A2D_CONNECTION_STATE_EVT: {
+            ESP_LOGD(BT_AV_TAG, "%s ESP_A2D_CONNECTION_STATE_EVT", __func__);
+            a2d = (esp_a2d_cb_param_t *)(p_param);
+            uint8_t *bda = a2d->conn_stat.remote_bda;
+            ESP_LOGI(BT_AV_TAG, "A2DP connection state: %s, [%02x:%02x:%02x:%02x:%02x:%02x]",
+                m_a2d_conn_state_str[a2d->conn_stat.state], bda[0], bda[1], bda[2], bda[3], bda[4], bda[5]);
+
+            if (is_auto_reconnect){             
+                if (a2d->conn_stat.state == ESP_A2D_CONNECTION_STATE_DISCONNECTED) {
+                    ESP_LOGI(BT_AV_TAG, "ESP_A2D_CONNECTION_STATE_DISCONNECTED");
+                    i2s_stop(i2s_port);
+                    i2s_zero_dma_buffer(i2s_port);
+                    if ( ( *lastBda != NULL ) && connectionTries < AUTOCONNECT_TRY_NUM ){
+                        ESP_LOGI(BT_AV_TAG,"Connection try number: %d", connectionTries);
+                        connectToLastDevice();
+                    } else {
+                        if ( *lastBda != NULL && a2d->conn_stat.disc_rsn == ESP_A2D_DISC_RSN_NORMAL ){
+                            esp_bd_addr_t cleanBda = {NULL};
+                            setLastBda(cleanBda, sizeof(cleanBda));
+                            ESP_LOGI(BT_AV_TAG,"Cleanly disconnected");
+                        }
+                        esp_bt_gap_set_scan_mode(ESP_BT_SCAN_MODE_CONNECTABLE_DISCOVERABLE);
+                    }
+                } else if (a2d->conn_stat.state == ESP_A2D_CONNECTION_STATE_CONNECTED){
+                    ESP_LOGI(BT_AV_TAG, "ESP_A2D_CONNECTION_STATE_CONNECTED");
+                    esp_bt_gap_set_scan_mode(ESP_BT_SCAN_MODE_NONE);
+                    connectionTries = 0;
+                    i2s_start(i2s_port);
+                    if (is_auto_reconnect) {
+                        setLastBda(a2d->conn_stat.remote_bda, sizeof(a2d->conn_stat.remote_bda));
+                    }
+                } else if (a2d->conn_stat.state == ESP_A2D_CONNECTION_STATE_CONNECTING){
+                    ESP_LOGI(BT_AV_TAG, "ESP_A2D_CONNECTION_STATE_CONNECTING");
+                    connectionTries++;
                 }
-                esp_bt_gap_set_scan_mode(ESP_BT_SCAN_MODE_CONNECTABLE_DISCOVERABLE);
             }
-        } else if (a2d->conn_stat.state == ESP_A2D_CONNECTION_STATE_CONNECTED){
-			ESP_LOGI(BT_AV_TAG, "ESP_A2D_CONNECTION_STATE_CONNECTED");
-            esp_bt_gap_set_scan_mode(ESP_BT_SCAN_MODE_NONE);
-			connectionTries = 0;
-			i2s_start(i2s_port);
-			setLastBda(a2d->conn_stat.remote_bda, sizeof(a2d->conn_stat.remote_bda));
-        } else if (a2d->conn_stat.state == ESP_A2D_CONNECTION_STATE_CONNECTING){
-			ESP_LOGI(BT_AV_TAG, "ESP_A2D_CONNECTION_STATE_CONNECTING");
-			connectionTries++;
+            break;
         }
-        break;
-    }
-    case ESP_A2D_AUDIO_STATE_EVT: {
-        ESP_LOGD(BT_AV_TAG, "%s ESP_A2D_AUDIO_STATE_EVT", __func__);
-        a2d = (esp_a2d_cb_param_t *)(p_param);
-        ESP_LOGI(BT_AV_TAG, "A2DP audio state: %s", m_a2d_audio_state_str[a2d->audio_stat.state]);
-        m_audio_state = a2d->audio_stat.state;
-        // if (ESP_A2D_AUDIO_STATE_STARTED == a2d->audio_stat.state) { 
-        //      m_pkt_cnt = 0; 
-        // } 
-
-        if (ESP_A2D_AUDIO_STATE_STARTED == a2d->audio_stat.state) { 
-            m_pkt_cnt = 0; 
-            i2s_start(i2s_port); 
-        } else if ( ESP_A2D_AUDIO_STATE_REMOTE_SUSPEND == a2d->audio_stat.state ){ 
-            i2s_stop(i2s_port);
-        }
-        break;
-    }
-    case ESP_A2D_AUDIO_CFG_EVT: {
-        ESP_LOGD(BT_AV_TAG, "%s ESP_A2D_AUDIO_CFG_EVT", __func__);
-        esp_a2d_cb_param_t *esp_a2d_callback_param = (esp_a2d_cb_param_t *)(p_param);
-        audio_type = esp_a2d_callback_param->audio_cfg.mcc.type;
-        a2d = (esp_a2d_cb_param_t *)(p_param);
-        ESP_LOGI(BT_AV_TAG, "a2dp audio_cfg_cb , codec type %d", a2d->audio_cfg.mcc.type);
-        // for now only SBC stream is supported
-        if (a2d->audio_cfg.mcc.type == ESP_A2D_MCT_SBC) {
-            i2s_config.sample_rate = 16000;
-            char oct0 = a2d->audio_cfg.mcc.cie.sbc[0];
-            if (oct0 & (0x01 << 6)) {
-                i2s_config.sample_rate = 32000;
-            } else if (oct0 & (0x01 << 5)) {
-                i2s_config.sample_rate = 44100;
-            } else if (oct0 & (0x01 << 4)) {
-                i2s_config.sample_rate = 48000;
+        case ESP_A2D_AUDIO_STATE_EVT: {
+            ESP_LOGD(BT_AV_TAG, "%s ESP_A2D_AUDIO_STATE_EVT", __func__);
+            a2d = (esp_a2d_cb_param_t *)(p_param);
+            ESP_LOGI(BT_AV_TAG, "A2DP audio state: %s", m_a2d_audio_state_str[a2d->audio_stat.state]);
+            m_audio_state = a2d->audio_stat.state;
+            if (ESP_A2D_AUDIO_STATE_STARTED == a2d->audio_stat.state) { 
+                m_pkt_cnt = 0; 
+                i2s_start(i2s_port); 
+            } else if ( ESP_A2D_AUDIO_STATE_REMOTE_SUSPEND == a2d->audio_stat.state 
+                    || ESP_A2D_AUDIO_STATE_STOPPED == a2d->audio_stat.state ) { 
+                i2s_stop(i2s_port);
+                i2s_zero_dma_buffer(i2s_port);
             }
-            
-            i2s_set_clk(i2s_port, i2s_config.sample_rate, i2s_config.bits_per_sample, (i2s_channel_t)2);
-
-            ESP_LOGI(BT_AV_TAG, "configure audio player %x-%x-%x-%x\n",
-                     a2d->audio_cfg.mcc.cie.sbc[0],
-                     a2d->audio_cfg.mcc.cie.sbc[1],
-                     a2d->audio_cfg.mcc.cie.sbc[2],
-                     a2d->audio_cfg.mcc.cie.sbc[3]);
-            ESP_LOGI(BT_AV_TAG, "audio player configured, samplerate=%d", i2s_config.sample_rate);
+            break;
         }
-        break;
-    }
-    default:
-        ESP_LOGE(BT_AV_TAG, "%s unhandled evt %d", __func__, event);
-        break;
+        case ESP_A2D_AUDIO_CFG_EVT: {
+            ESP_LOGD(BT_AV_TAG, "%s ESP_A2D_AUDIO_CFG_EVT", __func__);
+            esp_a2d_cb_param_t *esp_a2d_callback_param = (esp_a2d_cb_param_t *)(p_param);
+            audio_type = esp_a2d_callback_param->audio_cfg.mcc.type;
+            a2d = (esp_a2d_cb_param_t *)(p_param);
+            ESP_LOGI(BT_AV_TAG, "a2dp audio_cfg_cb , codec type %d", a2d->audio_cfg.mcc.type);
+            // for now only SBC stream is supported
+            if (a2d->audio_cfg.mcc.type == ESP_A2D_MCT_SBC) {
+                i2s_config.sample_rate = 16000;
+                char oct0 = a2d->audio_cfg.mcc.cie.sbc[0];
+                if (oct0 & (0x01 << 6)) {
+                    i2s_config.sample_rate = 32000;
+                } else if (oct0 & (0x01 << 5)) {
+                    i2s_config.sample_rate = 44100;
+                } else if (oct0 & (0x01 << 4)) {
+                    i2s_config.sample_rate = 48000;
+                }
+                
+                i2s_set_clk(i2s_port, i2s_config.sample_rate, i2s_config.bits_per_sample, (i2s_channel_t)2);
+
+                ESP_LOGI(BT_AV_TAG, "configure audio player %x-%x-%x-%x\n",
+                        a2d->audio_cfg.mcc.cie.sbc[0],
+                        a2d->audio_cfg.mcc.cie.sbc[1],
+                        a2d->audio_cfg.mcc.cie.sbc[2],
+                        a2d->audio_cfg.mcc.cie.sbc[3]);
+                ESP_LOGI(BT_AV_TAG, "audio player configured, samplerate=%d", i2s_config.sample_rate);
+            }
+            break;
+        }
+        default:
+            ESP_LOGE(BT_AV_TAG, "%s unhandled evt %d", __func__, event);
+            break;
     }
 }
 
@@ -698,30 +705,53 @@ void BluetoothA2DPSink::previous(){
     executeAVRCCommand(ESP_AVRC_PT_CMD_BACKWARD);
 }
 
-
 /**
- * C Callback Functions needed for the ESP32 API
+ * public Callbacks 
+ * 
  */
-extern "C" void app_task_handler_2(void *arg) {
+void BluetoothA2DPSinkCallbacks::app_task_handler(void *arg) {
   ESP_LOGD(BT_AV_TAG, "%s", __func__);
   if (actualBluetoothA2DPSink)
-    actualBluetoothA2DPSink->app_task_handler();
+    actualBluetoothA2DPSink->app_task_handler(arg);
 }
 
-extern "C" void audio_data_callback_2(const uint8_t *data, uint32_t len) {
+void BluetoothA2DPSinkCallbacks::audio_data_callback(const uint8_t *data, uint32_t len) {
   //ESP_LOGD(BT_AV_TAG, "%s", __func__);
   if (actualBluetoothA2DPSink)
     actualBluetoothA2DPSink->audio_data_callback(data,len);
 }
 
-extern "C" void app_a2d_callback_2(esp_a2d_cb_event_t event, esp_a2d_cb_param_t *param){
+void BluetoothA2DPSinkCallbacks::app_a2d_callback(esp_a2d_cb_event_t event, esp_a2d_cb_param_t *param){
   ESP_LOGD(BT_AV_TAG, "%s", __func__);
   if (actualBluetoothA2DPSink)
     actualBluetoothA2DPSink->app_a2d_callback(event, param);
 }
 
-extern "C" void app_rc_ct_callback_2(esp_avrc_ct_cb_event_t event, esp_avrc_ct_cb_param_t *param){
+void BluetoothA2DPSinkCallbacks::app_rc_ct_callback(esp_avrc_ct_cb_event_t event, esp_avrc_ct_cb_param_t *param){
   ESP_LOGD(BT_AV_TAG, "%s", __func__);
   if (actualBluetoothA2DPSink)
     actualBluetoothA2DPSink->app_rc_ct_callback(event, param);
+}
+
+/**
+ * C Callback Functions needed for the ESP32 API
+ */
+extern "C" void app_task_handler_2(void *arg) {
+    ESP_LOGD(BT_AV_TAG, "%s", __func__);
+    BluetoothA2DPSinkCallbacks::app_task_handler(arg);
+}
+
+extern "C" void audio_data_callback_2(const uint8_t *data, uint32_t len) {
+    //ESP_LOGD(BT_AV_TAG, "%s", __func__);
+    BluetoothA2DPSinkCallbacks::audio_data_callback(data,len);
+}
+
+extern "C" void app_a2d_callback_2(esp_a2d_cb_event_t event, esp_a2d_cb_param_t *param){
+    ESP_LOGD(BT_AV_TAG, "%s", __func__);
+    BluetoothA2DPSinkCallbacks::app_a2d_callback(event, param);
+}
+
+extern "C" void app_rc_ct_callback_2(esp_avrc_ct_cb_event_t event, esp_avrc_ct_cb_param_t *param){
+    ESP_LOGD(BT_AV_TAG, "%s", __func__);
+    BluetoothA2DPSinkCallbacks::app_rc_ct_callback(event, param);
 }

@@ -13,6 +13,9 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
+// ==> Example A2DP Receiver which uses I2S to an external DAC
+
 #include "BluetoothA2DPSink.h"
 
 BluetoothA2DPSink a2dp_sink;

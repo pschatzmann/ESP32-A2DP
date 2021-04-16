@@ -208,6 +208,9 @@ OneChannelSoundData(int16_t *data, int32_t len, bool loop=false, ChannelInfo cha
 
 ```
 
+## Documentation
+
+The class documentation can be found [here](https://pschatzmann.github.io/ESP32-A2DP/doc/html/annotated.html)
 
 ## Installation
 

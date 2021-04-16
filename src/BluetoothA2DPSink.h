@@ -61,21 +61,24 @@ enum {
 */
 class BluetoothA2DPSinkCallbacks {
   public:
+    /// handle esp_a2d_cb_event_t 
     static void app_a2d_callback(esp_a2d_cb_event_t event, esp_a2d_cb_param_t *param);
+    /// handle esp_avrc_ct_cb_event_t
     static void app_rc_ct_callback(esp_avrc_ct_cb_event_t event, esp_avrc_ct_cb_param_t *param);
+    /// task handler
     static void app_task_handler(void *arg);
-    // Callback for music stream 
+    /// Callback for music stream 
     static void audio_data_callback(const uint8_t *data, uint32_t len);
-    // av event handler
+    /// av event handler
     static void av_hdl_stack_evt(uint16_t event, void *p_param);
-    // a2dp event handler 
+    /// a2dp event handler 
     static void av_hdl_a2d_evt(uint16_t event, void *p_param);
-    // avrc event handler 
+    /// avrc event handler 
     static void av_hdl_avrc_evt(uint16_t event, void *p_param);
 };
 
 /**
- * @brief A2DP Bluethooth Sink - We iniitialize and start the Bluetooth A2DP Sink. 
+ * @brief A2DP Bluethooth Sink - We initialize and start the Bluetooth A2DP Sink. 
  * The example https://github.com/espressif/esp-idf/tree/master/examples/bluetooth/bluedroid/classic_bt/a2dp_sink
  * was refactered into a C++ class 
  */
@@ -92,10 +95,6 @@ class BluetoothA2DPSink {
     virtual void set_i2s_port(i2s_port_t i2s_num);
     /// Define the i2s configuration
     virtual void set_i2s_config(i2s_config_t i2s_config);
-    /// Define a callback method which provides the meta data
-    virtual void set_avrc_metadata_callback(void (*callback)(uint8_t, const uint8_t*)) {
-      this->avrc_metadata_callback = callback;
-    }
 
     /// starts the I2S bluetooth sink with the inidicated name
     virtual void start(char* name, bool auto_reconect=true);
@@ -103,10 +102,18 @@ class BluetoothA2DPSink {
     virtual esp_a2d_audio_state_t get_audio_state();
     /// Determine the actuall audio type
     virtual esp_a2d_mct_t get_audio_type();
+
+    /// Define a callback method which provides the meta data
+    virtual void set_avrc_metadata_callback(void (*callback)(uint8_t, const uint8_t*)) {
+      this->avrc_metadata_callback = callback;
+    }
+
     /// Define callback which is called when we receive data: This callback provides access to the data
     virtual void set_stream_reader(void (*callBack)(const uint8_t*, uint32_t));
+
     /// Define callback which is called when we receive data
     virtual void set_on_data_received(void (*callBack)());
+
     /// Starts to play music using AVRC
     virtual void play();
     /// AVRC pause

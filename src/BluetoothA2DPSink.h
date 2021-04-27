@@ -91,15 +91,25 @@ class BluetoothA2DPSink {
     ~BluetoothA2DPSink();
     /// Define the pins
     virtual void set_pin_config(i2s_pin_config_t pin_config);
+   
     /// Define an alternative i2s port other then 0 
     virtual void set_i2s_port(i2s_port_t i2s_num);
+   
     /// Define the i2s configuration
     virtual void set_i2s_config(i2s_config_t i2s_config);
 
     /// starts the I2S bluetooth sink with the inidicated name
     virtual void start(char* name, bool auto_reconect=true);
+
+    /// starts the I2S bluetooth sink with the inidicated name - if you release the memory a future start is not possible
+    virtual void end(bool release_memory=false);
+
     /// Determine the actual audio state
     virtual esp_a2d_audio_state_t get_audio_state();
+   
+    /// Determine the connection state
+    virtual esp_a2d_connection_state_t get_connection_state();
+
     /// Determine the actuall audio type
     virtual esp_a2d_mct_t get_audio_type();
 
@@ -141,13 +151,13 @@ class BluetoothA2DPSink {
     const char *m_a2d_conn_state_str[4] = {"Disconnected", "Connecting", "Connected", "Disconnecting"};
     const char *m_a2d_audio_state_str[3] = {"Suspended", "Stopped", "Started"};
     esp_a2d_audio_state_t audio_state;
+    esp_a2d_connection_state_t connection_state;
     esp_a2d_mct_t audio_type;
     void (*data_received)() = NULL;
     void (*stream_reader)(const uint8_t*, uint32_t) = NULL;
     void (*avrc_metadata_callback)(uint8_t, const uint8_t*) = NULL;
     bool is_auto_reconnect;
-	  esp_bd_addr_t lastBda = {NULL};
-
+	  esp_bd_addr_t last_connection = {NULL};
 
     // protected methods
     virtual int init_bluetooth();
@@ -161,10 +171,12 @@ class BluetoothA2DPSink {
     virtual void av_notify_evt_handler(uint8_t event_id, uint32_t event_parameter);
     
     virtual void init_nvs();
-    virtual void getLastBda();
-    virtual void setLastBda(esp_bd_addr_t bda, size_t size);
+    virtual void get_last_connection();
+    virtual void set_last_connection(esp_bd_addr_t bda, size_t size);
+    virtual void clean_last_connection();
+
     // execute AVRC command
-    virtual void executeAVRCCommand(int cmd);
+    virtual void execute_avrc_command(int cmd);
 
     /**
      * Wrappbed methods called from callbacks
@@ -181,7 +193,7 @@ class BluetoothA2DPSink {
     // avrc event handler 
     virtual void av_hdl_avrc_evt(uint16_t event, void *p_param);
 
-	  void connectToLastDevice();
+	  void connect_to_last_device();
 
 };
 

@@ -222,6 +222,10 @@ git clone pschatzmann/ESP32-A2DP.git
 
 ## Change History
 
+Master
+- provide get_connection_status() method
+- provide end() method to shut down bluetooth
+
 V.1.2.0
 - Metadata support with the help of a callback function - Thanks to [JohnyMielony](https://github.com/JohnyMielony)
 - AVRC command support thanks to [PeterPark](https://github.com/KIdon-Park) 

@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['pause_67',['pause',['../class_bluetooth_a2_d_p_sink.html#aa6967e9329939596c62f16e8686cac13',1,'BluetoothA2DPSink']]],
-  ['play_68',['play',['../class_bluetooth_a2_d_p_sink.html#aafd2afad1960db8ab73d7c6977aeb686',1,'BluetoothA2DPSink']]],
-  ['previous_69',['previous',['../class_bluetooth_a2_d_p_sink.html#a341024c18eabdb06c734c2242d5ba505',1,'BluetoothA2DPSink']]]
+  ['onechannelsounddata_80',['OneChannelSoundData',['../class_one_channel_sound_data.html#a95a08a39b92863edbc6c759e7c98e4ac',1,'OneChannelSoundData']]]
 ];

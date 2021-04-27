@@ -69,7 +69,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Public callback methods. We use a separate class so that we can protect the called methods in <a class="el" href="class_bluetooth_a2_d_p_sink.html" title="A2DP Bluethooth Sink - We iniitialize and start the Bluetooth A2DP Sink. The example https://github....">BluetoothA2DPSink</a>.  
+<p>Public callback methods. We use a separate class so that we can protect the called methods in <a class="el" href="class_bluetooth_a2_d_p_sink.html" title="A2DP Bluethooth Sink - We initialize and start the Bluetooth A2DP Sink. The example https://github....">BluetoothA2DPSink</a>.  
  <a href="class_bluetooth_a2_d_p_sink_callbacks.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_bluetooth_a2_d_p_sink_8h_source.html">BluetoothA2DPSink.h</a>&gt;</code></p>
@@ -77,28 +77,35 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a6044c5dc42ff6440445d10f124d11e2c"><td class="memItemLeft" align="right" valign="top"><a id="a6044c5dc42ff6440445d10f124d11e2c"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>app_a2d_callback</b> (esp_a2d_cb_event_t event, esp_a2d_cb_param_t *param)</td></tr>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink_callbacks.html#a6044c5dc42ff6440445d10f124d11e2c">app_a2d_callback</a> (esp_a2d_cb_event_t event, esp_a2d_cb_param_t *param)</td></tr>
+<tr class="memdesc:a6044c5dc42ff6440445d10f124d11e2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">handle esp_a2d_cb_event_t <br /></td></tr>
 <tr class="separator:a6044c5dc42ff6440445d10f124d11e2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a85efda64ad1405edb8382d24770654a8"><td class="memItemLeft" align="right" valign="top"><a id="a85efda64ad1405edb8382d24770654a8"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>app_rc_ct_callback</b> (esp_avrc_ct_cb_event_t event, esp_avrc_ct_cb_param_t *param)</td></tr>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink_callbacks.html#a85efda64ad1405edb8382d24770654a8">app_rc_ct_callback</a> (esp_avrc_ct_cb_event_t event, esp_avrc_ct_cb_param_t *param)</td></tr>
+<tr class="memdesc:a85efda64ad1405edb8382d24770654a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">handle esp_avrc_ct_cb_event_t <br /></td></tr>
 <tr class="separator:a85efda64ad1405edb8382d24770654a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e82c8cd94b5fe41e557d3c611fd12ec"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink_callbacks.html#a6e82c8cd94b5fe41e557d3c611fd12ec">app_task_handler</a> (void *arg)</td></tr>
+<tr class="memdesc:a6e82c8cd94b5fe41e557d3c611fd12ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">task handler  <a href="class_bluetooth_a2_d_p_sink_callbacks.html#a6e82c8cd94b5fe41e557d3c611fd12ec">More...</a><br /></td></tr>
 <tr class="separator:a6e82c8cd94b5fe41e557d3c611fd12ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9e2c4b56d94c1198b2e5650739b9be1a"><td class="memItemLeft" align="right" valign="top"><a id="a9e2c4b56d94c1198b2e5650739b9be1a"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>audio_data_callback</b> (const uint8_t *data, uint32_t len)</td></tr>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink_callbacks.html#a9e2c4b56d94c1198b2e5650739b9be1a">audio_data_callback</a> (const uint8_t *data, uint32_t len)</td></tr>
+<tr class="memdesc:a9e2c4b56d94c1198b2e5650739b9be1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback for music stream. <br /></td></tr>
 <tr class="separator:a9e2c4b56d94c1198b2e5650739b9be1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a301c9c34b71551fde64f3cc2fb7ce1c9"><td class="memItemLeft" align="right" valign="top"><a id="a301c9c34b71551fde64f3cc2fb7ce1c9"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>av_hdl_stack_evt</b> (uint16_t event, void *p_param)</td></tr>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink_callbacks.html#a301c9c34b71551fde64f3cc2fb7ce1c9">av_hdl_stack_evt</a> (uint16_t event, void *p_param)</td></tr>
+<tr class="memdesc:a301c9c34b71551fde64f3cc2fb7ce1c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">av event handler <br /></td></tr>
 <tr class="separator:a301c9c34b71551fde64f3cc2fb7ce1c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a616986984ae0d0deb7fc94f1604e17ef"><td class="memItemLeft" align="right" valign="top"><a id="a616986984ae0d0deb7fc94f1604e17ef"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>av_hdl_a2d_evt</b> (uint16_t event, void *p_param)</td></tr>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink_callbacks.html#a616986984ae0d0deb7fc94f1604e17ef">av_hdl_a2d_evt</a> (uint16_t event, void *p_param)</td></tr>
+<tr class="memdesc:a616986984ae0d0deb7fc94f1604e17ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">a2dp event handler <br /></td></tr>
 <tr class="separator:a616986984ae0d0deb7fc94f1604e17ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5562ce0b233c59b91d06bba2d894a9e2"><td class="memItemLeft" align="right" valign="top"><a id="a5562ce0b233c59b91d06bba2d894a9e2"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>av_hdl_avrc_evt</b> (uint16_t event, void *p_param)</td></tr>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink_callbacks.html#a5562ce0b233c59b91d06bba2d894a9e2">av_hdl_avrc_evt</a> (uint16_t event, void *p_param)</td></tr>
+<tr class="memdesc:a5562ce0b233c59b91d06bba2d894a9e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">avrc event handler <br /></td></tr>
 <tr class="separator:a5562ce0b233c59b91d06bba2d894a9e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Public callback methods. We use a separate class so that we can protect the called methods in <a class="el" href="class_bluetooth_a2_d_p_sink.html" title="A2DP Bluethooth Sink - We iniitialize and start the Bluetooth A2DP Sink. The example https://github....">BluetoothA2DPSink</a>. </p>
+<div class="textblock"><p>Public callback methods. We use a separate class so that we can protect the called methods in <a class="el" href="class_bluetooth_a2_d_p_sink.html" title="A2DP Bluethooth Sink - We initialize and start the Bluetooth A2DP Sink. The example https://github....">BluetoothA2DPSink</a>. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a6e82c8cd94b5fe41e557d3c611fd12ec"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6e82c8cd94b5fe41e557d3c611fd12ec">&#9670;&nbsp;</a></span>app_task_handler()</h2>
@@ -123,6 +130,8 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>av_hdl_avrc_ev
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>task handler </p>
 <p>public Callbacks </p>
 
 </div>

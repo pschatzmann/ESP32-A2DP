@@ -13,7 +13,6 @@
 // Copyright 2020 Phil Schatzmann
 // Copyright 2015-2016 Espressif Systems (Shanghai) PTE LTD
 
-
 #include "BluetoothA2DPSink.h"
 
 /**
@@ -406,14 +405,22 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
                         if ( *last_connection != NULL && a2d->conn_stat.disc_rsn == ESP_A2D_DISC_RSN_NORMAL ){
                             clean_last_connection();
                         }
+#ifdef CURRENT_ESP_IDF
+                        if (esp_bt_gap_set_scan_mode(ESP_BT_CONNECTABLE, ESP_BT_GENERAL_DISCOVERABLE)!=ESP_OK){
+#else
                         if (esp_bt_gap_set_scan_mode(ESP_BT_SCAN_MODE_CONNECTABLE_DISCOVERABLE)!=ESP_OK){
+#endif
                             ESP_LOGE(BT_AV_TAG,"esp_bt_gap_set_scan_mode");            
                         }
                     }
                 }
             } else if (a2d->conn_stat.state == ESP_A2D_CONNECTION_STATE_CONNECTED){
                 ESP_LOGI(BT_AV_TAG, "ESP_A2D_CONNECTION_STATE_CONNECTED");
+#ifdef CURRENT_ESP_IDF
+                esp_bt_gap_set_scan_mode(ESP_BT_NON_CONNECTABLE, ESP_BT_NON_DISCOVERABLE);
+#else
                 esp_bt_gap_set_scan_mode(ESP_BT_SCAN_MODE_NONE);
+#endif  
                 connection_rety_count = 0;
                 i2s_start(i2s_port);
                 // record current connection
@@ -485,7 +492,11 @@ void BluetoothA2DPSink::av_new_track()
     esp_avrc_ct_send_register_notification_cmd(1, ESP_AVRC_RN_TRACK_CHANGE, 0);
 }
 
+#ifdef CURRENT_ESP_IDF
+void BluetoothA2DPSink::av_notify_evt_handler(uint8_t& event_id, esp_avrc_rn_param_t& event_parameter)
+#else
 void BluetoothA2DPSink::av_notify_evt_handler(uint8_t event_id, uint32_t event_parameter)
+#endif
 {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
     switch (event_id) {
@@ -585,7 +596,11 @@ void BluetoothA2DPSink::av_hdl_stack_evt(uint16_t event, void *p_param)
 
         /* set discoverable and connectable mode, wait to be connected */
         ESP_LOGD(BT_AV_TAG, "esp_bt_gap_set_scan_mode(ESP_BT_SCAN_MODE_CONNECTABLE_DISCOVERABLE)");
+#ifdef CURRENT_ESP_IDF
+        if (esp_bt_gap_set_scan_mode(ESP_BT_CONNECTABLE, ESP_BT_GENERAL_DISCOVERABLE)!=ESP_OK){
+#else
         if (esp_bt_gap_set_scan_mode(ESP_BT_SCAN_MODE_CONNECTABLE_DISCOVERABLE)!=ESP_OK){
+#endif
             ESP_LOGE(BT_AV_TAG,"esp_bt_gap_set_scan_mode");            
         }
 

@@ -168,7 +168,11 @@ class BluetoothA2DPSink {
     virtual void app_work_dispatched(app_msg_t *msg);
     virtual void app_alloc_meta_buffer(esp_avrc_ct_cb_param_t *param);
     virtual void av_new_track();
+#ifdef CURRENT_ESP_IDF
+    virtual void av_notify_evt_handler(uint8_t& event_id, esp_avrc_rn_param_t& event_parameter);
+#else
     virtual void av_notify_evt_handler(uint8_t event_id, uint32_t event_parameter);
+#endif    
     
     virtual void init_nvs();
     virtual void get_last_connection();

@@ -406,7 +406,7 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
                             clean_last_connection();
                         }
 #ifdef CURRENT_ESP_IDF
-                        if (esp_bt_gap_set_scan_mode(ESP_BT_CONNECTABLE, ESP_BT_GENERAL_DISCOVERABLE)!=ESP_OK){
+                        if (esp_bt_gap_set_scan_mode(ESP_BT_CONNECTABLE, discoverability)!=ESP_OK){
 #else
                         if (esp_bt_gap_set_scan_mode(ESP_BT_SCAN_MODE_CONNECTABLE_DISCOVERABLE)!=ESP_OK){
 #endif
@@ -483,6 +483,15 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
             break;
     }
 }
+
+#ifdef CURRENT_ESP_IDF
+void BluetoothA2DPSink::set_discoverability(esp_bt_discovery_mode_t d) {
+  discoverability = d;
+  if (get_connection_state() == ESP_A2D_CONNECTION_STATE_DISCONNECTED || d != ESP_BT_NON_DISCOVERABLE) {
+    esp_bt_gap_set_scan_mode(ESP_BT_CONNECTABLE, discoverability);
+  }
+}
+#endif
 
 void BluetoothA2DPSink::av_new_track()
 {
@@ -597,7 +606,7 @@ void BluetoothA2DPSink::av_hdl_stack_evt(uint16_t event, void *p_param)
         /* set discoverable and connectable mode, wait to be connected */
         ESP_LOGD(BT_AV_TAG, "esp_bt_gap_set_scan_mode(ESP_BT_SCAN_MODE_CONNECTABLE_DISCOVERABLE)");
 #ifdef CURRENT_ESP_IDF
-        if (esp_bt_gap_set_scan_mode(ESP_BT_CONNECTABLE, ESP_BT_GENERAL_DISCOVERABLE)!=ESP_OK){
+        if (esp_bt_gap_set_scan_mode(ESP_BT_CONNECTABLE, discoverability)!=ESP_OK){
 #else
         if (esp_bt_gap_set_scan_mode(ESP_BT_SCAN_MODE_CONNECTABLE_DISCOVERABLE)!=ESP_OK){
 #endif

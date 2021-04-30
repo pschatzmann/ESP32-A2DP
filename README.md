@@ -228,6 +228,7 @@ Master
 - provide get_connection_status() method
 - provide end() method to shut down bluetooth
 - add compile time switch for new ESP IDF
+- provide set_discoverability() to change BT discovery mode (only for current ESP IDF)
 
 V.1.2.0
 - Metadata support with the help of a callback function - Thanks to [JohnyMielony](https://github.com/JohnyMielony)

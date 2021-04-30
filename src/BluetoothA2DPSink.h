@@ -135,6 +135,11 @@ class BluetoothA2DPSink {
     /// AVRC previouse
     virtual void previous();
 
+#ifdef CURRENT_ESP_IDF
+    // Bluetooth discoverability
+    virtual void set_discoverability(esp_bt_discovery_mode_t d);
+#endif
+
     /// Make sure that BluetoothA2DPCallbacks can call protected event handlers
     friend BluetoothA2DPSinkCallbacks;
 	
@@ -158,6 +163,9 @@ class BluetoothA2DPSink {
     void (*avrc_metadata_callback)(uint8_t, const uint8_t*) = NULL;
     bool is_auto_reconnect;
 	  esp_bd_addr_t last_connection = {NULL};
+#ifdef CURRENT_ESP_IDF
+    esp_bt_discovery_mode_t discoverability = ESP_BT_GENERAL_DISCOVERABLE;
+#endif
 
     // protected methods
     virtual int init_bluetooth();

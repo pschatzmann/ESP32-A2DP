@@ -91,6 +91,7 @@ void read_data_stream(const uint8_t *data, uint32_t length)
   // Do something with the data packet
 }
 ```
+In the ```a2dp_sink.set_stream_reader()``` method you can provide an optional parameter that defines if you want the output to I2S to be active or deactive - So you can use this method to e.g. to switch off I2S just by calling ```a2dp_sink.set_stream_reader(read_data_stream, false)```
 
 ### Support for Metadata
 

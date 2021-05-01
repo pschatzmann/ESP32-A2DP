@@ -86,9 +86,11 @@ void BluetoothA2DPSink::end(bool release_memory) {
         ESP_LOGE(BT_AV_TAG,"Failed to deinit bluetooth");
     }
 
-    ESP_LOGI(BT_AV_TAG,"uninstall i2s");
-    if (i2s_driver_uninstall(i2s_port) != ESP_OK){
-        ESP_LOGE(BT_AV_TAG,"Failed to uninstall i2s");
+    if (is_i2s_output){
+        ESP_LOGI(BT_AV_TAG,"uninstall i2s");
+        if (i2s_driver_uninstall(i2s_port) != ESP_OK){
+            ESP_LOGE(BT_AV_TAG,"Failed to uninstall i2s");
+        }
     }
 
     ESP_LOGI(BT_AV_TAG,"esp_bt_controller_disable");

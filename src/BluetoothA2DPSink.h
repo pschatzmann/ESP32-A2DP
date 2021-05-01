@@ -119,7 +119,7 @@ class BluetoothA2DPSink {
     }
 
     /// Define callback which is called when we receive data: This callback provides access to the data
-    virtual void set_stream_reader(void (*callBack)(const uint8_t*, uint32_t));
+    virtual void set_stream_reader(void (*callBack)(const uint8_t*, uint32_t), bool i2s_output=true);
 
     /// Define callback which is called when we receive data
     virtual void set_on_data_received(void (*callBack)());
@@ -163,6 +163,7 @@ class BluetoothA2DPSink {
     void (*avrc_metadata_callback)(uint8_t, const uint8_t*) = NULL;
     bool is_auto_reconnect;
 	  esp_bd_addr_t last_connection = {NULL};
+    bool is_i2s_output = true;
 #ifdef CURRENT_ESP_IDF
     esp_bt_discovery_mode_t discoverability = ESP_BT_GENERAL_DISCOVERABLE;
 #endif

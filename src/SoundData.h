@@ -25,6 +25,15 @@
 struct __attribute__((packed)) Channels {
   int16_t channel1;
   int16_t channel2;
+
+  Channels(int v){
+    channel1 = channel2 = v;
+  }
+  
+  Channels(){
+    channel1 = channel2 = 0;
+  }
+
 };
 
 /**

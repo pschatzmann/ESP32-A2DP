@@ -229,6 +229,7 @@ Master
 - provide end() method to shut down bluetooth
 - add compile time switch for new ESP IDF
 - provide set_discoverability() to change BT discovery mode (only for current ESP IDF)
+- add additional flag in set_stream_reader to stop output to i2s 
 
 V.1.2.0
 - Metadata support with the help of a callback function - Thanks to [JohnyMielony](https://github.com/JohnyMielony)

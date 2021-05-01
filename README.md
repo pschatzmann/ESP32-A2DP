@@ -147,7 +147,7 @@ void loop() {
 
 ```
 
-In the examples you can find an impelentation that generates sound with the help of the sin() function.
+In the examples you can find an implentation that generates sound with the help of the sin() function.
 You can also inticate multiple alternative Bluetooth names. The system just connects to the first one
 which is available:
 
@@ -240,6 +240,7 @@ Master
 - add compile time switch for new ESP IDF
 - provide set_discoverability() to change BT discovery mode (only for current ESP IDF)
 - add additional flag in set_stream_reader to stop output to i2s 
+- Remove includes of Arduino.h
 
 V.1.2.0
 - Metadata support with the help of a callback function - Thanks to [JohnyMielony](https://github.com/JohnyMielony)

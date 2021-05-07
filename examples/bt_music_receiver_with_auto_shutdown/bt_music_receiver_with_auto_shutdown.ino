@@ -20,8 +20,13 @@
 
 #include "BluetoothA2DPSink.h"
 
+#ifndef LED_BUILTIN
+#define LED_BUILTIN 13 // pin number is specific to your esp32 board
+#endif
+
 
 BluetoothA2DPSink a2dp_sink;
+esp_a2d_connection_state_t last_state;
 uint16_t minutes = 5;
 unsigned long shutdown_ms = millis() + 1000 * 60 * minutes;
 
@@ -33,6 +38,9 @@ void on_data() {
 void setup() {
   Serial.begin(115200);
 
+  // LED
+  pinMode(LED_BUILTIN, OUTPUT);
+
   // startup sink
   a2dp_sink.set_on_data_received(on_data);
   a2dp_sink.start("MyMusic");  
@@ -40,9 +48,18 @@ void setup() {
 
 
 void loop() {
+  // check timeout
   if (millis()>shutdown_ms){
     // stop the processor
     Serial.println("Shutting down");
     esp_deep_sleep_start();
   }
+  // check state
+  esp_a2d_connection_state_t state = a2dp_sink.get_connection_state();
+  if (last_state != state){
+    digitalWrite(LED_BUILTIN, state == ESP_A2D_CONNECTION_STATE_CONNECTED);
+    last_state = state;
+  }
+  delay(1000);
+
 }

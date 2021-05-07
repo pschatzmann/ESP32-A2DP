@@ -211,7 +211,9 @@ class BluetoothA2DPSink {
     // avrc event handler 
     virtual void av_hdl_avrc_evt(uint16_t event, void *p_param);
 
-	  void connect_to_last_device();
+	void connect_to_last_device();
+    // change the scan mode
+    void set_scan_mode_connectable(bool connectable);
 
 };
 

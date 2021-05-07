@@ -57,7 +57,9 @@ void loop() {
   // check state
   esp_a2d_connection_state_t state = a2dp_sink.get_connection_state();
   if (last_state != state){
-    digitalWrite(LED_BUILTIN, state == ESP_A2D_CONNECTION_STATE_CONNECTED);
+    bool is_connected = state == ESP_A2D_CONNECTION_STATE_CONNECTED;
+    Serial.println(is_connected ? "Connected" : "Not connected");    
+    digitalWrite(LED_BUILTIN, is_connected);
     last_state = state;
   }
   delay(1000);

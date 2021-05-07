@@ -204,6 +204,10 @@ esp_a2d_connection_state_t BluetoothA2DPSink::get_connection_state() {
     return connection_state;
 }
 
+bool BluetoothA2DPSink::isConnected() {
+    return connection_state == ESP_A2D_CONNECTION_STATE_CONNECTED;
+}
+
 esp_a2d_mct_t BluetoothA2DPSink::get_audio_type() {
     return audio_type;
 }
@@ -289,7 +293,7 @@ void BluetoothA2DPSink::app_task_handler(void *arg)
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
     app_msg_t msg;
     while (true) {
-        if (app_task_queue==NULL){
+        if (!app_task_queue){
             ESP_LOGE(BT_APP_CORE_TAG, "%s, app_task_queue is null", __func__);
             delay(100);
         } else if (pdTRUE == xQueueReceive(app_task_queue, &msg, (portTickType)portMAX_DELAY)) {
@@ -465,17 +469,21 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
             audio_type = esp_a2d_callback_param->audio_cfg.mcc.type;
             a2d = (esp_a2d_cb_param_t *)(p_param);
             ESP_LOGI(BT_AV_TAG, "a2dp audio_cfg_cb , codec type %d", a2d->audio_cfg.mcc.type);
+
+            // determine sample rate
+            i2s_config.sample_rate = 16000;
+            char oct0 = a2d->audio_cfg.mcc.cie.sbc[0];
+            if (oct0 & (0x01 << 6)) {
+                i2s_config.sample_rate = 32000;
+            } else if (oct0 & (0x01 << 5)) {
+                i2s_config.sample_rate = 44100;
+            } else if (oct0 & (0x01 << 4)) {
+                i2s_config.sample_rate = 48000;
+            }
+            ESP_LOGI(BT_AV_TAG, "a2dp audio_cfg_cb , sample_rate %d", i2s_config.sample_rate );
+
             // for now only SBC stream is supported
             if (is_i2s_output && a2d->audio_cfg.mcc.type == ESP_A2D_MCT_SBC) {
-                i2s_config.sample_rate = 16000;
-                char oct0 = a2d->audio_cfg.mcc.cie.sbc[0];
-                if (oct0 & (0x01 << 6)) {
-                    i2s_config.sample_rate = 32000;
-                } else if (oct0 & (0x01 << 5)) {
-                    i2s_config.sample_rate = 44100;
-                } else if (oct0 & (0x01 << 4)) {
-                    i2s_config.sample_rate = 48000;
-                }
                 
                 i2s_set_clk(i2s_port, i2s_config.sample_rate, i2s_config.bits_per_sample, (i2s_channel_t)2);
 
@@ -493,6 +501,11 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
             break;
     }
 }
+
+uint16_t BluetoothA2DPSink::sample_rate(){
+    return i2s_config.sample_rate;
+}
+
 
 #ifdef CURRENT_ESP_IDF
 void BluetoothA2DPSink::set_discoverability(esp_bt_discovery_mode_t d) {
@@ -699,12 +712,14 @@ void BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) {
     }
 
    
-   if (stream_reader!=NULL){
-   	  stream_reader(data, len);
+   if (stream_reader!=nullptr){
+        ESP_LOGD(BT_AV_TAG, "stream_reader");
+   	    (*stream_reader)(data, len);
    }
    
-   if (data_received!=NULL){
-   	  data_received();
+   if (data_received!=nullptr){
+        ESP_LOGD(BT_AV_TAG, "data_received");
+   	    (*data_received)();
    }
 }
 

@@ -209,6 +209,13 @@ OneChannelSoundData(int16_t *data, int32_t len, bool loop=false, ChannelInfo cha
 
 ```
 
+## Architecture / Dependencies  
+
+The current code is purely dependent on the ESP-IDF (which is also provided by the Arduino ESP32 core). There are no other dependencies and this includes the Arduino API! 
+
+This restriction limits the provided examples. Please have a look at the [audio-tools](https://github.com/pschatzmann/arduino-audio-tools) project: There I demonstrate e.g. how to connect different microphones, use SD cards and different Audio File Formats.
+
+
 ## Documentation
 
 The class documentation can be found [here](https://pschatzmann.github.io/ESP32-A2DP/doc/html/annotated.html)
@@ -225,12 +232,6 @@ git clone pschatzmann/ESP32-A2DP.git
 If you are using a current version of ESP IDF, you will receive compile errors like `'ESP_BT_SCAN_MODE_CONNECTABLE_DISCOVERABLE' was not declared in this scope`. To use the new API you can uncomment `#define CURRENT_ESP_IDF` in `src/BluetoothA2DPCommon.h`
 
 
-## Architecture / Dependencies  
-
-The current code is purely dependent on the ESP-IDF (which is also provided by the Arduino ESP32 core). There are no other dependencies and this includes the Arduino API! 
-
-This restriction limits the provided examples. Please have a look at the [audio-tools](https://github.com/pschatzmann/arduino-audio-tools) project: There I demonstrate e.g. how to connect different microphones, use SD cards and different Audio File Formats.
-
 
 ## Change History
 
@@ -239,8 +240,9 @@ Master
 - provide end() method to shut down bluetooth
 - add compile time switch for new ESP IDF
 - provide set_discoverability() to change BT discovery mode (only for current ESP IDF)
-- add additional flag in set_stream_reader to stop output to i2s 
-- Remove includes of Arduino.h
+- add additional flag in set_stream_reader to deactivate i2s 
+- Remove includes of Arduino.h to highlight independence of Arduino API
+- New examples with LED and auto shut down on idle
 
 V.1.2.0
 - Metadata support with the help of a callback function - Thanks to [JohnyMielony](https://github.com/JohnyMielony)

@@ -282,20 +282,25 @@ void BluetoothA2DPSource::bt_app_task_handler(void *arg)
 {
     app_msg_t msg;
     for (;;) {
-        if (pdTRUE == xQueueReceive(s_bt_app_task_queue, &msg, (portTickType)portMAX_DELAY)) {
-            ESP_LOGD(BT_APP_CORE_TAG, "%s, sig 0x%x, 0x%x", __func__, msg.sig, msg.event);
-            switch (msg.sig) {
-            case BT_APP_SIG_WORK_DISPATCH:
-                bt_app_work_dispatched(&msg);
-                break;
-            default:
-                ESP_LOGW(BT_APP_CORE_TAG, "%s, unhandled sig: %d", __func__, msg.sig);
-                break;
-            } // switch (msg.sig)
+        if (s_bt_app_task_queue){
+            if (pdTRUE == xQueueReceive(s_bt_app_task_queue, &msg, (portTickType)portMAX_DELAY)) {
+                ESP_LOGD(BT_APP_CORE_TAG, "%s, sig 0x%x, 0x%x", __func__, msg.sig, msg.event);
+                switch (msg.sig) {
+                case BT_APP_SIG_WORK_DISPATCH:
+                    bt_app_work_dispatched(&msg);
+                    break;
+                default:
+                    ESP_LOGW(BT_APP_CORE_TAG, "%s, unhandled sig: %d", __func__, msg.sig);
+                    break;
+                } // switch (msg.sig)
 
-            if (msg.param) {
-                free(msg.param);
+                if (msg.param) {
+                    free(msg.param);
+                }
             }
+        } else {
+            ESP_LOGE(BT_APP_CORE_TAG, "%s xQueue not available", __func__);
+            delay(100);
         }
     }
 }
@@ -319,7 +324,6 @@ void BluetoothA2DPSource::bt_app_task_shut_down(void)
     }
 }
 
-
 char *BluetoothA2DPSource::bda2str(esp_bd_addr_t bda, char *str, size_t size)
 {
     if (bda == NULL || str == NULL || size < 18) {
@@ -331,7 +335,6 @@ char *BluetoothA2DPSource::bda2str(esp_bd_addr_t bda, char *str, size_t size)
             p[0], p[1], p[2], p[3], p[4], p[5]);
     return str;
 }
-
 
 bool BluetoothA2DPSource::get_name_from_eir(uint8_t *eir, uint8_t *bdname, uint8_t *bdname_len)
 {
@@ -878,8 +881,6 @@ void BluetoothA2DPSource::bt_av_hdl_avrc_ct_evt(uint16_t event, void *p_param)
         break;
     }
 }
-
-
 
 bool BluetoothA2DPSource::hasSoundData() {
     return this->has_sound_data;

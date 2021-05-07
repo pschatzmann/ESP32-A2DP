@@ -110,6 +110,9 @@ class BluetoothA2DPSink {
     /// Determine the connection state
     virtual esp_a2d_connection_state_t get_connection_state();
 
+    /// Returns true if the state is connected
+    virtual bool isConnected();
+
     /// Determine the actuall audio type
     virtual esp_a2d_mct_t get_audio_type();
 
@@ -135,6 +138,8 @@ class BluetoothA2DPSink {
     /// AVRC previouse
     virtual void previous();
 
+    uint16_t sample_rate();
+
 #ifdef CURRENT_ESP_IDF
     // Bluetooth discoverability
     virtual void set_discoverability(esp_bt_discovery_mode_t d);
@@ -158,11 +163,11 @@ class BluetoothA2DPSink {
     esp_a2d_audio_state_t audio_state;
     esp_a2d_connection_state_t connection_state;
     esp_a2d_mct_t audio_type;
-    void (*data_received)() = NULL;
-    void (*stream_reader)(const uint8_t*, uint32_t) = NULL;
-    void (*avrc_metadata_callback)(uint8_t, const uint8_t*) = NULL;
+    void (*data_received)() = nullptr;
+    void (*stream_reader)(const uint8_t*, uint32_t) = nullptr;
+    void (*avrc_metadata_callback)(uint8_t, const uint8_t*) = nullptr;
     bool is_auto_reconnect;
-	  esp_bd_addr_t last_connection = {NULL};
+	esp_bd_addr_t last_connection = {NULL};
     bool is_i2s_output = true;
 #ifdef CURRENT_ESP_IDF
     esp_bt_discovery_mode_t discoverability = ESP_BT_GENERAL_DISCOVERABLE;

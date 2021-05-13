@@ -845,11 +845,11 @@ extern "C" void app_rc_ct_callback_2(esp_avrc_ct_cb_event_t event, esp_avrc_ct_c
 #ifdef CURRENT_ESP_IDF
 void BluetoothA2DPSink::set_scan_mode_connectable(bool connectable) {
     if (connectable){
-        if (esp_bt_gap_set_scan_mode(ESP_BT_CONNECTABLE, discoverability)!=ESP_OK){
+        if (esp_bt_gap_set_scan_mode(ESP_BT_CONNECTABLE, discoverability)!=ESP_OK) {
             ESP_LOGE(BT_AV_TAG,"esp_bt_gap_set_scan_mode");            
         } 
     } else {
-        if (esp_bt_gap_set_scan_mode(ESP_BT_NON_CONNECTABLE, ESP_BT_NON_DISCOVERABLE);
+        if (esp_bt_gap_set_scan_mode(ESP_BT_NON_CONNECTABLE, ESP_BT_NON_DISCOVERABLE)) {
             ESP_LOGE(BT_AV_TAG,"esp_bt_gap_set_scan_mode");            
         }    
     }

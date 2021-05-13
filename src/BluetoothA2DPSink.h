@@ -137,6 +137,8 @@ class BluetoothA2DPSink {
     virtual void next();
     /// AVRC previouse
     virtual void previous();
+    
+    virtual void set_mono_downmix(bool enabled) { mono_downmix = enabled; }
 
     uint16_t sample_rate();
 
@@ -167,8 +169,9 @@ class BluetoothA2DPSink {
     void (*stream_reader)(const uint8_t*, uint32_t) = nullptr;
     void (*avrc_metadata_callback)(uint8_t, const uint8_t*) = nullptr;
     bool is_auto_reconnect;
-	esp_bd_addr_t last_connection = {NULL};
+    esp_bd_addr_t last_connection = {NULL};
     bool is_i2s_output = true;
+    bool mono_downmix = false;
 #ifdef CURRENT_ESP_IDF
     esp_bt_discovery_mode_t discoverability = ESP_BT_GENERAL_DISCOVERABLE;
 #endif

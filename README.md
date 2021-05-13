@@ -243,6 +243,7 @@ Master
 - add additional flag in set_stream_reader to deactivate i2s 
 - Remove includes of Arduino.h to highlight independence of Arduino API
 - New examples with LED and auto shut down on idle
+- Implement mono downmix
 
 V.1.2.0
 - Metadata support with the help of a callback function - Thanks to [JohnyMielony](https://github.com/JohnyMielony)

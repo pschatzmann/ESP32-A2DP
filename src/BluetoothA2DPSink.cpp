@@ -658,9 +658,22 @@ void BluetoothA2DPSink::app_a2d_callback(esp_a2d_cb_event_t event, esp_a2d_cb_pa
     }
 }
 
-
 void BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
+
+    if (mono_downmix) {
+        uint8_t* corr_data = (uint8_t*) data;
+        for (int i=0; i<len/4; i++) {
+            int16_t pcmLeft = ((uint16_t)data[i*4 + 1] << 8) | data[i*4];
+            int16_t pcmRight = ((uint16_t)data[i*4 + 3] << 8) | data[i*4 + 2];
+            int16_t mono = ((int32_t)pcmLeft + pcmRight) >> 1;
+            uint16_t out = mono >> 1;
+            corr_data[i*4+1] = mono >> 8;
+            corr_data[i*4] = mono;
+            corr_data[i*4+3] = mono >> 8;
+            corr_data[i*4+2] = mono;
+        }
+    }
 
     if (is_i2s_output) {
         // special case for internal DAC output, the incomming PCM buffer needs 

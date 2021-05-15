@@ -667,12 +667,16 @@ void BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) {
             int16_t pcmLeft = ((uint16_t)data[i*4 + 1] << 8) | data[i*4];
             int16_t pcmRight = ((uint16_t)data[i*4 + 3] << 8) | data[i*4 + 2];
             int16_t mono = ((int32_t)pcmLeft + pcmRight) >> 1;
-            uint16_t out = mono >> 1;
             corr_data[i*4+1] = mono >> 8;
             corr_data[i*4] = mono;
             corr_data[i*4+3] = mono >> 8;
             corr_data[i*4+2] = mono;
         }
+    }
+    
+    if (stream_reader!=nullptr){
+        ESP_LOGD(BT_AV_TAG, "stream_reader");
+ 	      (*stream_reader)(data, len);
     }
 
     if (is_i2s_output) {
@@ -701,12 +705,6 @@ void BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) {
         }
     }
 
-   
-   if (stream_reader!=nullptr){
-        ESP_LOGD(BT_AV_TAG, "stream_reader");
-   	    (*stream_reader)(data, len);
-   }
-   
    if (data_received!=nullptr){
         ESP_LOGD(BT_AV_TAG, "data_received");
    	    (*data_received)();

@@ -236,6 +236,7 @@ If you are using a current version of ESP IDF, you will receive compile errors l
 ## Change History
 
 Master
+- Clean up compile warnings so that build with warnings ALL will succeed
 - provide get_connection_status() method
 - provide end() method to shut down bluetooth
 - add compile time switch for new ESP IDF

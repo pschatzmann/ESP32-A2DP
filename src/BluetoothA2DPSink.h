@@ -99,7 +99,7 @@ class BluetoothA2DPSink {
     virtual void set_i2s_config(i2s_config_t i2s_config);
 
     /// starts the I2S bluetooth sink with the inidicated name
-    virtual void start(char* name, bool auto_reconect=true);
+    virtual void start(const char* name, bool auto_reconect=true);
 
     /// starts the I2S bluetooth sink with the inidicated name - if you release the memory a future start is not possible
     virtual void end(bool release_memory=false);
@@ -157,7 +157,7 @@ class BluetoothA2DPSink {
     xTaskHandle app_task_handle;
     i2s_config_t i2s_config;
     i2s_pin_config_t pin_config;    
-    char * bt_name;
+    const char * bt_name;
     uint32_t m_pkt_cnt = 0;
     esp_a2d_audio_state_t m_audio_state = ESP_A2D_AUDIO_STATE_STOPPED;
     const char *m_a2d_conn_state_str[4] = {"Disconnected", "Connecting", "Connected", "Disconnecting"};
@@ -169,7 +169,7 @@ class BluetoothA2DPSink {
     void (*stream_reader)(const uint8_t*, uint32_t) = nullptr;
     void (*avrc_metadata_callback)(uint8_t, const uint8_t*) = nullptr;
     bool is_auto_reconnect;
-    esp_bd_addr_t last_connection = {NULL};
+    esp_bd_addr_t last_connection = {0};
     bool is_i2s_output = true;
     bool mono_downmix = false;
 #ifdef CURRENT_ESP_IDF
@@ -217,6 +217,8 @@ class BluetoothA2DPSink {
 	void connect_to_last_device();
     // change the scan mode
     void set_scan_mode_connectable(bool connectable);
+    // check if last connectioin is defined
+    bool has_last_connection();
 
 };
 

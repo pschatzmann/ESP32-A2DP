@@ -509,7 +509,7 @@ void BluetoothA2DPSource::bt_av_hdl_stack_evt(uint16_t event, void *p_param)
     switch (event) {
         case BT_APP_EVT_STACK_UP: {
             /* set up device name */
-            char *dev_name = "ESP_A2DP_SRC";
+            const char *dev_name = "ESP_A2DP_SRC";
             esp_bt_dev_set_device_name(dev_name);
 
             /* register GAP callback function */
@@ -897,9 +897,9 @@ int32_t BluetoothA2DPSource::get_data_default(uint8_t *data, int32_t len) {
     uint32_t result_len;
     if (hasSoundData()) {
         result_len = sound_data->get2ChannelData(sound_data_current_pos, len, data);
-        if (result_len!=512)
+        if (result_len!=512) {
             ESP_LOGD(BT_APP_TAG, "=> len: %d / result_len: %d", len, result_len);
-        
+        }
         // calculate next position
         sound_data_current_pos+=result_len;
         if (result_len<=0){

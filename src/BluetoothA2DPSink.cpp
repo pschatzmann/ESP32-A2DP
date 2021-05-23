@@ -146,7 +146,7 @@ void BluetoothA2DPSink::set_on_data_received(void (*callBack)()){
 /** 
  * Main function to start the Bluetooth Processing
  */
-void BluetoothA2DPSink::start(char* name, bool auto_reconnect)
+void BluetoothA2DPSink::start(const char* name, bool auto_reconnect)
 {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
     //store parameters
@@ -238,6 +238,7 @@ int BluetoothA2DPSink::init_bluetooth()
     }
     ESP_LOGI(BT_AV_TAG,"bluedroid enabled"); 
   }
+  return true;
 }
 
 bool BluetoothA2DPSink::app_work_dispatch(app_callback_t p_cback, uint16_t event, void *p_params, int param_len)
@@ -390,6 +391,7 @@ void  BluetoothA2DPSink::app_rc_ct_callback(esp_avrc_ct_cb_event_t event, esp_av
         }
 }
 
+
 void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
 {
     ESP_LOGD(BT_AV_TAG, "%s evt %d", __func__, event);
@@ -409,12 +411,12 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
                     i2s_stop(i2s_port);
                     i2s_zero_dma_buffer(i2s_port);
                 }
-                if (is_auto_reconnect && *last_connection!=NULL) {
-                    if ( ( *last_connection != NULL ) && connection_rety_count < AUTOCONNECT_TRY_NUM ){
+                if (is_auto_reconnect && has_last_connection()) {
+                    if ( has_last_connection()  && connection_rety_count < AUTOCONNECT_TRY_NUM ){
                         ESP_LOGI(BT_AV_TAG,"Connection try number: %d", connection_rety_count);
                         connect_to_last_device();
                     } else {
-                        if ( *last_connection != NULL && a2d->conn_stat.disc_rsn == ESP_A2D_DISC_RSN_NORMAL ){
+                        if ( has_last_connection() && a2d->conn_stat.disc_rsn == ESP_A2D_DISC_RSN_NORMAL ){
                             clean_last_connection();
                         }
                         set_scan_mode_connectable(true);
@@ -604,7 +606,7 @@ void BluetoothA2DPSink::av_hdl_stack_evt(uint16_t event, void *p_param)
             if (esp_a2d_sink_init()!=ESP_OK){
                 ESP_LOGE(BT_AV_TAG,"esp_a2d_sink_init");            
             }
-            if (is_auto_reconnect && *last_connection != NULL ) {
+            if (is_auto_reconnect && has_last_connection() ) {
                 ESP_LOGD(BT_AV_TAG, "connect_to_last_device");
                 connect_to_last_device();
             }
@@ -721,21 +723,33 @@ void BluetoothA2DPSink::init_nvs(){
     ESP_ERROR_CHECK( err );
 }
 
+bool BluetoothA2DPSink::has_last_connection() {  
+    return last_connection[0] != 0;
+}
+
 void BluetoothA2DPSink::get_last_connection(){
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
     nvs_handle my_handle;
     esp_err_t err;
     
     err = nvs_open("connected_bda", NVS_READWRITE, &my_handle);
-    if (err != ESP_OK) ESP_LOGE("NVS OPEN ERROR");
+    if (err != ESP_OK) {
+         ESP_LOGE("NVS OPEN ERROR");
+    }
 
     esp_bd_addr_t bda;
     size_t size = sizeof(bda);
     err = nvs_get_blob(my_handle, "last_bda", bda, &size);
-    if ( err != ESP_OK) ESP_LOGE(BT_AV_TAG, "ERROR GETTING NVS BLOB");
-    if ( err == ESP_ERR_NVS_NOT_FOUND ) ESP_LOGE(BT_AV_TAG, "NVS NOT FOUND");
+    if ( err != ESP_OK) { 
+        ESP_LOGE(BT_AV_TAG, "ERROR GETTING NVS BLOB");
+    }
+    if ( err == ESP_ERR_NVS_NOT_FOUND ) {
+        ESP_LOGE(BT_AV_TAG, "NVS NOT FOUND");
+    }
     nvs_close(my_handle);
-    if (err == ESP_OK) memcpy(last_connection,bda,size);
+    if (err == ESP_OK) {
+        memcpy(last_connection,bda,size);
+    } 
 }
 
 void BluetoothA2DPSink::set_last_connection(esp_bd_addr_t bda, size_t size){
@@ -745,25 +759,34 @@ void BluetoothA2DPSink::set_last_connection(esp_bd_addr_t bda, size_t size){
 	esp_err_t err;
 	
 	err = nvs_open("connected_bda", NVS_READWRITE, &my_handle);
-	if (err != ESP_OK) ESP_LOGE("NVS OPEN ERROR");
+	if (err != ESP_OK){
+         ESP_LOGE("NVS OPEN ERROR");
+    }
 	err = nvs_set_blob(my_handle, "last_bda", bda, size);
-	if (err == ESP_OK) err = nvs_commit(my_handle);
-	else ESP_LOGE(BT_AV_TAG, "NVS WRITE ERROR");
-	if (err != ESP_OK) ESP_LOGE(BT_AV_TAG, "NVS COMMIT ERROR");
+	if (err == ESP_OK) {
+        err = nvs_commit(my_handle);
+    } else {
+        ESP_LOGE(BT_AV_TAG, "NVS WRITE ERROR");
+    }
+	if (err != ESP_OK) {
+        ESP_LOGE(BT_AV_TAG, "NVS COMMIT ERROR");
+    }
 	nvs_close(my_handle);
 	memcpy(last_connection,bda,size);
 }
 
 void BluetoothA2DPSink::clean_last_connection() {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
-    esp_bd_addr_t cleanBda = {NULL};
+    esp_bd_addr_t cleanBda = { 0 };
     set_last_connection(cleanBda, sizeof(cleanBda));
 }
 
 void BluetoothA2DPSink::connect_to_last_device(){
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
 	esp_err_t status = esp_a2d_sink_connect(last_connection);
-	if ( status == ESP_FAIL ) ESP_LOGE(BT_AV_TAG,"Failed connecting to device!");
+	if ( status == ESP_FAIL ){
+        ESP_LOGE(BT_AV_TAG,"Failed connecting to device!");
+    } 
 }
 
 void BluetoothA2DPSink::execute_avrc_command(int cmd){

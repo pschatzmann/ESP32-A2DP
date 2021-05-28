@@ -25,12 +25,11 @@ void setup() {
 void loop() {
 }
 ```
-This creates a new Bluetooth device with the name “MyMusic” and the output will be sent to the following default I2S pins:
-– bck_io_num = 26,
-– ws_io_num = 25,
-– data_out_num = 22,
+This creates a new Bluetooth device with the name “MyMusic” and the output will be sent to the following default I2S pins which need to be conected to an external DAC:
+- bck_io_num = 26
+- ws_io_num = 25
+- data_out_num = 22
 
-which need to be conected to an external DAC. 
 
 ### Defining Pins
 

@@ -32,7 +32,7 @@ This creates a new Bluetooth device with the name “MyMusic” and the output w
 
 which need to be conected to an external DAC. 
 
-### A Simple I2S Example (A2DS Sink) indicating pins
+### Defining Pins
 
 You can define your own pins easily by calling the ```set_pin_config``` method in the setup before the ```start```.
 

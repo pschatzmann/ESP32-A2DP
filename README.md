@@ -10,7 +10,7 @@ Unfortunately this example did not make me happy so I decided to convert it into
 
 ## A2DP Sink
 
-### A Simple I2S Example (A2DS Sink)
+### A Simple I2S Example (A2DS Sink) using default Pins
 Here is the simplest example which just uses the proper default settings:
 
 ```
@@ -30,7 +30,32 @@ This creates a new Bluetooth device with the name “MyMusic” and the output w
 – ws_io_num = 25,
 – data_out_num = 22,
 
-which need to be conected to an external DAC. You can define your own pins easily by calling the set_pin_config method.
+which need to be conected to an external DAC. 
+
+### A Simple I2S Example (A2DS Sink) indicating pins
+
+You can define your own pins easily by calling the ```set_pin_config``` method in the setup before the ```start```.
+
+```
+#include "BluetoothA2DPSink.h"
+
+BluetoothA2DPSink a2dp_sink;
+
+void setup() {
+    i2s_pin_config_t my_pin_config = {
+        .bck_io_num = 26,
+        .ws_io_num = 25,
+        .data_out_num = 22,
+        .data_in_num = I2S_PIN_NO_CHANGE
+    };
+    a2dp_sink.set_pin_config(my_pin_config);
+    a2dp_sink.start("MyMusic");
+}
+
+void loop() {
+}
+```
+
 
 ### Output to the Internal DAC
 You can also send the output directly to the internal DAC of the ESP32 by providing the corresponding i2s_config:
@@ -236,7 +261,6 @@ If you are using a current version of ESP IDF, you will receive compile errors l
 ## Change History
 
 Master
-- Clean up compile warnings so that build with warnings ALL will succeed
 - provide get_connection_status() method
 - provide end() method to shut down bluetooth
 - add compile time switch for new ESP IDF
@@ -245,6 +269,8 @@ Master
 - Remove includes of Arduino.h to highlight independence of Arduino API
 - New examples with LED and auto shut down on idle
 - Implement mono downmix
+- Clean up compile warnings so that build with warnings ALL will succeed
+- Example with set_pin_config
 
 V.1.2.0
 - Metadata support with the help of a callback function - Thanks to [JohnyMielony](https://github.com/JohnyMielony)

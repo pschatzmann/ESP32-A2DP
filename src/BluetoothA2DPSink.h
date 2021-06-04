@@ -147,7 +147,7 @@ class BluetoothA2DPSink {
     /// @param src_bits Source audio bit (I2S_BITS_PER_SAMPLE_16BIT)
     ///
     /// @param aim_bits Bit wanted, no more than 32, and must be greater than src_bits
-    void expand_audio_bits_per_sample(size_t aim_bits, size_t src_bits = I2S_BITS_PER_SAMPLE_16BIT);
+    void expand_audio_bits_per_sample(i2s_bits_per_sample_t aim_bits, i2s_bits_per_sample_t src_bits = I2S_BITS_PER_SAMPLE_16BIT);
 
 #ifdef CURRENT_ESP_IDF
     // Bluetooth discoverability

@@ -698,7 +698,7 @@ void BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) {
         }
 
         size_t i2s_bytes_written;
-        if (i2s_write(i2s_port,(void*) data, len, &i2s_bytes_written, portMAX_DELAY)!=ESP_OK){
+        if (i2s_write_expand(i2s_port,(void*) data, len, I2S_BITS_PER_SAMPLE_16BIT, i2s_config.bits_per_sample, &i2s_bytes_written, portMAX_DELAY) != ESP_OK){
             ESP_LOGE(BT_AV_TAG, "i2s_write has failed");    
         }
 

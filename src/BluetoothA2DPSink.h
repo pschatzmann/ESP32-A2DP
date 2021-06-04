@@ -179,7 +179,7 @@ class BluetoothA2DPSink {
     esp_bd_addr_t last_connection = {0};
     bool is_i2s_output = true;
     bool mono_downmix = false;
-    size_t m_src_bits;
+    i2s_bits_per_sample_t m_src_bits;
 #ifdef CURRENT_ESP_IDF
     esp_bt_discovery_mode_t discoverability = ESP_BT_GENERAL_DISCOVERABLE;
 #endif

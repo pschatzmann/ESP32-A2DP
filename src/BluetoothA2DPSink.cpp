@@ -503,16 +503,15 @@ uint16_t BluetoothA2DPSink::sample_rate(){
     return i2s_config.sample_rate;
 }
 
-void BluetoothA2DPSink::expand_audio_bits_per_sample(size_t aim_bits, size_t src_bits)
-{
+void BluetoothA2DPSink::expand_audio_bits_per_sample(i2s_bits_per_sample_t aim_bits, i2s_bits_per_sample_t src_bits) {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
 
     if(is_i2s_output){
         if((src_bits > aim_bits) || (src_bits < I2S_BITS_PER_SAMPLE_16BIT)){
-            ESP_LOGE("param error. src_bits:%d aim_bits:%d", src_bits, aim_bits);
+            ESP_LOGE(BT_AV_TAG, "param error. src_bits:%d aim_bits:%d", src_bits, aim_bits);
             return;
-        } 
-    
+        }
+
         i2s_config.bits_per_sample = aim_bits;
         m_src_bits                 = src_bits;
     }

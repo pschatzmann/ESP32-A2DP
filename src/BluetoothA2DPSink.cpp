@@ -42,7 +42,7 @@ BluetoothA2DPSink::BluetoothA2DPSink() {
         i2s_config = {
             .mode = (i2s_mode_t) (I2S_MODE_MASTER | I2S_MODE_TX),
             .sample_rate = 44100,
-            .bits_per_sample = (i2s_bits_per_sample_t)16,
+            .bits_per_sample = (i2s_bits_per_sample_t)I2S_BITS_PER_SAMPLE_16BIT,
             .channel_format = I2S_CHANNEL_FMT_RIGHT_LEFT,
             .communication_format = (i2s_comm_format_t) (I2S_COMM_FORMAT_I2S | I2S_COMM_FORMAT_I2S_MSB),
             .intr_alloc_flags = 0, // default interrupt priority
@@ -58,6 +58,9 @@ BluetoothA2DPSink::BluetoothA2DPSink() {
             .data_out_num = 22,
             .data_in_num = I2S_PIN_NO_CHANGE
         };
+
+        //default no expanding bits per sample
+        expand_audio_bits_per_sample(I2S_BITS_PER_SAMPLE_16BIT);
     }
 }
 
@@ -500,6 +503,20 @@ uint16_t BluetoothA2DPSink::sample_rate(){
     return i2s_config.sample_rate;
 }
 
+void BluetoothA2DPSink::expand_audio_bits_per_sample(size_t aim_bits, size_t src_bits)
+{
+    ESP_LOGD(BT_AV_TAG, "%s", __func__);
+
+    if(is_i2s_output){
+        if((src_bits > aim_bits) || (src_bits < I2S_BITS_PER_SAMPLE_16BIT)){
+            ESP_LOGE("param error. src_bits:%d aim_bits:%d", src_bits, aim_bits);
+            return;
+        } 
+    
+        i2s_config.bits_per_sample = aim_bits;
+        m_src_bits                 = src_bits;
+    }
+}
 
 void BluetoothA2DPSink::av_new_track()
 {
@@ -698,8 +715,8 @@ void BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) {
         }
 
         size_t i2s_bytes_written;
-        if (i2s_write_expand(i2s_port,(void*) data, len, I2S_BITS_PER_SAMPLE_16BIT, i2s_config.bits_per_sample, &i2s_bytes_written, portMAX_DELAY) != ESP_OK){
-            ESP_LOGE(BT_AV_TAG, "i2s_write has failed");    
+        if (i2s_write_expand(i2s_port,(void*) data, len, m_src_bits, i2s_config.bits_per_sample, &i2s_bytes_written, portMAX_DELAY) != ESP_OK){
+            ESP_LOGE(BT_AV_TAG, "i2s_write_expand has failed");    
         }
 
         if (i2s_bytes_written<len){

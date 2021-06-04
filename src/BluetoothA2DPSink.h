@@ -142,6 +142,13 @@ class BluetoothA2DPSink {
 
     uint16_t sample_rate();
 
+    /// @brief Expanding the number of bits per sample. 
+    ///        For example, expanding 16-bit PCM to 32-bit PCM.
+    /// @param src_bits Source audio bit (I2S_BITS_PER_SAMPLE_16BIT)
+    ///
+    /// @param aim_bits Bit wanted, no more than 32, and must be greater than src_bits
+    void expand_audio_bits_per_sample(size_t aim_bits, size_t src_bits = I2S_BITS_PER_SAMPLE_16BIT);
+
 #ifdef CURRENT_ESP_IDF
     // Bluetooth discoverability
     virtual void set_discoverability(esp_bt_discovery_mode_t d);
@@ -172,6 +179,7 @@ class BluetoothA2DPSink {
     esp_bd_addr_t last_connection = {0};
     bool is_i2s_output = true;
     bool mono_downmix = false;
+    size_t m_src_bits;
 #ifdef CURRENT_ESP_IDF
     esp_bt_discovery_mode_t discoverability = ESP_BT_GENERAL_DISCOVERABLE;
 #endif

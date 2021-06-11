@@ -678,7 +678,7 @@ void BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) {
     
     if (stream_reader!=nullptr){
         ESP_LOGD(BT_AV_TAG, "stream_reader");
- 	      (*stream_reader)(data, len);
+ 	    (*stream_reader)(data, len);
     }
 
     if (is_i2s_output) {
@@ -698,8 +698,20 @@ void BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) {
         }
 
         size_t i2s_bytes_written;
-        if (i2s_write(i2s_port,(void*) data, len, &i2s_bytes_written, portMAX_DELAY)!=ESP_OK){
-            ESP_LOGE(BT_AV_TAG, "i2s_write has failed");    
+        if (i2s_config.bits_per_sample==I2S_BITS_PER_SAMPLE_16BIT){
+            // standard logic with 16 bits
+            if (i2s_write(i2s_port,(void*) data, len, &i2s_bytes_written, portMAX_DELAY)!=ESP_OK){
+                ESP_LOGE(BT_AV_TAG, "i2s_write has failed");    
+            }
+        } else {
+            if (i2s_config.bits_per_sample>16){
+                // expand e.g to 32 bit for dacs which do not support 16 bits
+                if (i2s_write_expand(i2s_port,(void*) data, len, I2S_BITS_PER_SAMPLE_16BIT, i2s_config.bits_per_sample, &i2s_bytes_written, portMAX_DELAY) != ESP_OK){
+                    ESP_LOGE(BT_AV_TAG, "i2s_write has failed");    
+                }
+            } else {
+                ESP_LOGE(BT_AV_TAG, "invalid bits_per_sample: %d", i2s_config.bits_per_sample);    
+            }
         }
 
         if (i2s_bytes_written<len){
@@ -707,10 +719,10 @@ void BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) {
         }
     }
 
-   if (data_received!=nullptr){
+    if (data_received!=nullptr){
         ESP_LOGD(BT_AV_TAG, "data_received");
    	    (*data_received)();
-   }
+    }
 }
 
 void BluetoothA2DPSink::init_nvs(){

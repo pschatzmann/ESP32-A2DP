@@ -271,6 +271,7 @@ Master
 - Clean up compile warnings so that build with warnings ALL will succeed
 - Example with set_pin_config
 - bluetooth devices with address starting 00 did not auto reconnect
+- expand to 24 or 32 bits using i2s_config.bits_per_sample
 
 V.1.2.0
 - Metadata support with the help of a callback function - Thanks to [JohnyMielony](https://github.com/JohnyMielony)

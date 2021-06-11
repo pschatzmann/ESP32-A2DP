@@ -724,7 +724,9 @@ void BluetoothA2DPSink::init_nvs(){
 }
 
 bool BluetoothA2DPSink::has_last_connection() {  
-    return last_connection[0] != 0;
+    esp_bd_addr_t empty_connection = {0,0,0,0,0,0};
+    int result = memcmp(last_connection, empty_connection, ESP_BD_ADDR_LEN);
+    return result!=0;
 }
 
 void BluetoothA2DPSink::get_last_connection(){

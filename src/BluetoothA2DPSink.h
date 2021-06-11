@@ -169,7 +169,7 @@ class BluetoothA2DPSink {
     void (*stream_reader)(const uint8_t*, uint32_t) = nullptr;
     void (*avrc_metadata_callback)(uint8_t, const uint8_t*) = nullptr;
     bool is_auto_reconnect;
-    esp_bd_addr_t last_connection = {0};
+    esp_bd_addr_t last_connection = {0,0,0,0,0,0};
     bool is_i2s_output = true;
     bool mono_downmix = false;
 #ifdef CURRENT_ESP_IDF

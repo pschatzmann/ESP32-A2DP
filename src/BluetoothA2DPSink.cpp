@@ -7,7 +7,7 @@
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
+// See the License for the specific language governing permissions andun
 // limitations under the License.
 //
 // Copyright 2020 Phil Schatzmann
@@ -90,6 +90,9 @@ void BluetoothA2DPSink::end(bool release_memory) {
         ESP_LOGI(BT_AV_TAG,"uninstall i2s");
         if (i2s_driver_uninstall(i2s_port) != ESP_OK){
             ESP_LOGE(BT_AV_TAG,"Failed to uninstall i2s");
+        }
+        else {
+            player_init = false;
         }
     }
 
@@ -183,7 +186,9 @@ void BluetoothA2DPSink::start(const char* name, bool auto_reconnect)
         // setup i2s
         if (i2s_driver_install(i2s_port, &i2s_config, 0, NULL) != ESP_OK) {
             ESP_LOGE(BT_AV_TAG,"i2s_driver_install failed");
-        }
+        } else {
+	    player_init = false; //reset player
+	}
 
         // pins are only relevant when music is not sent to internal DAC
         if (i2s_config.mode & I2S_MODE_DAC_BUILT_IN) {
@@ -477,7 +482,7 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
             ESP_LOGI(BT_AV_TAG, "a2dp audio_cfg_cb , sample_rate %d", i2s_config.sample_rate );
 
             // for now only SBC stream is supported
-            if (is_i2s_output && a2d->audio_cfg.mcc.type == ESP_A2D_MCT_SBC) {
+            if (player_init == false && is_i2s_output && a2d->audio_cfg.mcc.type == ESP_A2D_MCT_SBC) {
                 
                 i2s_set_clk(i2s_port, i2s_config.sample_rate, i2s_config.bits_per_sample, (i2s_channel_t)2);
 
@@ -487,6 +492,7 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
                         a2d->audio_cfg.mcc.cie.sbc[2],
                         a2d->audio_cfg.mcc.cie.sbc[3]);
                 ESP_LOGI(BT_AV_TAG, "audio player configured, samplerate=%d", i2s_config.sample_rate);
+		player_init = true; //init finished
             }
             break;
         }

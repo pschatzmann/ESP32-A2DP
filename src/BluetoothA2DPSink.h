@@ -142,10 +142,11 @@ class BluetoothA2DPSink {
     /// Defines the bits per sample for output (if > 16 output will be expanded)
     virtual void set_bits_per_sample(int bps) { i2s_config.bits_per_sample = (i2s_bits_per_sample_t) bps; }
 
+    /// Provides the actually set data rate (in samples per second)
     uint16_t sample_rate();
 
 #ifdef CURRENT_ESP_IDF
-    // Bluetooth discoverability
+    /// Bluetooth discoverability
     virtual void set_discoverability(esp_bt_discovery_mode_t d);
 #endif
 

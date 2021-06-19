@@ -137,13 +137,15 @@ class BluetoothA2DPSink {
     virtual void next();
     /// AVRC previouse
     virtual void previous();
-    
+
+    /// Provide the stereo data as mono
     virtual void set_mono_downmix(bool enabled) { mono_downmix = enabled; }
 
+    /// Provides the actually set data rate (in samples per second)
     uint16_t sample_rate();
 
 #ifdef CURRENT_ESP_IDF
-    // Bluetooth discoverability
+    /// Bluetooth discoverability
     virtual void set_discoverability(esp_bt_discovery_mode_t d);
 #endif
 

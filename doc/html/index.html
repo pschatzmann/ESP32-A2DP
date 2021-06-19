@@ -136,7 +136,7 @@ Output to the Internal DAC</h2>
 <div class="line"> </div>
 <div class="line">void loop() {</div>
 <div class="line">}</div>
-</div><!-- fragment --><p>The output goes now to the DAC pins G26/G27.</p>
+</div><!-- fragment --><p>The output goes now to the DAC pins GPIO25 (Channel 1) and GPIO26 (Channel 2).</p>
 <h2><a class="anchor" id="autotoc_md5"></a>
 Accessing the Sink Data Stream with Callbacks</h2>
 <p>You can be notified when a packet is received:</p>
@@ -266,6 +266,8 @@ Change History</h1>
 <li>Implement mono downmix</li>
 <li>Clean up compile warnings so that build with warnings ALL will succeed</li>
 <li>Example with set_pin_config</li>
+<li>bluetooth devices with address starting 00 did not auto reconnect</li>
+<li>expand to 24 or 32 bits using i2s_config.bits_per_sample</li>
 </ul>
 <p>V.1.2.0</p><ul>
 <li>Metadata support with the help of a callback function - Thanks to <a href="https://github.com/JohnyMielony">JohnyMielony</a></li>

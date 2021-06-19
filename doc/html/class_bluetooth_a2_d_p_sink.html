@@ -155,8 +155,12 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="separator:a341024c18eabdb06c734c2242d5ba505"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a624040cce89a4a2f66495f57db6c1457"><td class="memItemLeft" align="right" valign="top"><a id="a624040cce89a4a2f66495f57db6c1457"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a624040cce89a4a2f66495f57db6c1457">set_mono_downmix</a> (bool enabled)</td></tr>
-<tr class="memdesc:a624040cce89a4a2f66495f57db6c1457"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provide the stereo data as mono. <br /></td></tr>
+<tr class="memdesc:a624040cce89a4a2f66495f57db6c1457"><td class="mdescLeft">&#160;</td><td class="mdescRight">mix stereo into single mono signal <br /></td></tr>
 <tr class="separator:a624040cce89a4a2f66495f57db6c1457"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ebe4927600f29318133b5f11e0ab7f8"><td class="memItemLeft" align="right" valign="top"><a id="a9ebe4927600f29318133b5f11e0ab7f8"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a9ebe4927600f29318133b5f11e0ab7f8">set_bits_per_sample</a> (int bps)</td></tr>
+<tr class="memdesc:a9ebe4927600f29318133b5f11e0ab7f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the bits per sample for output (if &gt; 16 output will be expanded) <br /></td></tr>
+<tr class="separator:a9ebe4927600f29318133b5f11e0ab7f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a09a8b269e2a936c5517bd9f88f666a1c"><td class="memItemLeft" align="right" valign="top"><a id="a09a8b269e2a936c5517bd9f88f666a1c"></a>
 uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a09a8b269e2a936c5517bd9f88f666a1c">sample_rate</a> ()</td></tr>
 <tr class="memdesc:a09a8b269e2a936c5517bd9f88f666a1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides the actually set data rate (in samples per second) <br /></td></tr>
@@ -294,7 +298,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><b>avrc_metadata_callb
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_auto_reconnect</b></td></tr>
 <tr class="separator:a634e484429840251133a5b325827a0a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3876468af1c4bd60ef18aadfe63a1064"><td class="memItemLeft" align="right" valign="top"><a id="a3876468af1c4bd60ef18aadfe63a1064"></a>
-esp_bd_addr_t&#160;</td><td class="memItemRight" valign="bottom"><b>last_connection</b> = {0}</td></tr>
+esp_bd_addr_t&#160;</td><td class="memItemRight" valign="bottom"><b>last_connection</b> = {0,0,0,0,0,0}</td></tr>
 <tr class="separator:a3876468af1c4bd60ef18aadfe63a1064"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3046175ecb053f03df6596775ccfa560"><td class="memItemLeft" align="right" valign="top"><a id="a3046175ecb053f03df6596775ccfa560"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_i2s_output</b> = true</td></tr>

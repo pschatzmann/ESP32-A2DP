@@ -272,6 +272,7 @@ Master
 - Example with set_pin_config
 - bluetooth devices with address starting 00 did not auto reconnect
 - expand to 24 or 32 bits using i2s_config.bits_per_sample
+- Correction which allows restart after calling end() thanks to [alexus2033](https://github.com/alexus2033)
 
 V.1.2.0
 - Metadata support with the help of a callback function - Thanks to [JohnyMielony](https://github.com/JohnyMielony)

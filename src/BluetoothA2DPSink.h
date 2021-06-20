@@ -174,6 +174,7 @@ class BluetoothA2DPSink {
     bool is_auto_reconnect;
     esp_bd_addr_t last_connection = {0,0,0,0,0,0};
     bool is_i2s_output = true;
+    bool player_init = false;
     bool mono_downmix = false;
 #ifdef CURRENT_ESP_IDF
     esp_bt_discovery_mode_t discoverability = ESP_BT_GENERAL_DISCOVERABLE;

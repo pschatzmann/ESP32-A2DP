@@ -48,7 +48,8 @@ BluetoothA2DPSink::BluetoothA2DPSink() {
             .intr_alloc_flags = 0, // default interrupt priority
             .dma_buf_count = 8,
             .dma_buf_len = 64,
-            .use_apll = false
+            .use_apll = false,
+            .tx_desc_auto_clear = true // avoiding noise in case of data unavailability
         };
 
         // setup default pins

@@ -75,13 +75,8 @@ void BluetoothA2DPSink::disconnect()
     {
         ESP_LOGE(BT_AV_TAG, "Failed disconnecting to device!");
     }
-    // clean_last_connection();
-
-    // ESP_LOGI(BT_AV_TAG, "deinit avrc");
-    // if (esp_avrc_ct_deinit() != ESP_OK)
-    // {
-    //     ESP_LOGE(BT_AV_TAG, "Failed to deinit avrc");
-    // }
+    // reconnect should not work after end
+    clean_last_connection();
 }
 
 void BluetoothA2DPSink::end(bool release_memory) {

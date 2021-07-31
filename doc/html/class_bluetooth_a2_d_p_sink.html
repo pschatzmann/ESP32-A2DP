@@ -103,8 +103,12 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="separator:a8d6eae21dcf699b671b897f53498eaa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a91e49987a2e39c09fc6c2a64feaed6"><td class="memItemLeft" align="right" valign="top"><a id="a5a91e49987a2e39c09fc6c2a64feaed6"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a5a91e49987a2e39c09fc6c2a64feaed6">end</a> (bool release_memory=false)</td></tr>
-<tr class="memdesc:a5a91e49987a2e39c09fc6c2a64feaed6"><td class="mdescLeft">&#160;</td><td class="mdescRight">starts the I2S bluetooth sink with the inidicated name - if you release the memory a future start is not possible <br /></td></tr>
+<tr class="memdesc:a5a91e49987a2e39c09fc6c2a64feaed6"><td class="mdescLeft">&#160;</td><td class="mdescRight">ends the I2S bluetooth sink with the indicated name - if you release the memory a future start is not possible <br /></td></tr>
 <tr class="separator:a5a91e49987a2e39c09fc6c2a64feaed6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d068787d5fbd7a462be743bb7b8cca3"><td class="memItemLeft" align="right" valign="top"><a id="a6d068787d5fbd7a462be743bb7b8cca3"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a6d068787d5fbd7a462be743bb7b8cca3">disconnect</a> ()</td></tr>
+<tr class="memdesc:a6d068787d5fbd7a462be743bb7b8cca3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disconnects the remote a2d connection, allowing for a reconnection. <br /></td></tr>
+<tr class="separator:a6d068787d5fbd7a462be743bb7b8cca3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af38d68b41544b8f0aba1bafb80f0ac75"><td class="memItemLeft" align="right" valign="top"><a id="af38d68b41544b8f0aba1bafb80f0ac75"></a>
 virtual esp_a2d_audio_state_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#af38d68b41544b8f0aba1bafb80f0ac75">get_audio_state</a> ()</td></tr>
 <tr class="memdesc:af38d68b41544b8f0aba1bafb80f0ac75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine the actual audio state. <br /></td></tr>
@@ -303,6 +307,9 @@ esp_bd_addr_t&#160;</td><td class="memItemRight" valign="bottom"><b>last_connect
 <tr class="memitem:a3046175ecb053f03df6596775ccfa560"><td class="memItemLeft" align="right" valign="top"><a id="a3046175ecb053f03df6596775ccfa560"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_i2s_output</b> = true</td></tr>
 <tr class="separator:a3046175ecb053f03df6596775ccfa560"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3589ffe4b88230d5e4d38c9eae6b67e4"><td class="memItemLeft" align="right" valign="top"><a id="a3589ffe4b88230d5e4d38c9eae6b67e4"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>player_init</b> = false</td></tr>
+<tr class="separator:a3589ffe4b88230d5e4d38c9eae6b67e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a14cb3b2d7baf00deadcc9f5532164c03"><td class="memItemLeft" align="right" valign="top"><a id="a14cb3b2d7baf00deadcc9f5532164c03"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>mono_downmix</b> = false</td></tr>
 <tr class="separator:a14cb3b2d7baf00deadcc9f5532164c03"><td class="memSeparator" colspan="2">&#160;</td></tr>

@@ -104,7 +104,7 @@ class BluetoothA2DPSink {
     /// ends the I2S bluetooth sink with the indicated name - if you release the memory a future start is not possible
     virtual void end(bool release_memory=false);
     
-    /// Disconnects the remote a2d connection, allowing for a reconnection
+    /// Disconnects the current a2d connection, allowing for another device to connect
     virtual void disconnect();
 
     /// Determine the actual audio state

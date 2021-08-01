@@ -242,7 +242,7 @@ This restriction limits the provided examples. Please have a look at the [audio-
 
 ## Documentation
 
-The class documentation can be found [here](https://pschatzmann.github.io/ESP32-A2DP/doc/html/annotated.html)
+The class documentation can be found [here](https://pschatzmann.github.io/ESP32-A2DP/html/annotated.html)
 
 
 ## Installation
@@ -259,7 +259,7 @@ If you are using a current version of ESP IDF, you will receive compile errors l
 
 ## Change History
 
-V.1.3.0
+V1.3.0
 - provide get_connection_status() method
 - provide end() method to shut down bluetooth
 - add compile time switch for new ESP IDF
@@ -276,7 +276,7 @@ V.1.3.0
 - Correction which allows restart after calling end() thanks to [alexus2033](https://github.com/alexus2033)
 - Add method to disconnect current connection thanks to [ashthespy](https://github.com/ashthespy)
 
-V.1.2.0
+V1.2.0
 - Metadata support with the help of a callback function - Thanks to [JohnyMielony](https://github.com/JohnyMielony)
 - AVRC command support thanks to [PeterPark](https://github.com/KIdon-Park) 
 - Improved init_bluetooth checks, in case bluedroid was already initialized elsewhere - Thanks to [Antonis Katzourakis](https://github.com/ant0nisk)
@@ -295,13 +295,13 @@ V.1.2.0
 - Redesign to protect internal callbacks in BluetoothA2DPSink
 - Generate Documentation with the help of doxygen
 
-V.1.1.0 
+V1.1.0 
 - New functionality: BluetoothA2DPSource
 - Renamed project from 'esp32_bt_music_receiver' to 'ESP32-A2DP'
 - Corrected Spelling Mistake from Blootooth to Bluetooth in Class names: The correct class name is BluetoothA2DPSink!
 - The include h files are now called like the class names (e.g. BluetoothA2DPSink.h and BluetoothA2DPSource.h)
 
-V.1.0.0 
+V1.0.0 
 - Initial Release
 
 

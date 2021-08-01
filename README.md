@@ -242,7 +242,7 @@ This restriction limits the provided examples. Please have a look at the [audio-
 
 ## Documentation
 
-The class documentation can be found [here](https://pschatzmann.github.io/ESP32-A2DP/doc/html/annotated.html)
+The class documentation can be found [here](https://pschatzmann.github.io/ESP32-A2DP/html/annotated.html)
 
 
 ## Installation

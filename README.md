@@ -263,13 +263,13 @@ V1.3.0
 - provide get_connection_status() method
 - provide end() method to shut down bluetooth
 - add compile time switch for new ESP IDF
-- provide set_discoverability() to change BT discovery mode (only for current ESP IDF)
 - add additional flag in set_stream_reader to deactivate i2s 
 - Remove includes of Arduino.h to highlight independence of Arduino API
 - New examples with LED and auto shut down on idle
 - Clean up compile warnings so that build with warnings ALL will succeed
 - Example with set_pin_config
 - Correction - Bluetooth devices with address starting 00 did not auto reconnect
+- provide set_discoverability() to change BT discovery mode (only for current ESP IDF) thanks to [rbuehlma](https://github.com/rbuehlma)
 - Implement mono downmix thanks to [rbuehlma](https://github.com/rbuehlma)
 - expand to 24 or 32 bits using i2s_config.bits_per_sample thanks to [riraosan](https://github.com/riraosan)
 - Tracknumber and TrackCount added to Metadata thanks to [alexus2033](https://github.com/alexus2033)

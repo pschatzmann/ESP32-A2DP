@@ -68,6 +68,18 @@ BluetoothA2DPSink::~BluetoothA2DPSink() {
     }
 }
 
+void BluetoothA2DPSink::disconnect()
+{
+    ESP_LOGI(BT_AV_TAG, "discconect a2d");
+    esp_err_t status = esp_a2d_sink_disconnect(last_connection);
+    if (status == ESP_FAIL)
+    {
+        ESP_LOGE(BT_AV_TAG, "Failed disconnecting to device!");
+    }
+    // reconnect should not work after end
+    clean_last_connection();
+}
+
 void BluetoothA2DPSink::end(bool release_memory) {
     // reconnect does not work after end
     clean_last_connection();

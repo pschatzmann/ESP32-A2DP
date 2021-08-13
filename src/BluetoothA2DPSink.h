@@ -37,6 +37,8 @@ extern "C" {
 #include "driver/i2s.h"
 #include "esp_avrc_api.h"
 #include "BluetoothA2DPCommon.h"
+#include <esp_gap_ble_api.h>
+#include "esp_spp_api.h"
 
 #ifdef ARDUINO_ARCH_ESP32
 #include "esp32-hal-log.h"
@@ -47,7 +49,7 @@ extern "C" {
 #define APP_SIG_WORK_DISPATCH (0x01)
 
 #ifndef AUTOCONNECT_TRY_NUM
-#define AUTOCONNECT_TRY_NUM 5
+#define AUTOCONNECT_TRY_NUM 1
 #endif
 
 
@@ -65,6 +67,11 @@ class BluetoothA2DPSinkCallbacks {
     static void app_a2d_callback(esp_a2d_cb_event_t event, esp_a2d_cb_param_t *param);
     /// handle esp_avrc_ct_cb_event_t
     static void app_rc_ct_callback(esp_avrc_ct_cb_event_t event, esp_avrc_ct_cb_param_t *param);
+	
+	 /// handle esp_avrc_tg_cb_event_t
+    static void app_rc_tg_callback(esp_avrc_tg_cb_event_t event, esp_avrc_tg_cb_param_t *param);
+	
+	
     /// task handler
     static void app_task_handler(void *arg);
     /// Callback for music stream 
@@ -75,6 +82,9 @@ class BluetoothA2DPSinkCallbacks {
     static void av_hdl_a2d_evt(uint16_t event, void *p_param);
     /// avrc event handler 
     static void av_hdl_avrc_evt(uint16_t event, void *p_param);
+	/* avrc TG event handler */
+	static void av_hdl_avrc_tg_evt(uint16_t event, void *p_param);
+
 };
 
 /**
@@ -129,6 +139,17 @@ class BluetoothA2DPSink {
 
     /// Define callback which is called when we receive data
     virtual void set_on_data_received(void (*callBack)());
+	
+	/// Set the callback that is called when the BT device is connected
+    virtual void set_on_connected2BT(void (*callBack)());
+	
+	/// Set the callback that is called when the BT device is disconnected
+    virtual void set_on_disconnected2BT(void (*callBack)());
+
+	/// Set the callback that is called when they change the volume
+    virtual void set_on_volumechange(void (*callBack)(int));
+
+
 
     /// Starts to play music using AVRC
     virtual void play();
@@ -147,12 +168,24 @@ class BluetoothA2DPSink {
     
     /// Provides the actually set data rate (in samples per second)
     uint16_t sample_rate();
-
+	
+	virtual void setPinCode(int passkey);
+	
+	esp_err_t i2s_mclk_pin_select(const uint8_t pin);
+	
+	virtual void setVolume(uint8_t volume);
+	
+	virtual int getVolume();
+	
+	
+	
 #ifdef CURRENT_ESP_IDF
     /// Bluetooth discoverability
     virtual void set_discoverability(esp_bt_discovery_mode_t d);
 #endif
-
+	
+		
+	
     /// Make sure that BluetoothA2DPCallbacks can call protected event handlers
     friend BluetoothA2DPSinkCallbacks;
 	
@@ -171,6 +204,10 @@ class BluetoothA2DPSink {
     esp_a2d_audio_state_t audio_state;
     esp_a2d_connection_state_t connection_state;
     esp_a2d_mct_t audio_type;
+	
+	void (*bt_volumechange)(int) = nullptr;
+	void (*bt_disconnected)() = nullptr;
+	void (*bt_connected)() = nullptr;
     void (*data_received)() = nullptr;
     void (*stream_reader)(const uint8_t*, uint32_t) = nullptr;
     void (*avrc_metadata_callback)(uint8_t, const uint8_t*) = nullptr;
@@ -192,6 +229,8 @@ class BluetoothA2DPSink {
     virtual void app_work_dispatched(app_msg_t *msg);
     virtual void app_alloc_meta_buffer(esp_avrc_ct_cb_param_t *param);
     virtual void av_new_track();
+	virtual void volume_set_by_local_host(uint8_t volume);
+	virtual void volume_set_by_controller(uint8_t volume);
 #ifdef CURRENT_ESP_IDF
     virtual void av_notify_evt_handler(uint8_t& event_id, esp_avrc_rn_param_t& event_parameter);
 #else
@@ -211,6 +250,9 @@ class BluetoothA2DPSink {
      */
     virtual void app_a2d_callback(esp_a2d_cb_event_t event, esp_a2d_cb_param_t *param);
     virtual void app_rc_ct_callback(esp_avrc_ct_cb_event_t event, esp_avrc_ct_cb_param_t *param);
+	
+	virtual void app_rc_tg_callback(esp_avrc_tg_cb_event_t event, esp_avrc_tg_cb_param_t *param);
+	
     virtual void app_task_handler(void *arg);
     // Callback for music stream 
     virtual void audio_data_callback(const uint8_t *data, uint32_t len);
@@ -220,13 +262,17 @@ class BluetoothA2DPSink {
     virtual void av_hdl_a2d_evt(uint16_t event, void *p_param);
     // avrc event handler 
     virtual void av_hdl_avrc_evt(uint16_t event, void *p_param);
+	
+	virtual void av_hdl_avrc_tg_evt(uint16_t event, void *p_param);
 
 	void connect_to_last_device();
     // change the scan mode
     void set_scan_mode_connectable(bool connectable);
     // check if last connectioin is defined
     bool has_last_connection();
-
+	
+	
+	
 };
 
 

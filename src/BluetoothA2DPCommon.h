@@ -17,7 +17,7 @@
 #define __A2DP_COMMON_H__
 
 // Enable this if you are using a current version of ESP IDF
-//#define CURRENT_ESP_IDF
+#define CURRENT_ESP_IDF
 
 /**
  * @brief     handler for the dispatched work

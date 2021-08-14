@@ -243,6 +243,7 @@ This restriction limits the provided examples. Please have a look at the [audio-
 ## Documentation
 
 The class documentation can be found [here](https://pschatzmann.github.io/ESP32-A2DP/html/annotated.html)
+You can also find further information in the [Wiki](https://github.com/pschatzmann/ESP32-A2DP/wiki)
 
 
 ## Installation
@@ -264,7 +265,7 @@ Main
 - add volume control - thanks to [tv4you2016](https://github.com/tv4you2016)
 - add set volume control (set_volume(uint8_t volume);)- thanks to [tv4you2016](https://github.com/tv4you2016)
 - add get volume control (get_volume()) - thanks to [tv4you2016](https://github.com/tv4you2016)
-- Additional functionality for latest IDF release (Not for Arduino)
+- Additional functionality for latest IDF release (Not available for Arduino)
   - add callback bt_volumechange - thanks to [tv4you2016](https://github.com/tv4you2016)
   - fix I2S_COMM_FORMAT_I2S_MSB - thanks to [tv4you2016](https://github.com/tv4you2016)
   - setPinCode (int passkey) - thanks to [tv4you2016](https://github.com/tv4you2016)

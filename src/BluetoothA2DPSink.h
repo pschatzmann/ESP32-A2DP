@@ -184,7 +184,7 @@ class BluetoothA2DPSink {
 	virtual int get_volume();
 		
 #ifdef CURRENT_ESP_IDF
-	/// defines the pin code
+	/// defines the pin code which will authenticate the connection
 	virtual void setPinCode(int passkey);
 
     /// Bluetooth discoverability

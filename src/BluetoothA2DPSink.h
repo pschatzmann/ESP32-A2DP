@@ -52,6 +52,10 @@ extern "C" {
 #define AUTOCONNECT_TRY_NUM 1
 #endif
 
+#ifndef CURRENT_ESP_IDF
+#define I2S_COMM_FORMAT_STAND_I2S (I2S_COMM_FORMAT_I2S |I2S_COMM_FORMAT_I2S_MSB)
+#endif
+
 
 /* @brief event for handler "bt_av_hdl_stack_up */
 enum {
@@ -153,8 +157,6 @@ class BluetoothA2DPSink {
 	/// Set the callback that is called when they change the volume
     virtual void set_on_volumechange(void (*callBack)(int));
 
-
-
     /// Starts to play music using AVRC
     virtual void play();
     /// AVRC pause
@@ -186,9 +188,7 @@ class BluetoothA2DPSink {
 #ifdef CURRENT_ESP_IDF
     /// Bluetooth discoverability
     virtual void set_discoverability(esp_bt_discovery_mode_t d);
-#endif
-	
-		
+#endif		
 	
     /// Make sure that BluetoothA2DPCallbacks can call protected event handlers
     friend BluetoothA2DPSinkCallbacks;
@@ -237,6 +237,8 @@ class BluetoothA2DPSink {
 	virtual void volume_set_by_local_host(uint8_t volume);
 	virtual void volume_set_by_controller(uint8_t volume);
     virtual void av_notify_evt_handler(uint8_t& event_id, esp_avrc_rn_param_t& event_parameter);
+	virtual void app_rc_tg_callback(esp_avrc_tg_cb_event_t event, esp_avrc_tg_cb_param_t *param);
+	virtual void av_hdl_avrc_tg_evt(uint16_t event, void *p_param);
 #else
     virtual void av_notify_evt_handler(uint8_t event_id, uint32_t event_parameter);
 #endif    
@@ -272,14 +274,7 @@ class BluetoothA2DPSink {
     // check if last connectioin is defined
     bool has_last_connection();
 	
-	
-#ifdef CURRENT_ESP_IDF
-
-	virtual void app_rc_tg_callback(esp_avrc_tg_cb_event_t event, esp_avrc_tg_cb_param_t *param);
-	virtual void av_hdl_avrc_tg_evt(uint16_t event, void *p_param);
-
-#endif
-	
+		
 };
 
 

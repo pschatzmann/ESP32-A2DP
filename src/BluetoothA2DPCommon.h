@@ -16,12 +16,8 @@
 #ifndef __A2DP_COMMON_H__
 #define __A2DP_COMMON_H__
 
-// Enable this if you are using a current version of ESP IDF
+// Enable this if you are using a current version of ESP IDF e.g. 4.3
 // #define CURRENT_ESP_IDF
-
-#ifndef CURRENT_ESP_IDF
-#define I2S_COMM_FORMAT_STAND_I2S (I2S_COMM_FORMAT_I2S |I2S_COMM_FORMAT_I2S_MSB)
-#endif
 
 /**
  * @brief     handler for the dispatched work

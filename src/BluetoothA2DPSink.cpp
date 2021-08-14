@@ -830,7 +830,7 @@ void BluetoothA2DPSink::volume_set_by_local_host(uint8_t volume)
 {
     ESP_LOGI(BT_AV_TAG, "Volume is set locally to: %d%%", (uint32_t)volume * 100 / 0x7f);
     is_volume_used = true;
-    
+
     _lock_acquire(&s_volume_lock);
     s_volume = volume;
     _lock_release(&s_volume_lock);
@@ -1219,9 +1219,9 @@ extern "C" void app_rc_ct_callback_2(esp_avrc_ct_cb_event_t event, esp_avrc_ct_c
     BluetoothA2DPSinkCallbacks::app_rc_ct_callback(event, param);
 }
 
-void BluetoothA2DPSink::setVolume(uint8_t volume)
+void BluetoothA2DPSink::set_volume(uint8_t volume)
 {
-  ESP_LOGI(BT_AV_TAG, "setVolume %d", volume);
+  ESP_LOGI(BT_AV_TAG, "set_volume %d", volume);
   is_volume_used = true;
   s_volume =  (volume) & 0x7f;
 
@@ -1231,9 +1231,9 @@ void BluetoothA2DPSink::setVolume(uint8_t volume)
 
 }
 
-int BluetoothA2DPSink::getVolume()
+int BluetoothA2DPSink::get_volume()
 {
-  // ESP_LOGI(BT_AV_TAG, "getVolume %d", s_volume);
+  // ESP_LOGI(BT_AV_TAG, "get_volume %d", s_volume);
   return ((s_volume)* 100/ 0x7f);
 }
 

@@ -180,10 +180,10 @@ class BluetoothA2DPSink {
 	esp_err_t i2s_mclk_pin_select(const uint8_t pin);
 	
     /// Changes the volume
-	virtual void setVolume(uint8_t volume);
+	virtual void set_volume(uint8_t volume);
 	
     /// Determines the volume
-	virtual int getVolume();
+	virtual int get_volume();
 		
 #ifdef CURRENT_ESP_IDF
     /// Bluetooth discoverability

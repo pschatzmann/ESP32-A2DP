@@ -259,6 +259,16 @@ If you are using a current version of ESP IDF, you will receive compile errors l
 
 ## Change History
 
+Main
+
+- add volume control - thanks to [tv4you2016](https://github.com/tv4you2016)
+- add set volume control (setVolume(uint8_t volume);)- thanks to [tv4you2016](https://github.com/tv4you2016)
+- add get volume control (getVolume()) - thanks to [tv4you2016](https://github.com/tv4you2016)
+- Additional functionality for latest IDF release (Not for Arduino)
+  - add callback bt_volumechange - thanks to [tv4you2016](https://github.com/tv4you2016)
+  - fix I2S_COMM_FORMAT_I2S_MSB - thanks to [tv4you2016](https://github.com/tv4you2016)
+- Avoiding noise in case of data unavailability - thanks to [alexus2033](https://github.com/alexus2033)
+
 V1.3.0
 - provide get_connection_status() method
 - provide end() method to shut down bluetooth

@@ -137,6 +137,18 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#af65219e635fadbbc90f4663b33abd3e0">set_on_data_received</a> (void(*callBack)())</td></tr>
 <tr class="memdesc:af65219e635fadbbc90f4663b33abd3e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define callback which is called when we receive data. <br /></td></tr>
 <tr class="separator:af65219e635fadbbc90f4663b33abd3e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1c61ea5cc7d2e5ade20889f4929fd06"><td class="memItemLeft" align="right" valign="top"><a id="ae1c61ea5cc7d2e5ade20889f4929fd06"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#ae1c61ea5cc7d2e5ade20889f4929fd06">set_on_connected2BT</a> (void(*callBack)())</td></tr>
+<tr class="memdesc:ae1c61ea5cc7d2e5ade20889f4929fd06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the callback that is called when the BT device is connected. <br /></td></tr>
+<tr class="separator:ae1c61ea5cc7d2e5ade20889f4929fd06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada52b7766c039cbb379d6c6818f06804"><td class="memItemLeft" align="right" valign="top"><a id="ada52b7766c039cbb379d6c6818f06804"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#ada52b7766c039cbb379d6c6818f06804">set_on_disconnected2BT</a> (void(*callBack)())</td></tr>
+<tr class="memdesc:ada52b7766c039cbb379d6c6818f06804"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the callback that is called when the BT device is disconnected. <br /></td></tr>
+<tr class="separator:ada52b7766c039cbb379d6c6818f06804"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac245103d3d5c47b0414c2de21c0d52a7"><td class="memItemLeft" align="right" valign="top"><a id="ac245103d3d5c47b0414c2de21c0d52a7"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#ac245103d3d5c47b0414c2de21c0d52a7">set_on_volumechange</a> (void(*callBack)(int))</td></tr>
+<tr class="memdesc:ac245103d3d5c47b0414c2de21c0d52a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the callback that is called when they change the volume. <br /></td></tr>
+<tr class="separator:ac245103d3d5c47b0414c2de21c0d52a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aafd2afad1960db8ab73d7c6977aeb686"><td class="memItemLeft" align="right" valign="top"><a id="aafd2afad1960db8ab73d7c6977aeb686"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#aafd2afad1960db8ab73d7c6977aeb686">play</a> ()</td></tr>
 <tr class="memdesc:aafd2afad1960db8ab73d7c6977aeb686"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts to play music using AVRC. <br /></td></tr>
@@ -169,6 +181,20 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a09a8b269e2a936c5517bd9f88f666a1c">sample_rate</a> ()</td></tr>
 <tr class="memdesc:a09a8b269e2a936c5517bd9f88f666a1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides the actually set data rate (in samples per second) <br /></td></tr>
 <tr class="separator:a09a8b269e2a936c5517bd9f88f666a1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad013bef34a54b27552f2fb4be5ce401c"><td class="memItemLeft" align="right" valign="top"><a id="ad013bef34a54b27552f2fb4be5ce401c"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setPinCode</b> (int passkey)</td></tr>
+<tr class="separator:ad013bef34a54b27552f2fb4be5ce401c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90e76786cf62555379796e63f4499951"><td class="memItemLeft" align="right" valign="top"><a id="a90e76786cf62555379796e63f4499951"></a>
+esp_err_t&#160;</td><td class="memItemRight" valign="bottom"><b>i2s_mclk_pin_select</b> (const uint8_t pin)</td></tr>
+<tr class="separator:a90e76786cf62555379796e63f4499951"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec768e224bae7fe488d7e485519795a6"><td class="memItemLeft" align="right" valign="top"><a id="aec768e224bae7fe488d7e485519795a6"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#aec768e224bae7fe488d7e485519795a6">setVolume</a> (uint8_t volume)</td></tr>
+<tr class="memdesc:aec768e224bae7fe488d7e485519795a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changes the volume. <br /></td></tr>
+<tr class="separator:aec768e224bae7fe488d7e485519795a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abebcead9b59cb89f7836f3b2b0496ef9"><td class="memItemLeft" align="right" valign="top"><a id="abebcead9b59cb89f7836f3b2b0496ef9"></a>
+virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#abebcead9b59cb89f7836f3b2b0496ef9">getVolume</a> ()</td></tr>
+<tr class="memdesc:abebcead9b59cb89f7836f3b2b0496ef9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines the volume. <br /></td></tr>
+<tr class="separator:abebcead9b59cb89f7836f3b2b0496ef9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -289,6 +315,15 @@ esp_a2d_connection_state_t&#160;</td><td class="memItemRight" valign="bottom"><b
 <tr class="memitem:a91cc0f7e05ce24e311be3aa6281f4322"><td class="memItemLeft" align="right" valign="top"><a id="a91cc0f7e05ce24e311be3aa6281f4322"></a>
 esp_a2d_mct_t&#160;</td><td class="memItemRight" valign="bottom"><b>audio_type</b></td></tr>
 <tr class="separator:a91cc0f7e05ce24e311be3aa6281f4322"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32e9c57e2ff3224b94dfdc69ea52ad60"><td class="memItemLeft" align="right" valign="top"><a id="a32e9c57e2ff3224b94dfdc69ea52ad60"></a>
+void(*&#160;</td><td class="memItemRight" valign="bottom"><b>bt_volumechange</b> )(int) = nullptr</td></tr>
+<tr class="separator:a32e9c57e2ff3224b94dfdc69ea52ad60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a722caf501126d9268d67214678b36da0"><td class="memItemLeft" align="right" valign="top"><a id="a722caf501126d9268d67214678b36da0"></a>
+void(*&#160;</td><td class="memItemRight" valign="bottom"><b>bt_disconnected</b> )() = nullptr</td></tr>
+<tr class="separator:a722caf501126d9268d67214678b36da0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a515acb1d23ccd8188067ee68c2539aff"><td class="memItemLeft" align="right" valign="top"><a id="a515acb1d23ccd8188067ee68c2539aff"></a>
+void(*&#160;</td><td class="memItemRight" valign="bottom"><b>bt_connected</b> )() = nullptr</td></tr>
+<tr class="separator:a515acb1d23ccd8188067ee68c2539aff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa645d8bec02c53604e93b0dda6f34b15"><td class="memItemLeft" align="right" valign="top"><a id="aa645d8bec02c53604e93b0dda6f34b15"></a>
 void(*&#160;</td><td class="memItemRight" valign="bottom"><b>data_received</b> )() = nullptr</td></tr>
 <tr class="separator:aa645d8bec02c53604e93b0dda6f34b15"><td class="memSeparator" colspan="2">&#160;</td></tr>

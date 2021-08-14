@@ -843,14 +843,13 @@ void BluetoothA2DPSink::volume_set_by_local_host(uint8_t volume)
     }
 }
 
-#endif
-
-
 void BluetoothA2DPSink::setPinCode(int passkey)
 {
   ESP_LOGI(BT_AV_TAG, "setPinCode %d", passkey);
   esp_bt_gap_ssp_passkey_reply(peer_bd_addr, true,passkey);
 }
+
+#endif
 
 
 void BluetoothA2DPSink::av_hdl_stack_evt(uint16_t event, void *p_param)

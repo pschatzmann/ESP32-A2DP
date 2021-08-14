@@ -4,5 +4,5 @@ var searchData=
   ['get_5faudio_5fstate_84',['get_audio_state',['../class_bluetooth_a2_d_p_sink.html#af38d68b41544b8f0aba1bafb80f0ac75',1,'BluetoothA2DPSink']]],
   ['get_5faudio_5ftype_85',['get_audio_type',['../class_bluetooth_a2_d_p_sink.html#a77600cb1e36b7814eb9b4126cdec62d4',1,'BluetoothA2DPSink']]],
   ['get_5fconnection_5fstate_86',['get_connection_state',['../class_bluetooth_a2_d_p_sink.html#a785ef587a867d58ce31e466b1c68a96d',1,'BluetoothA2DPSink']]],
-  ['getvolume_87',['getVolume',['../class_bluetooth_a2_d_p_sink.html#abebcead9b59cb89f7836f3b2b0496ef9',1,'BluetoothA2DPSink']]]
+  ['get_5fvolume_87',['get_volume',['../class_bluetooth_a2_d_p_sink.html#aca1119f20d2321fb950ae859000cce7b',1,'BluetoothA2DPSink']]]
 ];

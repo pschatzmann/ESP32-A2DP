@@ -175,8 +175,6 @@ class BluetoothA2DPSink {
     /// Provides the actually set data rate (in samples per second)
     uint16_t sample_rate();
 	
-	virtual void setPinCode(int passkey);
-	
 	esp_err_t i2s_mclk_pin_select(const uint8_t pin);
 	
     /// Changes the volume
@@ -186,6 +184,9 @@ class BluetoothA2DPSink {
 	virtual int get_volume();
 		
 #ifdef CURRENT_ESP_IDF
+	/// defines the pin code
+	virtual void setPinCode(int passkey);
+
     /// Bluetooth discoverability
     virtual void set_discoverability(esp_bt_discovery_mode_t d);
 #endif		

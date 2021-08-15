@@ -82,7 +82,7 @@ extern "C" void ccall_bt_av_hdl_avrc_ct_evt(uint16_t event, void *param) {
 }
 
 extern "C" int32_t ccall_bt_app_a2d_data_cb(uint8_t *data, int32_t len){
-    //ESP_LOGD(APP, "x%x - len: %d", __func__, len);
+    //ESP_LOGD(BT_APP_TAG, "x%x - len: %d", __func__, len);
     if (len < 0 || data == NULL || self_BluetoothA2DPSource==NULL || self_BluetoothA2DPSource->data_stream_callback==NULL) {
         return 0;
     }
@@ -90,7 +90,7 @@ extern "C" int32_t ccall_bt_app_a2d_data_cb(uint8_t *data, int32_t len){
 }
 
 extern "C" int32_t ccall_get_channel_data_wrapper(uint8_t *data, int32_t len) {
-    //ESP_LOGD(APP, "x%x - len: %d", __func__, len);
+    //ESP_LOGD(BT_APP_TAG, "x%x - len: %d", __func__, len);
     if (len < 0 || data == NULL || self_BluetoothA2DPSource==NULL || self_BluetoothA2DPSource->data_stream_channels_callback==NULL) {
         return 0;
     }
@@ -104,7 +104,7 @@ extern "C" int32_t ccall_get_data_default(uint8_t *data, int32_t len) {
 
 
 BluetoothA2DPSource::BluetoothA2DPSource() {
-    ESP_LOGD(APP, "%s, ", __func__);
+    ESP_LOGD(BT_APP_TAG, "%s, ", __func__);
     self_BluetoothA2DPSource = this;
     this->ssp_enabled = false;
     this->pin_type = ESP_BT_PIN_TYPE_VARIABLE;
@@ -131,7 +131,7 @@ bool BluetoothA2DPSource::isConnected(){
 }
 
 void BluetoothA2DPSource::setPinCode(char *pin_code, esp_bt_pin_type_t pin_type){
-    ESP_LOGD(APP, "%s, ", __func__);
+    ESP_LOGD(BT_APP_TAG, "%s, ", __func__);
     this->pin_type = pin_type;
     this->pin_code_len = strlen(pin_code);
     strcpy((char*)this->pin_code, pin_code);
@@ -143,7 +143,7 @@ void BluetoothA2DPSource::start(char* name, music_data_channels_cb_t callback, b
 }
 
 void BluetoothA2DPSource::start(std::vector<char*> names, music_data_channels_cb_t callback, bool is_ssp_enabled) {
-    ESP_LOGD(APP, "%s, ", __func__);
+    ESP_LOGD(BT_APP_TAG, "%s, ", __func__);
     if (callback!=NULL){
         // we use the indicated callback
         this->data_stream_channels_callback = callback;
@@ -161,7 +161,7 @@ void BluetoothA2DPSource::startRaw(char* name, music_data_cb_t callback, bool is
 
 
 void BluetoothA2DPSource::startRaw(std::vector<char*> names, music_data_cb_t callback, bool is_ssp_enabled) {
-    ESP_LOGD(APP, "%s, ", __func__);
+    ESP_LOGD(BT_APP_TAG, "%s, ", __func__);
     this->ssp_enabled = is_ssp_enabled;
     this->bt_names = names;
     this->data_stream_callback = callback;
@@ -218,7 +218,7 @@ void BluetoothA2DPSource::startRaw(std::vector<char*> names, music_data_cb_t cal
 
 bool BluetoothA2DPSource::bt_app_work_dispatch(bt_app_cb_t p_cback, uint16_t event, void *p_params, int param_len, bt_app_copy_cb_t p_copy_cback)
 {
-    ESP_LOGD(BT_APP_CORE_TAG, "%s event 0x%x, param len %d", __func__, event, param_len);
+    ESP_LOGD(BT_APP_TAG, "%s event 0x%x, param len %d", __func__, event, param_len);
 
     app_msg_t msg;
     memset(&msg, 0, sizeof(app_msg_t));
@@ -250,7 +250,7 @@ bool BluetoothA2DPSource::bt_app_send_msg(app_msg_t *msg)
     }
 
     if (xQueueSend(s_bt_app_task_queue, msg, 10 / portTICK_RATE_MS) != pdTRUE) {
-        ESP_LOGE(BT_APP_CORE_TAG, "%s xQueue send failed", __func__);
+        ESP_LOGE(BT_APP_TAG, "%s xQueue send failed", __func__);
         return false;
     }
     return true;
@@ -269,13 +269,13 @@ void BluetoothA2DPSource::bt_app_task_handler(void *arg)
     for (;;) {
         if (s_bt_app_task_queue){
             if (pdTRUE == xQueueReceive(s_bt_app_task_queue, &msg, (portTickType)portMAX_DELAY)) {
-                ESP_LOGD(BT_APP_CORE_TAG, "%s, sig 0x%x, 0x%x", __func__, msg.sig, msg.event);
+                ESP_LOGD(BT_APP_TAG, "%s, sig 0x%x, 0x%x", __func__, msg.sig, msg.event);
                 switch (msg.sig) {
                 case BT_APP_SIG_WORK_DISPATCH:
                     bt_app_work_dispatched(&msg);
                     break;
                 default:
-                    ESP_LOGW(BT_APP_CORE_TAG, "%s, unhandled sig: %d", __func__, msg.sig);
+                    ESP_LOGW(BT_APP_TAG, "%s, unhandled sig: %d", __func__, msg.sig);
                     break;
                 } // switch (msg.sig)
 
@@ -284,7 +284,7 @@ void BluetoothA2DPSource::bt_app_task_handler(void *arg)
                 }
             }
         } else {
-            ESP_LOGE(BT_APP_CORE_TAG, "%s xQueue not available", __func__);
+            ESP_LOGE(BT_APP_TAG, "%s xQueue not available", __func__);
             delay(100);
         }
     }

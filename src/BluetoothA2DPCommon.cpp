@@ -20,15 +20,24 @@ bool btStart(){
     }
     if(esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_INITED){
         if (esp_bt_controller_enable(ESP_BT_MODE_CLASSIC_BT)) {
-            ESP_LOGE(APP, "BT Enable failed");
+            ESP_LOGE(BT_APP_TAG, "BT Enable failed");
             return false;
         }
     }
     if(esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_ENABLED){
         return true;
     }
-    ESP_LOGE(APP, "BT Start failed");
+    ESP_LOGE(BT_APP_TAG, "BT Start failed");
     return false;
+}
+
+/**
+ * @brief call vTaskDelay to deley for the indicated number of milliseconds
+ * 
+ */
+void delay(long millis) {
+    const TickType_t xDelay = millis / portTICK_PERIOD_MS; 
+    vTaskDelay(xDelay);
 }
 
 #endif    

@@ -260,7 +260,7 @@ void BluetoothA2DPSink::start(const char* name, bool auto_reconnect)
 
 esp_err_t BluetoothA2DPSink::i2s_mclk_pin_select(const uint8_t pin) {
     if(pin != 0 && pin != 1 && pin != 3) {
-        ESP_LOGE(APP, "Only support GPIO0/GPIO1/GPIO3, gpio_num:%d", pin);
+        ESP_LOGE(BT_APP_TAG, "Only support GPIO0/GPIO1/GPIO3, gpio_num:%d", pin);
         return ESP_ERR_INVALID_ARG;
     }
     switch(pin){
@@ -384,7 +384,7 @@ int BluetoothA2DPSink::init_bluetooth()
 
 bool BluetoothA2DPSink::app_work_dispatch(app_callback_t p_cback, uint16_t event, void *p_params, int param_len)
 {
-    ESP_LOGD(BT_APP_CORE_TAG, "%s event 0x%x, param len %d", __func__, event, param_len);
+    ESP_LOGD(BT_APP_TAG, "%s event 0x%x, param len %d", __func__, event, param_len);
     
     app_msg_t msg;
     memset(&msg, 0, sizeof(app_msg_t));
@@ -418,12 +418,12 @@ bool BluetoothA2DPSink::app_send_msg(app_msg_t *msg)
 {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
     if (msg == NULL || app_task_queue == NULL) {
-        ESP_LOGE(BT_APP_CORE_TAG, "%s app_send_msg failed", __func__);
+        ESP_LOGE(BT_APP_TAG, "%s app_send_msg failed", __func__);
         return false;
     }
 
     if (xQueueSend(app_task_queue, msg, 10 / portTICK_RATE_MS) != pdTRUE) {
-        ESP_LOGE(BT_APP_CORE_TAG, "%s xQueue send failed", __func__);
+        ESP_LOGE(BT_APP_TAG, "%s xQueue send failed", __func__);
         return false;
     }
     return true;
@@ -436,17 +436,17 @@ void BluetoothA2DPSink::app_task_handler(void *arg)
     app_msg_t msg;
     while (true) {
         if (!app_task_queue){
-            ESP_LOGE(BT_APP_CORE_TAG, "%s, app_task_queue is null", __func__);
+            ESP_LOGE(BT_APP_TAG, "%s, app_task_queue is null", __func__);
             delay(100);
         } else if (pdTRUE == xQueueReceive(app_task_queue, &msg, (portTickType)portMAX_DELAY)) {
-            ESP_LOGD(BT_APP_CORE_TAG, "%s, sig 0x%x, 0x%x", __func__, msg.sig, msg.event);
+            ESP_LOGD(BT_APP_TAG, "%s, sig 0x%x, 0x%x", __func__, msg.sig, msg.event);
             switch (msg.sig) {
             case APP_SIG_WORK_DISPATCH:
-                ESP_LOGW(BT_APP_CORE_TAG, "%s, APP_SIG_WORK_DISPATCH sig: %d", __func__, msg.sig);
+                ESP_LOGW(BT_APP_TAG, "%s, APP_SIG_WORK_DISPATCH sig: %d", __func__, msg.sig);
                 app_work_dispatched(&msg);
                 break;
             default:
-                ESP_LOGW(BT_APP_CORE_TAG, "%s, unhandled sig: %d", __func__, msg.sig);
+                ESP_LOGW(BT_APP_TAG, "%s, unhandled sig: %d", __func__, msg.sig);
                 break;
             } // switch (msg.sig)
 
@@ -462,7 +462,7 @@ void BluetoothA2DPSink::app_task_start_up(void)
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
     app_task_queue = xQueueCreate(10, sizeof(app_msg_t));
     if (xTaskCreate(app_task_handler_2, "BtAppT", 2048, NULL, configMAX_PRIORITIES - 3, &app_task_handle) != pdPASS){
-        ESP_LOGE(BT_APP_CORE_TAG, "%s failed", __func__);
+        ESP_LOGE(BT_APP_TAG, "%s failed", __func__);
     }
 }
 

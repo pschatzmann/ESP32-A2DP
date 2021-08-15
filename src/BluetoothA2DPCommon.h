@@ -35,7 +35,6 @@
 #include "esp_a2dp_api.h"
 #include "driver/i2s.h"
 #include "esp_avrc_api.h"
-#include <esp_gap_ble_api.h>
 #include "esp_spp_api.h"
 #include "nvs.h"
 #include "nvs_flash.h"
@@ -47,6 +46,7 @@
 #include "esp_log.h"
 
 extern "C" bool btStart();
+extern "C" void delay(long millis);
 
 #endif
 
@@ -64,12 +64,6 @@ typedef struct {
 } app_msg_t;
 
 
-#ifndef ARDUINO_ARCH_ESP32
-#define delay(millis) const TickType_t xDelay = millis / portTICK_PERIOD_MS; vTaskDelay(xDelay);
-#endif
-
-#define BT_APP_CORE_TAG  "BT_APP_CORE"
-#define APP              "BT_APP_CORE"
 #define BT_AV_TAG        "BT_AV"
 #define BT_RC_CT_TAG     "RCCT"
 #define BT_APP_TAG       "BT_API"

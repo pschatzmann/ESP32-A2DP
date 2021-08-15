@@ -13,39 +13,14 @@
 // Copyright 2020 Phil Schatzmann
 // Copyright 2015-2016 Espressif Systems (Shanghai) PTE LTD
 
-#ifndef __A2DP_SINK_H__
-#define __A2DP_SINK_H__
+#pragma once
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-#include "nvs.h"
-#include "nvs_flash.h"
-#include "esp_system.h"
-#include "esp_bt.h"
-#include "esp_bt_main.h"
-#include "esp_bt_device.h"
-#include "esp_gap_bt_api.h"
-#include "esp_a2dp_api.h"
-#include "driver/i2s.h"
-#include "esp_avrc_api.h"
 #include "BluetoothA2DPCommon.h"
-#include <esp_gap_ble_api.h>
-#include "esp_spp_api.h"
 
-#ifdef ARDUINO_ARCH_ESP32
-#include "esp32-hal-log.h"
-#include "esp32-hal-bt.h"
-#endif
-
-#define APP_CORE_TAG  "BT_APP_CORE"
 #define APP_SIG_WORK_DISPATCH (0x01)
 
 #ifndef AUTOCONNECT_TRY_NUM
@@ -56,6 +31,9 @@ extern "C" {
 #define I2S_COMM_FORMAT_STAND_I2S (I2S_COMM_FORMAT_I2S |I2S_COMM_FORMAT_I2S_MSB)
 #endif
 
+#ifndef BT_AV_TAG
+#define BT_AV_TAG               "BT_AV"
+#endif
 
 /* @brief event for handler "bt_av_hdl_stack_up */
 enum {
@@ -284,4 +262,3 @@ class BluetoothA2DPSink {
 #endif
 
 
-#endif

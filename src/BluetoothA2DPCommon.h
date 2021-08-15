@@ -13,11 +13,42 @@
 // Copyright 2020 Phil Schatzmann
 // Copyright 2015-2016 Espressif Systems (Shanghai) PTE LTD
 
-#ifndef __A2DP_COMMON_H__
-#define __A2DP_COMMON_H__
+#pragma once
 
-// Enable this if you are using a current version of ESP IDF e.g. 4.3
-// #define CURRENT_ESP_IDF
+#include "config.h"
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include "freertos/FreeRTOS.h"
+#include "freertos/timers.h"
+#include "freertos/xtensa_api.h"
+#include "freertos/FreeRTOSConfig.h"
+#include "freertos/queue.h"
+#include "freertos/task.h"
+#include "esp_system.h"
+#include "esp_bt.h"
+#include "esp_bt_main.h"
+#include "esp_bt_device.h"
+#include "esp_gap_bt_api.h"
+#include "esp_a2dp_api.h"
+#include "driver/i2s.h"
+#include "esp_avrc_api.h"
+#include <esp_gap_ble_api.h>
+#include "esp_spp_api.h"
+#include "nvs.h"
+#include "nvs_flash.h"
+
+#ifdef ARDUINO_ARCH_ESP32
+#include "esp32-hal-log.h"
+#include "esp32-hal-bt.h"
+#else
+#include "esp_log.h"
+
+extern "C" bool btStart();
+
+#endif
 
 /**
  * @brief     handler for the dispatched work
@@ -32,4 +63,15 @@ typedef struct {
     void                 *param;   /*!< parameter area needs to be last */
 } app_msg_t;
 
+
+#ifndef ARDUINO_ARCH_ESP32
+#define delay(millis) const TickType_t xDelay = millis / portTICK_PERIOD_MS; vTaskDelay(xDelay);
 #endif
+
+#define BT_APP_CORE_TAG  "BT_APP_CORE"
+#define APP              "BT_APP_CORE"
+#define BT_AV_TAG        "BT_AV"
+#define BT_RC_CT_TAG     "RCCT"
+#define BT_APP_TAG       "BT_API"
+
+

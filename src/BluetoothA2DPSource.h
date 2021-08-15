@@ -16,38 +16,12 @@
 // Copyright 2020 Phil Schatzmann
 // Copyright 2015-2016 Espressif Systems (Shanghai) PTE LTD
 
-#ifndef __A2DP_SOURCE_H__
-#define __A2DP_SOURCE_H__
+#pragma once
 
-//#include "Arduino.h"
-#include "freertos/FreeRTOS.h"
-#include "freertos/timers.h"
-#include "freertos/xtensa_api.h"
-#include "freertos/FreeRTOSConfig.h"
-#include "freertos/queue.h"
-#include "freertos/task.h"
-#include "nvs.h"
-#include "nvs_flash.h"
-#include "esp_system.h"
-#include "esp_bt.h"
-#include "esp_bt_main.h"
-#include "esp_bt_device.h"
-#include "esp_gap_bt_api.h"
-#include "esp_a2dp_api.h"
-#include "esp_avrc_api.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <stdint.h>
 #include <stdbool.h>
 #include <vector> 
 #include "BluetoothA2DPCommon.h"
-
-#include "esp32-hal-log.h"
-#include "esp32-hal-bt.h"
 #include "SoundData.h"
-
 
 typedef void (* bt_app_cb_t) (uint16_t event, void *param);
 typedef  int32_t (* music_data_cb_t) (uint8_t *data, int32_t len);
@@ -192,5 +166,3 @@ class BluetoothA2DPSource {
     virtual void filter_inquiry_scan_result(esp_bt_gap_cb_param_t *param);
 
 };
-
-#endif

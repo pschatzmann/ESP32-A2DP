@@ -25,10 +25,6 @@ int connection_rety_count = 0;
 esp_bd_addr_t peer_bd_addr = {0};
 static const esp_spp_mode_t esp_spp_mode = ESP_SPP_MODE_CB;
 
-#ifdef CURRENT_ESP_IDF
-static esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap;
-#endif
-
 static _lock_t s_volume_lock;
 static uint8_t s_volume = 0;
 static bool is_volume_used = false;
@@ -41,6 +37,7 @@ extern "C" void app_a2d_callback_2(esp_a2d_cb_event_t event, esp_a2d_cb_param_t 
 extern "C" void app_rc_ct_callback_2(esp_avrc_ct_cb_event_t event, esp_avrc_ct_cb_param_t *param);
 
 #ifdef CURRENT_ESP_IDF
+static esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap;
 extern "C" void app_rc_tg_callback_2(esp_avrc_tg_cb_event_t  event, esp_avrc_tg_cb_param_t *param);
 #endif
 
@@ -177,7 +174,6 @@ void BluetoothA2DPSink::set_on_data_received(void (*callBack)()){
 }
 
 
-
 void BluetoothA2DPSink::set_on_connected2BT(void (*callBack)()){
   this->bt_connected = callBack;
 }
@@ -264,7 +260,7 @@ void BluetoothA2DPSink::start(const char* name, bool auto_reconnect)
 
 esp_err_t BluetoothA2DPSink::i2s_mclk_pin_select(const uint8_t pin) {
     if(pin != 0 && pin != 1 && pin != 3) {
-        ESP_LOGE(TAG, "Only support GPIO0/GPIO1/GPIO3, gpio_num:%d", pin);
+        ESP_LOGE(APP, "Only support GPIO0/GPIO1/GPIO3, gpio_num:%d", pin);
         return ESP_ERR_INVALID_ARG;
     }
     switch(pin){
@@ -519,7 +515,7 @@ void BluetoothA2DPSink::app_rc_tg_callback(esp_avrc_tg_cb_event_t event, esp_avr
 			break;
 		}
 		default:
-			ESP_LOGE(BT_RC_TG_TAG, "Invalid AVRC event: %d", event);
+			ESP_LOGE(BT_AV_TAG, "Invalid AVRC event: %d", event);
 			break;
     }
 	
@@ -780,7 +776,7 @@ void BluetoothA2DPSink::av_hdl_avrc_evt(uint16_t event, void *p_param)
         break;
     }
     case ESP_AVRC_CT_CHANGE_NOTIFY_EVT: {
-        ESP_LOGI(BT_AV_TAG, "AVRC event notification: %d, param: %d", rc->change_ntf.event_id, rc->change_ntf.event_parameter);
+        //ESP_LOGI(BT_AV_TAG, "AVRC event notification: %d, param: %d", (int)rc->change_ntf.event_id, (int)rc->change_ntf.event_parameter);
         av_notify_evt_handler(rc->change_ntf.event_id, rc->change_ntf.event_parameter);
         break;
     }
@@ -1067,7 +1063,7 @@ void BluetoothA2DPSink::get_last_connection(){
     
     err = nvs_open("connected_bda", NVS_READWRITE, &my_handle);
     if (err != ESP_OK) {
-         ESP_LOGE("NVS OPEN ERROR");
+         ESP_LOGE(BT_AV_TAG,"NVS OPEN ERROR");
     }
 
     esp_bd_addr_t bda;
@@ -1093,7 +1089,7 @@ void BluetoothA2DPSink::set_last_connection(esp_bd_addr_t bda, size_t size){
 	
 	err = nvs_open("connected_bda", NVS_READWRITE, &my_handle);
 	if (err != ESP_OK){
-         ESP_LOGE("NVS OPEN ERROR");
+         ESP_LOGE(BT_AV_TAG, "NVS OPEN ERROR");
     }
 	err = nvs_set_blob(my_handle, "last_bda", bda, size);
 	if (err == ESP_OK) {
@@ -1266,6 +1262,8 @@ void BluetoothA2DPSink::set_discoverability(esp_bt_discovery_mode_t d) {
 void BluetoothA2DPSink::av_hdl_avrc_tg_evt(uint16_t event, void *p_param)
 {
     ESP_LOGD(BT_AV_TAG, "%s evt %d", __func__, event);
+    esp_avrc_tg_cb_param_t *rc = (esp_avrc_tg_cb_param_t *)(p_param);
+
     switch (event) {
 
     case ESP_AVRC_TG_CONNECTION_STATE_EVT: {
@@ -1286,8 +1284,6 @@ void BluetoothA2DPSink::av_hdl_avrc_tg_evt(uint16_t event, void *p_param)
         volume_set_by_controller(rc->set_abs_vol.volume);
         break;
     }
-
-    esp_avrc_tg_cb_param_t *rc = (esp_avrc_tg_cb_param_t *)(p_param);
 
     case ESP_AVRC_TG_REGISTER_NOTIFICATION_EVT: {
         ESP_LOGI(BT_AV_TAG, "AVRC register event notification: %d, param: 0x%x", rc->reg_ntf.event_id, rc->reg_ntf.event_parameter);
@@ -1310,7 +1306,6 @@ void BluetoothA2DPSink::av_hdl_avrc_tg_evt(uint16_t event, void *p_param)
         break;
     }
 }
-
 
 #else 
 

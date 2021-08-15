@@ -173,7 +173,6 @@ void BluetoothA2DPSink::set_on_data_received(void (*callBack)()){
   this->data_received = callBack;
 }
 
-
 void BluetoothA2DPSink::set_on_connected2BT(void (*callBack)()){
   this->bt_connected = callBack;
 }
@@ -367,10 +366,6 @@ int BluetoothA2DPSink::init_bluetooth()
         return false;
     }
 	
-	
-  
-  
-  
    if ((esp_spp_init(esp_spp_mode)) != ESP_OK) {
         ESP_LOGE(BT_AV_TAG,"esp_spp_init failed");
         return false;
@@ -491,37 +486,7 @@ void BluetoothA2DPSink::app_alloc_meta_buffer(esp_avrc_ct_cb_param_t *param)
     rc->meta_rsp.attr_text = attr_text;
 }
 
-#ifdef CURRENT_ESP_IDF
 
-void BluetoothA2DPSink::app_rc_tg_callback(esp_avrc_tg_cb_event_t event, esp_avrc_tg_cb_param_t *param)
-{
-	ESP_LOGD(BT_AV_TAG, "%s", __func__);
-	switch (event) {
-		case ESP_AVRC_TG_CONNECTION_STATE_EVT:
-		case ESP_AVRC_TG_REMOTE_FEATURES_EVT:
-		case ESP_AVRC_TG_PASSTHROUGH_CMD_EVT:
-		case ESP_AVRC_TG_SET_ABSOLUTE_VOLUME_CMD_EVT:
-		case ESP_AVRC_TG_REGISTER_NOTIFICATION_EVT:
-		case ESP_AVRC_TG_SET_PLAYER_APP_VALUE_EVT:{
-		
-			 //Lambda for callback
-				auto av_hdl_avrc_tg_evt_2 = [](uint16_t event, void *p_param) {
-					ESP_LOGD(BT_AV_TAG, "av_hdl_avrc_tg_evt_2");
-					if (actual_bluetooth_a2dp_sink) {
-						actual_bluetooth_a2dp_sink->av_hdl_avrc_tg_evt(event,p_param);
-					}
-				};
-			app_work_dispatch(av_hdl_avrc_tg_evt_2, event, param, sizeof(esp_avrc_tg_cb_param_t));
-			break;
-		}
-		default:
-			ESP_LOGE(BT_AV_TAG, "Invalid AVRC event: %d", event);
-			break;
-    }
-	
-}
-
-#endif
 
 void BluetoothA2DPSink::app_rc_ct_callback(esp_avrc_ct_cb_event_t event, esp_avrc_ct_cb_param_t *param)
 {
@@ -804,48 +769,6 @@ void BluetoothA2DPSink::av_hdl_avrc_evt(uint16_t event, void *p_param)
         break;
     }
 }
-
-
-
-#ifdef CURRENT_ESP_IDF
-
-void BluetoothA2DPSink::volume_set_by_controller(uint8_t volume)
-{
-    ESP_LOGI(BT_AV_TAG, "Volume is set by remote controller %d%%\n", (uint32_t)volume * 100 / 0x7f);
-    _lock_acquire(&s_volume_lock);
-    s_volume = volume;
-    _lock_release(&s_volume_lock);
-	
-	
-	if (bt_volumechange!=nullptr){
-		(*bt_volumechange)(s_volume * 100/ 0x7f);
-	}	
-}
-
-void BluetoothA2DPSink::volume_set_by_local_host(uint8_t volume)
-{
-    ESP_LOGI(BT_AV_TAG, "Volume is set locally to: %d%%", (uint32_t)volume * 100 / 0x7f);
-    is_volume_used = true;
-
-    _lock_acquire(&s_volume_lock);
-    s_volume = volume;
-    _lock_release(&s_volume_lock);
-
-    if (s_volume_notify) {
-        esp_avrc_rn_param_t rn_param;
-        rn_param.volume = s_volume;
-        esp_avrc_tg_send_rn_rsp(ESP_AVRC_RN_VOLUME_CHANGE, ESP_AVRC_RN_RSP_CHANGED, &rn_param);
-        s_volume_notify = false;
-    }
-}
-
-void BluetoothA2DPSink::setPinCode(int passkey)
-{
-  ESP_LOGI(BT_AV_TAG, "setPinCode %d", passkey);
-  esp_bt_gap_ssp_passkey_reply(peer_bd_addr, true,passkey);
-}
-
-#endif
 
 
 void BluetoothA2DPSink::av_hdl_stack_evt(uint16_t event, void *p_param)
@@ -1181,16 +1104,6 @@ void BluetoothA2DPSinkCallbacks::app_rc_ct_callback(esp_avrc_ct_cb_event_t event
     actual_bluetooth_a2dp_sink->app_rc_ct_callback(event, param);
 }
 
-#ifdef CURRENT_ESP_IDF
-
-void BluetoothA2DPSinkCallbacks::app_rc_tg_callback(esp_avrc_tg_cb_event_t event, esp_avrc_tg_cb_param_t *param){
-  ESP_LOGD(BT_AV_TAG, "%s", __func__);
-  if (actual_bluetooth_a2dp_sink)
-    actual_bluetooth_a2dp_sink->app_rc_tg_callback(event, param);
-}
-
-#endif
-
 /**
  * C Callback Functions needed for the ESP32 API
  */
@@ -1232,7 +1145,83 @@ int BluetoothA2DPSink::get_volume()
   return ((s_volume)* 100/ 0x7f);
 }
 
+
+//---------------------------------------------------------
+// ==> Methods which are only supported in new ESP Release 
+
 #ifdef CURRENT_ESP_IDF
+
+void BluetoothA2DPSink::app_rc_tg_callback(esp_avrc_tg_cb_event_t event, esp_avrc_tg_cb_param_t *param)
+{
+	ESP_LOGD(BT_AV_TAG, "%s", __func__);
+	switch (event) {
+		case ESP_AVRC_TG_CONNECTION_STATE_EVT:
+		case ESP_AVRC_TG_REMOTE_FEATURES_EVT:
+		case ESP_AVRC_TG_PASSTHROUGH_CMD_EVT:
+		case ESP_AVRC_TG_SET_ABSOLUTE_VOLUME_CMD_EVT:
+		case ESP_AVRC_TG_REGISTER_NOTIFICATION_EVT:
+		case ESP_AVRC_TG_SET_PLAYER_APP_VALUE_EVT:{
+		
+			 //Lambda for callback
+				auto av_hdl_avrc_tg_evt_2 = [](uint16_t event, void *p_param) {
+					ESP_LOGD(BT_AV_TAG, "av_hdl_avrc_tg_evt_2");
+					if (actual_bluetooth_a2dp_sink) {
+						actual_bluetooth_a2dp_sink->av_hdl_avrc_tg_evt(event,p_param);
+					}
+				};
+			app_work_dispatch(av_hdl_avrc_tg_evt_2, event, param, sizeof(esp_avrc_tg_cb_param_t));
+			break;
+		}
+		default:
+			ESP_LOGE(BT_AV_TAG, "Invalid AVRC event: %d", event);
+			break;
+    }
+	
+}
+
+void BluetoothA2DPSink::volume_set_by_controller(uint8_t volume)
+{
+    ESP_LOGI(BT_AV_TAG, "Volume is set by remote controller %d%%\n", (uint32_t)volume * 100 / 0x7f);
+    _lock_acquire(&s_volume_lock);
+    s_volume = volume;
+    _lock_release(&s_volume_lock);
+	
+	
+	if (bt_volumechange!=nullptr){
+		(*bt_volumechange)(s_volume * 100/ 0x7f);
+	}	
+}
+
+void BluetoothA2DPSink::volume_set_by_local_host(uint8_t volume)
+{
+    ESP_LOGI(BT_AV_TAG, "Volume is set locally to: %d%%", (uint32_t)volume * 100 / 0x7f);
+    is_volume_used = true;
+
+    _lock_acquire(&s_volume_lock);
+    s_volume = volume;
+    _lock_release(&s_volume_lock);
+
+    if (s_volume_notify) {
+        esp_avrc_rn_param_t rn_param;
+        rn_param.volume = s_volume;
+        esp_avrc_tg_send_rn_rsp(ESP_AVRC_RN_VOLUME_CHANGE, ESP_AVRC_RN_RSP_CHANGED, &rn_param);
+        s_volume_notify = false;
+    }
+}
+
+void BluetoothA2DPSink::setPinCode(int passkey)
+{
+  ESP_LOGI(BT_AV_TAG, "setPinCode %d", passkey);
+  esp_bt_gap_ssp_passkey_reply(peer_bd_addr, true,passkey);
+}
+
+
+void BluetoothA2DPSinkCallbacks::app_rc_tg_callback(esp_avrc_tg_cb_event_t event, esp_avrc_tg_cb_param_t *param){
+  ESP_LOGD(BT_AV_TAG, "%s", __func__);
+  if (actual_bluetooth_a2dp_sink)
+    actual_bluetooth_a2dp_sink->app_rc_tg_callback(event, param);
+}
+
 
 extern "C" void app_rc_tg_callback_2(esp_avrc_tg_cb_event_t  event, esp_avrc_tg_cb_param_t *param){
     ESP_LOGD(BT_AV_TAG, "%s", __func__);

@@ -242,13 +242,13 @@ This restriction limits the provided examples. Please have a look at the [audio-
 
 ## Documentation
 
-The class documentation can be found [here](https://pschatzmann.github.io/ESP32-A2DP/html/annotated.html)
-You can also find further information in the [Wiki](https://github.com/pschatzmann/ESP32-A2DP/wiki)
+- The [class documentation can be found here](https://pschatzmann.github.io/ESP32-A2DP/html/annotated.html)
+- You can also find further information in the [Wiki](https://github.com/pschatzmann/ESP32-A2DP/wiki)
 
 
 ## Installation
 
-You can download the library as zip and call include Library -> zip library. Or you can git clone this project into the Arduino libraries folder e.g. with
+For Arduino you can download the library as zip and call include Library -> zip library. Or you can git clone this project into the Arduino libraries folder e.g. with
 ```
 cd  ~/Documents/Arduino/libraries
 git clone pschatzmann/ESP32-A2DP.git
@@ -256,7 +256,7 @@ git clone pschatzmann/ESP32-A2DP.git
 
 If you are using a current version of ESP IDF, you will receive compile errors like `'ESP_BT_SCAN_MODE_CONNECTABLE_DISCOVERABLE' was not declared in this scope`. To use the new API you can uncomment `#define CURRENT_ESP_IDF` in `src/config.h`
 
-
+For other frameworks [see the Wiki]((https://github.com/pschatzmann/ESP32-A2DP/wiki))
 
 ## Change History
 

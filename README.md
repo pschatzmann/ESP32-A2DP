@@ -254,7 +254,7 @@ cd  ~/Documents/Arduino/libraries
 git clone pschatzmann/ESP32-A2DP.git
 ```
 
-If you are using a current version of ESP IDF, you will receive compile errors like `'ESP_BT_SCAN_MODE_CONNECTABLE_DISCOVERABLE' was not declared in this scope`. To use the new API you can uncomment `#define CURRENT_ESP_IDF` in `src/BluetoothA2DPCommon.h`
+If you are using a current version of ESP IDF, you will receive compile errors like `'ESP_BT_SCAN_MODE_CONNECTABLE_DISCOVERABLE' was not declared in this scope`. To use the new API you can uncomment `#define CURRENT_ESP_IDF` in `src/config.h`
 
 
 

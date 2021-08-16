@@ -98,7 +98,7 @@ class BluetoothA2DPSource {
      // handler for bluetooth stack enabled events
     virtual void bt_av_hdl_stack_evt(uint16_t event, void *p_param);
     virtual void bt_app_task_handler(void *arg);
-    virtual void bt_app_gap_cb(esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *param);
+    virtual void bt_app_gap_callback(esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *param);
     /// callback function for AVRCP controller
     virtual void bt_app_rc_ct_cb(esp_avrc_ct_cb_event_t event, esp_avrc_ct_cb_param_t *param);
     virtual void a2d_app_heart_beat(void *arg);

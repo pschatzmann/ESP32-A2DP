@@ -57,8 +57,8 @@ extern "C"  void ccall_bt_app_task_handler(void *arg){
     if (self_BluetoothA2DPSource) self_BluetoothA2DPSource->bt_app_task_handler(arg);
 }
 
-extern "C" void ccall_bt_app_gap_cb(esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *param){
-    if (self_BluetoothA2DPSource) self_BluetoothA2DPSource->bt_app_gap_cb(event,param);
+extern "C" void ccall_bt_app_gap_callback(esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *param){
+    if (self_BluetoothA2DPSource) self_BluetoothA2DPSource->bt_app_gap_callback(event,param);
 }
 
 extern "C" void ccall_bt_app_rc_ct_cb(esp_avrc_ct_cb_event_t event, esp_avrc_ct_cb_param_t *param){
@@ -413,7 +413,7 @@ void BluetoothA2DPSource::filter_inquiry_scan_result(esp_bt_gap_cb_param_t *para
 }
 
 
-void BluetoothA2DPSource::bt_app_gap_cb(esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *param)
+void BluetoothA2DPSource::bt_app_gap_callback(esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *param)
 {
     switch (event) {
         case ESP_BT_GAP_DISC_RES_EVT: {
@@ -498,7 +498,7 @@ void BluetoothA2DPSource::bt_av_hdl_stack_evt(uint16_t event, void *p_param)
             esp_bt_dev_set_device_name(dev_name);
 
             /* register GAP callback function */
-            esp_bt_gap_register_callback(ccall_bt_app_gap_cb);
+            esp_bt_gap_register_callback(ccall_bt_app_gap_callback);
 
             /* initialize AVRCP controller */
             esp_avrc_ct_init();

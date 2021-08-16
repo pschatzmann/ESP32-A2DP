@@ -1,7 +1,7 @@
 #pragma once
 
 #ifdef ARDUINO
-#include "esp_arduino_version.h"
+#include "Arduino.h"
 #endif
 
 // Enable CURRENT_ESP_IDF if we are using a current version of ESP IDF e.g. 4.3

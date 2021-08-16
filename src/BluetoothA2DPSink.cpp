@@ -29,6 +29,8 @@ static _lock_t s_volume_lock;
 static uint8_t s_volume = 0;
 static bool is_volume_used = false;
 static bool s_volume_notify;
+static int pin_code_int=0;
+static bool is_pin_code_active = false;
 
 // Forward declarations for C Callback functions for ESP32 Framework
 extern "C" void app_task_handler_2(void *arg);
@@ -238,22 +240,33 @@ void BluetoothA2DPSink::start(const char* name, bool auto_reconnect)
         }
     }
 	
+    if (is_pin_code_active) {
+        /* Set default parameters for Secure Simple Pairing */
+        esp_bt_sp_param_t param_type = ESP_BT_SP_IOCAP_MODE;
+        esp_bt_io_cap_t iocap = ESP_BT_IO_CAP_IO;
+        esp_bt_gap_set_security_param(param_type, &iocap, sizeof(uint8_t));
 
-	
-	/* Set default parameters for Secure Simple Pairing */
-	
-    esp_bt_sp_param_t param_type = ESP_BT_SP_IOCAP_MODE;
-    esp_bt_io_cap_t iocap = ESP_BT_IO_CAP_IN;
-    esp_bt_gap_set_security_param(param_type, &iocap, sizeof(uint8_t));
+        esp_bt_pin_type_t pin_type = ESP_BT_PIN_TYPE_VARIABLE;
+        esp_bt_pin_code_t pin_code;
+        esp_bt_gap_set_pin(pin_type, 0, pin_code);
+
+    } else {
+        /* Set default parameters for Secure Simple Pairing */
+        esp_bt_sp_param_t param_type = ESP_BT_SP_IOCAP_MODE;
+        esp_bt_io_cap_t iocap = ESP_BT_IO_CAP_NONE;
+        esp_bt_gap_set_security_param(param_type, &iocap, sizeof(uint8_t));
+
+        esp_bt_pin_type_t pin_type = ESP_BT_PIN_TYPE_FIXED;
+        esp_bt_pin_code_t pin_code;
+        esp_bt_gap_set_pin(pin_type, 0, pin_code);
+
+    }
     
-	
 	/*
      * Set default parameters for Legacy Pairing
-     * Use fixed pin code
+     * ESP_BT_PIN_TYPE_VARIABLE will trigger callbacks - pin_code and len is ignored
      */
-    esp_bt_pin_type_t pin_type = ESP_BT_PIN_TYPE_VARIABLE;
-    esp_bt_pin_code_t pin_code;
-    esp_bt_gap_set_pin(pin_type, 0, pin_code);
+
 	
 }
 
@@ -310,21 +323,24 @@ void bt_app_gap_cb(esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *param)
 			break;
 		}
 		
-		case ESP_BT_GAP_CFM_REQ_EVT:
-			ESP_LOGI(BT_AV_TAG, "ESP_BT_GAP_CFM_REQ_EVT Please compare the numeric value: %d", param->cfm_req.num_val);
-		   
-			
-			//esp_bt_gap_ssp_confirm_reply(param->cfm_req.bda, true);
-			break;
-		case ESP_BT_GAP_KEY_NOTIF_EVT:
-			ESP_LOGI(BT_AV_TAG, "ESP_BT_GAP_KEY_NOTIF_EVT passkey:%d", param->key_notif.passkey);
-			break;
-		case ESP_BT_GAP_KEY_REQ_EVT:
-			ESP_LOGI(BT_AV_TAG, "ESP_BT_GAP_KEY_REQ_EVT Please enter passkey!");
-			memcpy(peer_bd_addr, param->cfm_req.bda, ESP_BD_ADDR_LEN);
+		case ESP_BT_GAP_CFM_REQ_EVT: {
+                ESP_LOGI(BT_AV_TAG, "ESP_BT_GAP_CFM_REQ_EVT Please confirm the passkey: %d", param->cfm_req.num_val);
+                pin_code_int = param->key_notif.passkey;
+            }
 			break;
 
-		
+		case ESP_BT_GAP_KEY_NOTIF_EVT: {
+                ESP_LOGI(BT_AV_TAG, "ESP_BT_GAP_KEY_NOTIF_EVT passkey:%d", param->key_notif.passkey);
+                pin_code_int = param->key_notif.passkey;
+            }
+			break;
+
+		case ESP_BT_GAP_KEY_REQ_EVT: {
+                ESP_LOGI(BT_AV_TAG, "ESP_BT_GAP_KEY_REQ_EVT Please enter passkey!");
+                memcpy(peer_bd_addr, param->cfm_req.bda, ESP_BD_ADDR_LEN);
+			} 
+            break;
+
 
 		default: {
 			ESP_LOGI(BT_AV_TAG, "event: %d", event);
@@ -1145,9 +1161,26 @@ int BluetoothA2DPSink::get_volume()
   return ((s_volume)* 100/ 0x7f);
 }
 
+void BluetoothA2DPSink::activate_pin_code(bool active){
+    is_pin_code_active = active;
+}
 
-//---------------------------------------------------------
-// ==> Methods which are only supported in new ESP Release 
+
+void BluetoothA2DPSink::confirm_pin_code()
+{
+  ESP_LOGI(BT_AV_TAG, "confirm_pin_code %s", pin_code_int);
+  esp_bt_gap_ssp_passkey_reply(peer_bd_addr, true, pin_code_int);
+}
+
+void BluetoothA2DPSink::confirm_pin_code(int code)
+{
+  ESP_LOGI(BT_AV_TAG, "confirm_pin_code %s", code);
+  esp_bt_gap_ssp_passkey_reply(peer_bd_addr, true, code);
+}
+
+
+//------------------------------------------------------------
+// ==> Methods which are only supported in new ESP Release 4
 
 #ifdef CURRENT_ESP_IDF
 
@@ -1207,12 +1240,6 @@ void BluetoothA2DPSink::volume_set_by_local_host(uint8_t volume)
         esp_avrc_tg_send_rn_rsp(ESP_AVRC_RN_VOLUME_CHANGE, ESP_AVRC_RN_RSP_CHANGED, &rn_param);
         s_volume_notify = false;
     }
-}
-
-void BluetoothA2DPSink::setPinCode(int passkey)
-{
-  ESP_LOGI(BT_AV_TAG, "setPinCode %d", passkey);
-  esp_bt_gap_ssp_passkey_reply(peer_bd_addr, true,passkey);
 }
 
 

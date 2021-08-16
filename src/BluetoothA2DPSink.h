@@ -160,10 +160,18 @@ class BluetoothA2DPSink {
 	
     /// Determines the volume
 	virtual int get_volume();
-		
+
+    /// We need to confirm a new seesion by calling confirm_pin_code()
+    virtual void activate_pin_code(bool active);
+
+    /// confirms the connection request by returning the receivedn pin code
+	virtual void confirm_pin_code();
+
+    /// confirms the connection request by returning the indicated pin code
+	virtual void confirm_pin_code(int code);
+
+
 #ifdef CURRENT_ESP_IDF
-	/// defines the pin code which will authenticate the connection
-	virtual void setPinCode(int passkey);
 
     /// Bluetooth discoverability
     virtual void set_discoverability(esp_bt_discovery_mode_t d);
@@ -187,6 +195,7 @@ class BluetoothA2DPSink {
     esp_a2d_audio_state_t audio_state;
     esp_a2d_connection_state_t connection_state;
     esp_a2d_mct_t audio_type;
+    char* pin_code = nullptr;
 	
 	void (*bt_volumechange)(int) = nullptr;
 	void (*bt_disconnected)() = nullptr;
@@ -199,6 +208,8 @@ class BluetoothA2DPSink {
     bool is_i2s_output = true;
     bool player_init = false;
     bool mono_downmix = false;
+
+
 #ifdef CURRENT_ESP_IDF
     esp_bt_discovery_mode_t discoverability = ESP_BT_GENERAL_DISCOVERABLE;
 #endif

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['next_90',['next',['../class_bluetooth_a2_d_p_sink.html#a296fb7aaf8d8e78991d9d505353de94f',1,'BluetoothA2DPSink']]]
+  ['isconnected_93',['isConnected',['../class_bluetooth_a2_d_p_sink.html#a426488b357a83573cbcab893570700c5',1,'BluetoothA2DPSink::isConnected()'],['../class_bluetooth_a2_d_p_source.html#a4e98bae7828ded2e1dfd619d753b6c37',1,'BluetoothA2DPSource::isConnected()']]]
 ];

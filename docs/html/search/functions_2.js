@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['disconnect_80',['disconnect',['../class_bluetooth_a2_d_p_sink.html#a6d068787d5fbd7a462be743bb7b8cca3',1,'BluetoothA2DPSink']]],
-  ['doloop_81',['doLoop',['../class_sound_data.html#ac79933ed3379cf5ef58d5675aa4bf12e',1,'SoundData']]]
+  ['confirm_5fpin_5fcode_83',['confirm_pin_code',['../class_bluetooth_a2_d_p_sink.html#a5d4707195d0d6e79b65bef4ed48a57c2',1,'BluetoothA2DPSink::confirm_pin_code()'],['../class_bluetooth_a2_d_p_sink.html#a43369961e9858cf99798e9c1b6a634b9',1,'BluetoothA2DPSink::confirm_pin_code(int code)']]]
 ];

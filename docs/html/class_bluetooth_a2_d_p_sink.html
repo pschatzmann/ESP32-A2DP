@@ -181,9 +181,6 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a09a8b269e2a936c5517bd9f88f666a1c">sample_rate</a> ()</td></tr>
 <tr class="memdesc:a09a8b269e2a936c5517bd9f88f666a1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides the actually set data rate (in samples per second) <br /></td></tr>
 <tr class="separator:a09a8b269e2a936c5517bd9f88f666a1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad013bef34a54b27552f2fb4be5ce401c"><td class="memItemLeft" align="right" valign="top"><a id="ad013bef34a54b27552f2fb4be5ce401c"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setPinCode</b> (int passkey)</td></tr>
-<tr class="separator:ad013bef34a54b27552f2fb4be5ce401c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a90e76786cf62555379796e63f4499951"><td class="memItemLeft" align="right" valign="top"><a id="a90e76786cf62555379796e63f4499951"></a>
 esp_err_t&#160;</td><td class="memItemRight" valign="bottom"><b>i2s_mclk_pin_select</b> (const uint8_t pin)</td></tr>
 <tr class="separator:a90e76786cf62555379796e63f4499951"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -195,6 +192,18 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#aca1119f20d2321fb950ae859000cce7b">get_volume</a> ()</td></tr>
 <tr class="memdesc:aca1119f20d2321fb950ae859000cce7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines the volume. <br /></td></tr>
 <tr class="separator:aca1119f20d2321fb950ae859000cce7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22d52952a8ac8c78a483a53c2006a387"><td class="memItemLeft" align="right" valign="top"><a id="a22d52952a8ac8c78a483a53c2006a387"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a22d52952a8ac8c78a483a53c2006a387">activate_pin_code</a> (bool active)</td></tr>
+<tr class="memdesc:a22d52952a8ac8c78a483a53c2006a387"><td class="mdescLeft">&#160;</td><td class="mdescRight">We need to confirm a new seesion by calling <a class="el" href="class_bluetooth_a2_d_p_sink.html#a5d4707195d0d6e79b65bef4ed48a57c2" title="confirms the connection request by returning the receivedn pin code">confirm_pin_code()</a> <br /></td></tr>
+<tr class="separator:a22d52952a8ac8c78a483a53c2006a387"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d4707195d0d6e79b65bef4ed48a57c2"><td class="memItemLeft" align="right" valign="top"><a id="a5d4707195d0d6e79b65bef4ed48a57c2"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a5d4707195d0d6e79b65bef4ed48a57c2">confirm_pin_code</a> ()</td></tr>
+<tr class="memdesc:a5d4707195d0d6e79b65bef4ed48a57c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">confirms the connection request by returning the receivedn pin code <br /></td></tr>
+<tr class="separator:a5d4707195d0d6e79b65bef4ed48a57c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43369961e9858cf99798e9c1b6a634b9"><td class="memItemLeft" align="right" valign="top"><a id="a43369961e9858cf99798e9c1b6a634b9"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a43369961e9858cf99798e9c1b6a634b9">confirm_pin_code</a> (int code)</td></tr>
+<tr class="memdesc:a43369961e9858cf99798e9c1b6a634b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">confirms the connection request by returning the indicated pin code <br /></td></tr>
+<tr class="separator:a43369961e9858cf99798e9c1b6a634b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -315,6 +324,9 @@ esp_a2d_connection_state_t&#160;</td><td class="memItemRight" valign="bottom"><b
 <tr class="memitem:a91cc0f7e05ce24e311be3aa6281f4322"><td class="memItemLeft" align="right" valign="top"><a id="a91cc0f7e05ce24e311be3aa6281f4322"></a>
 esp_a2d_mct_t&#160;</td><td class="memItemRight" valign="bottom"><b>audio_type</b></td></tr>
 <tr class="separator:a91cc0f7e05ce24e311be3aa6281f4322"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9c07a6468a4aa00ce017d115636ffd8"><td class="memItemLeft" align="right" valign="top"><a id="ac9c07a6468a4aa00ce017d115636ffd8"></a>
+char *&#160;</td><td class="memItemRight" valign="bottom"><b>pin_code</b> = nullptr</td></tr>
+<tr class="separator:ac9c07a6468a4aa00ce017d115636ffd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a32e9c57e2ff3224b94dfdc69ea52ad60"><td class="memItemLeft" align="right" valign="top"><a id="a32e9c57e2ff3224b94dfdc69ea52ad60"></a>
 void(*&#160;</td><td class="memItemRight" valign="bottom"><b>bt_volumechange</b> )(int) = nullptr</td></tr>
 <tr class="separator:a32e9c57e2ff3224b94dfdc69ea52ad60"><td class="memSeparator" colspan="2">&#160;</td></tr>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['onechannelsounddata_91',['OneChannelSoundData',['../class_one_channel_sound_data.html#a95a08a39b92863edbc6c759e7c98e4ac',1,'OneChannelSoundData']]]
+  ['next_94',['next',['../class_bluetooth_a2_d_p_sink.html#a296fb7aaf8d8e78991d9d505353de94f',1,'BluetoothA2DPSink']]]
 ];

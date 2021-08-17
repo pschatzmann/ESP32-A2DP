@@ -1120,13 +1120,13 @@ void BluetoothA2DPSink::activate_pin_code(bool active){
 
 void BluetoothA2DPSink::confirm_pin_code()
 {
-  ESP_LOGI(BT_AV_TAG, "confirm_pin_code %s", pin_code_int);
+  ESP_LOGI(BT_AV_TAG, "confirm_pin_code %d", pin_code_int);
   esp_bt_gap_ssp_passkey_reply(peer_bd_addr, true, pin_code_int);
 }
 
 void BluetoothA2DPSink::confirm_pin_code(int code)
 {
-  ESP_LOGI(BT_AV_TAG, "confirm_pin_code %s", code);
+  ESP_LOGI(BT_AV_TAG, "confirm_pin_code %d", code);
   esp_bt_gap_ssp_passkey_reply(peer_bd_addr, true, code);
 }
 

@@ -242,32 +242,27 @@ void BluetoothA2DPSink::start(const char* name, bool auto_reconnect)
     }
 	
     if (is_pin_code_active) {
-        /* Set default parameters for Secure Simple Pairing */
+        // Set default parameters for Secure Simple Pairing 
         esp_bt_sp_param_t param_type = ESP_BT_SP_IOCAP_MODE;
         esp_bt_io_cap_t iocap = ESP_BT_IO_CAP_IO;
         esp_bt_gap_set_security_param(param_type, &iocap, sizeof(uint8_t));
-
+        // invokes callbacks
         esp_bt_pin_type_t pin_type = ESP_BT_PIN_TYPE_VARIABLE;
         esp_bt_pin_code_t pin_code;
         esp_bt_gap_set_pin(pin_type, 0, pin_code);
 
     } else {
-        /* Set default parameters for Secure Simple Pairing */
+        // Set default parameters for Secure Simple Pairing 
         esp_bt_sp_param_t param_type = ESP_BT_SP_IOCAP_MODE;
         esp_bt_io_cap_t iocap = ESP_BT_IO_CAP_NONE;
         esp_bt_gap_set_security_param(param_type, &iocap, sizeof(uint8_t));
-
+        // no callbacks
         esp_bt_pin_type_t pin_type = ESP_BT_PIN_TYPE_FIXED;
         esp_bt_pin_code_t pin_code;
         esp_bt_gap_set_pin(pin_type, 0, pin_code);
 
     }
     
-	/*
-     * Set default parameters for Legacy Pairing
-     * ESP_BT_PIN_TYPE_VARIABLE will trigger callbacks - pin_code and len is ignored
-     */
-
 }
 
 esp_err_t BluetoothA2DPSink::i2s_mclk_pin_select(const uint8_t pin) {

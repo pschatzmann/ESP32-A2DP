@@ -151,6 +151,11 @@ class BluetoothA2DPSink {
     virtual void next();
     /// AVRC previouse
     virtual void previous();
+    
+    /// set output to I2S_CHANNEL_STEREO (default) or I2S_CHANNEL_MONO
+    virtual void set_channels(i2s_channel_t channels) {
+        i2s_channels = channels;
+    }
     /// mix stereo into single mono signal
     virtual void set_mono_downmix(bool enabled) { mono_downmix = enabled; }
     /// Defines the bits per sample for output (if > 16 output will be expanded)
@@ -216,6 +221,7 @@ class BluetoothA2DPSink {
     bool is_i2s_output = true;
     bool player_init = false;
     bool mono_downmix = false;
+    i2s_channel_t i2s_channels = I2S_CHANNEL_STEREO;
 
 
 #ifdef CURRENT_ESP_IDF

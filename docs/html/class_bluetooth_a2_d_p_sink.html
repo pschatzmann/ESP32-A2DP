@@ -173,6 +173,10 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a341024c18eabdb06c734c2242d5ba505">previous</a> ()</td></tr>
 <tr class="memdesc:a341024c18eabdb06c734c2242d5ba505"><td class="mdescLeft">&#160;</td><td class="mdescRight">AVRC previouse. <br /></td></tr>
 <tr class="separator:a341024c18eabdb06c734c2242d5ba505"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc8a4564e135ace22d31c2231f1a0696"><td class="memItemLeft" align="right" valign="top"><a id="abc8a4564e135ace22d31c2231f1a0696"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#abc8a4564e135ace22d31c2231f1a0696">set_channels</a> (i2s_channel_t channels)</td></tr>
+<tr class="memdesc:abc8a4564e135ace22d31c2231f1a0696"><td class="mdescLeft">&#160;</td><td class="mdescRight">set output to I2S_CHANNEL_STEREO (default) or I2S_CHANNEL_MONO <br /></td></tr>
+<tr class="separator:abc8a4564e135ace22d31c2231f1a0696"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a624040cce89a4a2f66495f57db6c1457"><td class="memItemLeft" align="right" valign="top"><a id="a624040cce89a4a2f66495f57db6c1457"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a624040cce89a4a2f66495f57db6c1457">set_mono_downmix</a> (bool enabled)</td></tr>
 <tr class="memdesc:a624040cce89a4a2f66495f57db6c1457"><td class="mdescLeft">&#160;</td><td class="mdescRight">mix stereo into single mono signal <br /></td></tr>
@@ -370,6 +374,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>player_init</b> = fal
 <tr class="memitem:a14cb3b2d7baf00deadcc9f5532164c03"><td class="memItemLeft" align="right" valign="top"><a id="a14cb3b2d7baf00deadcc9f5532164c03"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>mono_downmix</b> = false</td></tr>
 <tr class="separator:a14cb3b2d7baf00deadcc9f5532164c03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70cba1227c116caeb8e444ee1d9b9cfb"><td class="memItemLeft" align="right" valign="top"><a id="a70cba1227c116caeb8e444ee1d9b9cfb"></a>
+i2s_channel_t&#160;</td><td class="memItemRight" valign="bottom"><b>i2s_channels</b> = I2S_CHANNEL_STEREO</td></tr>
+<tr class="separator:a70cba1227c116caeb8e444ee1d9b9cfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A2DP Bluethooth Sink - We initialize and start the Bluetooth A2DP Sink. The example <a href="https://github.com/espressif/esp-idf/tree/master/examples/bluetooth/bluedroid/classic_bt/a2dp_sink">https://github.com/espressif/esp-idf/tree/master/examples/bluetooth/bluedroid/classic_bt/a2dp_sink</a> was refactered into a C++ class. </p>

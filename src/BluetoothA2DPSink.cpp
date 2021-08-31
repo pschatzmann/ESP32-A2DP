@@ -40,7 +40,6 @@ extern "C" void app_rc_ct_callback_2(esp_avrc_ct_cb_event_t event, esp_avrc_ct_c
 extern "C" void app_gap_callback_2(esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *param);
 
 #ifdef CURRENT_ESP_IDF
-static esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap;
 extern "C" void app_rc_tg_callback_2(esp_avrc_tg_cb_event_t  event, esp_avrc_tg_cb_param_t *param);
 #endif
 
@@ -733,7 +732,6 @@ void BluetoothA2DPSink::av_hdl_avrc_evt(uint16_t event, void *p_param)
                  rc->conn_stat.connected, bda[0], bda[1], bda[2], bda[3], bda[4], bda[5]);
 
 #ifdef CURRENT_ESP_IDF
-
         if (rc->conn_stat.connected) {
             av_new_track();
 			 // get remote supported event_ids of peer AVRCP Target
@@ -742,8 +740,12 @@ void BluetoothA2DPSink::av_hdl_avrc_evt(uint16_t event, void *p_param)
 			// clear peer notification capability record
             s_avrc_peer_rn_cap.bits = 0;
 		}		
-        break;
+#else
+        if (rc->conn_stat.connected) {
+            av_new_track();
+        }
 #endif
+        break;
 
     }
     case ESP_AVRC_CT_PASSTHROUGH_RSP_EVT: {

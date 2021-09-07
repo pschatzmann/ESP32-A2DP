@@ -46,8 +46,8 @@ class BluetoothA2DPSource {
      * name: Bluetooth name of the device to connect to
      * callback: function that provides the audio stream as array of Channels
      */
-    virtual void start(char* name, music_data_channels_cb_t callback = NULL, bool is_ssp_enabled = false);
-    virtual void start(std::vector<char*> names, music_data_channels_cb_t callback = NULL, bool is_ssp_enabled = false);
+    virtual void start(const char* name, music_data_channels_cb_t callback = NULL, bool is_ssp_enabled = false);
+    virtual void start(std::vector<const char*> names, music_data_channels_cb_t callback = NULL, bool is_ssp_enabled = false);
 
     /**
      * name: Bluetooth name of the device to connect to
@@ -56,13 +56,13 @@ class BluetoothA2DPSource {
      * from PCM data normally formatted as 44.1kHz sampling rate, two-channel 16-bit sample data
      * is_ssp_enabled: Flag to activate Secure Simple Pairing 
      */ 
-    virtual void startRaw(char* name, music_data_cb_t callback = NULL, bool is_ssp_enabled = false);
-    virtual void startRaw(std::vector<char*> names, music_data_cb_t callback = NULL, bool is_ssp_enabled = false);
+    virtual void startRaw(const char* name, music_data_cb_t callback = NULL, bool is_ssp_enabled = false);
+    virtual void startRaw(std::vector<const char*> names, music_data_cb_t callback = NULL, bool is_ssp_enabled = false);
 
     /**
      * Defines the pin code. If nothing is defined we use "1234"
      */ 
-    virtual  void setPinCode(char* pin_code, esp_bt_pin_type_t pin_type=ESP_BT_PIN_TYPE_VARIABLE);
+    virtual  void setPinCode(const char* pin_code, esp_bt_pin_type_t pin_type=ESP_BT_PIN_TYPE_VARIABLE);
 
     /**
      * In some cases it is very difficult to use the callback function. As an alternative we provide
@@ -117,8 +117,8 @@ class BluetoothA2DPSource {
   protected:
   
     bool ssp_enabled;
-    char* bt_name;
-    std::vector<char*> bt_names;
+    const char* bt_name;
+    std::vector<const char*> bt_names;
 
     esp_bt_pin_type_t pin_type;
     esp_bt_pin_code_t pin_code;
@@ -131,7 +131,9 @@ class BluetoothA2DPSource {
     int s_intv_cnt;
     int s_connecting_intv;
     uint32_t s_pkt_cnt;
-    //static esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap;
+#ifdef CURRENT_ESP_IDF
+    esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap;
+#endif
     TimerHandle_t s_tmr;
     xQueueHandle s_bt_app_task_queue;
     xTaskHandle s_bt_app_task_handle;
@@ -154,9 +156,7 @@ class BluetoothA2DPSource {
     virtual void bt_app_av_state_connecting(uint16_t event, void *param);
     virtual void bt_app_av_state_connected(uint16_t event, void *param);
     virtual void bt_app_av_state_disconnecting(uint16_t event, void *param);
-     //void bt_av_notify_evt_handler(uint8_t event, esp_avrc_rn_param_t *param);
 
-    // void bt_av_volume_changed(void);
 
     virtual bool bt_app_send_msg(app_msg_t *msg);
     virtual void bt_app_work_dispatched(app_msg_t *msg);
@@ -164,5 +164,10 @@ class BluetoothA2DPSource {
     virtual char *bda2str(esp_bd_addr_t bda, char *str, size_t size);
     virtual bool get_name_from_eir(uint8_t *eir, uint8_t *bdname, uint8_t *bdname_len);
     virtual void filter_inquiry_scan_result(esp_bt_gap_cb_param_t *param);
+
+#ifdef CURRENT_ESP_IDF
+    void bt_av_notify_evt_handler(uint8_t event, esp_avrc_rn_param_t *param);
+    void bt_av_volume_changed(void);
+#endif
 
 };

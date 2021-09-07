@@ -226,6 +226,7 @@ class BluetoothA2DPSink {
 
 #ifdef CURRENT_ESP_IDF
     esp_bt_discovery_mode_t discoverability = ESP_BT_GENERAL_DISCOVERABLE;
+    esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap;
 #endif
 
     // protected methods

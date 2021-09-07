@@ -664,7 +664,7 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
                 
                 // setup sample rate and channels
                 if (i2s_set_clk(i2s_port, i2s_config.sample_rate, i2s_config.bits_per_sample, i2s_channels)!=ESP_OK){
-                    ESP_LOGE(BT_AV_TAG, "i2s_set_clk failed");
+                    ESP_LOGE(BT_AV_TAG, "i2s_set_clk failed with samplerate=%d", i2s_config.sample_rate);
                 } else {
                     ESP_LOGI(BT_AV_TAG, "audio player configured, samplerate=%d", i2s_config.sample_rate);
     		        player_init = true; //init finished

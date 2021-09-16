@@ -914,16 +914,29 @@ void BluetoothA2DPSink::app_a2d_callback(esp_a2d_cb_event_t event, esp_a2d_cb_pa
 void BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
 
-    if (mono_downmix) {
+    if (mono_downmix || is_volume_used) {
+        double volumeFactorFloat = s_volume;
+        volumeFactorFloat = pow(2.0, volumeFactorFloat * 12.0 / 127.0);
+        int32_t volumeFactor = volumeFactorFloat - 1.0;
+        if (volumeFactor > 0xfff) {
+            volumeFactor = 0xfff;
+        }
         uint8_t* corr_data = (uint8_t*) data;
         for (int i=0; i<len/4; i++) {
             int16_t pcmLeft = ((uint16_t)data[i*4 + 1] << 8) | data[i*4];
             int16_t pcmRight = ((uint16_t)data[i*4 + 3] << 8) | data[i*4 + 2];
-            int16_t mono = ((int32_t)pcmLeft + pcmRight) >> 1;
-            corr_data[i*4+1] = mono >> 8;
-            corr_data[i*4] = mono;
-            corr_data[i*4+3] = mono >> 8;
-            corr_data[i*4+2] = mono;
+            if (mono_downmix) {
+                pcmRight = pcmLeft = ((int32_t)pcmLeft + pcmRight) >> 1;
+            }
+
+            if (is_volume_used) {
+                pcmLeft = (int32_t)pcmLeft * volumeFactor / 0xfff; 
+                pcmRight = (int32_t)pcmRight * volumeFactor / 0xfff; 
+            }
+            corr_data[i*4+1] = pcmLeft >> 8;
+            corr_data[i*4] = pcmLeft;
+            corr_data[i*4+3] = pcmRight >> 8;
+            corr_data[i*4+2] = pcmRight;
         }
     }
     
@@ -946,22 +959,7 @@ void BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) {
                 int16_t sample = data[i*2] | data[i*2+1]<<8;
                 corr_data[i]= sample + 0x8000;
             }
-        }
-		
-
-        // adjust volume if necessary
-        if (is_volume_used){
-            int16_t * pcmdata = (int16_t *)data;
-            for (int i=0; i<len/2; i++) {
-                int32_t temp = (int32_t)(*pcmdata);
-                temp = temp * s_volume;
-                temp = temp/512;
-                //*pcmdata = ((*pcmdata)*s_volume)/127;
-                *pcmdata = (int16_t)temp;
-                pcmdata++;
-            }
-        }
-		
+        }		
 
         size_t i2s_bytes_written;
         if (i2s_config.bits_per_sample==I2S_BITS_PER_SAMPLE_16BIT){
@@ -1108,7 +1106,12 @@ void BluetoothA2DPSink::set_volume(uint8_t volume)
 {
   ESP_LOGI(BT_AV_TAG, "set_volume %d", volume);
   is_volume_used = true;
-  s_volume =  (volume) & 0x7f;
+  if (volume > 0x7f) {
+      volume = 0x7f;
+  } else if (volume < 0) {
+      volume = 0;
+  }
+  s_volume = volume & 0x7f;
 
 #ifdef CURRENT_ESP_IDF
   volume_set_by_local_host(s_volume);
@@ -1119,7 +1122,7 @@ void BluetoothA2DPSink::set_volume(uint8_t volume)
 int BluetoothA2DPSink::get_volume()
 {
   // ESP_LOGI(BT_AV_TAG, "get_volume %d", s_volume);
-  return ((s_volume)* 100/ 0x7f);
+  return s_volume;
 }
 
 void BluetoothA2DPSink::activate_pin_code(bool active){
@@ -1241,10 +1244,10 @@ void BluetoothA2DPSink::volume_set_by_controller(uint8_t volume)
     _lock_acquire(&s_volume_lock);
     s_volume = volume;
     _lock_release(&s_volume_lock);
-	
+	is_volume_used = true;
 	
 	if (bt_volumechange!=nullptr){
-		(*bt_volumechange)(s_volume * 100/ 0x7f);
+		(*bt_volumechange)(s_volume);
 	}	
 }
 

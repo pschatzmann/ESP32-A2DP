@@ -1236,6 +1236,8 @@ void BluetoothA2DPSink::app_rc_tg_callback(esp_avrc_tg_cb_event_t event, esp_avr
 void BluetoothA2DPSink::volume_set_by_controller(uint8_t volume)
 {
     ESP_LOGI(BT_AV_TAG, "Volume is set by remote controller to %d", (uint32_t)volume * 100 / 0x7f);
+    is_volume_used = true;
+
     _lock_acquire(&s_volume_lock);
     s_volume = volume;
     _lock_release(&s_volume_lock);

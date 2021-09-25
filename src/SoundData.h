@@ -16,8 +16,8 @@
 #ifndef __SOUND_DATA_H__
 #define __SOUND_DATA_H__
 
-//#include "Arduino.h"
 #include <stdint.h>
+#include <stdbool.h>
 
 #ifndef min
 #define min(a,b) (((a)<(b))?(a):(b))

@@ -247,57 +247,19 @@ Architecture / Dependencies</h1>
 <p>This restriction limits the provided examples. Please have a look at the <a href="https://github.com/pschatzmann/arduino-audio-tools">audio-tools</a> project: There I demonstrate e.g. how to connect different microphones, use SD cards and different Audio File Formats.</p>
 <h1><a class="anchor" id="autotoc_md12"></a>
 Documentation</h1>
-<p>The class documentation can be found <a href="https://pschatzmann.github.io/ESP32-A2DP/doc/html/annotated.html">here</a></p>
+<ul>
+<li>The <a href="https://pschatzmann.github.io/ESP32-A2DP/html/annotated.html">class documentation can be found here</a></li>
+<li>You can also find further information in the <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki">Wiki</a></li>
+</ul>
 <h1><a class="anchor" id="autotoc_md13"></a>
 Installation</h1>
-<p>You can download the library as zip and call include Library -&gt; zip library. Or you can git clone this project into the Arduino libraries folder e.g. with </p><div class="fragment"><div class="line">cd  ~/Documents/Arduino/libraries</div>
+<p>For Arduino you can download the library as zip and call include Library -&gt; zip library. Or you can git clone this project into the Arduino libraries folder e.g. with </p><div class="fragment"><div class="line">cd  ~/Documents/Arduino/libraries</div>
 <div class="line">git clone pschatzmann/ESP32-A2DP.git</div>
-</div><!-- fragment --><p>If you are using a current version of ESP IDF, you will receive compile errors like &lsquo;'ESP_BT_SCAN_MODE_CONNECTABLE_DISCOVERABLE&rsquo; was not declared in this scope<code>. To use the new API you can uncomment</code>#define CURRENT_ESP_IDF<code>in</code><a class="el" href="_bluetooth_a2_d_p_common_8h_source.html">src/BluetoothA2DPCommon.h</a>`</p>
+</div><!-- fragment --><p>If you are using a current version of ESP IDF, you will receive compile errors like &lsquo;'ESP_BT_SCAN_MODE_CONNECTABLE_DISCOVERABLE&rsquo; was not declared in this scope<code>. To use the new API you can uncomment</code>#define CURRENT_ESP_IDF<code>in</code><a class="el" href="config_8h_source.html">src/config.h</a>`</p>
+<p>For other frameworks <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki">see the Wiki</a></p>
 <h1><a class="anchor" id="autotoc_md14"></a>
 Change History</h1>
-<p>Master</p><ul>
-<li>provide get_connection_status() method</li>
-<li>provide end() method to shut down bluetooth</li>
-<li>add compile time switch for new ESP IDF</li>
-<li>provide set_discoverability() to change BT discovery mode (only for current ESP IDF)</li>
-<li>add additional flag in set_stream_reader to deactivate i2s</li>
-<li>Remove includes of Arduino.h to highlight independence of Arduino API</li>
-<li>New examples with LED and auto shut down on idle</li>
-<li>Implement mono downmix</li>
-<li>Clean up compile warnings so that build with warnings ALL will succeed</li>
-<li>Example with set_pin_config</li>
-<li>bluetooth devices with address starting 00 did not auto reconnect</li>
-<li>expand to 24 or 32 bits using i2s_config.bits_per_sample</li>
-<li>Correction which allows restart after calling end() thanks to <a href="https://github.com/alexus2033">alexus2033</a></li>
-</ul>
-<p>V.1.2.0</p><ul>
-<li>Metadata support with the help of a callback function - Thanks to <a href="https://github.com/JohnyMielony">JohnyMielony</a></li>
-<li>AVRC command support thanks to <a href="https://github.com/KIdon-Park">PeterPark</a></li>
-<li>Improved init_bluetooth checks, in case bluedroid was already initialized elsewhere - Thanks to <a href="https://github.com/ant0nisk">Antonis Katzourakis</a></li>
-<li>No auto reconnect after clean disconnect - Thanks to <a href="https://github.com/leventeBajczi">Bajczi Levente</a></li>
-<li>The data is rescaled to when written to the internal DAC - Thanks to <a href="https://github.com/thinkcz">Martin Hron</a></li>
-<li>Corrected wrong case of include to Arduino.h - Thanks to <a href="https://github.com/RyanDavis">RyanDavis</a></li>
-<li>Added callback to received packets - Thanks to <a href="https://github.com/Mishaux">Mishaux</a></li>
-<li>Automatically reconnect to last source - Thanks to <a href="https://github.com/JohnyMielony">JohnyMielony</a></li>
-<li>Support for data callback - Thanks to <a href="https://github.com/Mishaux">Mike Mishaux</a></li>
-<li>Improved init_bluetooth checks, in case bluedroid was already initialized elsewhere <a href="https://github.com/ant0nisk">Antonis Katzourakis</a></li>
-<li>No auto reconnect after clean disconnect thanks to <a href="https://github.com/leventeBajczi">Bajczi Levente</a></li>
-<li>Made all methods virtual to enable flexible subclassing</li>
-<li>Error Corrections in <a class="el" href="class_bluetooth_a2_d_p_source.html" title="A2DP Bluetooth Source.">BluetoothA2DPSource</a></li>
-<li>Support for writeData in <a class="el" href="class_bluetooth_a2_d_p_source.html" title="A2DP Bluetooth Source.">BluetoothA2DPSource</a></li>
-<li>Support for multiple alternative BT names in <a class="el" href="class_bluetooth_a2_d_p_source.html" title="A2DP Bluetooth Source.">BluetoothA2DPSource</a></li>
-<li>Redesign to protect internal callbacks in <a class="el" href="class_bluetooth_a2_d_p_sink.html" title="A2DP Bluethooth Sink - We initialize and start the Bluetooth A2DP Sink. The example https://github....">BluetoothA2DPSink</a></li>
-<li>Generate Documentation with the help of doxygen</li>
-</ul>
-<p>V.1.1.0</p><ul>
-<li>New functionality: <a class="el" href="class_bluetooth_a2_d_p_source.html" title="A2DP Bluetooth Source.">BluetoothA2DPSource</a></li>
-<li>Renamed project from 'esp32_bt_music_receiver' to 'ESP32-A2DP'</li>
-<li>Corrected Spelling Mistake from Blootooth to Bluetooth in Class names: The correct class name is BluetoothA2DPSink!</li>
-<li>The include h files are now called like the class names (e.g. <a class="el" href="_bluetooth_a2_d_p_sink_8h_source.html">BluetoothA2DPSink.h</a> and <a class="el" href="_bluetooth_a2_d_p_source_8h_source.html">BluetoothA2DPSource.h</a>)</li>
-</ul>
-<p>V.1.0.0</p><ul>
-<li>Initial Release </li>
-</ul>
+<p>The <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki/Change-History">Change History can be found in the Wiki</a> </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->

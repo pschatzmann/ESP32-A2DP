@@ -242,68 +242,25 @@ This restriction limits the provided examples. Please have a look at the [audio-
 
 ## Documentation
 
-The class documentation can be found [here](https://pschatzmann.github.io/ESP32-A2DP/html/annotated.html)
+- The [class documentation can be found here](https://pschatzmann.github.io/ESP32-A2DP/html/annotated.html)
+- You can also find further information in the [Wiki](https://github.com/pschatzmann/ESP32-A2DP/wiki)
 
 
 ## Installation
 
-You can download the library as zip and call include Library -> zip library. Or you can git clone this project into the Arduino libraries folder e.g. with
+For Arduino you can download the library as zip and call include Library -> zip library. Or you can git clone this project into the Arduino libraries folder e.g. with
 ```
 cd  ~/Documents/Arduino/libraries
 git clone pschatzmann/ESP32-A2DP.git
 ```
 
-If you are using a current version of ESP IDF, you will receive compile errors like `'ESP_BT_SCAN_MODE_CONNECTABLE_DISCOVERABLE' was not declared in this scope`. To use the new API you can uncomment `#define CURRENT_ESP_IDF` in `src/BluetoothA2DPCommon.h`
+If you are using a current version of ESP IDF, you will receive compile errors like `'ESP_BT_SCAN_MODE_CONNECTABLE_DISCOVERABLE' was not declared in this scope`. To use the new API you can uncomment `#define CURRENT_ESP_IDF` in `src/config.h`
 
-
+For other frameworks [see the Wiki](https://github.com/pschatzmann/ESP32-A2DP/wiki)
 
 ## Change History
 
-V1.3.0
-- provide get_connection_status() method
-- provide end() method to shut down bluetooth
-- add compile time switch for new ESP IDF
-- provide set_discoverability() to change BT discovery mode (only for current ESP IDF)
-- add additional flag in set_stream_reader to deactivate i2s 
-- Remove includes of Arduino.h to highlight independence of Arduino API
-- New examples with LED and auto shut down on idle
-- Clean up compile warnings so that build with warnings ALL will succeed
-- Example with set_pin_config
-- Correction - Bluetooth devices with address starting 00 did not auto reconnect
-- Implement mono downmix thanks to [rbuehlma](https://github.com/rbuehlma)
-- expand to 24 or 32 bits using i2s_config.bits_per_sample thanks to [riraosan](https://github.com/riraosan)
-- Tracknumber and TrackCount added to Metadata thanks to [alexus2033](https://github.com/alexus2033)
-- Correction which allows restart after calling end() thanks to [alexus2033](https://github.com/alexus2033)
-- Add method to disconnect current connection thanks to [ashthespy](https://github.com/ashthespy)
-
-V1.2.0
-- Metadata support with the help of a callback function - Thanks to [JohnyMielony](https://github.com/JohnyMielony)
-- AVRC command support thanks to [PeterPark](https://github.com/KIdon-Park) 
-- Improved init_bluetooth checks, in case bluedroid was already initialized elsewhere - Thanks to [Antonis Katzourakis](https://github.com/ant0nisk)
-- No auto reconnect after clean disconnect - Thanks to [Bajczi Levente](https://github.com/leventeBajczi)
-- The data is rescaled to when written to the internal DAC - Thanks to [Martin Hron](https://github.com/thinkcz)
-- Corrected wrong case of include to Arduino.h - Thanks to [RyanDavis](https://github.com/RyanDavis)
-- Added callback to received packets - Thanks to [Mishaux](https://github.com/Mishaux)
-- Automatically reconnect to last source - Thanks to [JohnyMielony](https://github.com/JohnyMielony)
-- Support for data callback - Thanks to [Mike Mishaux](https://github.com/Mishaux)
-- Improved init_bluetooth checks, in case bluedroid was already initialized elsewhere [Antonis Katzourakis](https://github.com/ant0nisk)
-- No auto reconnect after clean disconnect thanks to [Bajczi Levente](https://github.com/leventeBajczi)
-- Made all methods virtual to enable flexible subclassing
-- Error Corrections in BluetoothA2DPSource
-- Support for writeData in BluetoothA2DPSource
-- Support for multiple alternative BT names in BluetoothA2DPSource
-- Redesign to protect internal callbacks in BluetoothA2DPSink
-- Generate Documentation with the help of doxygen
-
-V1.1.0 
-- New functionality: BluetoothA2DPSource
-- Renamed project from 'esp32_bt_music_receiver' to 'ESP32-A2DP'
-- Corrected Spelling Mistake from Blootooth to Bluetooth in Class names: The correct class name is BluetoothA2DPSink!
-- The include h files are now called like the class names (e.g. BluetoothA2DPSink.h and BluetoothA2DPSource.h)
-
-V1.0.0 
-- Initial Release
-
+The [Change History can be found in the Wiki](https://github.com/pschatzmann/ESP32-A2DP/wiki/Change-History)
 
 
 

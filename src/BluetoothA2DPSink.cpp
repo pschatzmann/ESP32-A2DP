@@ -31,6 +31,7 @@ static bool is_volume_used = false;
 static bool s_volume_notify;
 static int pin_code_int=0;
 static bool is_pin_code_active = false;
+static bool is_start_disabled = false;
 
 // Forward declarations for C Callback functions for ESP32 Framework
 extern "C" void app_task_handler_2(void *arg);
@@ -38,6 +39,7 @@ extern "C" void audio_data_callback_2(const uint8_t *data, uint32_t len);
 extern "C" void app_a2d_callback_2(esp_a2d_cb_event_t event, esp_a2d_cb_param_t *param);
 extern "C" void app_rc_ct_callback_2(esp_avrc_ct_cb_event_t event, esp_avrc_ct_cb_param_t *param);
 extern "C" void app_gap_callback_2(esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *param);
+extern "C" void av_hdl_stack_evt_2(uint16_t event, void *p_param);
 
 #ifdef CURRENT_ESP_IDF
 extern "C" void app_rc_tg_callback_2(esp_avrc_tg_cb_event_t  event, esp_avrc_tg_cb_param_t *param);
@@ -85,6 +87,10 @@ BluetoothA2DPSink::~BluetoothA2DPSink() {
     }
 }
 
+void logFreeHeap() {
+    ESP_LOGI(BT_AV_TAG, "Available Heap: %ld", esp_get_free_heap_size());
+}
+
 void BluetoothA2DPSink::disconnect()
 {
     ESP_LOGI(BT_AV_TAG, "discconect a2d");
@@ -97,25 +103,71 @@ void BluetoothA2DPSink::disconnect()
     clean_last_connection();
 }
 
-void BluetoothA2DPSink::end(bool release_memory) {
-    // reconnect does not work after end
-    clean_last_connection();
 
+void BluetoothA2DPSink::end(bool release_memory) {
+    // reconnect should not work after end
+    is_start_disabled = false;
+    clean_last_connection();
+    logFreeHeap();
+
+    // Disconnect
+    disconnect();
+    while(isConnected()){
+        delay(100);
+    }
+
+    // deinit AVRC
     ESP_LOGI(BT_AV_TAG,"deinit avrc");
     if (esp_avrc_ct_deinit() != ESP_OK){
          ESP_LOGE(BT_AV_TAG,"Failed to deinit avrc");
     }
+    logFreeHeap();
 
-    ESP_LOGI(BT_AV_TAG,"disable bluetooth");
-    if (esp_bluedroid_disable() != ESP_OK){
-        ESP_LOGE(BT_AV_TAG,"Failed to disable bluetooth");
-    }
+    if (release_memory) {
+
+        ESP_LOGI(BT_AV_TAG,"disable bluetooth");
+        if (esp_bluedroid_disable() != ESP_OK){
+            ESP_LOGE(BT_AV_TAG,"Failed to disable bluetooth");
+        }
+        logFreeHeap();
+
+	
+        ESP_LOGI(BT_AV_TAG,"deinit bluetooth");
+        if (esp_bluedroid_deinit() != ESP_OK){
+            ESP_LOGE(BT_AV_TAG,"Failed to deinit bluetooth");
+        }
+        logFreeHeap();
+
+
+        ESP_LOGI(BT_AV_TAG,"esp_bt_controller_disable");
+        if (esp_bt_controller_disable()!=ESP_OK){
+            ESP_LOGE(BT_AV_TAG,"esp_bt_controller_disable failed");
+        }
+        logFreeHeap();
+
+        // waiting for status change
+        while(esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_ENABLED)
+            delay(50);
+
+        if(esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_INITED){
+            ESP_LOGI(BT_AV_TAG,"esp_bt_controller_deinit");
+            if (esp_bt_controller_deinit()!= ESP_OK){
+                ESP_LOGE(BT_AV_TAG,"esp_bt_controller_deinit failed");
+            }
+            logFreeHeap();
+        }
     
-    ESP_LOGI(BT_AV_TAG,"deinit bluetooth");
-    if (esp_bluedroid_deinit() != ESP_OK){
-        ESP_LOGE(BT_AV_TAG,"Failed to deinit bluetooth");
-    }
+        // after a release memory - a restart will not be possible
+        ESP_LOGI(BT_AV_TAG,"esp_bt_controller_mem_release");
+        if (esp_bt_controller_mem_release(ESP_BT_MODE_CLASSIC_BT)!= ESP_OK){
+            ESP_LOGE(BT_AV_TAG,"esp_bt_controller_mem_release failed");
+        }
+        logFreeHeap();
+        is_start_disabled = true;
 
+    } 
+
+    // stop I2S
     if (is_i2s_output){
         ESP_LOGI(BT_AV_TAG,"uninstall i2s");
         if (i2s_driver_uninstall(i2s_port) != ESP_OK){
@@ -125,32 +177,9 @@ void BluetoothA2DPSink::end(bool release_memory) {
             player_init = false;
         }
     }
+    logFreeHeap();
 
-    ESP_LOGI(BT_AV_TAG,"esp_bt_controller_disable");
-    if (esp_bt_controller_disable()!=ESP_OK){
-     	ESP_LOGE(BT_AV_TAG,"esp_bt_controller_disable failed");
-    }
 
-    // waiting for status change
-    while(esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_ENABLED);
-
-    if(esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_INITED){
-        ESP_LOGI(BT_AV_TAG,"esp_bt_controller_deinit");
-        if (esp_bt_controller_deinit()!= ESP_OK){
-            ESP_LOGE(BT_AV_TAG,"esp_bt_controller_deinit failed");
-        }
-    }
-    
-    // after a release memory - a restart will not be possible
-    if (release_memory) {
-        ESP_LOGI(BT_AV_TAG,"esp_bt_controller_mem_release");
-        if (esp_bt_controller_mem_release(ESP_BT_MODE_CLASSIC_BT)!= ESP_OK){
-            ESP_LOGE(BT_AV_TAG,"esp_bt_controller_mem_release failed");
-        }
-    }
-
-    // shutdown tasks
-    app_task_shut_down();
 }
 
 
@@ -193,6 +222,13 @@ void BluetoothA2DPSink::set_on_volumechange(void (*callBack)(int)){
 void BluetoothA2DPSink::start(const char* name, bool auto_reconnect)
 {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
+
+    if (is_start_disabled){
+        ESP_LOGE(BT_AV_TAG, "re-start not supported after end(true)");
+        return;
+    }
+
+    logFreeHeap();
     //store parameters
     if (name) {
       this->bt_name = name;
@@ -212,14 +248,6 @@ void BluetoothA2DPSink::start(const char* name, bool auto_reconnect)
     // create application task 
     app_task_start_up();
 
-    //Lambda for callback
-    auto av_hdl_stack_evt_2 = [](uint16_t event, void *p_param) {
-        ESP_LOGD(BT_AV_TAG, "av_hdl_stack_evt_2");
-        if (actual_bluetooth_a2dp_sink) {
-            actual_bluetooth_a2dp_sink->av_hdl_stack_evt(event,p_param);
-        }
-    };
-
     // Bluetooth device name, connection mode and profile set up 
     app_work_dispatch(av_hdl_stack_evt_2, BT_APP_EVT_STACK_UP, NULL, 0);
 
@@ -228,8 +256,8 @@ void BluetoothA2DPSink::start(const char* name, bool auto_reconnect)
         if (i2s_driver_install(i2s_port, &i2s_config, 0, NULL) != ESP_OK) {
             ESP_LOGE(BT_AV_TAG,"i2s_driver_install failed");
         } else {
-	    player_init = false; //reset player
-	}
+            player_init = false; //reset player
+        }
 
         // pins are only relevant when music is not sent to internal DAC
         if (i2s_config.mode & I2S_MODE_DAC_BUILT_IN) {
@@ -239,7 +267,8 @@ void BluetoothA2DPSink::start(const char* name, bool auto_reconnect)
             i2s_set_pin(i2s_port, &pin_config);
         }
     }
-	
+    
+    // handle security pin
     if (is_pin_code_active) {
         // Set default parameters for Secure Simple Pairing 
         esp_bt_sp_param_t param_type = ESP_BT_SP_IOCAP_MODE;
@@ -261,6 +290,8 @@ void BluetoothA2DPSink::start(const char* name, bool auto_reconnect)
         esp_bt_gap_set_pin(pin_type, 0, pin_code);
 
     }
+
+    logFreeHeap();
     
 }
 
@@ -307,43 +338,46 @@ esp_a2d_mct_t BluetoothA2DPSink::get_audio_type() {
 
 int BluetoothA2DPSink::init_bluetooth()
 {
-  ESP_LOGD(BT_AV_TAG, "%s", __func__);
-  if (!btStart()) {
-    ESP_LOGE(BT_AV_TAG,"Failed to initialize controller");
-    return false;
-  }
-  ESP_LOGI(BT_AV_TAG,"controller initialized");
-
-  esp_bluedroid_status_t bt_stack_status = esp_bluedroid_get_status();
-
-  if(bt_stack_status == ESP_BLUEDROID_STATUS_UNINITIALIZED){
-    if (esp_bluedroid_init() != ESP_OK) {
-        ESP_LOGE(BT_AV_TAG,"Failed to initialize bluedroid");
+    ESP_LOGD(BT_AV_TAG, "%s", __func__);
+    if (!btStart()) {
+        ESP_LOGE(BT_AV_TAG,"Failed to initialize controller");
         return false;
     }
-    ESP_LOGI(BT_AV_TAG,"bluedroid initialized");
-  }
- 
-  if(bt_stack_status != ESP_BLUEDROID_STATUS_ENABLED){
-    if (esp_bluedroid_enable() != ESP_OK) {
-        ESP_LOGE(BT_AV_TAG,"Failed to enable bluedroid");
-        return false;
+    ESP_LOGI(BT_AV_TAG,"controller initialized");
+
+    esp_bluedroid_status_t bt_stack_status = esp_bluedroid_get_status();
+
+    if(bt_stack_status == ESP_BLUEDROID_STATUS_UNINITIALIZED){
+        if (esp_bluedroid_init() != ESP_OK) {
+            ESP_LOGE(BT_AV_TAG,"Failed to initialize bluedroid");
+            return false;
+        }
+        ESP_LOGI(BT_AV_TAG,"bluedroid initialized");
     }
-    ESP_LOGI(BT_AV_TAG,"bluedroid enabled"); 
-  }
-  
-  if (esp_bt_gap_register_callback(app_gap_callback_2) != ESP_OK) {
+
+    while(bt_stack_status != ESP_BLUEDROID_STATUS_ENABLED){
+        if (esp_bluedroid_enable() != ESP_OK) {
+            ESP_LOGE(BT_AV_TAG,"Failed to enable bluedroid");
+            delay(100);
+            //return false;
+        } else {
+            ESP_LOGI(BT_AV_TAG,"bluedroid enabled"); 
+        }
+        bt_stack_status = esp_bluedroid_get_status();
+    }
+
+    if (esp_bt_gap_register_callback(app_gap_callback_2) != ESP_OK) {
         ESP_LOGE(BT_AV_TAG,"gap register failed");
         return false;
     }
-	
-   if ((esp_spp_init(esp_spp_mode)) != ESP_OK) {
+
+    if ((esp_spp_init(esp_spp_mode)) != ESP_OK) {
         ESP_LOGE(BT_AV_TAG,"esp_spp_init failed");
         return false;
     }
-  
-  
-  return true;
+
+
+    return true;
 }
 
 
@@ -418,6 +452,8 @@ void BluetoothA2DPSink::app_task_handler(void *arg)
             if (msg.param) {
                 free(msg.param);
             }
+        } else {
+            delay(10);
         }
     }
 }
@@ -425,9 +461,13 @@ void BluetoothA2DPSink::app_task_handler(void *arg)
 void BluetoothA2DPSink::app_task_start_up(void)
 {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
-    app_task_queue = xQueueCreate(10, sizeof(app_msg_t));
-    if (xTaskCreate(app_task_handler_2, "BtAppT", 2048, NULL, configMAX_PRIORITIES - 3, &app_task_handle) != pdPASS){
-        ESP_LOGE(BT_APP_TAG, "%s failed", __func__);
+    if (app_task_queue==NULL) 
+        app_task_queue = xQueueCreate(10, sizeof(app_msg_t));
+
+    if (app_task_handle==NULL) {
+        if (xTaskCreate(app_task_handler_2, "BtAppT", 2048, NULL, configMAX_PRIORITIES - 3, &app_task_handle) != pdPASS){
+            ESP_LOGE(BT_APP_TAG, "%s failed", __func__);
+        }
     }
 }
 
@@ -854,9 +894,8 @@ void BluetoothA2DPSink::av_hdl_stack_evt(uint16_t event, void *p_param)
             }
 
             /* set discoverable and connectable mode, wait to be connected */
-            ESP_LOGD(BT_AV_TAG, "esp_bt_gap_set_scan_mode(ESP_BT_SCAN_MODE_CONNECTABLE_DISCOVERABLE)");
+            ESP_LOGD(BT_AV_TAG, "set_scan_mode_connectable(true)");
             set_scan_mode_connectable(true);
-
             break;
         }
 
@@ -1175,6 +1214,13 @@ void BluetoothA2DPSinkCallbacks::app_gap_callback(esp_bt_gap_cb_event_t event, e
     actual_bluetooth_a2dp_sink->app_gap_callback(event, param);
 }
 
+void BluetoothA2DPSinkCallbacks::av_hdl_stack_evt(uint16_t event, void *param){
+    ESP_LOGD(BT_AV_TAG, "%s", __func__);
+    if (actual_bluetooth_a2dp_sink) {
+        actual_bluetooth_a2dp_sink->av_hdl_stack_evt(event, param);
+    }
+}
+
 /**
  * C Callback Functions needed for the ESP32 API
  */
@@ -1201,6 +1247,11 @@ extern "C" void app_rc_ct_callback_2(esp_avrc_ct_cb_event_t event, esp_avrc_ct_c
 extern "C" void app_gap_callback_2(esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *param){
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
     BluetoothA2DPSinkCallbacks::app_gap_callback(event, param);
+}
+
+extern "C" void av_hdl_stack_evt_2(uint16_t event, void *param) {
+    ESP_LOGD(BT_AV_TAG, "%s", __func__);
+    BluetoothA2DPSinkCallbacks::av_hdl_stack_evt(event, param);
 }
 
 
@@ -1283,6 +1334,7 @@ extern "C" void app_rc_tg_callback_2(esp_avrc_tg_cb_event_t  event, esp_avrc_tg_
 
 
 void BluetoothA2DPSink::set_scan_mode_connectable(bool connectable) {
+    ESP_LOGI(BT_AV_TAG,"set_scan_mode_connectable %s", connectable ? "true":"false" );            
     if (connectable){
         if (esp_bt_gap_set_scan_mode(ESP_BT_CONNECTABLE, discoverability)!=ESP_OK) {
             ESP_LOGE(BT_AV_TAG,"esp_bt_gap_set_scan_mode");            

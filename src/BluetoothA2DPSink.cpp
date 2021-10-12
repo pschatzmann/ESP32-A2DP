@@ -178,8 +178,6 @@ void BluetoothA2DPSink::end(bool release_memory) {
         }
     }
     logFreeHeap();
-
-
 }
 
 
@@ -261,8 +259,9 @@ void BluetoothA2DPSink::start(const char* name, bool auto_reconnect)
 
         // pins are only relevant when music is not sent to internal DAC
         if (i2s_config.mode & I2S_MODE_DAC_BUILT_IN) {
-            ESP_LOGI(BT_AV_TAG, "Output will go to DAC pins");
             i2s_set_pin(i2s_port, NULL);      
+            i2s_set_dac_mode(I2S_DAC_CHANNEL_BOTH_EN);
+            ESP_LOGI(BT_AV_TAG, "Output will go to DAC pins");
         } else {
             i2s_set_pin(i2s_port, &pin_config);
         }
@@ -653,7 +652,6 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
             } else if (a2d->conn_stat.state == ESP_A2D_CONNECTION_STATE_CONNECTING){
                 ESP_LOGI(BT_AV_TAG, "ESP_A2D_CONNECTION_STATE_CONNECTING");
                 connection_rety_count++;
-
             }
             
             break;
@@ -874,10 +872,8 @@ void BluetoothA2DPSink::av_hdl_stack_evt(uint16_t event, void *p_param)
                 ESP_LOGE(BT_AV_TAG,"esp_avrc_tg_init failed");
             }
 
-
 #endif
 			
-		
             /* initialize A2DP sink */
             if (esp_a2d_register_callback(app_a2d_callback_2)!=ESP_OK){
                 ESP_LOGE(BT_AV_TAG,"esp_a2d_register_callback");
@@ -954,6 +950,7 @@ void BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
 
     if (mono_downmix || is_volume_used) {
+        ESP_LOGD(BT_AV_TAG, "volume/channels");
         double volumeFactorFloat = s_volume;
         volumeFactorFloat = pow(2.0, volumeFactorFloat * 12.0 / 127.0);
         int32_t volumeFactor = volumeFactorFloat - 1.0;
@@ -993,10 +990,11 @@ void BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) {
             //https://github.com/espressif/esp-idf/blob/178b122/components/bt/host/bluedroid/api/include/api/esp_a2dp_api.h
             //the buffer is anyway static block of memory possibly overwritten by next incomming data.
 
-            uint16_t* corr_data = (uint16_t*) data;
+            int16_t* corr_data = (int16_t*) data;
             for (int i=0; i<len/2; i++) {
-                int16_t sample = data[i*2] | data[i*2+1]<<8;
-                corr_data[i]= sample + 0x8000;
+                //int16_t sample = data[i*2] | data[i*2+1]<<8;
+                //corr_data[i]= sample + 0x8000;
+                corr_data[i] = ((int32_t)corr_data[i] * 255 / 32767) + 255 / 2;
             }
         }		
 
@@ -1006,6 +1004,7 @@ void BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) {
             if (i2s_write(i2s_port,(void*) data, len, &i2s_bytes_written, portMAX_DELAY)!=ESP_OK){
                 ESP_LOGE(BT_AV_TAG, "i2s_write has failed");    
             }
+            ESP_LOGI(BT_AV_TAG, "i2s_write %d", i2s_bytes_written);
         } else {
             if (i2s_config.bits_per_sample>16){
                 // expand e.g to 32 bit for dacs which do not support 16 bits

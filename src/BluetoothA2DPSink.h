@@ -27,9 +27,6 @@ extern "C" {
 #define AUTOCONNECT_TRY_NUM 1
 #endif
 
-#ifndef CURRENT_ESP_IDF
-#define I2S_COMM_FORMAT_STAND_I2S (I2S_COMM_FORMAT_I2S |I2S_COMM_FORMAT_I2S_MSB)
-#endif
 
 #ifndef BT_AV_TAG
 #define BT_AV_TAG               "BT_AV"

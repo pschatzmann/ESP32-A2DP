@@ -228,6 +228,7 @@ class BluetoothA2DPSink {
 
     // protected methods
     virtual int init_bluetooth();
+    virtual void init_i2s();
     virtual void app_task_start_up(void);
     virtual void app_task_shut_down(void);
     virtual bool app_send_msg(app_msg_t *msg);

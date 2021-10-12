@@ -54,7 +54,7 @@ extern "C" void delay(long millis);
 #if !defined(CURRENT_ESP_IDF) && !defined(I2S_COMM_FORMAT_STAND_I2S)
 // support for old idf releases
 #define I2S_COMM_FORMAT_STAND_I2S (I2S_COMM_FORMAT_I2S | I2S_COMM_FORMAT_I2S_MSB)
-#define I2S_COMM_FORMAT_STAND_MSB (I2S_COMM_FORMAT_I2S | I2S_COMM_FORMAT_I2S_MSB)
+#define I2S_COMM_FORMAT_STAND_MSB (I2S_COMM_FORMAT_I2S | I2S_COMM_FORMAT_I2S_LSB)
 #endif
 
 

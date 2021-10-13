@@ -151,7 +151,7 @@ class BluetoothA2DPSink {
     
     /// set output to I2S_CHANNEL_STEREO (default) or I2S_CHANNEL_MONO
     virtual void set_channels(i2s_channel_t channels) {
-        i2s_channels = channels;
+        set_mono_downmix(channels==I2S_CHANNEL_MONO);
     }
     /// mix stereo into single mono signal
     virtual void set_mono_downmix(bool enabled) { mono_downmix = enabled; }

@@ -9,3 +9,11 @@
 #if ESP_IDF_VERSION_MAJOR >= 4 || ESP_ARDUINO_VERSION_MAJOR >= 2
 #define CURRENT_ESP_IDF
 #endif
+
+// Compile ESP32C3
+#if __has_include("sdkconfig.h")
+#include "sdkconfig.h"
+#ifdef CONFIG_IDF_TARGET_ESP32C3
+#define ESP32C3
+#endif
+#endif

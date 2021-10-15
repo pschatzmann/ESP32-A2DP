@@ -23,7 +23,7 @@
 #include <string.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/timers.h"
-#include "freertos/xtensa_api.h"
+//#include "freertos/xtensa_api.h"
 #include "freertos/FreeRTOSConfig.h"
 #include "freertos/queue.h"
 #include "freertos/task.h"
@@ -57,6 +57,11 @@ extern "C" void delay(long millis);
 #define I2S_COMM_FORMAT_STAND_MSB (I2S_COMM_FORMAT_I2S | I2S_COMM_FORMAT_I2S_LSB)
 #endif
 
+// prevent compile errors for ESP32C3
+#ifdef ESP32C3
+// DAC mode not supported!
+#define I2S_MODE_DAC_BUILT_IN 0
+#endif
 
 /**
  * @brief     handler for the dispatched work
@@ -75,5 +80,6 @@ typedef struct {
 #define BT_AV_TAG        "BT_AV"
 #define BT_RC_CT_TAG     "RCCT"
 #define BT_APP_TAG       "BT_API"
+
 
 

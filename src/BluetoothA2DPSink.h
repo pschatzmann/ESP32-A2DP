@@ -118,6 +118,10 @@ class BluetoothA2DPSink {
       this->avrc_metadata_callback = callback;
     }
 
+    virtual void set_sample_rate_callback(void (*callback)(uint16_t rate)) {
+      this->sample_rate_callback = callback;
+    }
+
     /// Define callback which is called when we receive data: This callback provides access to the data
     virtual void set_stream_reader(void (*callBack)(const uint8_t*, uint32_t), bool i2s_output=true);
 
@@ -212,7 +216,7 @@ class BluetoothA2DPSink {
     void (*stream_reader)(const uint8_t*, uint32_t) = nullptr;
     void (*avrc_metadata_callback)(uint8_t, const uint8_t*) = nullptr;
     bool (*address_validator)(esp_bd_addr_t remote_bda) = nullptr;
-
+    void (*sample_rate_callback)(uint16_t rate)=nullptr;
     bool is_auto_reconnect;
     esp_bd_addr_t last_connection = {0,0,0,0,0,0};
     bool is_i2s_output = true;

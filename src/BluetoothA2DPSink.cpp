@@ -290,6 +290,11 @@ void BluetoothA2DPSink::init_i2s() {
             player_init = false; //reset player
         }
 
+#ifdef ESP32C3
+        if (i2s_set_pin(i2s_port, &pin_config) != ESP_OK) {
+            ESP_LOGE(BT_AV_TAG,"i2s_set_pin failed");
+        }
+#else
         // pins are only relevant when music is not sent to internal DAC
         if (i2s_config.mode & I2S_MODE_DAC_BUILT_IN) {
             if (i2s_set_pin(i2s_port, nullptr)!= ESP_OK) {
@@ -304,9 +309,11 @@ void BluetoothA2DPSink::init_i2s() {
                 ESP_LOGE(BT_AV_TAG,"i2s_set_pin failed");
             }
         }
+#endif
     }
 }
 
+#ifndef ESP32C3
 esp_err_t BluetoothA2DPSink::i2s_mclk_pin_select(const uint8_t pin) {
     if(pin != 0 && pin != 1 && pin != 3) {
         ESP_LOGE(BT_APP_TAG, "Only support GPIO0/GPIO1/GPIO3, gpio_num:%d", pin);
@@ -330,6 +337,7 @@ esp_err_t BluetoothA2DPSink::i2s_mclk_pin_select(const uint8_t pin) {
     }
     return ESP_OK;
 }
+#endif
 
 esp_a2d_audio_state_t BluetoothA2DPSink::get_audio_state() {
   return audio_state;

@@ -233,11 +233,17 @@ OneChannelSoundData(int16_t *data, int32_t len, bool loop=false, ChannelInfo cha
 
 ```
 
-## Architecture / Dependencies  
+## Architecture / Dependencies / Frameworks
 
 The current code is purely dependent on the ESP-IDF (which is also provided by the Arduino ESP32 core). There are no other dependencies and this includes the Arduino API! 
 
-This restriction limits the provided examples. Please have a look at the [audio-tools](https://github.com/pschatzmann/arduino-audio-tools) project: There I demonstrate e.g. how to connect different microphones, use SD cards and different Audio File Formats.
+Therefore we support:
+
+- Arduino
+- [PlatformIO](https://github.com/pschatzmann/ESP32-A2DP/wiki/PlatformIO)
+- [Espressif IDF](https://github.com/pschatzmann/ESP32-A2DP/wiki/Espressif-IDF-as-a-Component)
+
+This restriction limits however the provided examples. Please have a look at the [audio-tools](https://github.com/pschatzmann/arduino-audio-tools) project: There I demonstrate e.g. how to connect different microphones, use SD cards and different Audio File Formats.
 
 
 ## Documentation
@@ -253,8 +259,6 @@ For Arduino you can download the library as zip and call include Library -> zip 
 cd  ~/Documents/Arduino/libraries
 git clone pschatzmann/ESP32-A2DP.git
 ```
-
-If you are using a current version of ESP IDF, you will receive compile errors like `'ESP_BT_SCAN_MODE_CONNECTABLE_DISCOVERABLE' was not declared in this scope`. To use the new API you can uncomment `#define CURRENT_ESP_IDF` in `src/config.h`
 
 For other frameworks [see the Wiki](https://github.com/pschatzmann/ESP32-A2DP/wiki)
 

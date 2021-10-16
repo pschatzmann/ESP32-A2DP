@@ -21,6 +21,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <math.h>       
 #include "freertos/FreeRTOS.h"
 #include "freertos/timers.h"
 //#include "freertos/xtensa_api.h"

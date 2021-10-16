@@ -88,7 +88,7 @@ BluetoothA2DPSink::~BluetoothA2DPSink() {
 }
 
 void logFreeHeap() {
-    ESP_LOGI(BT_AV_TAG, "Available Heap: %ld", esp_get_free_heap_size());
+    ESP_LOGI(BT_AV_TAG, "Available Heap: %zu", esp_get_free_heap_size());
 }
 
 void BluetoothA2DPSink::disconnect()
@@ -1183,9 +1183,7 @@ void BluetoothA2DPSink::set_volume(uint8_t volume)
   is_volume_used = true;
   if (volume > 0x7f) {
       volume = 0x7f;
-  } else if (volume < 0) {
-      volume = 0;
-  }
+  } 
   s_volume = volume & 0x7f;
 
 #ifdef CURRENT_ESP_IDF

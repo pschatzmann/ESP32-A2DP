@@ -112,7 +112,7 @@ void BluetoothA2DPSink::end(bool release_memory) {
 
     // Disconnect
     disconnect();
-    while(isConnected()){
+    while(is_connected()){
         delay(100);
     }
 
@@ -206,8 +206,8 @@ void BluetoothA2DPSink::set_on_connected2BT(void (*callBack)()){
   this->bt_connected = callBack;
 }
 
-void BluetoothA2DPSink::set_on_disconnected2BT(void (*callBack)()){
-  this->bt_disconnected = callBack;
+void BluetoothA2DPSink::set_on_dis_connected2BT(void (*callBack)()){
+  this->bt_dis_connected = callBack;
 }
 
 void BluetoothA2DPSink::set_on_volumechange(void (*callBack)(int)){
@@ -347,7 +347,7 @@ esp_a2d_connection_state_t BluetoothA2DPSink::get_connection_state() {
     return connection_state;
 }
 
-bool BluetoothA2DPSink::isConnected() {
+bool BluetoothA2DPSink::is_connected() {
     return connection_state == ESP_A2D_CONNECTION_STATE_CONNECTED;
 }
 
@@ -625,8 +625,8 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
             if (a2d->conn_stat.state == ESP_A2D_CONNECTION_STATE_DISCONNECTED) {
                 ESP_LOGI(BT_AV_TAG, "ESP_A2D_CONNECTION_STATE_DISCONNECTED");
 				
-				if (bt_disconnected!=nullptr){
-					(*bt_disconnected)();
+				if (bt_dis_connected!=nullptr){
+					(*bt_dis_connected)();
 				}	
 				
                 if (is_i2s_output) {

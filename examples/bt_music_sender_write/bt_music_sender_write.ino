@@ -32,7 +32,7 @@ SoundData *data = new OneChannelSoundData((int16_t*)StarWars30_raw, StarWars30_r
 
 void setup() {
   a2dp_source.start("RadioPlayer");  
-  a2dp_source.writeData(data);
+  a2dp_source.write_data(data);
 }
 
 void loop() {

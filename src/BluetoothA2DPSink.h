@@ -77,7 +77,7 @@ class BluetoothA2DPSinkCallbacks {
  * was refactered into a C++ class 
  */
 
-class BluetoothA2DPSink {
+class BluetoothA2DPSink : public BluetoothA2DPCommon {
   public: 
     /// Constructor
     BluetoothA2DPSink();
@@ -108,7 +108,7 @@ class BluetoothA2DPSink {
     virtual esp_a2d_connection_state_t get_connection_state();
 
     /// Returns true if the state is connected
-    virtual bool isConnected();
+    virtual bool is_connected();
 
     /// Determine the actuall audio type
     virtual esp_a2d_mct_t get_audio_type();
@@ -131,8 +131,8 @@ class BluetoothA2DPSink {
 	/// Set the callback that is called when the BT device is connected
     virtual void set_on_connected2BT(void (*callBack)());
 	
-	/// Set the callback that is called when the BT device is disconnected
-    virtual void set_on_disconnected2BT(void (*callBack)());
+	/// Set the callback that is called when the BT device is dis_connected
+    virtual void set_on_dis_connected2BT(void (*callBack)());
 
     /// Allows you to reject unauthorized addresses
     virtual void set_address_validator(bool (*callBack)(esp_bd_addr_t remote_bda)){
@@ -202,7 +202,7 @@ class BluetoothA2DPSink {
     const char * bt_name;
     uint32_t m_pkt_cnt = 0;
     esp_a2d_audio_state_t m_audio_state = ESP_A2D_AUDIO_STATE_STOPPED;
-    const char *m_a2d_conn_state_str[4] = {"Disconnected", "Connecting", "Connected", "Disconnecting"};
+    const char *m_a2d_conn_state_str[4] = {"Dis_connected", "Connecting", "Connected", "Disconnecting"};
     const char *m_a2d_audio_state_str[3] = {"Suspended", "Stopped", "Started"};
     esp_a2d_audio_state_t audio_state;
     esp_a2d_connection_state_t connection_state;
@@ -210,7 +210,7 @@ class BluetoothA2DPSink {
     char* pin_code = nullptr;
 	
 	void (*bt_volumechange)(int) = nullptr;
-	void (*bt_disconnected)() = nullptr;
+	void (*bt_dis_connected)() = nullptr;
 	void (*bt_connected)() = nullptr;
     void (*data_received)() = nullptr;
     void (*stream_reader)(const uint8_t*, uint32_t) = nullptr;

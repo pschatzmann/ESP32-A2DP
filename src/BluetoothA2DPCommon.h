@@ -82,5 +82,15 @@ typedef struct {
 #define BT_RC_CT_TAG     "RCCT"
 #define BT_APP_TAG       "BT_API"
 
+class BluetoothA2DPCommon {
+    public:
+        virtual ~BluetoothA2DPCommon() = default;
 
+        virtual  bool is_connected() = 0;
+
+        /// obsolete: please use is_connected
+        virtual bool isConnected(){
+            return is_connected();
+        }
+};
 

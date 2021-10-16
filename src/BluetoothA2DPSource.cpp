@@ -126,11 +126,11 @@ BluetoothA2DPSource::BluetoothA2DPSource() {
 
 }
 
-bool BluetoothA2DPSource::isConnected(){
+bool BluetoothA2DPSource::is_connected(){
     return s_a2d_state == APP_AV_STATE_CONNECTED;
 }
 
-void BluetoothA2DPSource::setPinCode(const char *pin_code, esp_bt_pin_type_t pin_type){
+void BluetoothA2DPSource::set_pin_code(const char *pin_code, esp_bt_pin_type_t pin_type){
     ESP_LOGD(BT_APP_TAG, "%s, ", __func__);
     this->pin_type = pin_type;
     this->pin_code_len = strlen(pin_code);
@@ -147,20 +147,20 @@ void BluetoothA2DPSource::start(std::vector<const char*> names, music_data_chann
     if (callback!=NULL){
         // we use the indicated callback
         this->data_stream_channels_callback = callback;
-        startRaw(names, ccall_get_channel_data_wrapper, is_ssp_enabled);
+        start_raw(names, ccall_get_channel_data_wrapper, is_ssp_enabled);
     } else {
-        // we use the callback which supports writeData
-        startRaw(names, ccall_get_data_default, is_ssp_enabled);
+        // we use the callback which supports write_data
+        start_raw(names, ccall_get_data_default, is_ssp_enabled);
     }
 }
 
-void BluetoothA2DPSource::startRaw(const char* name, music_data_cb_t callback, bool is_ssp_enabled) {
+void BluetoothA2DPSource::start_raw(const char* name, music_data_cb_t callback, bool is_ssp_enabled) {
     std::vector<const char*> names = {name};
-    startRaw(names, callback, is_ssp_enabled);
+    start_raw(names, callback, is_ssp_enabled);
 }
 
 
-void BluetoothA2DPSource::startRaw(std::vector<const char*> names, music_data_cb_t callback, bool is_ssp_enabled) {
+void BluetoothA2DPSource::start_raw(std::vector<const char*> names, music_data_cb_t callback, bool is_ssp_enabled) {
     ESP_LOGD(BT_APP_TAG, "%s, ", __func__);
     this->ssp_enabled = is_ssp_enabled;
     this->bt_names = names;
@@ -705,7 +705,7 @@ void BluetoothA2DPSource::bt_app_av_state_connected(uint16_t event, void *param)
     case ESP_A2D_CONNECTION_STATE_EVT: {
         a2d = (esp_a2d_cb_param_t *)(param);
         if (a2d->conn_stat.state == ESP_A2D_CONNECTION_STATE_DISCONNECTED) {
-            ESP_LOGI(BT_AV_TAG, "a2dp disconnected");
+            ESP_LOGI(BT_AV_TAG, "a2dp dis_connected");
             s_a2d_state = APP_AV_STATE_UNCONNECTED;
 #ifdef CURRENT_ESP_IDF
             esp_bt_gap_set_scan_mode(ESP_BT_CONNECTABLE, ESP_BT_GENERAL_DISCOVERABLE);
@@ -744,7 +744,7 @@ void BluetoothA2DPSource::bt_app_av_state_disconnecting(uint16_t event, void *pa
     case ESP_A2D_CONNECTION_STATE_EVT: {
         a2d = (esp_a2d_cb_param_t *)(param);
         if (a2d->conn_stat.state == ESP_A2D_CONNECTION_STATE_DISCONNECTED) {
-            ESP_LOGI(BT_AV_TAG, "a2dp disconnected");
+            ESP_LOGI(BT_AV_TAG, "a2dp dis_connected");
             s_a2d_state =  APP_AV_STATE_UNCONNECTED;
 #ifdef CURRENT_ESP_IDF
             esp_bt_gap_set_scan_mode(ESP_BT_CONNECTABLE, ESP_BT_GENERAL_DISCOVERABLE);
@@ -856,20 +856,20 @@ void BluetoothA2DPSource::bt_av_hdl_avrc_ct_evt(uint16_t event, void *p_param)
     }
 }
 
-bool BluetoothA2DPSource::hasSoundData() {
-    return this->has_sound_data;
+bool BluetoothA2DPSource::has_sound_data() {
+    return this->hasSoundData;
 }
 
-bool BluetoothA2DPSource::writeData(SoundData *data){
+bool BluetoothA2DPSource::write_data(SoundData *data){
     this->sound_data = data;
     this->sound_data_current_pos = 0;
-    this->has_sound_data = true;
+    this->hasSoundData = true;
     return true;
 }
 
 int32_t BluetoothA2DPSource::get_data_default(uint8_t *data, int32_t len) {
     uint32_t result_len;
-    if (hasSoundData()) {
+    if (has_sound_data()) {
         result_len = sound_data->get2ChannelData(sound_data_current_pos, len, data);
         if (result_len!=512) {
             ESP_LOGD(BT_APP_TAG, "=> len: %d / result_len: %d", len, result_len);
@@ -882,7 +882,7 @@ int32_t BluetoothA2DPSource::get_data_default(uint8_t *data, int32_t len) {
                 sound_data_current_pos = 0;            
             } else {
                 ESP_LOGD(BT_APP_TAG, "%s - end of data: stopping", __func__);
-                has_sound_data = false;
+                hasSoundData = false;
             }
         }
     } else {
@@ -895,11 +895,11 @@ int32_t BluetoothA2DPSource::get_data_default(uint8_t *data, int32_t len) {
 }
 
 
-void BluetoothA2DPSource::setNVSInit(bool doInit){
+void BluetoothA2DPSource::set_nvs_init(bool doInit){
     nvs_init = doInit;
 }
 
-void BluetoothA2DPSource::setResetBLE(bool doInit){
+void BluetoothA2DPSource::set_reset_ble(bool doInit){
     reset_ble = doInit;
 }
 

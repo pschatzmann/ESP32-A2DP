@@ -8,7 +8,7 @@ So we can just feed the input from Bluetooth to the I2S output: An example for t
 
 Unfortunately this example did not make me happy so I decided to convert it into a simple __Arduino Library__ that is very easy to use from an Arduino Software IDE.
 
-## A2DP Sink
+## A2DP Sink (Music Receiver)
 
 ### A Simple I2S Example (A2DS Sink) using default Pins
 Here is the simplest example which just uses the proper default settings:
@@ -139,7 +139,7 @@ I have added the following AVRC commmands, that you can use to 'control' your A2
 - previous();
 
 
-## A2DP Source
+## A2DP Source (Music Sender)
 
 ### Sending Data from a A2DS Data Source with a Callback
 

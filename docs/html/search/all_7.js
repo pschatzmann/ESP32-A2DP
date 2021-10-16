@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['isconnected_31',['isConnected',['../class_bluetooth_a2_d_p_sink.html#a426488b357a83573cbcab893570700c5',1,'BluetoothA2DPSink::isConnected()'],['../class_bluetooth_a2_d_p_source.html#a4e98bae7828ded2e1dfd619d753b6c37',1,'BluetoothA2DPSource::isConnected()']]]
+  ['is_5fconnected_0',['is_connected',['../class_bluetooth_a2_d_p_sink.html#a19842c9bedcfd1d88e4f62f7a2523db7',1,'BluetoothA2DPSink::is_connected()'],['../class_bluetooth_a2_d_p_source.html#a5cdf418188e9d1d003c6524f2e1e640c',1,'BluetoothA2DPSource::is_connected()']]],
+  ['isconnected_1',['isConnected',['../class_bluetooth_a2_d_p_common.html#ac06f6104a9a10a93dfcaed28b3df9c8a',1,'BluetoothA2DPCommon']]]
 ];

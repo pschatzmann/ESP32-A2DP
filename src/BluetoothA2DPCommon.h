@@ -102,10 +102,17 @@ class BluetoothA2DPCommon {
             }
         }
 
+        /// converts a esp_bd_addr_t to a string - the string must be min 18 characters long! 
+        void addr_to_str(esp_bd_addr_t bda, char *str){
+            sprintf(str, "%02x:%02x:%02x:%02x:%02x:%02x", bda[0], bda[1], bda[2], bda[3], bda[4], bda[5]);
+        }
+
         /// Logs the free heap
         void log_free_heap() {
             ESP_LOGI(BT_AV_TAG, "Available Heap: %zu", esp_get_free_heap_size());
         }
+
+
         
     protected:
         uint32_t debounce_ms = 0;

@@ -511,6 +511,10 @@ void BluetoothA2DPSink::app_gap_callback(esp_bt_gap_cb_event_t event, esp_bt_gap
         case ESP_BT_GAP_KEY_REQ_EVT: {
                 ESP_LOGI(BT_AV_TAG, "ESP_BT_GAP_KEY_REQ_EVT Please enter passkey!");
                 memcpy(peer_bd_addr, param->cfm_req.bda, ESP_BD_ADDR_LEN);
+                char peer_str[18];
+                addr_to_str(peer_bd_addr, peer_str);
+                ESP_LOGI(BT_AV_TAG, "partner address: %s", peer_str);
+
             } 
             break;
 
@@ -574,10 +578,10 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
         case ESP_A2D_CONNECTION_STATE_EVT: {
             ESP_LOGD(BT_AV_TAG, "%s ESP_A2D_CONNECTION_STATE_EVT", __func__);
             a2d = (esp_a2d_cb_param_t *)(p_param);
-            uint8_t *bda = a2d->conn_stat.remote_bda;
             connection_state = a2d->conn_stat.state;
-            ESP_LOGI(BT_AV_TAG, "A2DP connection state: %s, [%02x:%02x:%02x:%02x:%02x:%02x]",
-            m_a2d_conn_state_str[a2d->conn_stat.state], bda[0], bda[1], bda[2], bda[3], bda[4], bda[5]);
+            char peer_str[18];
+            addr_to_str(a2d->conn_stat.remote_bda, peer_str);
+            ESP_LOGI(BT_AV_TAG, "A2DP connection state: %s, [%s]", m_a2d_conn_state_str[a2d->conn_stat.state], peer_str);
 
             if (a2d->conn_stat.state == ESP_A2D_CONNECTION_STATE_DISCONNECTED) {
                 ESP_LOGI(BT_AV_TAG, "ESP_A2D_CONNECTION_STATE_DISCONNECTED");
@@ -613,6 +617,7 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
                 // checks if the address is valid
                 bool is_valid = true;
                 if(address_validator!=nullptr){
+                    uint8_t *bda = a2d->conn_stat.remote_bda;
                     if (!address_validator(bda)){
                         ESP_LOGI(BT_AV_TAG,"esp_a2d_sink_disconnect: %s", (char*)bda );
                         esp_a2d_sink_disconnect(bda);
@@ -760,9 +765,9 @@ void BluetoothA2DPSink::av_hdl_avrc_evt(uint16_t event, void *p_param)
     esp_avrc_ct_cb_param_t *rc = (esp_avrc_ct_cb_param_t *)(p_param);
     switch (event) {
     case ESP_AVRC_CT_CONNECTION_STATE_EVT: {
-        uint8_t *bda = rc->conn_stat.remote_bda;
-        ESP_LOGI(BT_AV_TAG, "AVRC conn_state evt: state %d, [%02x:%02x:%02x:%02x:%02x:%02x]",
-                 rc->conn_stat.connected, bda[0], bda[1], bda[2], bda[3], bda[4], bda[5]);
+        char peer_str[18];
+        addr_to_str(rc->conn_stat.remote_bda, peer_str);
+        ESP_LOGI(BT_AV_TAG, "AVRC conn_state evt: state %d, [%s]", rc->conn_stat.connected, peer_str);
 
 #ifdef CURRENT_ESP_IDF
         if (rc->conn_stat.connected) {
@@ -1167,11 +1172,8 @@ void BluetoothA2DPSink::activate_pin_code(bool active){
 
 void BluetoothA2DPSink::confirm_pin_code()
 {
-  ESP_LOGI(BT_AV_TAG, "confirm_pin_code %d", pin_code_int);
   if (pin_code_int!=0) {
-    if (esp_bt_gap_ssp_passkey_reply(peer_bd_addr, true, pin_code_int)!=ESP_OK){
-        ESP_LOGE(BT_AV_TAG,"esp_bt_gap_ssp_passkey_reply");
-    }
+    confirm_pin_code(pin_code_int);
   } else {
     ESP_LOGI(BT_AV_TAG, "pincode not available (yet)");
   }
@@ -1179,7 +1181,10 @@ void BluetoothA2DPSink::confirm_pin_code()
 
 void BluetoothA2DPSink::confirm_pin_code(int code)
 {
-  ESP_LOGI(BT_AV_TAG, "confirm_pin_code %d", code);
+  char peer_str[18];
+  addr_to_str(peer_bd_addr, peer_str);
+
+  ESP_LOGI(BT_AV_TAG, "confirm_pin_code %d -> %s", code, peer_str);
   if (esp_bt_gap_ssp_passkey_reply(peer_bd_addr, true, code)!=ESP_OK){
     ESP_LOGE(BT_AV_TAG,"esp_bt_gap_ssp_passkey_reply");
   }
@@ -1338,9 +1343,9 @@ void BluetoothA2DPSink::av_hdl_avrc_tg_evt(uint16_t event, void *p_param)
     switch (event) {
 
     case ESP_AVRC_TG_CONNECTION_STATE_EVT: {
-        uint8_t *bda = rc->conn_stat.remote_bda;
-        ESP_LOGI(BT_AV_TAG, "AVRC conn_state evt: state %d, [%02x:%02x:%02x:%02x:%02x:%02x]",
-                 rc->conn_stat.connected, bda[0], bda[1], bda[2], bda[3], bda[4], bda[5]);
+        char peer_str[18];
+        addr_to_str(rc->conn_stat.remote_bda, peer_str);
+        ESP_LOGI(BT_AV_TAG, "AVRC conn_state evt: state %d, [%s]",rc->conn_stat.connected, peer_str);
         break;
     }
 

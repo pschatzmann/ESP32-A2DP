@@ -484,6 +484,11 @@ void BluetoothA2DPSink::app_alloc_meta_buffer(esp_avrc_ct_cb_param_t *param)
 
 void BluetoothA2DPSink::app_gap_callback(esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *param)
 {
+    memcpy(peer_bd_addr, param->cfm_req.bda, ESP_BD_ADDR_LEN);
+    char peer_str[18];
+    addr_to_str(peer_bd_addr, peer_str);
+    ESP_LOGI(BT_AV_TAG, "partner address: %s", peer_str);
+
     switch (event) {
         case ESP_BT_GAP_AUTH_CMPL_EVT: {
             if (param->auth_cmpl.stat == ESP_BT_STATUS_SUCCESS) {
@@ -499,22 +504,20 @@ void BluetoothA2DPSink::app_gap_callback(esp_bt_gap_cb_event_t event, esp_bt_gap
         case ESP_BT_GAP_CFM_REQ_EVT: {
                 ESP_LOGI(BT_AV_TAG, "ESP_BT_GAP_CFM_REQ_EVT Please confirm the passkey: %d", param->cfm_req.num_val);
                 pin_code_int = param->key_notif.passkey;
+                pin_code_request = Confirm;
             }
             break;
 
         case ESP_BT_GAP_KEY_NOTIF_EVT: {
                 ESP_LOGI(BT_AV_TAG, "ESP_BT_GAP_KEY_NOTIF_EVT passkey:%d", param->key_notif.passkey);
                 pin_code_int = param->key_notif.passkey;
+                pin_code_request = Reply;
             }
             break;
 
         case ESP_BT_GAP_KEY_REQ_EVT: {
                 ESP_LOGI(BT_AV_TAG, "ESP_BT_GAP_KEY_REQ_EVT Please enter passkey!");
-                memcpy(peer_bd_addr, param->cfm_req.bda, ESP_BD_ADDR_LEN);
-                char peer_str[18];
-                addr_to_str(peer_bd_addr, peer_str);
-                ESP_LOGI(BT_AV_TAG, "partner address: %s", peer_str);
-
+                pin_code_request = Reply;
             } 
             break;
 
@@ -593,6 +596,7 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
                 ESP_LOGI(BT_AV_TAG, "ESP_A2D_CONNECTION_STATE_DISCONNECTED");
                 // reset pin code
                 pin_code_int = 0;
+                pin_code_request = Undefined;
 
                 // call callback
                 if (bt_dis_connected!=nullptr){
@@ -1196,10 +1200,22 @@ void BluetoothA2DPSink::confirm_pin_code(int code)
   char peer_str[18];
   addr_to_str(peer_bd_addr, peer_str);
 
-  ESP_LOGI(BT_AV_TAG, "confirm_pin_code %d -> %s", code, peer_str);
-  if (esp_bt_gap_ssp_passkey_reply(peer_bd_addr, true, code)!=ESP_OK){
-    ESP_LOGE(BT_AV_TAG,"esp_bt_gap_ssp_passkey_reply");
+  switch(pin_code_request){
+      case Confirm:
+        ESP_LOGI(BT_AV_TAG, "-> %s",  peer_str);
+        if (esp_bt_gap_ssp_confirm_reply(peer_bd_addr, true)!=ESP_OK){
+            ESP_LOGE(BT_AV_TAG,"esp_bt_gap_ssp_passkey_reply");
+        }
+        break;
+      case Reply:
+        ESP_LOGI(BT_AV_TAG, "confirm_pin_code %d -> %s", code, peer_str);
+        if (esp_bt_gap_ssp_passkey_reply(peer_bd_addr, true, code)!=ESP_OK){
+            ESP_LOGE(BT_AV_TAG,"esp_bt_gap_ssp_passkey_reply");
+        }
+        break;
   }
+
+
 }
 
 /**

@@ -19,8 +19,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdbool.h>
 #include <string.h>
-#include <math.h>       
+#include <math.h>    
+#include "freertos/FreeRTOS.h" // needed for ESP Arduino < 2.0    
 #include "esp_bt.h"
 #include "esp_bt_main.h"
 #include "esp_bt_device.h"

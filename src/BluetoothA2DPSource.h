@@ -18,7 +18,6 @@
 
 #pragma once
 
-#include <stdbool.h>
 #include <vector> 
 #include "BluetoothA2DPCommon.h"
 #include "SoundData.h"

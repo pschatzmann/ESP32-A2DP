@@ -44,9 +44,9 @@ extern "C" void ccall_audio_data_callback(const uint8_t *data, uint32_t len);
 extern "C" void ccall_av_hdl_stack_evt(uint16_t event, void *p_param);
 extern "C" void ccall_av_hdl_a2d_evt(uint16_t event, void *p_param);
 extern "C" void ccall_av_hdl_avrc_evt(uint16_t event, void *p_param);
-extern "C"  void ccall_app_rc_tg_callback(esp_avrc_tg_cb_event_t event, esp_avrc_tg_cb_param_t *param);
 
 #ifdef CURRENT_ESP_IDF
+extern "C" void ccall_app_rc_tg_callback(esp_avrc_tg_cb_event_t event, esp_avrc_tg_cb_param_t *param);
 extern "C" void ccall_av_hdl_avrc_tg_evt(uint16_t event, void *p_param);
 #endif    
 

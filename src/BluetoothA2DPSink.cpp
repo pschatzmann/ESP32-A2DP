@@ -732,7 +732,7 @@ void BluetoothA2DPSink::av_new_track()
 {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
     //Register notifications and request metadata
-    esp_avrc_ct_send_metadata_cmd(0, ESP_AVRC_MD_ATTR_TITLE | ESP_AVRC_MD_ATTR_ARTIST | ESP_AVRC_MD_ATTR_ALBUM | ESP_AVRC_MD_ATTR_TRACK_NUM | ESP_AVRC_MD_ATTR_NUM_TRACKS | ESP_AVRC_MD_ATTR_GENRE);
+    esp_avrc_ct_send_metadata_cmd(0, avrc_metadata_flags);
     esp_avrc_ct_send_register_notification_cmd(1, ESP_AVRC_RN_TRACK_CHANGE, 0);
 }
 
@@ -1180,7 +1180,7 @@ void BluetoothA2DPSink::confirm_pin_code()
 void BluetoothA2DPSink::confirm_pin_code(int code)
 {
   ESP_LOGI(BT_AV_TAG, "confirm_pin_code %d", code);
-  if (esp_bt_gap_ssp_passkey_reply(peer_bd_addr, true, pin_code_int)!=ESP_OK){
+  if (esp_bt_gap_ssp_passkey_reply(peer_bd_addr, true, code)!=ESP_OK){
     ESP_LOGE(BT_AV_TAG,"esp_bt_gap_ssp_passkey_reply");
   }
 }

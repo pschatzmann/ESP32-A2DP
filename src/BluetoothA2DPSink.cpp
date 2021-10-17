@@ -74,7 +74,7 @@ void BluetoothA2DPSink::end(bool release_memory) {
     // reconnect should not work after end
     is_start_disabled = false;
     clean_last_connection();
-    logFreeHeap();
+    log_free_heap();
 
     // Disconnect
     disconnect();
@@ -87,7 +87,7 @@ void BluetoothA2DPSink::end(bool release_memory) {
     if (esp_avrc_ct_deinit() != ESP_OK){
          ESP_LOGE(BT_AV_TAG,"Failed to deinit avrc");
     }
-    logFreeHeap();
+    log_free_heap();
 
     if (release_memory) {
 
@@ -95,21 +95,21 @@ void BluetoothA2DPSink::end(bool release_memory) {
         if (esp_bluedroid_disable() != ESP_OK){
             ESP_LOGE(BT_AV_TAG,"Failed to disable bluetooth");
         }
-        logFreeHeap();
+        log_free_heap();
 
     
         ESP_LOGI(BT_AV_TAG,"deinit bluetooth");
         if (esp_bluedroid_deinit() != ESP_OK){
             ESP_LOGE(BT_AV_TAG,"Failed to deinit bluetooth");
         }
-        logFreeHeap();
+        log_free_heap();
 
 
         ESP_LOGI(BT_AV_TAG,"esp_bt_controller_disable");
         if (esp_bt_controller_disable()!=ESP_OK){
             ESP_LOGE(BT_AV_TAG,"esp_bt_controller_disable failed");
         }
-        logFreeHeap();
+        log_free_heap();
 
         // waiting for status change
         while(esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_ENABLED)
@@ -120,7 +120,7 @@ void BluetoothA2DPSink::end(bool release_memory) {
             if (esp_bt_controller_deinit()!= ESP_OK){
                 ESP_LOGE(BT_AV_TAG,"esp_bt_controller_deinit failed");
             }
-            logFreeHeap();
+            log_free_heap();
         }
     
         // after a release memory - a restart will not be possible
@@ -128,7 +128,7 @@ void BluetoothA2DPSink::end(bool release_memory) {
         if (esp_bt_controller_mem_release(ESP_BT_MODE_CLASSIC_BT)!= ESP_OK){
             ESP_LOGE(BT_AV_TAG,"esp_bt_controller_mem_release failed");
         }
-        logFreeHeap();
+        log_free_heap();
         is_start_disabled = true;
 
     } 
@@ -143,7 +143,7 @@ void BluetoothA2DPSink::end(bool release_memory) {
             player_init = false;
         }
     }
-    logFreeHeap();
+    log_free_heap();
 }
 
 
@@ -186,7 +186,7 @@ void BluetoothA2DPSink::set_on_volumechange(void (*callBack)(int)){
 void BluetoothA2DPSink::start(const char* name, bool auto_reconnect)
 {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
-    logFreeHeap();
+    log_free_heap();
 
     if (is_start_disabled){
         ESP_LOGE(BT_AV_TAG, "re-start not supported after end(true)");
@@ -241,7 +241,7 @@ void BluetoothA2DPSink::start(const char* name, bool auto_reconnect)
 
     }
 
-    logFreeHeap();
+    log_free_heap();
     
 }
 

@@ -100,11 +100,13 @@ class BluetoothA2DPCommon {
             }
         }
 
+        /// Logs the free heap
+        void log_free_heap() {
+            ESP_LOGI(BT_AV_TAG, "Available Heap: %zu", esp_get_free_heap_size());
+        }
+        
     protected:
         uint32_t debounce_ms = 0;
 
-        void logFreeHeap() {
-            ESP_LOGI(BT_AV_TAG, "Available Heap: %zu", esp_get_free_heap_size());
-        }
 };
 

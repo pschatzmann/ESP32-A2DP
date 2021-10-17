@@ -70,7 +70,7 @@ $(function() {
 <p >So we can just feed the input from Bluetooth to the I2S output: An example for this from Expressive can be found on <a href="https://github.com/espressif/esp-idf/tree/master/examples/bluetooth/bluedroid/classic_bt/a2dp_sink">Github</a>.</p>
 <p >Unfortunately this example did not make me happy so I decided to convert it into a simple <b>Arduino Library</b> that is very easy to use from an Arduino Software IDE.</p>
 <h1><a class="anchor" id="autotoc_md1"></a>
-A2DP Sink</h1>
+A2DP Sink (Music Receiver)</h1>
 <h2><a class="anchor" id="autotoc_md2"></a>
 A Simple I2S Example (A2DS Sink) using default Pins</h2>
 <p >Here is the simplest example which just uses the proper default settings:</p>
@@ -176,7 +176,7 @@ Support for AVRC Commands</h2>
 <li>previous();</li>
 </ul>
 <h1><a class="anchor" id="autotoc_md8"></a>
-A2DP Source</h1>
+A2DP Source (Music Sender)</h1>
 <h2><a class="anchor" id="autotoc_md9"></a>
 Sending Data from a A2DS Data Source with a Callback</h2>
 <p >We can also generate sound and send it e.g. to a Bluetooth Speaker. <br  />
@@ -242,9 +242,15 @@ Sending Data from a A2DS Data Source with Recorded Data</h2>
 <div class="fragment"><div class="line">TwoChannelSoundData(Channels *data, int32_t len, bool loop=false);</div>
 <div class="line">OneChannelSoundData(int16_t *data, int32_t len, bool loop=false, ChannelInfo channelInfo=Both);</div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md11"></a>
-Architecture / Dependencies</h1>
+Architecture / Dependencies / Frameworks</h1>
 <p >The current code is purely dependent on the ESP-IDF (which is also provided by the Arduino ESP32 core). There are no other dependencies and this includes the Arduino API!</p>
-<p >This restriction limits the provided examples. Please have a look at the <a href="https://github.com/pschatzmann/arduino-audio-tools">audio-tools</a> project: There I demonstrate e.g. how to connect different microphones, use SD cards and different Audio File Formats.</p>
+<p >Therefore we support:</p>
+<ul>
+<li>Arduino</li>
+<li><a href="https://github.com/pschatzmann/ESP32-A2DP/wiki/PlatformIO">PlatformIO</a></li>
+<li><a href="https://github.com/pschatzmann/ESP32-A2DP/wiki/Espressif-IDF-as-a-Component">Espressif IDF</a></li>
+</ul>
+<p >This restriction limits however the provided examples. Please have a look at the <a href="https://github.com/pschatzmann/arduino-audio-tools">audio-tools</a> project: There I demonstrate e.g. how to connect different microphones, use SD cards and different Audio File Formats.</p>
 <h1><a class="anchor" id="autotoc_md12"></a>
 Documentation</h1>
 <ul>
@@ -255,8 +261,7 @@ Documentation</h1>
 Installation</h1>
 <p >For Arduino you can download the library as zip and call include Library -&gt; zip library. Or you can git clone this project into the Arduino libraries folder e.g. with </p><div class="fragment"><div class="line">cd  ~/Documents/Arduino/libraries</div>
 <div class="line">git clone pschatzmann/ESP32-A2DP.git</div>
-</div><!-- fragment --><p >If you are using a current version of ESP IDF, you will receive compile errors like &lsquo;'ESP_BT_SCAN_MODE_CONNECTABLE_DISCOVERABLE&rsquo; was not declared in this scope<code>. To use the new API you can uncomment</code>#define CURRENT_ESP_IDF<code>in</code><a class="el" href="config_8h_source.html">src/config.h</a>`</p>
-<p >For other frameworks <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki">see the Wiki</a></p>
+</div><!-- fragment --><p >For other frameworks <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki">see the Wiki</a></p>
 <h1><a class="anchor" id="autotoc_md14"></a>
 Change History</h1>
 <p >The <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki/Change-History">Change History can be found in the Wiki</a> </p>

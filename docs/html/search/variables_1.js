@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['cb_0',['cb',['../structapp__msg__t.html#a178b4f47f5dec620dd55568a112bed5c',1,'app_msg_t']]]
+  ['event_0',['event',['../structapp__msg__t.html#a94101fa8211369ac8234e5052922bf1d',1,'app_msg_t']]]
 ];

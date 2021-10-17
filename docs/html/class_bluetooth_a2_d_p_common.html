@@ -64,10 +64,17 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="class_bluetooth_a2_d_p_common-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">BluetoothA2DPCommon Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Common Bluetooth A2DP functions.  
+ <a href="class_bluetooth_a2_d_p_common.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_bluetooth_a2_d_p_common_8h_source.html">BluetoothA2DPCommon.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for BluetoothA2DPCommon:</div>
 <div class="dyncontent">
@@ -87,8 +94,28 @@ Public Member Functions</h2></td></tr>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>isConnected</b> ()</td></tr>
 <tr class="memdesc:ac06f6104a9a10a93dfcaed28b3df9c8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">obsolete: please use is_connected <br /></td></tr>
 <tr class="separator:ac06f6104a9a10a93dfcaed28b3df9c8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bc541b96e6b42b78ebb9d08688c5699"><td class="memItemLeft" align="right" valign="top"><a id="a3bc541b96e6b42b78ebb9d08688c5699" name="a3bc541b96e6b42b78ebb9d08688c5699"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>debounce</b> (void(*cb)(void), int ms)</td></tr>
+<tr class="memdesc:a3bc541b96e6b42b78ebb9d08688c5699"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prevents that the same method is executed multiple times within the indicated time limit. <br /></td></tr>
+<tr class="separator:a3bc541b96e6b42b78ebb9d08688c5699"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a2fbf9020ffa2745ef5eb467ec8596a10"><td class="memItemLeft" align="right" valign="top"><a id="a2fbf9020ffa2745ef5eb467ec8596a10" name="a2fbf9020ffa2745ef5eb467ec8596a10"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>logFreeHeap</b> ()</td></tr>
+<tr class="separator:a2fbf9020ffa2745ef5eb467ec8596a10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:ad04d173227dbd77d1956747cc10837c4"><td class="memItemLeft" align="right" valign="top"><a id="ad04d173227dbd77d1956747cc10837c4" name="ad04d173227dbd77d1956747cc10837c4"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>debounce_ms</b> = 0</td></tr>
+<tr class="separator:ad04d173227dbd77d1956747cc10837c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p >Common Bluetooth A2DP functions. </p>
+<dl class="section author"><dt>Author</dt><dd>Phil Schatzmann </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>Apache License Version 2 </dd></dl>
+</div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a168bc344644da48b595e284b7800e3f2" name="a168bc344644da48b595e284b7800e3f2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a168bc344644da48b595e284b7800e3f2">&#9670;&nbsp;</a></span>is_connected()</h2>
 

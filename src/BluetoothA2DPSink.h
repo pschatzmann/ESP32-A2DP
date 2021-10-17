@@ -129,6 +129,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
       this->avrc_metadata_callback = callback;
     }
 
+    /// Defines the method which will be called with the sample rate is updated
     virtual void set_sample_rate_callback(void (*callback)(uint16_t rate)) {
       this->sample_rate_callback = callback;
     }
@@ -176,6 +177,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     /// Provides the actually set data rate (in samples per second)
     virtual uint16_t sample_rate();
     
+    /// Defines the pin for the master clock
     virtual esp_err_t i2s_mclk_pin_select(const uint8_t pin);
     
     /// Changes the volume

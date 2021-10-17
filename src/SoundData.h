@@ -11,7 +11,6 @@
 // limitations under the License.
 //
 // Copyright 2020 Phil Schatzmann
-// Copyright 2015-2016 Espressif Systems (Shanghai) PTE LTD
 
 #ifndef __SOUND_DATA_H__
 #define __SOUND_DATA_H__

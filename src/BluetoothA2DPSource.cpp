@@ -18,7 +18,6 @@
 #define BT_APP_SIG_WORK_DISPATCH            (0x01)
 #define BT_APP_SIG_WORK_DISPATCH            (0x01)
 
-#define APP_RC_CT_TL_GET_CAPS               (0)
 #define APP_RC_CT_TL_RN_VOLUME_CHANGE       (1)
 #define BT_APP_HEART_BEAT_EVT               (0xff00)
 

@@ -11,7 +11,6 @@
 // limitations under the License.
 //
 // Copyright 2020 Phil Schatzmann
-// Copyright 2015-2016 Espressif Systems (Shanghai) PTE LTD
 
 #pragma once
 
@@ -22,13 +21,6 @@
 #include <unistd.h>
 #include <string.h>
 #include <math.h>       
-#include "freertos/FreeRTOS.h"
-#include "freertos/timers.h"
-//#include "freertos/xtensa_api.h"
-#include "freertos/FreeRTOSConfig.h"
-#include "freertos/queue.h"
-#include "freertos/task.h"
-#include "esp_system.h"
 #include "esp_bt.h"
 #include "esp_bt_main.h"
 #include "esp_bt_device.h"
@@ -81,7 +73,13 @@ typedef struct {
 #define BT_AV_TAG        "BT_AV"
 #define BT_RC_CT_TAG     "RCCT"
 #define BT_APP_TAG       "BT_API"
+#define APP_RC_CT_TL_GET_CAPS   (0)
 
+/** 
+ * @brief Common Bluetooth A2DP functions 
+ * @author Phil Schatzmann
+ * @copyright Apache License Version 2
+*/
 class BluetoothA2DPCommon {
     public:
         virtual ~BluetoothA2DPCommon() = default;
@@ -91,6 +89,22 @@ class BluetoothA2DPCommon {
         /// obsolete: please use is_connected
         virtual bool isConnected(){
             return is_connected();
+        }
+
+       /// Prevents that the same method is executed multiple times within the indicated time limit
+        virtual void debounce(void(*cb)(void),int ms){
+            if (debounce_ms<millis()){
+                cb();
+                // new time limit
+                debounce_ms = millis()+ms;
+            }
+        }
+
+    protected:
+        uint32_t debounce_ms = 0;
+
+        void logFreeHeap() {
+            ESP_LOGI(BT_AV_TAG, "Available Heap: %zu", esp_get_free_heap_size());
         }
 };
 

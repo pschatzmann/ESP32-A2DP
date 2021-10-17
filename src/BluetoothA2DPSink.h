@@ -198,8 +198,8 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
         return pin_code_int;
     }
 
-    // defines the requested metadata: eg. ESP_AVRC_MD_ATTR_TITLE | ESP_AVRC_MD_ATTR_ARTIST | ESP_AVRC_MD_ATTR_ALBUM | ESP_AVRC_MD_ATTR_TRACK_NUM | ESP_AVRC_MD_ATTR_NUM_TRACKS | ESP_AVRC_MD_ATTR_GENRE | AVRC_MEDIA_ATTR_ID_PLAYING_TIME
-    virtual void set_avrc_metadata_attribut_mask(int flags){
+    /// defines the requested metadata: eg. ESP_AVRC_MD_ATTR_TITLE | ESP_AVRC_MD_ATTR_ARTIST | ESP_AVRC_MD_ATTR_ALBUM | ESP_AVRC_MD_ATTR_TRACK_NUM | ESP_AVRC_MD_ATTR_NUM_TRACKS | ESP_AVRC_MD_ATTR_GENRE | AVRC_MEDIA_ATTR_ID_PLAYING_TIME
+    virtual void set_avrc_metadata_attribute_mask(int flags){
         avrc_metadata_flags = flags;
     }
 

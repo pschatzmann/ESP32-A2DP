@@ -55,6 +55,37 @@ void loop() {
 }
 ```
 
+### Using your specific i2s_config
+
+In some cases you might want to use your specific i2s_config settings. E.g. to request a different bits_per_sample (e.g. 32) or to use the use_apll or to optimize the dma buffer...
+
+```
+#include "BluetoothA2DPSink.h"
+
+BluetoothA2DPSink a2dp_sink;
+
+void setup() {
+
+    static i2s_config_t i2s_config = {
+      .mode = (i2s_mode_t) (I2S_MODE_MASTER | I2S_MODE_TX),
+      .sample_rate = 44100, // updated automatically by A2DP
+      .bits_per_sample = (i2s_bits_per_sample_t)32,
+      .channel_format = I2S_CHANNEL_FMT_RIGHT_LEFT,
+      .communication_format = (i2s_comm_format_t) (I2S_COMM_FORMAT_STAND_I2S),
+      .intr_alloc_flags = 0, // default interrupt priority
+      .dma_buf_count = 8,
+      .dma_buf_len = 64,
+      .use_apll = true,
+      .tx_desc_auto_clear = true // avoiding noise in case of data unavailability
+  };
+  a2dp_sink.set_i2s_config(i2s_config);
+  a2dp_sink.start("MyMusic");
+}
+
+void loop() {
+}
+
+```
 
 ### Output to the Internal DAC
 You can also send the output directly to the internal DAC of the ESP32 by providing the corresponding i2s_config:
@@ -127,6 +158,11 @@ void avrc_metadata_callback(uint8_t data1, const uint8_t *data2) {
 a2dp_sink.set_avrc_metadata_callback(avrc_metadata_callback);
 a2dp_sink.start("BT");
 ```
+By default you should get the most important information, however you can adjust this by calling the ```set_avrc_metadata_attribute_mask``` method e.g if you just need the title and playing time you can call:
+```
+set_avrc_metadata_attribute_mask(ESP_AVRC_MD_ATTR_TITLE | AVRC_MEDIA_ATTR_ID_PLAYING_TIME);
+```
+before you start the A2DP sink.
 
 ### Support for AVRC Commands
 

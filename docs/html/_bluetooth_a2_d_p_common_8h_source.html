@@ -160,16 +160,18 @@ $(function() {
 <div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>            }</div>
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        }</div>
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    <span class="keyword">protected</span>:</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        uint32_t debounce_ms = 0;</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        <span class="keywordtype">void</span> logFreeHeap() {</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>            ESP_LOGI(BT_AV_TAG, <span class="stringliteral">&quot;Available Heap: %zu&quot;</span>, esp_get_free_heap_size());</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        }</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>};</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#a791432e5c800e75fb11b858071cff651">  104</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_bluetooth_a2_d_p_common.html#a791432e5c800e75fb11b858071cff651">log_free_heap</a>() {</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>            ESP_LOGI(BT_AV_TAG, <span class="stringliteral">&quot;Available Heap: %zu&quot;</span>, esp_get_free_heap_size());</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        }</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        </div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    <span class="keyword">protected</span>:</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>        uint32_t debounce_ms = 0;</div>
 <div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>};</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
 <div class="ttc" id="aclass_bluetooth_a2_d_p_common_html"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html">BluetoothA2DPCommon</a></div><div class="ttdoc">Common Bluetooth A2DP functions.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:83</div></div>
 <div class="ttc" id="aclass_bluetooth_a2_d_p_common_html_a3bc541b96e6b42b78ebb9d08688c5699"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html#a3bc541b96e6b42b78ebb9d08688c5699">BluetoothA2DPCommon::debounce</a></div><div class="ttdeci">virtual void debounce(void(*cb)(void), int ms)</div><div class="ttdoc">Prevents that the same method is executed multiple times within the indicated time limit.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:95</div></div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_common_html_a791432e5c800e75fb11b858071cff651"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html#a791432e5c800e75fb11b858071cff651">BluetoothA2DPCommon::log_free_heap</a></div><div class="ttdeci">void log_free_heap()</div><div class="ttdoc">Logs the free heap.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:104</div></div>
 <div class="ttc" id="aclass_bluetooth_a2_d_p_common_html_ac06f6104a9a10a93dfcaed28b3df9c8a"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html#ac06f6104a9a10a93dfcaed28b3df9c8a">BluetoothA2DPCommon::isConnected</a></div><div class="ttdeci">virtual bool isConnected()</div><div class="ttdoc">obsolete: please use is_connected</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:90</div></div>
 <div class="ttc" id="astructapp__msg__t_html"><div class="ttname"><a href="structapp__msg__t.html">app_msg_t</a></div><div class="ttdoc">Internal message to be sent for BluetoothA2DPSink and BluetoothA2DPSource.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:65</div></div>
 <div class="ttc" id="astructapp__msg__t_html_a178b4f47f5dec620dd55568a112bed5c"><div class="ttname"><a href="structapp__msg__t.html#a178b4f47f5dec620dd55568a112bed5c">app_msg_t::cb</a></div><div class="ttdeci">app_callback_t cb</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:68</div></div>

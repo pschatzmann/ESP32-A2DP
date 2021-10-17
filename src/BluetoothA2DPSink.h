@@ -144,6 +144,16 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     /// Set the callback that is called when the BT device is dis_connected
     virtual void set_on_dis_connected2BT(void (*callBack)());
 
+    /// Set the callback that is called when the connection state is changed
+    virtual void set_on_connection_state_changed(void (*callBack)(esp_a2d_connection_state_t state)){
+        connection_state_callback = callBack;
+    }
+
+    /// Set the callback that is called when the audio state is changed
+    virtual void set_on_audio_state_changed(void (*callBack)(esp_a2d_audio_state_t state)){
+        audio_state_callback = callBack;
+    }
+
     /// Allows you to reject unauthorized addresses
     virtual void set_address_validator(bool (*callBack)(esp_bd_addr_t remote_bda)){
         address_validator = callBack;
@@ -249,6 +259,9 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     void (*avrc_metadata_callback)(uint8_t, const uint8_t*) = nullptr;
     bool (*address_validator)(esp_bd_addr_t remote_bda) = nullptr;
     void (*sample_rate_callback)(uint16_t rate)=nullptr;
+    void (*connection_state_callback)(esp_a2d_connection_state_t state) = nullptr;
+    void (*audio_state_callback)(esp_a2d_audio_state_t state) = nullptr;
+
 
 #ifdef CURRENT_ESP_IDF
     esp_bt_discovery_mode_t discoverability = ESP_BT_GENERAL_DISCOVERABLE;

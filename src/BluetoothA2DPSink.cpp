@@ -579,6 +579,12 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
             ESP_LOGD(BT_AV_TAG, "%s ESP_A2D_CONNECTION_STATE_EVT", __func__);
             a2d = (esp_a2d_cb_param_t *)(p_param);
             connection_state = a2d->conn_stat.state;
+
+            // callback
+            if (connection_state_callback!=nullptr){
+                connection_state_callback(connection_state);
+            }
+
             char peer_str[18];
             addr_to_str(a2d->conn_stat.remote_bda, peer_str);
             ESP_LOGI(BT_AV_TAG, "A2DP connection state: %s, [%s]", m_a2d_conn_state_str[a2d->conn_stat.state], peer_str);
@@ -652,6 +658,12 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
             a2d = (esp_a2d_cb_param_t *)(p_param);
             ESP_LOGI(BT_AV_TAG, "A2DP audio state: %s", m_a2d_audio_state_str[a2d->audio_stat.state]);
             m_audio_state = a2d->audio_stat.state;
+
+            // callback
+            if (audio_state_callback!=nullptr){
+                audio_state_callback(m_audio_state);
+            }
+
             if (is_i2s_output){
                 if (ESP_A2D_AUDIO_STATE_STARTED == a2d->audio_stat.state) { 
                     m_pkt_cnt = 0; 

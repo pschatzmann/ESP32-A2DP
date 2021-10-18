@@ -18,7 +18,7 @@
 
 #include "BluetoothA2DPSink32.h"
 
-BluetoothA2DPSink32 a2dp_sink;
+BluetoothA2DPSink32 a2dp_sink; // Subclass of BluetoothA2DPSink
 
 void setup() {
   a2dp_sink.set_bits_per_sample(32);  

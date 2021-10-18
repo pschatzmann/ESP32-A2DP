@@ -13,7 +13,7 @@
 class BluetoothA2DPSink32 : public BluetoothA2DPSink {
     protected:
         void audio_data_callback(const uint8_t *data, uint32_t len) {
-            ESP_LOGD(BT_AV_TAG, "%s", __func__);
+            ESP_LOGD(BT_AV_TAG, "%s", __PRETTY_FUNCTION__);
             Frame* frame = (Frame*) data;  // convert to array of frames
             static constexpr int blk_size = 128;
             static uint32_t data32[blk_size/2];

@@ -21,8 +21,9 @@
 BluetoothA2DPSink a2dp_sink;
 
 void setup() {
+  // you could also do this also with your own i2s config. But this is simpler
   a2dp_sink.set_bits_per_sample(32);  
-  a2dp_sink.start("Callback");  
+  a2dp_sink.start("BT32bit");  
 }
 
 

@@ -20,11 +20,10 @@
 
 #include <vector> 
 #include "BluetoothA2DPCommon.h"
-#include "SoundData.h"
 
 typedef void (* bt_app_cb_t) (uint16_t event, void *param);
 typedef  int32_t (* music_data_cb_t) (uint8_t *data, int32_t len);
-typedef  int32_t (* music_data_channels_cb_t) (Channels *data, int32_t len);
+typedef  int32_t (* music_data_channels_cb_t) (Frame *data, int32_t len);
 typedef void (* bt_app_copy_cb_t) (app_msg_t *msg, void *p_dest, void *p_src);
 
 extern "C" void ccall_bt_av_hdl_stack_evt(uint16_t event, void *p_param);
@@ -68,7 +67,7 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
 
     /**
      * name: Bluetooth name of the device to connect to
-     * callback: function that provides the audio stream as array of Channels
+     * callback: function that provides the audio stream as array of Frame
      */
     virtual void start(const char* name, music_data_channels_cb_t callback = NULL, bool is_ssp_enabled = false);
     virtual void start(std::vector<const char*> names, music_data_channels_cb_t callback = NULL, bool is_ssp_enabled = false);

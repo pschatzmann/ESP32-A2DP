@@ -33,6 +33,7 @@
 #include "esp_spp_api.h"
 #include "nvs.h"
 #include "nvs_flash.h"
+#include "SoundData.h"
 
 #ifdef ARDUINO_ARCH_ESP32
 #include "esp32-hal-log.h"

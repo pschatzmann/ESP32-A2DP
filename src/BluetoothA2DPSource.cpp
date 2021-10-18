@@ -94,7 +94,7 @@ extern "C" int32_t ccall_get_channel_data_wrapper(uint8_t *data, int32_t len) {
         return 0;
     }
     memset(data,0,len);
-    return (*(self_BluetoothA2DPSource->data_stream_channels_callback))((Channels*)data, len / 4) * 4 ;
+    return (*(self_BluetoothA2DPSource->data_stream_channels_callback))((Frame*)data, len / 4) * 4 ;
 }
 
 extern "C" int32_t ccall_get_data_default(uint8_t *data, int32_t len) {

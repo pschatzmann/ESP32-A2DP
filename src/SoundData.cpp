@@ -30,7 +30,7 @@ void SoundData::setLoop(bool loop) {
 /**
  *  Constructor for Data containing 2 channels
  */
-TwoChannelSoundData::TwoChannelSoundData(Channels *data, int32_t len, bool loop) {
+TwoChannelSoundData::TwoChannelSoundData(Frame *data, int32_t len, bool loop) {
     setData(data, len);
     setLoop(loop);
 }
@@ -40,18 +40,18 @@ TwoChannelSoundData::TwoChannelSoundData(bool loop) {
 }
 
 
-void TwoChannelSoundData::setData(Channels *data, int32_t len){
+void TwoChannelSoundData::setData(Frame *data, int32_t len){
     this->len = len;
     this->data = data;
 }
 
 void TwoChannelSoundData::setDataRaw(uint8_t *data, int32_t len){
-    this->len = len*4;
-    this->data = (Channels *)data;
+    this->len = len/4;
+    this->data = (Frame *)data;
 }
 
 
-int32_t TwoChannelSoundData::getData(int32_t pos, int32_t len, Channels *data) {
+int32_t TwoChannelSoundData::getData(int32_t pos, int32_t len, Frame *data) {
     //ESP_LOGD(SOUND_DATA, "x%x - pos: %d / len: %d", __func__, pos, len);
     int result_len = min(len, this->len - pos);
     for (int32_t j=0;j<result_len;j++){
@@ -60,7 +60,7 @@ int32_t TwoChannelSoundData::getData(int32_t pos, int32_t len, Channels *data) {
     return result_len;
 }
 
-int32_t TwoChannelSoundData::getData(int32_t pos, Channels &channels){
+int32_t TwoChannelSoundData::getData(int32_t pos, Frame &channels){
     int32_t result = 0;
     if (pos<this->len){
         result = 1;
@@ -75,7 +75,7 @@ int32_t TwoChannelSoundData::getData(int32_t pos, Channels &channels){
  */
 int32_t TwoChannelSoundData::get2ChannelData(int32_t pos, int32_t len, uint8_t *data) {
     //ESP_LOGD(SOUND_DATA, "x%x - pos: %d / len: %d", __func__, pos, len);
-    return getData(pos/4, len/4, (Channels*)data)*4;
+    return getData(pos/4, len/4, (Frame*)data)*4;
 }
 
 //*****************************************************************************************
@@ -113,13 +113,13 @@ int32_t OneChannelSoundData::getData(int32_t pos, int32_t len, int16_t *data) {
 }
 
 /**
- * Data is stored in one channel with int16_t data. However we need to provide 2 Channels 
+ * Data is stored in one channel with int16_t data. However we need to provide 2 Frame 
  * pos and len are in bytes.
  * 
  */
 int32_t OneChannelSoundData::get2ChannelData(int32_t pos, int32_t len, uint8_t *data) {
     //ESP_LOGD(SOUND_DATA, "x%x - pos: %d / len: %d", __func__, pos, len);
-    Channels *result_data = (Channels*) data;
+    Frame *result_data = (Frame*) data;
     int32_t req_len_in_channels = len / 4;
     int32_t start = pos / 4 ;  // position in uint16_t array
     int32_t result_len = 0;
@@ -134,7 +134,7 @@ int32_t OneChannelSoundData::get2ChannelData(int32_t pos, int32_t len, uint8_t *
     return result_len;
 }
 
-int32_t OneChannelSoundData::getData(int32_t pos, Channels &channels){
+int32_t OneChannelSoundData::getData(int32_t pos, Frame &channels){
     int32_t result = 0;
     if (pos<this->len){
         result = 1;

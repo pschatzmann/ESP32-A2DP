@@ -49,7 +49,13 @@ class VolumeControl {
         }
         // provides a factor in the range of 0 to 4096
         virtual int32_t get_volume_factor(uint8_t volume) = 0;
-        virtual int32_t get_volume_factor_max() = 0;
+
+        // provides the max factor value 4096
+        virtual int32_t get_volume_factor_max() {
+            return 0x1000;
+        }
+
+
 };
 
 /**
@@ -72,9 +78,6 @@ class DefaultVolumeControl : public VolumeControl {
             return volumeFactor;
         }
 
-        virtual int32_t get_volume_factor_max() {
-            return 0xfff;
-        }
 };
 
 /**
@@ -93,9 +96,6 @@ class SimpleExponentialVolumeControl : public VolumeControl {
             return volumeFactor;
         }
 
-        virtual int32_t get_volume_factor_max() {
-            return 0xfff;
-        }
 };
 
 /**
@@ -121,13 +121,5 @@ class LinearVolumeControl : public VolumeControl {
 class NoVolumeControl : public VolumeControl {
     public:
         virtual void update_audio_data(Frame* data, uint16_t frameCount, uint8_t volume, bool mono_downmix, bool ivolume_used) {
-        }
-        /// not used
-        virtual int32_t get_volume_factor(uint8_t volume) {
-            return 0;
-        }
-        /// not used
-        virtual int32_t get_volume_factor_max() {
-            return 0;
         }
 };

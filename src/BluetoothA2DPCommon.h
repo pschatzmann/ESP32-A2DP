@@ -43,6 +43,7 @@
 
 extern "C" bool btStart();
 extern "C" void delay(long millis);
+extern "C" unsigned long millis();
 
 #endif
 
@@ -78,6 +79,8 @@ typedef struct {
 #define BT_APP_TAG       "BT_API"
 #define APP_RC_CT_TL_GET_CAPS   (0)
 
+
+
 /** 
  * @brief Common Bluetooth A2DP functions 
  * @author Phil Schatzmann
@@ -96,7 +99,7 @@ class BluetoothA2DPCommon {
 
        /// Prevents that the same method is executed multiple times within the indicated time limit
         virtual void debounce(void(*cb)(void),int ms){
-            if (debounce_ms<millis()){
+            if (debounce_ms < millis()){
                 cb();
                 // new time limit
                 debounce_ms = millis()+ms;

@@ -54,6 +54,10 @@ void delay(long millis) {
     vTaskDelay(xDelay);
 }
 
+unsigned long millis() {
+    return (unsigned long) (esp_timer_get_time() / 1000ULL);
+}
+
 #endif 
 
 

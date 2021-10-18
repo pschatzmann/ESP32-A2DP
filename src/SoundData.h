@@ -28,14 +28,9 @@ struct __attribute__((packed)) Frame {
   int16_t channel1;
   int16_t channel2;
 
-  Frame(int v){
+  Frame(int v=0){
     channel1 = channel2 = v;
   }
-  
-  Frame(){
-    channel1 = channel2 = 0;
-  }
-
 };
 
 /**

@@ -1173,6 +1173,9 @@ void BluetoothA2DPSink::confirm_pin_code(int code)
             ESP_LOGE(BT_AV_TAG,"esp_bt_gap_ssp_passkey_reply");
         }
         break;
+    default:
+        ESP_LOGE(BT_AV_TAG, "No open request -> %s",  peer_str);
+        break;
   }
 }
 

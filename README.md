@@ -160,7 +160,7 @@ a2dp_sink.start("BT");
 ```
 By default you should get the most important information, however you can adjust this by calling the ```set_avrc_metadata_attribute_mask``` method e.g if you just need the title and playing time you can call:
 ```
-set_avrc_metadata_attribute_mask(ESP_AVRC_MD_ATTR_TITLE | AVRC_MEDIA_ATTR_ID_PLAYING_TIME);
+set_avrc_metadata_attribute_mask(ESP_AVRC_MD_ATTR_TITLE | ESP_AVRC_MD_ATTR_PLAYING_TIME);
 ```
 before you start the A2DP sink.
 

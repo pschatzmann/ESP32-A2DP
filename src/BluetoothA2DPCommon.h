@@ -23,6 +23,11 @@
 #include <string.h>
 #include <math.h>    
 #include "freertos/FreeRTOS.h" // needed for ESP Arduino < 2.0    
+#include "freertos/timers.h"
+#include "freertos/xtensa_api.h"
+#include "freertos/FreeRTOSConfig.h"
+#include "freertos/queue.h"
+#include "freertos/task.h"
 #include "esp_bt.h"
 #include "esp_bt_main.h"
 #include "esp_bt_device.h"

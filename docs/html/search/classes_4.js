@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['twochannelsounddata_79',['TwoChannelSoundData',['../class_two_channel_sound_data.html',1,'']]]
+  ['novolumecontrol_0',['NoVolumeControl',['../class_no_volume_control.html',1,'']]]
 ];

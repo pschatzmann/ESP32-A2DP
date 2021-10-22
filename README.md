@@ -192,7 +192,7 @@ function' that generates the sound data:
 BluetoothA2DPSource a2dp_source;
 
 // callback 
-int32_t get_sound_data(Channels *data, int32_t len) {
+int32_t get_sound_data(Frame *data, int32_t len) {
     // generate your sound data 
     // return the length of the generated sound - which usually is identical with len
     return len;
@@ -257,14 +257,14 @@ In the example above we provide the data with one channel. This has the advantag
 a 2 channel recording, which you could use in the following way: 
 
 ```
-SoundData *data = new TwoChannelSoundData((Channels*)StarWars10_raw,StarWars10_raw_len/4);
+SoundData *data = new TwoChannelSoundData((Frame*)StarWars10_raw,StarWars10_raw_len/4);
 
 ```
 
 In the constructor you can pass additional parameters:
 
 ```
-TwoChannelSoundData(Channels *data, int32_t len, bool loop=false);
+TwoChannelSoundData(Frame *data, int32_t len, bool loop=false);
 OneChannelSoundData(int16_t *data, int32_t len, bool loop=false, ChannelInfo channelInfo=Both);
 
 ```

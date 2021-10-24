@@ -27,7 +27,7 @@
 class VolumeControl {
     public:
         virtual void update_audio_data(Frame* data, uint16_t frameCount, uint8_t volume, bool mono_downmix, bool is_volume_used) {
-            if (mono_downmix || is_volume_used) {
+            if (data!=nullptr && frameCount>0 && ( mono_downmix || is_volume_used)) {
                 ESP_LOGD("VolumeControl", "update_audio_data");
                 int32_t volumeFactor = get_volume_factor(volume);
                 int32_t max = get_volume_factor_max();
@@ -48,6 +48,7 @@ class VolumeControl {
                 }
             }
         }
+
         // provides a factor in the range of 0 to 4096
         virtual int32_t get_volume_factor(uint8_t volume) = 0;
 

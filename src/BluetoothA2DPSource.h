@@ -143,6 +143,7 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
 
     /// Sets the volume (range 0 - 4096)
     virtual void set_volume(uint8_t volume){
+      ESP_LOGI(BT_AV_TAG, "%s set_volume: %d", volume);
       volume_value = volume;
       is_volume_used = true;
     }

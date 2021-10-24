@@ -679,6 +679,8 @@ void BluetoothA2DPSource::bt_app_av_state_connecting(uint16_t event, void *param
         case BT_APP_HEART_BEAT_EVT:
             if (++s_connecting_intv >= 5) {
                 ESP_LOGW(BT_AV_TAG,"setting APP_AV_STATE_UNCONNECTED");
+                // just to make sure that the remote devices knows about this
+                esp_a2d_sink_disconnect(s_peer_bda);
                 s_a2d_state = APP_AV_STATE_UNCONNECTED;
                 s_connecting_intv = 0;
             }

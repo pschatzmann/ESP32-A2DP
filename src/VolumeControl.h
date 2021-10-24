@@ -15,7 +15,8 @@
 // Copyright 2020 Phil Schatzmann
 // Copyright 2015-2016 Espressif Systems (Shanghai) PTE LTD
 
-#include "BluetoothA2DPCommon.h"
+#include "SoundData.h"
+#include "esp_log.h"
 
 /**
  * @brief Abstract class for handling of the volume of the audio data
@@ -27,7 +28,7 @@ class VolumeControl {
     public:
         virtual void update_audio_data(Frame* data, uint16_t frameCount, uint8_t volume, bool mono_downmix, bool is_volume_used) {
             if (mono_downmix || is_volume_used) {
-                ESP_LOGD(BT_AV_TAG, "update_audio_data");
+                ESP_LOGD("VolumeControl", "update_audio_data");
                 int32_t volumeFactor = get_volume_factor(volume);
                 int32_t max = get_volume_factor_max();
                 for (int i=0;i<frameCount;i++){
@@ -54,8 +55,6 @@ class VolumeControl {
         virtual int32_t get_volume_factor_max() {
             return 0x1000;
         }
-
-
 };
 
 /**

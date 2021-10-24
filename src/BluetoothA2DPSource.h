@@ -60,68 +60,108 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
 
 
   public: 
-    /**
-     * Constructor
-     */
+    /// Constructor
     BluetoothA2DPSource();
 
-    /**
-     * name: Bluetooth name of the device to connect to
-     * callback: function that provides the audio stream as array of Frame
-     */
-    virtual void start(const char* name, music_data_channels_cb_t callback = NULL, bool is_ssp_enabled = false);
-    virtual void start(std::vector<const char*> names, music_data_channels_cb_t callback = NULL, bool is_ssp_enabled = false);
+    /// Destructor
+    ~BluetoothA2DPSource();
+
+    /// activate Secure Simple Pairing 
+    void set_ssp_enabled(bool active){
+      this->ssp_enabled = active;
+    }
+
+    /// activate / deactivate the automatic reconnection to the last address (per default this is on)
+    void set_auto_reconnect(bool active){
+      this->auto_reconnect = active;
+    }
+
+    /// automatically tries to reconnect to the indicated address
+    void set_auto_reconnect(esp_bd_addr_t addr){
+      this->auto_reconnect = true;
+    	memcpy(last_connection,addr,ESP_BD_ADDR_LEN);
+    }
+
+    /// Defines the local name
+    virtual void set_local_name(const char* name){
+      bt_name = name;
+    }
 
     /**
-     * name: Bluetooth name of the device to connect to
-     * callback: function that provides the audio stream -
+     * @brief starts the bluetooth source
+     * @param name: Bluetooth name of the device to connect to
+     * @param callback: function that provides the audio stream as array of Frame
+     * @param is_ssp_enabled: Flag to activate Secure Simple Pairing 
+     */
+    virtual void start(const char* name, music_data_channels_cb_t callback = NULL);
+
+    /// starts the bluetooth source. Supports multiple alternative names
+    virtual void start(std::vector<const char*> names, music_data_channels_cb_t callback = NULL);
+
+    /**
+     * @brief starts the bluetooth source 
+     * 
+     * @param name: Bluetooth name of the device to connect to
+     * @param callback: function that provides the audio stream -
      * The supported audio codec in ESP32 A2DP is SBC. SBC audio stream is encoded
      * from PCM data normally formatted as 44.1kHz sampling rate, two-channel 16-bit sample data
-     * is_ssp_enabled: Flag to activate Secure Simple Pairing 
+     *  @param is_ssp_enabled: Flag to activate Secure Simple Pairing 
      */ 
-    virtual void start_raw(const char* name, music_data_cb_t callback = NULL, bool is_ssp_enabled = false);
-    virtual void start_raw(std::vector<const char*> names, music_data_cb_t callback = NULL, bool is_ssp_enabled = false);
+    virtual void start_raw(const char* name, music_data_cb_t callback = NULL);
 
-    /**
-     * Defines the pin code. If nothing is defined we use "1234"
-     */ 
+    /// start_raw which supports multiple alternative names
+    virtual void start_raw(std::vector<const char*> names, music_data_cb_t callback = NULL);
+
+
+    /// Defines the pin code. If nothing is defined we use "1234"
     virtual  void set_pin_code(const char* pin_code, esp_bt_pin_type_t pin_type=ESP_BT_PIN_TYPE_VARIABLE);
 
     /**
-     * In some cases it is very difficult to use the callback function. As an alternative we provide
+     * @brief write sound data: In some cases it is very difficult to use the callback function. As an alternative we provide
      * this method where you can just send the data to a queue. It is your responsibility however that
      * you handle the situation if the queue is full.
      */
     virtual bool write_data(SoundData *data);
 
-    /**
-     *  Returns true if the bluetooth device is connected
-     */
+    /// Returns true if the bluetooth device is connected
     virtual  bool is_connected();
 
     /**
-     *  Returns true if write_dataRaw has been called with any valid data
+     *   @brief Returns true if write_dataRaw has been called with any valid data
      */
     virtual  bool has_sound_data();
 
     /**
-     *  Defines if the Flash NVS should be reset on start
+     *  @brief Defines if the Flash NVS should be reset on start
      */
     virtual  void set_nvs_init(bool doInit);
 
     /**
-     *  Defines if the BLE should be reset on start
+     *   @brief Defines if the BLE should be reset on start
      */
     virtual void set_reset_ble(bool doInit);
 
+    /// Sets the volume (range 0 - 4096)
+    virtual void set_volume(uint8_t volume){
+      volume_value = volume;
+      is_volume_used = true;
+    }
+        
+    /// Determines the actual volume
+    virtual int get_volume(){
+      return is_volume_used ? volume_value : 0;
+    }
 
-    // callback for data
+    /// callback for data
     virtual int32_t get_data_default(uint8_t *data, int32_t len);
-    music_data_channels_cb_t data_stream_channels_callback;
+
 
   protected:
-  
-    bool ssp_enabled;
+    music_data_channels_cb_t data_stream_channels_callback;
+    const char *dev_name = "ESP32_A2DP_SRC";
+
+    bool ssp_enabled=false;
+    bool auto_reconnect=true;
     const char* bt_name;
     std::vector<const char*> bt_names;
 
@@ -131,9 +171,9 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
 
     esp_bd_addr_t s_peer_bda;
     uint8_t s_peer_bdname[ESP_BT_GAP_MAX_BDNAME_LEN + 1];
-    int s_a2d_state;
+    int s_a2d_state; // Next Target Connection State
     int s_media_state;
-    int s_intv_cnt;
+    int s_intv_cnt=0;
     int s_connecting_intv;
     uint32_t s_pkt_cnt;
     TimerHandle_t s_tmr;
@@ -149,10 +189,15 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
     bool reset_ble = true;
     music_data_cb_t data_stream_callback;
 
+    // volume 
+    uint8_t volume_value = 0;
+    bool is_volume_used = false;
+
 #ifdef CURRENT_ESP_IDF
     esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap;
 #endif
 
+    virtual void process_user_state_callbacks(uint16_t event, void *param);
 
     virtual bool bt_app_work_dispatch(bt_app_cb_t p_cback, uint16_t event, void *p_params, int param_len, bt_app_copy_cb_t p_copy_cback);
     virtual void bt_app_task_start_up(void);
@@ -169,7 +214,6 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
     virtual bool bt_app_send_msg(app_msg_t *msg);
     virtual void bt_app_work_dispatched(app_msg_t *msg);
 
-    virtual char *bda2str(esp_bd_addr_t bda, char *str, size_t size);
     virtual bool get_name_from_eir(uint8_t *eir, uint8_t *bdname, uint8_t *bdname_len);
     virtual void filter_inquiry_scan_result(esp_bt_gap_cb_param_t *param);
 
@@ -190,6 +234,8 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
     virtual void bt_app_av_sm_hdlr(uint16_t event, void *param);
     /// avrc CT event handler
     virtual void bt_av_hdl_avrc_ct_evt(uint16_t event, void *p_param);
+    /// resets the last connectioin so that we can reconnect
+    virtual void reset_last_connection();
 
 #ifdef CURRENT_ESP_IDF
     void bt_av_notify_evt_handler(uint8_t event, esp_avrc_rn_param_t *param);

@@ -15,7 +15,6 @@
 
 #pragma once
 #include "BluetoothA2DPCommon.h"
-#include "VolumeControl.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -110,15 +109,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     /// ends the I2S bluetooth sink with the indicated name - if you release the memory a future start is not possible
     virtual void end(bool release_memory=false);
     
-    /// Disconnects the current a2d connection, allowing for another device to connect
-    virtual void disconnect();
-
-    /// Determine the actual audio state
-    virtual esp_a2d_audio_state_t get_audio_state();
-   
-    /// Determine the connection state
-    virtual esp_a2d_connection_state_t get_connection_state();
-
     /// Returns true if the state is connected
     virtual bool is_connected();
 
@@ -147,20 +137,16 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     /// Set the callback that is called when the BT device is dis_connected
     virtual void set_on_dis_connected2BT(void (*callBack)());
 
-    /// Set the callback that is called when the connection state is changed
-    virtual void set_on_connection_state_changed(void (*callBack)(esp_a2d_connection_state_t state)){
-        connection_state_callback = callBack;
-    }
-
-    /// Set the callback that is called when the audio state is changed
-    virtual void set_on_audio_state_changed(void (*callBack)(esp_a2d_audio_state_t state)){
-        audio_state_callback = callBack;
-    }
-
     /// Allows you to reject unauthorized addresses
     virtual void set_address_validator(bool (*callBack)(esp_bd_addr_t remote_bda)){
         address_validator = callBack;
     }
+
+    /// Changes the volume
+    virtual void set_volume(uint8_t volume);
+    
+    /// Determines the volume
+    virtual int get_volume();
 
     /// Set the callback that is called when they change the volume
     virtual void set_on_volumechange(void (*callBack)(int));
@@ -191,12 +177,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     /// Defines the pin for the master clock
     virtual esp_err_t i2s_mclk_pin_select(const uint8_t pin);
     
-    /// Changes the volume
-    virtual void set_volume(uint8_t volume);
-    
-    /// Determines the volume
-    virtual int get_volume();
-
     /// We need to confirm a new seesion by calling confirm_pin_code()
     virtual void activate_pin_code(bool active);
 
@@ -216,11 +196,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
         avrc_metadata_flags = flags;
     }
 
-    /// you can define a custom VolumeControl implementation
-    virtual void set_volume_control(VolumeControl *ptr){
-        volume_control_ptr = ptr;
-    }
-
 #ifdef CURRENT_ESP_IDF
     /// Bluetooth discoverability
     virtual void set_discoverability(esp_bt_discovery_mode_t d);
@@ -235,15 +210,10 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     i2s_pin_config_t pin_config;    
     const char * bt_name;
     uint32_t m_pkt_cnt = 0;
-    esp_a2d_audio_state_t m_audio_state = ESP_A2D_AUDIO_STATE_STOPPED;
-    const char *m_a2d_conn_state_str[4] = {"Dis_connected", "Connecting", "Connected", "Disconnecting"};
-    const char *m_a2d_audio_state_str[3] = {"Suspended", "Stopped", "Started"};
-    esp_a2d_audio_state_t audio_state;
-    esp_a2d_connection_state_t connection_state;
+    //esp_a2d_audio_state_t m_audio_state = ESP_A2D_AUDIO_STATE_STOPPED;
     esp_a2d_mct_t audio_type;
     char pin_code_str[20];
     bool is_auto_reconnect;
-    esp_bd_addr_t last_connection = {0,0,0,0,0,0};
     bool is_i2s_output = true;
     bool player_init = false;
     bool mono_downmix = false;
@@ -259,7 +229,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     int pin_code_int = 0;
     PinCodeRequest pin_code_request = Undefined;
     bool is_pin_code_active = false;
-    bool is_start_disabled = false;
     int avrc_metadata_flags = ESP_AVRC_MD_ATTR_TITLE | ESP_AVRC_MD_ATTR_ARTIST | ESP_AVRC_MD_ATTR_ALBUM | ESP_AVRC_MD_ATTR_TRACK_NUM | ESP_AVRC_MD_ATTR_NUM_TRACKS | ESP_AVRC_MD_ATTR_GENRE;
     void (*bt_volumechange)(int) = nullptr;
     void (*bt_dis_connected)() = nullptr;
@@ -269,10 +238,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     void (*avrc_metadata_callback)(uint8_t, const uint8_t*) = nullptr;
     bool (*address_validator)(esp_bd_addr_t remote_bda) = nullptr;
     void (*sample_rate_callback)(uint16_t rate)=nullptr;
-    void (*connection_state_callback)(esp_a2d_connection_state_t state) = nullptr;
-    void (*audio_state_callback)(esp_a2d_audio_state_t state) = nullptr;
-    DefaultVolumeControl default_volume_control;
-    VolumeControl *volume_control_ptr;
 
 #ifdef CURRENT_ESP_IDF
     esp_bt_discovery_mode_t discoverability = ESP_BT_GENERAL_DISCOVERABLE;
@@ -290,14 +255,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     virtual void app_alloc_meta_buffer(esp_avrc_ct_cb_param_t *param);
     virtual void av_new_track();
     virtual void init_nvs();
-    virtual void get_last_connection();
-    virtual void set_last_connection(esp_bd_addr_t bda, size_t size);
-    virtual void clean_last_connection();
-    virtual void connect_to_last_device();
-    // change the scan mode
-    virtual void set_scan_mode_connectable(bool connectable);
-    // check if last connectioin is defined
-    virtual bool has_last_connection();
     // execute AVRC command
     virtual void execute_avrc_command(int cmd);
 
@@ -320,10 +277,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     virtual void av_hdl_a2d_evt(uint16_t event, void *p_param);
     // avrc event handler 
     virtual void av_hdl_avrc_evt(uint16_t event, void *p_param);
-    // provides the volume factor for the indicated volue
-    VolumeControl* volume_control() {
-        return volume_control_ptr !=nullptr ? volume_control_ptr : &default_volume_control;
-    }
+
 #ifdef CURRENT_ESP_IDF
     virtual void volume_set_by_local_host(uint8_t volume);
     virtual void volume_set_by_controller(uint8_t volume);

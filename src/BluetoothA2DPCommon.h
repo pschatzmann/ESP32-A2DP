@@ -39,6 +39,7 @@
 #include "nvs.h"
 #include "nvs_flash.h"
 #include "SoundData.h"
+#include "VolumeControl.h"
 
 #ifdef ARDUINO_ARCH_ESP32
 #include "esp32-hal-log.h"
@@ -93,8 +94,16 @@ typedef struct {
 */
 class BluetoothA2DPCommon {
     public:
+        /// Destructor
         virtual ~BluetoothA2DPCommon() = default;
 
+        /// Closes the connection
+        virtual void disconnect();
+
+        /// Closes the connection and stops A2DP
+        virtual void end(bool releaseMemory=false);
+
+        /// Checks if A2DP is connected
         virtual  bool is_connected() = 0;
 
         /// obsolete: please use is_connected
@@ -102,29 +111,71 @@ class BluetoothA2DPCommon {
             return is_connected();
         }
 
-       /// Prevents that the same method is executed multiple times within the indicated time limit
-        virtual void debounce(void(*cb)(void),int ms){
-            if (debounce_ms < millis()){
-                cb();
-                // new time limit
-                debounce_ms = millis()+ms;
-            }
+        /// Changes the volume (use the range 0-100)
+        virtual void set_volume(uint8_t volume) = 0;
+        
+        /// Determines the volume
+        virtual int get_volume() = 0;
+
+        /// you can define a custom VolumeControl implementation
+        virtual void set_volume_control(VolumeControl *ptr){
+            volume_control_ptr = ptr;
         }
 
-        /// converts a esp_bd_addr_t to a string - the string must be min 18 characters long! 
-        void addr_to_str(esp_bd_addr_t bda, char *str){
-            sprintf(str, "%02x:%02x:%02x:%02x:%02x:%02x", bda[0], bda[1], bda[2], bda[3], bda[4], bda[5]);
-        }
+        /// Determine the actual audio state
+        virtual esp_a2d_audio_state_t get_audio_state();
+    
+        /// Determine the connection state
+        virtual esp_a2d_connection_state_t get_connection_state();
+
+        /// Set the callback that is called when the connection state is changed
+        virtual void set_on_connection_state_changed(void (*callBack)(esp_a2d_connection_state_t state));
+
+        /// Set the callback that is called when the audio state is changed
+        virtual void set_on_audio_state_changed(void (*callBack)(esp_a2d_audio_state_t state));
+
+       /// Prevents that the same method is executed multiple times within the indicated time limit
+        virtual void debounce(void(*cb)(void),int ms);
 
         /// Logs the free heap
-        void log_free_heap() {
-            ESP_LOGI(BT_AV_TAG, "Available Heap: %zu", esp_get_free_heap_size());
-        }
+        void log_free_heap();
+
+        /// converts esp_a2d_connection_state_t to a string
+        const char* to_str(esp_a2d_connection_state_t state);
+
+        /// converts a esp_a2d_audio_state_t to a string
+        const char* to_str(esp_a2d_audio_state_t state);
+
+        /// converts a esp_bd_addr_t to a string - the string is 18 characters long! 
+        const char* to_str(esp_bd_addr_t bda);
 
 
-        
     protected:
         uint32_t debounce_ms = 0;
+        DefaultVolumeControl default_volume_control;
+        VolumeControl *volume_control_ptr;
+        esp_bd_addr_t last_connection = {0,0,0,0,0,0};
+        bool is_start_disabled = false;
+        void (*connection_state_callback)(esp_a2d_connection_state_t state) = nullptr;
+        void (*audio_state_callback)(esp_a2d_audio_state_t state) = nullptr;
+        const char *m_a2d_conn_state_str[4] = {"Disconnected", "Connecting", "Connected", "Disconnecting"};
+        const char *m_a2d_audio_state_str[3] = {"Suspended", "Stopped", "Started"};
+        esp_a2d_audio_state_t audio_state = ESP_A2D_AUDIO_STATE_STOPPED;
+        esp_a2d_connection_state_t connection_state = ESP_A2D_CONNECTION_STATE_DISCONNECTED;
+
+        virtual void get_last_connection();
+        virtual void set_last_connection(esp_bd_addr_t bda);
+        virtual void clean_last_connection();
+        virtual void connect_to_last_device();
+        virtual bool has_last_connection();
+        // change the scan mode
+        virtual void set_scan_mode_connectable(bool connectable);
+
+        /// provides access to the VolumeControl object
+        virtual VolumeControl* volume_control() {
+            return volume_control_ptr !=nullptr ? volume_control_ptr : &default_volume_control;
+        }
+
 
 };
 

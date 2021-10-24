@@ -485,6 +485,7 @@ void BluetoothA2DPSink::app_rc_ct_callback(esp_avrc_ct_cb_event_t event, esp_avr
             app_work_dispatch(ccall_av_hdl_avrc_evt, event, param, sizeof(esp_avrc_ct_cb_param_t));
             break;
         }
+        
 #endif
 
         default:
@@ -509,7 +510,7 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
                 connection_state_callback(connection_state);
             }
 
-            ESP_LOGI(BT_AV_TAG, "A2DP connection state: %s, [%s]", m_a2d_conn_state_str[a2d->conn_stat.state], to_str(a2d->conn_stat.remote_bda));
+            ESP_LOGI(BT_AV_TAG, "A2DP connection state: %s, [%s]", to_str(a2d->conn_stat.state), to_str(a2d->conn_stat.remote_bda));
 
             if (a2d->conn_stat.state == ESP_A2D_CONNECTION_STATE_DISCONNECTED) {
                 ESP_LOGI(BT_AV_TAG, "ESP_A2D_CONNECTION_STATE_DISCONNECTED");
@@ -579,7 +580,7 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
         case ESP_A2D_AUDIO_STATE_EVT: {
             ESP_LOGD(BT_AV_TAG, "%s ESP_A2D_AUDIO_STATE_EVT", __func__);
             a2d = (esp_a2d_cb_param_t *)(p_param);
-            ESP_LOGI(BT_AV_TAG, "A2DP audio state: %s", m_a2d_audio_state_str[a2d->audio_stat.state]);
+            ESP_LOGI(BT_AV_TAG, "A2DP audio state: %s", to_str(a2d->audio_stat.state));
             
             // callback on state change
             if (audio_state_callback!=nullptr && audio_state != a2d->audio_stat.state){

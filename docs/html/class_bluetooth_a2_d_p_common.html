@@ -128,14 +128,14 @@ virtual esp_a2d_audio_state_t&#160;</td><td class="memItemRight" valign="bottom"
 virtual esp_a2d_connection_state_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a513b32676d8fc248bb481180f832ef97">get_connection_state</a> ()</td></tr>
 <tr class="memdesc:a513b32676d8fc248bb481180f832ef97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine the connection state. <br /></td></tr>
 <tr class="separator:a513b32676d8fc248bb481180f832ef97"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afdde4addf872c52ca8f79a91c9211397"><td class="memItemLeft" align="right" valign="top"><a id="afdde4addf872c52ca8f79a91c9211397"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#afdde4addf872c52ca8f79a91c9211397">set_on_connection_state_changed</a> (void(*callBack)(esp_a2d_connection_state_t state))</td></tr>
-<tr class="memdesc:afdde4addf872c52ca8f79a91c9211397"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the callback that is called when the connection state is changed. <br /></td></tr>
-<tr class="separator:afdde4addf872c52ca8f79a91c9211397"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86bf947c3cbf7b6df89655fafe512515"><td class="memItemLeft" align="right" valign="top"><a id="a86bf947c3cbf7b6df89655fafe512515"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a86bf947c3cbf7b6df89655fafe512515">set_on_audio_state_changed</a> (void(*callBack)(esp_a2d_audio_state_t state))</td></tr>
-<tr class="memdesc:a86bf947c3cbf7b6df89655fafe512515"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the callback that is called when the audio state is changed. <br /></td></tr>
-<tr class="separator:a86bf947c3cbf7b6df89655fafe512515"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa79cff78c075c9273ea2b5c03f052fcd"><td class="memItemLeft" align="right" valign="top"><a id="aa79cff78c075c9273ea2b5c03f052fcd"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#aa79cff78c075c9273ea2b5c03f052fcd">set_on_connection_state_changed</a> (void(*callBack)(esp_a2d_connection_state_t state, void *), void *obj=nullptr)</td></tr>
+<tr class="memdesc:aa79cff78c075c9273ea2b5c03f052fcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the callback that is called when the connection state is changed. <br /></td></tr>
+<tr class="separator:aa79cff78c075c9273ea2b5c03f052fcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f13ecf541393c21a5a489235bad27fb"><td class="memItemLeft" align="right" valign="top"><a id="a5f13ecf541393c21a5a489235bad27fb"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a5f13ecf541393c21a5a489235bad27fb">set_on_audio_state_changed</a> (void(*callBack)(esp_a2d_audio_state_t state, void *), void *obj=nullptr)</td></tr>
+<tr class="memdesc:a5f13ecf541393c21a5a489235bad27fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the callback that is called when the audio state is changed. <br /></td></tr>
+<tr class="separator:a5f13ecf541393c21a5a489235bad27fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa6601d3c57e37f77bfdd03a3ef6231e2"><td class="memItemLeft" align="right" valign="top"><a id="aa6601d3c57e37f77bfdd03a3ef6231e2"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#aa6601d3c57e37f77bfdd03a3ef6231e2">debounce</a> (void(*cb)(void), int ms)</td></tr>
 <tr class="memdesc:aa6601d3c57e37f77bfdd03a3ef6231e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prevents that the same method is executed multiple times within the indicated time limit. <br /></td></tr>
@@ -199,12 +199,18 @@ esp_bd_addr_t&#160;</td><td class="memItemRight" valign="bottom"><b>last_connect
 <tr class="memitem:a44c96686a0e2d7da22805a1c9fb7ab85"><td class="memItemLeft" align="right" valign="top"><a id="a44c96686a0e2d7da22805a1c9fb7ab85"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_start_disabled</b> = false</td></tr>
 <tr class="separator:a44c96686a0e2d7da22805a1c9fb7ab85"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8531c967a570648a563485defbf7b957"><td class="memItemLeft" align="right" valign="top"><a id="a8531c967a570648a563485defbf7b957"></a>
-void(*&#160;</td><td class="memItemRight" valign="bottom"><b>connection_state_callback</b> )(esp_a2d_connection_state_t state) = nullptr</td></tr>
-<tr class="separator:a8531c967a570648a563485defbf7b957"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0deac692b0cc6b043bcff898f4a3d7ec"><td class="memItemLeft" align="right" valign="top"><a id="a0deac692b0cc6b043bcff898f4a3d7ec"></a>
-void(*&#160;</td><td class="memItemRight" valign="bottom"><b>audio_state_callback</b> )(esp_a2d_audio_state_t state) = nullptr</td></tr>
-<tr class="separator:a0deac692b0cc6b043bcff898f4a3d7ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefac3515fd23a006c95a754c7ad9ee28"><td class="memItemLeft" align="right" valign="top"><a id="aefac3515fd23a006c95a754c7ad9ee28"></a>
+void(*&#160;</td><td class="memItemRight" valign="bottom"><b>connection_state_callback</b> )(esp_a2d_connection_state_t state, void *obj) = nullptr</td></tr>
+<tr class="separator:aefac3515fd23a006c95a754c7ad9ee28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa227651f633af4d364515a7691d68782"><td class="memItemLeft" align="right" valign="top"><a id="aa227651f633af4d364515a7691d68782"></a>
+void(*&#160;</td><td class="memItemRight" valign="bottom"><b>audio_state_callback</b> )(esp_a2d_audio_state_t state, void *obj) = nullptr</td></tr>
+<tr class="separator:aa227651f633af4d364515a7691d68782"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76c7cf9a20791dbfa9ee0117e3d42b95"><td class="memItemLeft" align="right" valign="top"><a id="a76c7cf9a20791dbfa9ee0117e3d42b95"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><b>connection_state_obj</b> = nullptr</td></tr>
+<tr class="separator:a76c7cf9a20791dbfa9ee0117e3d42b95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a430ec514ce2596d8d1f644defa2090b0"><td class="memItemLeft" align="right" valign="top"><a id="a430ec514ce2596d8d1f644defa2090b0"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><b>audio_state_obj</b> = nullptr</td></tr>
+<tr class="separator:a430ec514ce2596d8d1f644defa2090b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8614127c04ef9b9ef6d0c9fa2f33d1ed"><td class="memItemLeft" align="right" valign="top"><a id="a8614127c04ef9b9ef6d0c9fa2f33d1ed"></a>
 const char *&#160;</td><td class="memItemRight" valign="bottom"><b>m_a2d_conn_state_str</b> [4] = {&quot;Disconnected&quot;, &quot;Connecting&quot;, &quot;Connected&quot;, &quot;Disconnecting&quot;}</td></tr>
 <tr class="separator:a8614127c04ef9b9ef6d0c9fa2f33d1ed"><td class="memSeparator" colspan="2">&#160;</td></tr>

@@ -129,10 +129,10 @@ class BluetoothA2DPCommon {
         virtual esp_a2d_connection_state_t get_connection_state();
 
         /// Set the callback that is called when the connection state is changed
-        virtual void set_on_connection_state_changed(void (*callBack)(esp_a2d_connection_state_t state));
+        virtual void set_on_connection_state_changed(void (*callBack)(esp_a2d_connection_state_t state, void *), void *obj=nullptr);
 
         /// Set the callback that is called when the audio state is changed
-        virtual void set_on_audio_state_changed(void (*callBack)(esp_a2d_audio_state_t state));
+        virtual void set_on_audio_state_changed(void (*callBack)(esp_a2d_audio_state_t state, void*), void* obj=nullptr);
 
        /// Prevents that the same method is executed multiple times within the indicated time limit
         virtual void debounce(void(*cb)(void),int ms);
@@ -156,8 +156,10 @@ class BluetoothA2DPCommon {
         VolumeControl *volume_control_ptr;
         esp_bd_addr_t last_connection = {0,0,0,0,0,0};
         bool is_start_disabled = false;
-        void (*connection_state_callback)(esp_a2d_connection_state_t state) = nullptr;
-        void (*audio_state_callback)(esp_a2d_audio_state_t state) = nullptr;
+        void (*connection_state_callback)(esp_a2d_connection_state_t state, void* obj) = nullptr;
+        void (*audio_state_callback)(esp_a2d_audio_state_t state, void* obj) = nullptr;
+        void *connection_state_obj = nullptr;
+        void *audio_state_obj = nullptr;
         const char *m_a2d_conn_state_str[4] = {"Disconnected", "Connecting", "Connected", "Disconnecting"};
         const char *m_a2d_audio_state_str[3] = {"Suspended", "Stopped", "Started"};
         esp_a2d_audio_state_t audio_state = ESP_A2D_AUDIO_STATE_STOPPED;

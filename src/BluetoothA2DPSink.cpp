@@ -507,7 +507,7 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
 
             // callback
             if (connection_state_callback!=nullptr){
-                connection_state_callback(connection_state);
+                connection_state_callback(connection_state, connection_state_obj);
             }
 
             ESP_LOGI(BT_AV_TAG, "A2DP connection state: %s, [%s]", to_str(a2d->conn_stat.state), to_str(a2d->conn_stat.remote_bda));
@@ -584,7 +584,7 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
             
             // callback on state change
             if (audio_state_callback!=nullptr && audio_state != a2d->audio_stat.state){
-                audio_state_callback(audio_state);
+                audio_state_callback(audio_state, audio_state_obj);
                 audio_state = a2d->audio_stat.state;
             }
 

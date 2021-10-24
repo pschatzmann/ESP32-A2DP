@@ -181,13 +181,15 @@ void BluetoothA2DPCommon::connect_to_last_device(){
 }
 
 /// Set the callback that is called when the connection state is changed
-void BluetoothA2DPCommon::set_on_connection_state_changed(void (*callBack)(esp_a2d_connection_state_t state)){
+void BluetoothA2DPCommon::set_on_connection_state_changed(void (*callBack)(esp_a2d_connection_state_t state, void*), void* obj){
     connection_state_callback = callBack;
+    connection_state_obj = obj;
 }
 
 /// Set the callback that is called when the audio state is changed
-void BluetoothA2DPCommon::set_on_audio_state_changed(void (*callBack)(esp_a2d_audio_state_t state)){
+void BluetoothA2DPCommon::set_on_audio_state_changed(void (*callBack)(esp_a2d_audio_state_t state, void*), void* obj){
     audio_state_callback = callBack;
+    audio_state_obj = obj;
 }
 
 /// Prevents that the same method is executed multiple times within the indicated time limit

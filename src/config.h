@@ -1,5 +1,8 @@
 #pragma once
 
+#define DEPRECATED __attribute__((deprecated))
+
+
 #if __has_include("esp_arduino_version.h")
 #include "esp_arduino_version.h"
 #endif

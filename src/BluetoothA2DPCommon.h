@@ -107,6 +107,7 @@ class BluetoothA2DPCommon {
         virtual  bool is_connected() = 0;
 
         /// obsolete: please use is_connected
+        DEPRECATED
         virtual bool isConnected(){
             return is_connected();
         }

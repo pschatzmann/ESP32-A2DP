@@ -586,8 +586,8 @@ void BluetoothA2DPSource::process_user_state_callbacks(uint16_t event, void *par
             ESP_LOGD(BT_AV_TAG, "%s ESP_A2D_CONNECTION_STATE_EVT: %s", __func__, to_str(a2d->conn_stat.state));
 
             // callback on state change
-            if (connection_state_callback!=nullptr){
-                connection_state_callback(connection_state, connection_state_obj);
+            if (connection_state_callback!=nullptr && connection_state!=a2d->conn_stat.state){
+                connection_state_callback(connection_state, a2d->conn_stat.state);
                 connection_state = a2d->conn_stat.state;
             }
             break;
@@ -598,7 +598,7 @@ void BluetoothA2DPSource::process_user_state_callbacks(uint16_t event, void *par
 
             // callback on state change
             if (audio_state_callback!=nullptr && audio_state != a2d->audio_stat.state){
-                audio_state_callback(audio_state, audio_state_obj);
+                audio_state_callback(audio_state, a2d->audio_stat.state);
                 audio_state = a2d->audio_stat.state;
             }
             break;

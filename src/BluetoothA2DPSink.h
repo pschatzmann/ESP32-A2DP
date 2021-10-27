@@ -131,10 +131,10 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     /// Define callback which is called when we receive data
     virtual void set_on_data_received(void (*callBack)());
     
-    /// Set the callback that is called when the BT device is connected
+    /// Obsolete: please use set_on_connection_state_changed - Set the callback that is called when the BT device is connected
     virtual void set_on_connected2BT(void (*callBack)());
     
-    /// Set the callback that is called when the BT device is dis_connected
+    /// Obsolete: please use set_on_connection_state_changed - Set the callback that is called when the BT device is dis_connected
     virtual void set_on_dis_connected2BT(void (*callBack)());
 
     /// Allows you to reject unauthorized addresses

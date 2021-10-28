@@ -26,14 +26,14 @@ void connection_state_changed(esp_a2d_connection_state_t state, void *ptr){
 }
 
 // for esp_a2d_audio_state_t see https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/bluetooth/esp_a2dp.html#_CPPv421esp_a2d_audio_state_t
-void on_audio_state_changed(esp_a2d_audio_state_t state, void *ptr){
+void audio_state_changed(esp_a2d_audio_state_t state, void *ptr){
   Serial.println(a2dp_sink.to_str(state));
 }
 
 
 void setup() {
   a2dp_sink.set_on_connection_state_changed(connection_state_changed);
-  a2dp_sink.set_on_audio_state_changed(on_audio_state_changed);
+  a2dp_sink.set_on_audio_state_changed(audio_state_changed);
   a2dp_sink.start("MyMusic");  
 }
 

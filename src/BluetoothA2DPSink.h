@@ -198,11 +198,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
         avrc_metadata_flags = flags;
     }
 
-#ifdef CURRENT_ESP_IDF
-    /// Bluetooth discoverability
-    virtual void set_discoverability(esp_bt_discovery_mode_t d);
-#endif        
-
 
   protected:
     // protected data
@@ -242,7 +237,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     void (*sample_rate_callback)(uint16_t rate)=nullptr;
 
 #ifdef CURRENT_ESP_IDF
-    esp_bt_discovery_mode_t discoverability = ESP_BT_GENERAL_DISCOVERABLE;
     esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap;
 #endif
 

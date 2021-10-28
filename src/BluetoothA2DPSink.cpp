@@ -1151,12 +1151,6 @@ void ccall_av_hdl_avrc_tg_evt(uint16_t event, void *param){
     actual_bluetooth_a2dp_sink->av_hdl_avrc_tg_evt(event, param);
 }
 
-void BluetoothA2DPSink::set_discoverability(esp_bt_discovery_mode_t d) {
-  discoverability = d;
-  if (get_connection_state() == ESP_A2D_CONNECTION_STATE_DISCONNECTED || d != ESP_BT_NON_DISCOVERABLE) {
-    esp_bt_gap_set_scan_mode(ESP_BT_CONNECTABLE, discoverability);
-  }
-}
 
 void BluetoothA2DPSink::av_hdl_avrc_tg_evt(uint16_t event, void *p_param)
 {

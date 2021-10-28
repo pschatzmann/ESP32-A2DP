@@ -155,6 +155,11 @@ class BluetoothA2DPCommon {
             task_priority = priority;
         }
 
+#ifdef CURRENT_ESP_IDF
+    /// Bluetooth discoverability
+    virtual void set_discoverability(esp_bt_discovery_mode_t d);
+#endif        
+
     protected:
         uint32_t debounce_ms = 0;
         DefaultVolumeControl default_volume_control;
@@ -170,6 +175,9 @@ class BluetoothA2DPCommon {
         esp_a2d_audio_state_t audio_state = ESP_A2D_AUDIO_STATE_STOPPED;
         esp_a2d_connection_state_t connection_state = ESP_A2D_CONNECTION_STATE_DISCONNECTED;
         UBaseType_t task_priority = configMAX_PRIORITIES - 3;
+#ifdef CURRENT_ESP_IDF
+        esp_bt_discovery_mode_t discoverability = ESP_BT_GENERAL_DISCOVERABLE;
+#endif
 
         virtual void get_last_connection();
         virtual void set_last_connection(esp_bd_addr_t bda);

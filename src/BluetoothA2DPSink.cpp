@@ -373,7 +373,7 @@ void BluetoothA2DPSink::app_task_start_up(void)
         app_task_queue = xQueueCreate(10, sizeof(app_msg_t));
 
     if (app_task_handle==NULL) {
-        if (xTaskCreate(ccall_app_task_handler, "BtAppT", 2048, NULL, configMAX_PRIORITIES - 3, &app_task_handle) != pdPASS){
+        if (xTaskCreate(ccall_app_task_handler, "BtAppT", 2048, NULL, task_priority, &app_task_handle) != pdPASS){
             ESP_LOGE(BT_APP_TAG, "%s failed", __func__);
         }
     }

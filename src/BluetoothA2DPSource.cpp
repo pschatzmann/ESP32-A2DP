@@ -322,7 +322,7 @@ void BluetoothA2DPSource::bt_app_task_handler(void *arg)
 void BluetoothA2DPSource::bt_app_task_start_up(void)
 {
     s_bt_app_task_queue = xQueueCreate(10, sizeof(app_msg_t));
-    xTaskCreate(ccall_bt_app_task_handler, "BtAppT", 2048, NULL, configMAX_PRIORITIES - 3, &s_bt_app_task_handle);
+    xTaskCreate(ccall_bt_app_task_handler, "BtAppT", 2048, NULL, task_priority, &s_bt_app_task_handle);
     return;
 }
 

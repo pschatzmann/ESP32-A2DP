@@ -503,9 +503,9 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
         case ESP_A2D_CONNECTION_STATE_EVT: {
             ESP_LOGD(BT_AV_TAG, "%s ESP_A2D_CONNECTION_STATE_EVT", __func__);
             a2d = (esp_a2d_cb_param_t *)(p_param);
-            connection_state = a2d->conn_stat.state;
 
             // callback
+            connection_state = a2d->conn_stat.state;
             if (connection_state_callback!=nullptr){
                 connection_state_callback(connection_state, connection_state_obj);
             }
@@ -583,9 +583,9 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
             ESP_LOGI(BT_AV_TAG, "A2DP audio state: %s", to_str(a2d->audio_stat.state));
             
             // callback on state change
-            if (audio_state_callback!=nullptr && audio_state != a2d->audio_stat.state){
-                audio_state_callback(audio_state, audio_state_obj);
-                audio_state = a2d->audio_stat.state;
+            audio_state = a2d->audio_stat.state;
+            if (audio_state_callback!=nullptr && audio_state){
+                audio_state_callback(a2d->audio_stat.state, audio_state_obj);
             }
 
             if (is_i2s_output){

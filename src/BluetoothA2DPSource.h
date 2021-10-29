@@ -218,6 +218,10 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
     virtual bool get_name_from_eir(uint8_t *eir, uint8_t *bdname, uint8_t *bdname_len);
     virtual void filter_inquiry_scan_result(esp_bt_gap_cb_param_t *param);
 
+    virtual const char* last_bda_nvs_name() {
+        return "src_bda";
+    }
+
     /**
      *  The following mthods are called by the framework. They are public so that they can
      *  be executed from a extern "C" function.

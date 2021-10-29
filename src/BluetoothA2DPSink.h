@@ -254,6 +254,9 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     // execute AVRC command
     virtual void execute_avrc_command(int cmd);
 
+    virtual const char* last_bda_nvs_name() {
+        return "last_bda";
+    }
     /**
      * Wrappbed methods called from callbacks
      */

@@ -121,7 +121,7 @@ void BluetoothA2DPCommon::get_last_connection(){
 
     esp_bd_addr_t bda;
     size_t size = sizeof(bda);
-    err = nvs_get_blob(my_handle, "last_bda", bda, &size);
+    err = nvs_get_blob(my_handle, last_bda_nvs_name(), bda, &size);
     if ( err != ESP_OK) { 
         ESP_LOGE(BT_AV_TAG, "ERROR GETTING NVS BLOB");
     }
@@ -153,7 +153,7 @@ void BluetoothA2DPCommon::set_last_connection(esp_bd_addr_t bda){
     if (err != ESP_OK){
          ESP_LOGE(BT_AV_TAG, "NVS OPEN ERROR");
     }
-    err = nvs_set_blob(my_handle, "last_bda", bda, size);
+    err = nvs_set_blob(my_handle, last_bda_nvs_name(), bda, size);
     if (err == ESP_OK) {
         err = nvs_commit(my_handle);
     } else {

@@ -179,6 +179,7 @@ class BluetoothA2DPCommon {
         esp_bt_discovery_mode_t discoverability = ESP_BT_GENERAL_DISCOVERABLE;
 #endif
 
+        virtual const char* last_bda_nvs_name() = 0;
         virtual void get_last_connection();
         virtual void set_last_connection(esp_bd_addr_t bda);
         virtual void clean_last_connection();
@@ -191,6 +192,7 @@ class BluetoothA2DPCommon {
         virtual VolumeControl* volume_control() {
             return volume_control_ptr !=nullptr ? volume_control_ptr : &default_volume_control;
         }
+
 
 
 };

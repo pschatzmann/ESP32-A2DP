@@ -881,10 +881,22 @@ void BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) {
         (*stream_reader)(data, len);
     }
 
+    // swap left and right channels
+    if (swap_left_right){
+        Frame *frame = (Frame*)data;
+        for (int i=0; i<len/4; i++) {
+            int16_t temp = frame[i].channel1;
+            frame[i].channel1 = frame[i].channel2;
+            frame[i].channel2 = temp;
+        }
+    }
+
+
     if (is_i2s_output) {
         // special case for internal DAC output, the incomming PCM buffer needs 
         // to be converted from signed 16bit to unsigned
         int16_t* data16 = (int16_t*) data;
+
         if (this->i2s_config.mode & I2S_MODE_DAC_BUILT_IN) {
     
             //HACK: this is here to remove the const restriction to replace the data in place as per

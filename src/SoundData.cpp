@@ -53,7 +53,7 @@ void TwoChannelSoundData::setDataRaw(uint8_t *data, int32_t len){
 
 int32_t TwoChannelSoundData::getData(int32_t pos, int32_t len, Frame *data) {
     //ESP_LOGD(SOUND_DATA, "x%x - pos: %d / len: %d", __func__, pos, len);
-    int result_len = min(len, this->len - pos);
+    int result_len = std::min(len, this->len - pos);
     for (int32_t j=0;j<result_len;j++){
         data[j] = this->data[pos+j];
     }
@@ -105,7 +105,7 @@ void OneChannelSoundData::setDataRaw(uint8_t *data, int32_t len){
 }
 
 int32_t OneChannelSoundData::getData(int32_t pos, int32_t len, int16_t *data) {
-    int result_len = min(len, this->len - pos);    
+    int result_len = std::min(len, this->len - pos);    
     for (int32_t j=0;j<result_len;j++){
         data[j] = this->data[pos+j];
     }

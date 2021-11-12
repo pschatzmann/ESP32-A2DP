@@ -16,10 +16,8 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <algorithm>    // std::min
 
-#ifndef min
-#define min(a,b) (((a)<(b))?(a):(b))
-#endif
 
 /**
  *  @brief Utility structure that can be used to split a int32_t up into 2 separate channels with int16_t data.

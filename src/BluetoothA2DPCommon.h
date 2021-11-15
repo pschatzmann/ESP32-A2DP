@@ -163,7 +163,7 @@ class BluetoothA2DPCommon {
     protected:
         uint32_t debounce_ms = 0;
         DefaultVolumeControl default_volume_control;
-        VolumeControl *volume_control_ptr;
+        VolumeControl *volume_control_ptr = nullptr;
         esp_bd_addr_t last_connection = {0,0,0,0,0,0};
         bool is_start_disabled = false;
         void (*connection_state_callback)(esp_a2d_connection_state_t state, void* obj) = nullptr;

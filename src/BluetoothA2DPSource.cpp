@@ -82,7 +82,7 @@ extern "C" void ccall_bt_av_hdl_avrc_ct_evt(uint16_t event, void *param) {
 
 extern "C" int32_t ccall_bt_app_a2d_data_cb(uint8_t *data, int32_t len){
     ESP_LOGD(BT_APP_TAG, "x%x - len: %d", __func__, len);
-    if (len < 0 || data == NULL || self_BluetoothA2DPSource==NULL || self_BluetoothA2DPSource->data_stream_callback==NULL) {
+    if (len <= 0 || data == NULL || self_BluetoothA2DPSource==NULL || self_BluetoothA2DPSource->data_stream_callback==NULL) {
         return 0;
     }
     int32_t result = (*(self_BluetoothA2DPSource->data_stream_callback))(data, len);

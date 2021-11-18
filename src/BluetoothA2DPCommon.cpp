@@ -123,10 +123,11 @@ void BluetoothA2DPCommon::get_last_connection(){
     size_t size = sizeof(bda);
     err = nvs_get_blob(my_handle, last_bda_nvs_name(), bda, &size);
     if ( err != ESP_OK) { 
-        ESP_LOGE(BT_AV_TAG, "ERROR GETTING NVS BLOB");
-    }
-    if ( err == ESP_ERR_NVS_NOT_FOUND ) {
-        ESP_LOGE(BT_AV_TAG, "NVS NOT FOUND");
+        if ( err == ESP_ERR_NVS_NOT_FOUND ) {
+            ESP_LOGI(BT_AV_TAG, "nvs_blob does not exist");
+        } else {
+            ESP_LOGE(BT_AV_TAG, "nvs_get_blob failed");
+        }
     }
     nvs_close(my_handle);
     if (err == ESP_OK) {

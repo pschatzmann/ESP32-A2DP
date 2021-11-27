@@ -26,6 +26,8 @@ void SoundData::setLoop(bool loop) {
 }
 
 //*****************************************************************************************
+//  TwoChannelSoundData
+//*****************************************************************************************
 
 /**
  *  Constructor for Data containing 2 channels
@@ -79,32 +81,39 @@ int32_t TwoChannelSoundData::get2ChannelData(int32_t pos, int32_t len, uint8_t *
 }
 
 //*****************************************************************************************
+// OneChannelSoundDataT
+//*****************************************************************************************
 
 /** 
  * Constructor for data conisting only of one Channel 
  */
-OneChannelSoundData::OneChannelSoundData(int16_t *data, int32_t len, bool loop, ChannelInfo channelInfo) {
+template <class T>
+OneChannelSoundDataT<T>::OneChannelSoundDataT(T *data, int32_t len, bool loop, ChannelInfo channelInfo) {
     this->channelInfo = channelInfo;
     setData(data, len);
     setLoop(loop);
 }
 
-OneChannelSoundData::OneChannelSoundData(bool loop, ChannelInfo channelInfo) {
+template <class T>
+OneChannelSoundDataT<T>::OneChannelSoundDataT(bool loop, ChannelInfo channelInfo) {
     this->channelInfo = channelInfo;
     setLoop(loop);
 }
 
-void OneChannelSoundData::setData(int16_t *data, int32_t len){
+template <class T>
+void OneChannelSoundDataT<T>::setData(T *data, int32_t len){
     this->len = len;
     this->data = data;
 }
 
-void OneChannelSoundData::setDataRaw(uint8_t *data, int32_t len){
-    this->len = len*2;
-    this->data = (int16_t *)data;
+template <class T>
+void OneChannelSoundDataT<T>::setDataRaw(uint8_t *data, int32_t lenBytes){
+    this->len = lenBytes / sizeof(T);
+    this->data = (T *)data;
 }
 
-int32_t OneChannelSoundData::getData(int32_t pos, int32_t len, int16_t *data) {
+template <class T>
+int32_t OneChannelSoundDataT<T>::getData(int32_t pos, int32_t len, T *data) {
     int result_len = std::min(len, this->len - pos);    
     for (int32_t j=0;j<result_len;j++){
         data[j] = this->data[pos+j];
@@ -117,7 +126,8 @@ int32_t OneChannelSoundData::getData(int32_t pos, int32_t len, int16_t *data) {
  * pos, len and result are in bytes.
  * 
  */
-int32_t OneChannelSoundData::get2ChannelData(int32_t pos, int32_t len, uint8_t *data) {
+template <class T>
+int32_t OneChannelSoundDataT<T>::get2ChannelData(int32_t pos, int32_t len, uint8_t *data) {
     //ESP_LOGD(SOUND_DATA, "x%x - pos: %d / len: %d", __func__, pos, len);
     Frame *result_data = (Frame*) data;
     int32_t frame_count = len / 4;
@@ -134,24 +144,25 @@ int32_t OneChannelSoundData::get2ChannelData(int32_t pos, int32_t len, uint8_t *
     return result_len;
 }
 
-int32_t OneChannelSoundData::getData(int32_t pos, Frame &frame){
+template <class T>
+int32_t OneChannelSoundDataT<T>::getData(int32_t pos, Frame &frame){
     int32_t result = 0;
     if (pos<this->len){
         result = 1;
         switch(channelInfo){
             case Left:
-                frame.channel1 = this->data[pos];
+                frame.channel1 = this->data[pos] * 127;
                 frame.channel2 = 0;
                 break;
             case Right:
                 frame.channel1 = 0;
-                frame.channel2 = this->data[pos];
+                frame.channel2 = this->data[pos] * 127;
                 break;
 
             case Both:
             default:
-                frame.channel1 = this->data[pos];
-                frame.channel2 = this->data[pos];
+                frame.channel1 = this->data[pos] * 127;
+                frame.channel2 = frame.channel1;
                 break;
         }
     }

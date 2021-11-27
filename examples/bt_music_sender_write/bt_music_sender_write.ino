@@ -25,13 +25,15 @@
 // ==> complie with Partition Scheme - Huge APP !
 
 #include "BluetoothA2DPSource.h"
-#include "StarWars30.h"
+#include "piano16bit.h"
 
 BluetoothA2DPSource a2dp_source;
-SoundData *data = new OneChannelSoundData((int16_t*)StarWars30_raw, StarWars30_raw_len/2);
+SoundData *data = new OneChannelSoundData((int16_t*)piano16bit_raw, piano16bit_raw_len/2);
 
 void setup() {
-  a2dp_source.start("RadioPlayer");  
+  //a2dp_source.set_auto_reconnect(false);
+  a2dp_source.start("LEXON MINO L");  
+  a2dp_source.set_volume(20);
   a2dp_source.write_data(data);
 }
 

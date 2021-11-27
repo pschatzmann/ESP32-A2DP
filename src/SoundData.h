@@ -106,44 +106,42 @@ private:
 
 
 /**
- * @brief 1 Channel data is provided as variable data type
- * @author Phil Schatzmann
- * @copyright Apache License Version 2
- */
-template <class T>
-class OneChannelSoundDataT : public SoundData {
-  public:
-    OneChannelSoundDataT(bool loop=false, ChannelInfo channelInfo=Both);
-    OneChannelSoundDataT(T *data, int32_t len, bool loop=false, ChannelInfo channelInfo=Both);
-    void setData( T *data, int32_t len);
-    void setDataRaw( uint8_t* data, int32_t len);
-    int32_t getData(int32_t pos, int32_t len, T *data);
-    int32_t getData(int32_t pos, Frame &frame);
-    int32_t get2ChannelData(int32_t pos, int32_t len, uint8_t *data);
-  private:
-    T* data;
-    int32_t len;
-    ChannelInfo channelInfo;
-};
-
-/**
  * @brief 1 Channel data is provided as int16 values
  * @author Phil Schatzmann
  * @copyright Apache License Version 2
  */
-class OneChannelSoundData : OneChannelSoundDataT<int16_t> {
+class OneChannelSoundData : public SoundData {
   public:
-    OneChannelSoundData(bool loop=false, ChannelInfo channelInfo=Both):OneChannelSoundDataT(loop,channelInfo) {};
-    OneChannelSoundData(int16_t *data, int32_t len, bool loop=false, ChannelInfo channelInfo=Both):OneChannelSoundDataT(data,len,loop) {};
+    OneChannelSoundData(bool loop=false, ChannelInfo channelInfo=Both);
+    OneChannelSoundData(int16_t *data, int32_t len, bool loop=false, ChannelInfo channelInfo=Both);
+    void setData( int16_t *data, int32_t len);
+    void setDataRaw( uint8_t* data, int32_t len);
+    int32_t getData(int32_t pos, int32_t len, int16_t *data);
+    int32_t getData(int32_t pos, Frame &frame);
+    int32_t get2ChannelData(int32_t pos, int32_t len, uint8_t *data);
+  private:
+    int16_t* data;
+    int32_t len;
+    ChannelInfo channelInfo;
 };
+
 
 /**
  * @brief 1 Channel data is provided as signed int8 values.
  * @author Phil Schatzmann
  * @copyright Apache License Version 2
  */
-class OneChannel8BitSoundData : OneChannelSoundDataT<int8_t> {
+class OneChannel8BitSoundData : public SoundData {
   public:
-    OneChannel8BitSoundData(bool loop=false, ChannelInfo channelInfo=Both):OneChannelSoundDataT(loop,channelInfo) {};
-    OneChannel8BitSoundData(int8_t *data, int32_t len, bool loop=false, ChannelInfo channelInfo=Both):OneChannelSoundDataT(data,len,loop) {};
+    OneChannel8BitSoundData(bool loop=false, ChannelInfo channelInfo=Both);
+    OneChannel8BitSoundData(int8_t *data, int32_t len, bool loop=false, ChannelInfo channelInfo=Both);
+    void setData( int8_t *data, int32_t len);
+    void setDataRaw( uint8_t* data, int32_t len);
+    int32_t getData(int32_t pos, int32_t len, int8_t *data);
+    int32_t getData(int32_t pos, Frame &frame);
+    int32_t get2ChannelData(int32_t pos, int32_t len, uint8_t *data);
+  private:
+    int8_t* data;
+    int32_t len;
+    ChannelInfo channelInfo;
 };

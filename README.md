@@ -264,8 +264,9 @@ SoundData *data = new TwoChannelSoundData((Frame*)StarWars10_raw,StarWars10_raw_
 In the constructor you can pass additional parameters:
 
 ```
-TwoChannelSoundData(Frame *data, int32_t len, bool loop=false);
-OneChannelSoundData(int16_t *data, int32_t len, bool loop=false, ChannelInfo channelInfo=Both);
+TwoChannelSoundData(Frame *data, int32_t frameCount, bool loop=false);
+OneChannelSoundData(int16_t *data, int32_t frameCount, bool loop=false, ChannelInfo channelInfo=Both);
+OneChannel8BitSoundData(int8_t *data, int32_t frameCount, bool loop=false, ChannelInfo channelInfo=Both);
 
 ```
 

@@ -106,11 +106,11 @@ class BluetoothA2DPCommon {
         /// Checks if A2DP is connected
         virtual  bool is_connected() = 0;
 
-        /// obsolete: please use is_connected
-        DEPRECATED
-        virtual bool isConnected(){
-            return is_connected();
-        }
+        // /// obsolete: please use is_connected
+        // DEPRECATED
+        // virtual bool isConnected(){
+        //     return is_connected();
+        // }
 
         /// Changes the volume (use the range 0-100)
         virtual void set_volume(uint8_t volume) = 0;

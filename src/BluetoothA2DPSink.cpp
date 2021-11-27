@@ -98,13 +98,13 @@ void BluetoothA2DPSink::set_on_data_received(void (*callBack)()){
   this->data_received = callBack;
 }
 
-void BluetoothA2DPSink::set_on_connected2BT(void (*callBack)()){
-  this->bt_connected = callBack;
-}
+// void BluetoothA2DPSink::set_on_connected2BT(void (*callBack)()){
+//   this->bt_connected = callBack;
+// }
 
-void BluetoothA2DPSink::set_on_dis_connected2BT(void (*callBack)()){
-  this->bt_dis_connected = callBack;
-}
+// void BluetoothA2DPSink::set_on_dis_connected2BT(void (*callBack)()){
+//   this->bt_dis_connected = callBack;
+// }
 
 void BluetoothA2DPSink::set_on_volumechange(void (*callBack)(int)){
   this->bt_volumechange = callBack;

@@ -87,82 +87,99 @@ $(function() {
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#ifndef min</span></div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#define min(a,b) (((a)&lt;(b))?(a):(b))</span></div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="keyword">struct </span>__attribute__((packed)) Frame {</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  int16_t channel1;</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>  int16_t channel2;</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>  Frame(<span class="keywordtype">int</span> v=0){</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    channel1 = channel2 = v;</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>  }</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>};</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="keyword">enum</span> ChannelInfo {</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    Both,</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    Left,</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    Right</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>};</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="class_sound_data.html">   60</a></span><span class="keyword">class </span><a class="code hl_class" href="class_sound_data.html">SoundData</a> {</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>  <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="class_sound_data.html#aacc2d88868ceabde718113bd404452c3">   66</a></span>     <span class="keyword">virtual</span> int32_t <a class="code hl_function" href="class_sound_data.html#aacc2d88868ceabde718113bd404452c3">get2ChannelData</a>(int32_t pos, int32_t len, uint8_t *data);</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>     <span class="keyword">virtual</span> int32_t getData(int32_t pos, Frame &amp;channels);</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>     <span class="keyword">virtual</span> <span class="keywordtype">void</span> setDataRaw( uint8_t* data, int32_t len);</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>     <span class="keywordtype">bool</span> <a class="code hl_function" href="class_sound_data.html#ac79933ed3379cf5ef58d5675aa4bf12e">doLoop</a>();</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>     <span class="keywordtype">void</span> setLoop(<span class="keywordtype">bool</span> loop);</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>  <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>     <span class="keywordtype">bool</span> automatic_loop;</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>};</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno"><a class="line" href="class_two_channel_sound_data.html">   84</a></span><span class="keyword">class </span><a class="code hl_class" href="class_two_channel_sound_data.html">TwoChannelSoundData</a> : <span class="keyword">public</span> <a class="code hl_class" href="class_sound_data.html">SoundData</a> {</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    <a class="code hl_class" href="class_two_channel_sound_data.html">TwoChannelSoundData</a>(<span class="keywordtype">bool</span> loop=<span class="keyword">false</span>);</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    <a class="code hl_class" href="class_two_channel_sound_data.html">TwoChannelSoundData</a>(Frame *data, int32_t len, <span class="keywordtype">bool</span> loop=<span class="keyword">false</span>);</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    <span class="keywordtype">void</span> setData( Frame *data, int32_t len);</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    <span class="keywordtype">void</span> setDataRaw( uint8_t* data, int32_t len);</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    int32_t getData(int32_t pos, int32_t len, Frame *data);</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    int32_t getData(int32_t pos, Frame &amp;channels);</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    int32_t <a class="code hl_function" href="class_two_channel_sound_data.html#a0a39d70aca39dbeca3d20676635b7615">get2ChannelData</a>(int32_t pos, int32_t len, uint8_t *data);</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    <span class="comment">// the number of frames</span></div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    int32_t count(){</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>      <span class="keywordflow">return</span> len;</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    }</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    Frame* data;</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    int32_t len; <span class="comment">// length of all data in base unit of subclass</span></div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>};</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno"><a class="line" href="class_one_channel_sound_data.html">  106</a></span><span class="keyword">class </span><a class="code hl_class" href="class_one_channel_sound_data.html">OneChannelSoundData</a> : <span class="keyword">public</span> <a class="code hl_class" href="class_sound_data.html">SoundData</a> {</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>  <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    <a class="code hl_class" href="class_one_channel_sound_data.html">OneChannelSoundData</a>(<span class="keywordtype">bool</span> loop=<span class="keyword">false</span>, ChannelInfo channelInfo=Both);</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>    <a class="code hl_class" href="class_one_channel_sound_data.html">OneChannelSoundData</a>(int16_t *data, int32_t len, <span class="keywordtype">bool</span> loop=<span class="keyword">false</span>, ChannelInfo channelInfo=Both);</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    <span class="keywordtype">void</span> setData( int16_t *data, int32_t len);</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    <span class="keywordtype">void</span> setDataRaw( uint8_t* data, int32_t len);</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>    int32_t getData(int32_t pos, int32_t len, int16_t *data);</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    int32_t getData(int32_t pos, Frame &amp;channels);</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    int32_t <a class="code hl_function" href="class_one_channel_sound_data.html#a3ed4a75be0bb4dbb42752f5ae83badbb">get2ChannelData</a>(int32_t pos, int32_t len, uint8_t *data);</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>  <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    int16_t* data;</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    int32_t len;</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    ChannelInfo channelInfo;</div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> </div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>};</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
-<div class="ttc" id="aclass_one_channel_sound_data_html"><div class="ttname"><a href="class_one_channel_sound_data.html">OneChannelSoundData</a></div><div class="ttdoc">1 Channel data is provided: so Len is 2 byte entries (int16)</div><div class="ttdef"><b>Definition:</b> SoundData.h:106</div></div>
-<div class="ttc" id="aclass_one_channel_sound_data_html_a3ed4a75be0bb4dbb42752f5ae83badbb"><div class="ttname"><a href="class_one_channel_sound_data.html#a3ed4a75be0bb4dbb42752f5ae83badbb">OneChannelSoundData::get2ChannelData</a></div><div class="ttdeci">int32_t get2ChannelData(int32_t pos, int32_t len, uint8_t *data)</div><div class="ttdef"><b>Definition:</b> SoundData.cpp:120</div></div>
-<div class="ttc" id="aclass_sound_data_html"><div class="ttname"><a href="class_sound_data.html">SoundData</a></div><div class="ttdoc">Sound data as byte stream. We support TwoChannelSoundData (uint16_t + uint16_t) and OneChannelSoundDa...</div><div class="ttdef"><b>Definition:</b> SoundData.h:60</div></div>
-<div class="ttc" id="aclass_sound_data_html_aacc2d88868ceabde718113bd404452c3"><div class="ttname"><a href="class_sound_data.html#aacc2d88868ceabde718113bd404452c3">SoundData::get2ChannelData</a></div><div class="ttdeci">virtual int32_t get2ChannelData(int32_t pos, int32_t len, uint8_t *data)</div></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &lt;algorithm&gt;</span>    <span class="comment">// std::min</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keyword">struct </span>__attribute__((packed)) Frame {</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>  int16_t channel1;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  int16_t channel2;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>  Frame(<span class="keywordtype">int</span> v=0){</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    channel1 = channel2 = v;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>  }</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>  </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>  Frame(<span class="keywordtype">int</span> ch1, <span class="keywordtype">int</span> ch2){</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    channel1 = ch1;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    channel2 = ch2;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>  }</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>};</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="keyword">enum</span> ChannelInfo {</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    Both,</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    Left,</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    Right</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>};</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="class_sound_data.html">   67</a></span><span class="keyword">class </span><a class="code hl_class" href="class_sound_data.html">SoundData</a> {</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>  <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>     <span class="keyword">virtual</span> int32_t get2ChannelData(int32_t pos, int32_t len, uint8_t *data);</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>     <span class="keyword">virtual</span> int32_t getData(int32_t pos, Frame &amp;channels);</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>     <span class="keyword">virtual</span> <span class="keywordtype">void</span> setDataRaw( uint8_t* data, int32_t len);</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>     <span class="keywordtype">bool</span> <a class="code hl_function" href="class_sound_data.html#ac79933ed3379cf5ef58d5675aa4bf12e">doLoop</a>();</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>     <span class="keywordtype">void</span> setLoop(<span class="keywordtype">bool</span> loop);</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>  <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>     <span class="keywordtype">bool</span> automatic_loop;</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>};</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno"><a class="line" href="class_two_channel_sound_data.html">   89</a></span><span class="keyword">class </span><a class="code hl_class" href="class_two_channel_sound_data.html">TwoChannelSoundData</a> : <span class="keyword">public</span> <a class="code hl_class" href="class_sound_data.html">SoundData</a> {</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    <a class="code hl_class" href="class_two_channel_sound_data.html">TwoChannelSoundData</a>(<span class="keywordtype">bool</span> loop=<span class="keyword">false</span>);</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    <a class="code hl_class" href="class_two_channel_sound_data.html">TwoChannelSoundData</a>(Frame *data, int32_t len, <span class="keywordtype">bool</span> loop=<span class="keyword">false</span>);</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    <span class="keywordtype">void</span> setData( Frame *data, int32_t len);</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    <span class="keywordtype">void</span> setDataRaw( uint8_t* data, int32_t len);</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    int32_t getData(int32_t pos, int32_t len, Frame *data);</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    int32_t getData(int32_t pos, Frame &amp;channels);</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    int32_t <a class="code hl_function" href="class_two_channel_sound_data.html#a0a39d70aca39dbeca3d20676635b7615">get2ChannelData</a>(int32_t pos, int32_t len, uint8_t *data);</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    <span class="comment">// the number of frames</span></div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    int32_t count(){</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>      <span class="keywordflow">return</span> len;</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    }</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    Frame* data;</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    int32_t len; <span class="comment">// length of all data in base unit of subclass</span></div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>};</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno"><a class="line" href="class_one_channel_sound_data.html">  113</a></span><span class="keyword">class </span><a class="code hl_class" href="class_one_channel_sound_data.html">OneChannelSoundData</a> : <span class="keyword">public</span> <a class="code hl_class" href="class_sound_data.html">SoundData</a> {</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>  <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    <a class="code hl_class" href="class_one_channel_sound_data.html">OneChannelSoundData</a>(<span class="keywordtype">bool</span> loop=<span class="keyword">false</span>, ChannelInfo channelInfo=Both);</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    <a class="code hl_class" href="class_one_channel_sound_data.html">OneChannelSoundData</a>(int16_t *data, int32_t len, <span class="keywordtype">bool</span> loop=<span class="keyword">false</span>, ChannelInfo channelInfo=Both);</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    <span class="keywordtype">void</span> setData( int16_t *data, int32_t len);</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    <span class="keywordtype">void</span> setDataRaw( uint8_t* data, int32_t len);</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    int32_t getData(int32_t pos, int32_t len, int16_t *data);</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    int32_t getData(int32_t pos, Frame &amp;frame);</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    int32_t <a class="code hl_function" href="class_one_channel_sound_data.html#a3ed4a75be0bb4dbb42752f5ae83badbb">get2ChannelData</a>(int32_t pos, int32_t len, uint8_t *data);</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>  <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    int16_t* data;</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    int32_t len;</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    ChannelInfo channelInfo;</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>};</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> </div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span> </div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno"><a class="line" href="class_one_channel8_bit_sound_data.html">  134</a></span><span class="keyword">class </span><a class="code hl_class" href="class_one_channel8_bit_sound_data.html">OneChannel8BitSoundData</a> : <span class="keyword">public</span> <a class="code hl_class" href="class_sound_data.html">SoundData</a> {</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>  <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>    <a class="code hl_class" href="class_one_channel8_bit_sound_data.html">OneChannel8BitSoundData</a>(<span class="keywordtype">bool</span> loop=<span class="keyword">false</span>, ChannelInfo channelInfo=Both);</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>    <a class="code hl_class" href="class_one_channel8_bit_sound_data.html">OneChannel8BitSoundData</a>(int8_t *data, int32_t len, <span class="keywordtype">bool</span> loop=<span class="keyword">false</span>, ChannelInfo channelInfo=Both);</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>    <span class="keywordtype">void</span> setData( int8_t *data, int32_t len);</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>    <span class="keywordtype">void</span> setDataRaw( uint8_t* data, int32_t len);</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>    int32_t getData(int32_t pos, int32_t len, int8_t *data);</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>    int32_t getData(int32_t pos, Frame &amp;frame);</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>    int32_t <a class="code hl_function" href="class_one_channel8_bit_sound_data.html#a0d7a1fdf7cc8aee06c158b7dc72d491d">get2ChannelData</a>(int32_t pos, int32_t len, uint8_t *data);</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>  <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>    int8_t* data;</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    int32_t len;</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    ChannelInfo channelInfo;</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>};</div>
+<div class="ttc" id="aclass_one_channel8_bit_sound_data_html"><div class="ttname"><a href="class_one_channel8_bit_sound_data.html">OneChannel8BitSoundData</a></div><div class="ttdoc">1 Channel data is provided as signed int8 values.</div><div class="ttdef"><b>Definition:</b> SoundData.h:134</div></div>
+<div class="ttc" id="aclass_one_channel8_bit_sound_data_html_a0d7a1fdf7cc8aee06c158b7dc72d491d"><div class="ttname"><a href="class_one_channel8_bit_sound_data.html#a0d7a1fdf7cc8aee06c158b7dc72d491d">OneChannel8BitSoundData::get2ChannelData</a></div><div class="ttdeci">int32_t get2ChannelData(int32_t pos, int32_t len, uint8_t *data)</div><div class="ttdef"><b>Definition:</b> SoundData.cpp:206</div></div>
+<div class="ttc" id="aclass_one_channel_sound_data_html"><div class="ttname"><a href="class_one_channel_sound_data.html">OneChannelSoundData</a></div><div class="ttdoc">1 Channel data is provided as int16 values</div><div class="ttdef"><b>Definition:</b> SoundData.h:113</div></div>
+<div class="ttc" id="aclass_one_channel_sound_data_html_a3ed4a75be0bb4dbb42752f5ae83badbb"><div class="ttname"><a href="class_one_channel_sound_data.html#a3ed4a75be0bb4dbb42752f5ae83badbb">OneChannelSoundData::get2ChannelData</a></div><div class="ttdeci">int32_t get2ChannelData(int32_t pos, int32_t len, uint8_t *data)</div><div class="ttdef"><b>Definition:</b> SoundData.cpp:124</div></div>
+<div class="ttc" id="aclass_sound_data_html"><div class="ttname"><a href="class_sound_data.html">SoundData</a></div><div class="ttdoc">Sound data as byte stream. We support TwoChannelSoundData (uint16_t + uint16_t) and OneChannelSoundDa...</div><div class="ttdef"><b>Definition:</b> SoundData.h:67</div></div>
 <div class="ttc" id="aclass_sound_data_html_ac79933ed3379cf5ef58d5675aa4bf12e"><div class="ttname"><a href="class_sound_data.html#ac79933ed3379cf5ef58d5675aa4bf12e">SoundData::doLoop</a></div><div class="ttdeci">bool doLoop()</div><div class="ttdef"><b>Definition:</b> SoundData.cpp:21</div></div>
-<div class="ttc" id="aclass_two_channel_sound_data_html"><div class="ttname"><a href="class_two_channel_sound_data.html">TwoChannelSoundData</a></div><div class="ttdoc">Data is provided in two channels of int16 data: so len is in 4 byte entries (int16 + int16)</div><div class="ttdef"><b>Definition:</b> SoundData.h:84</div></div>
-<div class="ttc" id="aclass_two_channel_sound_data_html_a0a39d70aca39dbeca3d20676635b7615"><div class="ttname"><a href="class_two_channel_sound_data.html#a0a39d70aca39dbeca3d20676635b7615">TwoChannelSoundData::get2ChannelData</a></div><div class="ttdeci">int32_t get2ChannelData(int32_t pos, int32_t len, uint8_t *data)</div><div class="ttdef"><b>Definition:</b> SoundData.cpp:76</div></div>
+<div class="ttc" id="aclass_two_channel_sound_data_html"><div class="ttname"><a href="class_two_channel_sound_data.html">TwoChannelSoundData</a></div><div class="ttdoc">Data is provided in two channels of int16 data: so len is in 4 byte entries (int16 + int16)</div><div class="ttdef"><b>Definition:</b> SoundData.h:89</div></div>
+<div class="ttc" id="aclass_two_channel_sound_data_html_a0a39d70aca39dbeca3d20676635b7615"><div class="ttname"><a href="class_two_channel_sound_data.html#a0a39d70aca39dbeca3d20676635b7615">TwoChannelSoundData::get2ChannelData</a></div><div class="ttdeci">int32_t get2ChannelData(int32_t pos, int32_t len, uint8_t *data)</div><div class="ttdef"><b>Definition:</b> SoundData.cpp:78</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

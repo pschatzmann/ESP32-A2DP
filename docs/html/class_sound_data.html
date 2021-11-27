@@ -69,7 +69,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Sound data as byte stream. We support <a class="el" href="class_two_channel_sound_data.html" title="Data is provided in two channels of int16 data: so len is in 4 byte entries (int16 + int16)">TwoChannelSoundData</a> (uint16_t + uint16_t) and <a class="el" href="class_one_channel_sound_data.html" title="1 Channel data is provided: so Len is 2 byte entries (int16)">OneChannelSoundData</a> which stores the data as array of uint16_t We provide the complete sound data as a simple c array which can be prepared e.g. in the following way.  
+<p>Sound data as byte stream. We support <a class="el" href="class_two_channel_sound_data.html" title="Data is provided in two channels of int16 data: so len is in 4 byte entries (int16 + int16)">TwoChannelSoundData</a> (uint16_t + uint16_t) and <a class="el" href="class_one_channel_sound_data.html" title="1 Channel data is provided as int16 values">OneChannelSoundData</a> which stores the data as array of uint16_t We provide the complete sound data as a simple c array which can be prepared e.g. in the following way.  
  <a href="class_sound_data.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_sound_data_8h_source.html">SoundData.h</a>&gt;</code></p>
@@ -79,8 +79,9 @@ Inheritance diagram for SoundData:</div>
  <div class="center">
   <img src="class_sound_data.png" usemap="#SoundData_map" alt=""/>
   <map id="SoundData_map" name="SoundData_map">
-<area href="class_one_channel_sound_data.html" title="1 Channel data is provided: so Len is 2 byte entries (int16)" alt="OneChannelSoundData" shape="rect" coords="0,56,145,80"/>
-<area href="class_two_channel_sound_data.html" title="Data is provided in two channels of int16 data: so len is in 4 byte entries (int16 + int16)" alt="TwoChannelSoundData" shape="rect" coords="155,56,300,80"/>
+<area href="class_one_channel8_bit_sound_data.html" title="1 Channel data is provided as signed int8 values." alt="OneChannel8BitSoundData" shape="rect" coords="0,56,166,80"/>
+<area href="class_one_channel_sound_data.html" title="1 Channel data is provided as int16 values" alt="OneChannelSoundData" shape="rect" coords="176,56,342,80"/>
+<area href="class_two_channel_sound_data.html" title="Data is provided in two channels of int16 data: so len is in 4 byte entries (int16 + int16)" alt="TwoChannelSoundData" shape="rect" coords="352,56,518,80"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -101,7 +102,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setLoop</b> (bool loo
 <tr class="separator:aed157f28a14d6fd8ef1571db60afd003"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p >Sound data as byte stream. We support <a class="el" href="class_two_channel_sound_data.html" title="Data is provided in two channels of int16 data: so len is in 4 byte entries (int16 + int16)">TwoChannelSoundData</a> (uint16_t + uint16_t) and <a class="el" href="class_one_channel_sound_data.html" title="1 Channel data is provided: so Len is 2 byte entries (int16)">OneChannelSoundData</a> which stores the data as array of uint16_t We provide the complete sound data as a simple c array which can be prepared e.g. in the following way. </p>
+<div class="textblock"><p >Sound data as byte stream. We support <a class="el" href="class_two_channel_sound_data.html" title="Data is provided in two channels of int16 data: so len is in 4 byte entries (int16 + int16)">TwoChannelSoundData</a> (uint16_t + uint16_t) and <a class="el" href="class_one_channel_sound_data.html" title="1 Channel data is provided as int16 values">OneChannelSoundData</a> which stores the data as array of uint16_t We provide the complete sound data as a simple c array which can be prepared e.g. in the following way. </p>
 <ul>
 <li>Open any sound file in Audacity. Make sure that it contains 2 channels<ul>
 <li>Select Tracks -&gt; Resample and select 44100</li>
@@ -109,7 +110,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setLoop</b> (bool loo
 </ul>
 </li>
 <li>Convert to c file e.g. with "xxd -i file_example_WAV_1MG.raw file_example_WAV_1MG.c"<ul>
-<li>add the const qualifier to the array definition. E.g const unsigned char file_example_WAV_1MG_raw[] = { </li>
+<li>add the const qualifier to the array definition. E.g const unsigned char file_example_WAV_1MG_raw[] = { <dl class="section author"><dt>Author</dt><dd>Phil Schatzmann </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>Apache License Version 2 </dd></dl>
+</li>
 </ul>
 </li>
 </ul>
@@ -171,9 +174,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setLoop</b> (bool loo
   </tr>
 </table>
 </div><div class="memdoc">
-<p >Gets 2Channel data. the len is indicated in bytes len is in bytes </p>
 
-<p>Reimplemented in <a class="el" href="class_two_channel_sound_data.html#a0a39d70aca39dbeca3d20676635b7615">TwoChannelSoundData</a>, and <a class="el" href="class_one_channel_sound_data.html#a3ed4a75be0bb4dbb42752f5ae83badbb">OneChannelSoundData</a>.</p>
+<p>Reimplemented in <a class="el" href="class_two_channel_sound_data.html#a0a39d70aca39dbeca3d20676635b7615">TwoChannelSoundData</a>, <a class="el" href="class_one_channel_sound_data.html#a3ed4a75be0bb4dbb42752f5ae83badbb">OneChannelSoundData</a>, and <a class="el" href="class_one_channel8_bit_sound_data.html#a0d7a1fdf7cc8aee06c158b7dc72d491d">OneChannel8BitSoundData</a>.</p>
 
 </div>
 </div>

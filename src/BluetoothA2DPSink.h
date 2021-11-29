@@ -112,8 +112,11 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     /// Returns true if the state is connected
     virtual bool is_connected();
 
-    /// Determine the actuall audio type
+    /// Determine the actual audio type
     virtual esp_a2d_mct_t get_audio_type();
+
+    /// Get the name of the connected source device
+    virtual const char* get_connected_source_name();
 
     /// Define a callback method which provides the meta data
     virtual void set_avrc_metadata_callback(void (*callback)(uint8_t, const uint8_t*)) {
@@ -214,6 +217,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     //esp_a2d_audio_state_t m_audio_state = ESP_A2D_AUDIO_STATE_STOPPED;
     esp_a2d_mct_t audio_type;
     char pin_code_str[20];
+    char remote_name[ESP_BT_GAP_MAX_BDNAME_LEN + 1];
     bool is_auto_reconnect;
     bool is_i2s_output = true;
     bool player_init = false;

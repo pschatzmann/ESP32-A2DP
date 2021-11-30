@@ -115,8 +115,10 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     /// Determine the actual audio type
     virtual esp_a2d_mct_t get_audio_type();
 
+ #ifdef CURRENT_ESP_IDF
     /// Get the name of the connected source device
     virtual const char* get_connected_source_name();
+ #endif
 
     /// Define a callback method which provides the meta data
     virtual void set_avrc_metadata_callback(void (*callback)(uint8_t, const uint8_t*)) {

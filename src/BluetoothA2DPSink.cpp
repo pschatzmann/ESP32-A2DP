@@ -565,12 +565,7 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
                 }
             } else if (a2d->conn_stat.state == ESP_A2D_CONNECTION_STATE_CONNECTED){
                 ESP_LOGI(BT_AV_TAG, "ESP_A2D_CONNECTION_STATE_CONNECTED");
-
-#ifdef CURRENT_ESP_IDF
-                // ask for the remote name
-                ESP_LOGI(BT_AV_TAG, "** Requesting remote name.  Board address: %s", to_str(peer_bd_addr));
-                esp_bt_gap_read_remote_name(peer_bd_addr);
-#endif                
+               
                 // checks if the address is valid
                 bool is_valid = true;
                 if(address_validator!=nullptr){
@@ -598,6 +593,10 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
                 if (is_auto_reconnect && is_valid) {
                     set_last_connection(a2d->conn_stat.remote_bda);
                 }
+#ifdef CURRENT_ESP_IDF
+                // ask for the remote name
+                esp_err_t esp_err = esp_bt_gap_read_remote_name(a2d->conn_stat.remote_bda);
+#endif                 
             } else if (a2d->conn_stat.state == ESP_A2D_CONNECTION_STATE_CONNECTING){
                 ESP_LOGI(BT_AV_TAG, "ESP_A2D_CONNECTION_STATE_CONNECTING");
                 connection_rety_count++;

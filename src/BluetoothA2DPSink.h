@@ -115,11 +115,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     /// Determine the actual audio type
     virtual esp_a2d_mct_t get_audio_type();
 
- #ifdef CURRENT_ESP_IDF
-    /// Get the name of the connected source device
-    virtual const char* get_connected_source_name();
- #endif
-
     /// Define a callback method which provides the meta data
     virtual void set_avrc_metadata_callback(void (*callback)(uint8_t, const uint8_t*)) {
       this->avrc_metadata_callback = callback;
@@ -208,6 +203,11 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
         swap_left_right = swap;
     }
 
+ #ifdef CURRENT_ESP_IDF
+    /// Get the name of the connected source device
+    virtual const char* get_connected_source_name();
+ #endif
+
   protected:
     // protected data
     xQueueHandle app_task_queue;
@@ -219,7 +219,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     //esp_a2d_audio_state_t m_audio_state = ESP_A2D_AUDIO_STATE_STOPPED;
     esp_a2d_mct_t audio_type;
     char pin_code_str[20];
-    char remote_name[ESP_BT_GAP_MAX_BDNAME_LEN + 1];
     bool is_auto_reconnect;
     bool is_i2s_output = true;
     bool player_init = false;
@@ -249,6 +248,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
 
 #ifdef CURRENT_ESP_IDF
     esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap;
+    char remote_name[ESP_BT_GAP_MAX_BDNAME_LEN + 1];
 #endif
 
     // protected methods

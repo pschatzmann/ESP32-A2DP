@@ -112,7 +112,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     /// Returns true if the state is connected
     virtual bool is_connected();
 
-    /// Determine the actuall audio type
+    /// Determine the actual audio type
     virtual esp_a2d_mct_t get_audio_type();
 
     /// Define a callback method which provides the meta data
@@ -203,6 +203,11 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
         swap_left_right = swap;
     }
 
+ #ifdef CURRENT_ESP_IDF
+    /// Get the name of the connected source device
+    virtual const char* get_connected_source_name();
+ #endif
+
   protected:
     // protected data
     xQueueHandle app_task_queue;
@@ -243,6 +248,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
 
 #ifdef CURRENT_ESP_IDF
     esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap;
+    char remote_name[ESP_BT_GAP_MAX_BDNAME_LEN + 1];
 #endif
 
     // protected methods

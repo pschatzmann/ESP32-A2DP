@@ -244,6 +244,17 @@ esp_a2d_mct_t BluetoothA2DPSink::get_audio_type() {
     return audio_type;
 }
 
+#ifdef CURRENT_ESP_IDF
+const char* BluetoothA2DPSink::get_connected_source_name() {
+    if (is_connected()){
+        return(remote_name);
+    }
+    else
+    {
+        return("unknown");
+    }
+}
+#endif
 
 int BluetoothA2DPSink::init_bluetooth()
 {
@@ -442,6 +453,17 @@ void BluetoothA2DPSink::app_gap_callback(esp_bt_gap_cb_event_t event, esp_bt_gap
             } 
             break;
 
+#ifdef CURRENT_ESP_IDF
+        case ESP_BT_GAP_READ_REMOTE_NAME_EVT: {
+                ESP_LOGI(BT_AV_TAG, "ESP_BT_GAP_READ_REMOTE_NAME_EVT stat:%d", param->read_rmt_name.stat);
+                if (param->read_rmt_name.stat == ESP_BT_STATUS_SUCCESS ) {
+                  ESP_LOGI(BT_AV_TAG, "ESP_BT_GAP_READ_REMOTE_NAME_EVT remote name:%s", param->read_rmt_name.rmt_name);
+                  memcpy(remote_name, param->read_rmt_name.rmt_name, ESP_BT_GAP_MAX_BDNAME_LEN );
+                }
+            } 
+            break;
+#endif
+
         default: {
             ESP_LOGI(BT_AV_TAG, "event: %d", event);
             break;
@@ -543,7 +565,7 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
                 }
             } else if (a2d->conn_stat.state == ESP_A2D_CONNECTION_STATE_CONNECTED){
                 ESP_LOGI(BT_AV_TAG, "ESP_A2D_CONNECTION_STATE_CONNECTED");
-                
+
                 // checks if the address is valid
                 bool is_valid = true;
                 if(address_validator!=nullptr){
@@ -571,6 +593,10 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
                 if (is_auto_reconnect && is_valid) {
                     set_last_connection(a2d->conn_stat.remote_bda);
                 }
+#ifdef CURRENT_ESP_IDF
+                // ask for the remote name
+                esp_err_t esp_err = esp_bt_gap_read_remote_name(a2d->conn_stat.remote_bda);
+#endif                 
             } else if (a2d->conn_stat.state == ESP_A2D_CONNECTION_STATE_CONNECTING){
                 ESP_LOGI(BT_AV_TAG, "ESP_A2D_CONNECTION_STATE_CONNECTING");
                 connection_rety_count++;

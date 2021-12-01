@@ -162,7 +162,6 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
     const char *dev_name = "ESP32_A2DP_SRC";
 
     bool ssp_enabled=false;
-    bool auto_reconnect=true;
     const char* bt_name;
     std::vector<const char*> bt_names;
 

@@ -104,7 +104,10 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     virtual void set_i2s_config(i2s_config_t i2s_config);
 
     /// starts the I2S bluetooth sink with the inidicated name
-    virtual void start(const char* name, bool auto_reconect=true);
+    virtual void start(const char* name, bool auto_reconect);
+
+    /// starts the I2S bluetooth sink with the inidicated name
+    virtual void start(const char* name);
 
     /// ends the I2S bluetooth sink with the indicated name - if you release the memory a future start is not possible
     virtual void end(bool release_memory=false);
@@ -219,7 +222,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     //esp_a2d_audio_state_t m_audio_state = ESP_A2D_AUDIO_STATE_STOPPED;
     esp_a2d_mct_t audio_type;
     char pin_code_str[20];
-    bool is_auto_reconnect;
     bool is_i2s_output = true;
     bool player_init = false;
     bool mono_downmix = false;

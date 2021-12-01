@@ -96,6 +96,11 @@ class BluetoothA2DPCommon {
     public:
         /// Destructor
         virtual ~BluetoothA2DPCommon() = default;
+    
+        /// activate / deactivate the automatic reconnection to the last address (per default this is on)
+        void set_auto_reconnect(bool active){
+            this->auto_reconnect = active;
+        }
 
         /// Closes the connection
         virtual void disconnect();
@@ -161,6 +166,7 @@ class BluetoothA2DPCommon {
 #endif        
 
     protected:
+        bool auto_reconnect=true;
         uint32_t debounce_ms = 0;
         DefaultVolumeControl default_volume_control;
         VolumeControl *volume_control_ptr = nullptr;

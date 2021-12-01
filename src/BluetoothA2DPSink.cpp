@@ -110,10 +110,14 @@ void BluetoothA2DPSink::set_on_volumechange(void (*callBack)(int)){
   this->bt_volumechange = callBack;
 }
 
+void BluetoothA2DPSink::start(const char* name, bool auto_reconnect){
+    set_auto_reconnect(auto_reconnect);
+    start(name);
+}
 /** 
  * Main function to start the Bluetooth Processing
  */
-void BluetoothA2DPSink::start(const char* name, bool auto_reconnect)
+void BluetoothA2DPSink::start(const char* name)
 {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
     log_free_heap();
@@ -130,9 +134,8 @@ void BluetoothA2DPSink::start(const char* name, bool auto_reconnect)
     ESP_LOGI(BT_AV_TAG,"Device name will be set to '%s'",this->bt_name);
     
     // Initialize NVS
-    is_auto_reconnect = auto_reconnect;
     init_nvs();
-    if (is_auto_reconnect){
+    if (auto_reconnect){
         get_last_connection();
     }
 
@@ -418,9 +421,6 @@ void BluetoothA2DPSink::app_alloc_meta_buffer(esp_avrc_ct_cb_param_t *param)
 
 void BluetoothA2DPSink::app_gap_callback(esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *param)
 {
-    memcpy(peer_bd_addr, param->cfm_req.bda, ESP_BD_ADDR_LEN);
-    ESP_LOGI(BT_AV_TAG, "partner address: %s", to_str(last_connection));
-
     switch (event) {
         case ESP_BT_GAP_AUTH_CMPL_EVT: {
             if (param->auth_cmpl.stat == ESP_BT_STATUS_SUCCESS) {
@@ -432,8 +432,17 @@ void BluetoothA2DPSink::app_gap_callback(esp_bt_gap_cb_event_t event, esp_bt_gap
             }
             break;
         }
-        
+
+        case ESP_BT_GAP_PIN_REQ_EVT: {
+                memcpy(peer_bd_addr, param->pin_req.bda, ESP_BD_ADDR_LEN);
+                ESP_LOGI(BT_AV_TAG, "partner address: %s", to_str(peer_bd_addr));
+            }
+            break;
+
         case ESP_BT_GAP_CFM_REQ_EVT: {
+                memcpy(peer_bd_addr, param->cfm_req.bda, ESP_BD_ADDR_LEN);
+                ESP_LOGI(BT_AV_TAG, "partner address: %s", to_str(peer_bd_addr));
+
                 ESP_LOGI(BT_AV_TAG, "ESP_BT_GAP_CFM_REQ_EVT Please confirm the passkey: %d", param->cfm_req.num_val);
                 pin_code_int = param->key_notif.passkey;
                 pin_code_request = Confirm;
@@ -526,6 +535,10 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
             ESP_LOGD(BT_AV_TAG, "%s ESP_A2D_CONNECTION_STATE_EVT", __func__);
             a2d = (esp_a2d_cb_param_t *)(p_param);
 
+            // determine remote BDA
+            memcpy(peer_bd_addr, a2d->conn_stat.remote_bda, ESP_BD_ADDR_LEN);
+            ESP_LOGI(BT_AV_TAG, "partner address: %s", to_str(peer_bd_addr));
+
             // callback
             connection_state = a2d->conn_stat.state;
             if (connection_state_callback!=nullptr){
@@ -550,7 +563,7 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
                     i2s_stop(i2s_port);
                     i2s_zero_dma_buffer(i2s_port);
                 }
-                if (is_auto_reconnect && has_last_connection()) {
+                if (auto_reconnect && has_last_connection()) {
                     if ( has_last_connection()  && connection_rety_count < AUTOCONNECT_TRY_NUM ){
                         ESP_LOGI(BT_AV_TAG,"Connection try number: %d", connection_rety_count);
                         connect_to_last_device();
@@ -590,7 +603,7 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
                     }
                 }
                 // record current connection
-                if (is_auto_reconnect && is_valid) {
+                if (auto_reconnect && is_valid) {
                     set_last_connection(a2d->conn_stat.remote_bda);
                 }
 #ifdef CURRENT_ESP_IDF
@@ -841,7 +854,7 @@ void BluetoothA2DPSink::av_hdl_stack_evt(uint16_t event, void *p_param)
             if (esp_a2d_sink_init()!=ESP_OK){
                 ESP_LOGE(BT_AV_TAG,"esp_a2d_sink_init");            
             }
-            if (is_auto_reconnect && has_last_connection() ) {
+            if (auto_reconnect && has_last_connection() ) {
                 ESP_LOGD(BT_AV_TAG, "connect_to_last_device");
                 connect_to_last_device();
             }

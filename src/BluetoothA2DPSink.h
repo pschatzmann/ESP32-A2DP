@@ -290,6 +290,11 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     // avrc event handler 
     virtual void av_hdl_avrc_evt(uint16_t event, void *p_param);
 
+    // split up long handlers
+    virtual void handle_connection_state(uint16_t event, void *p_param);
+    virtual void handle_audio_state(uint16_t event, void *p_param);
+    virtual void handle_audio_cfg(uint16_t event, void *p_param);
+
 #ifdef CURRENT_ESP_IDF
     virtual void volume_set_by_local_host(uint8_t volume);
     virtual void volume_set_by_controller(uint8_t volume);

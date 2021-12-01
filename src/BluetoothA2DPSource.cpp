@@ -178,7 +178,7 @@ void BluetoothA2DPSource::start_raw(std::vector<const char*> names, music_data_c
         get_last_connection();
     }
     // reset last connection if we do not reconnect
-    if (!auto_reconnect){
+    if (!is_auto_reconnect){
         reset_last_connection();
     }
 
@@ -535,7 +535,7 @@ void BluetoothA2DPSource::bt_av_hdl_stack_evt(uint16_t event, void *p_param)
             esp_a2d_source_init();
             set_scan_mode_connectable(true);
 
-            if (auto_reconnect && has_last_connection()) {
+            if (is_auto_reconnect && has_last_connection()) {
                 ESP_LOGI(BT_AV_TAG, "Reconnecting to %s", to_str(last_connection));
                 memcpy(s_peer_bda,last_connection,ESP_BD_ADDR_LEN);
                 esp_a2d_source_connect(last_connection);

@@ -99,7 +99,7 @@ class BluetoothA2DPCommon {
     
         /// activate / deactivate the automatic reconnection to the last address (per default this is on)
         void set_auto_reconnect(bool active){
-            this->auto_reconnect = active;
+            this->is_auto_reconnect = active;
         }
 
         /// Closes the connection
@@ -166,7 +166,7 @@ class BluetoothA2DPCommon {
 #endif        
 
     protected:
-        bool auto_reconnect=true;
+        bool is_auto_reconnect=true;
         uint32_t debounce_ms = 0;
         DefaultVolumeControl default_volume_control;
         VolumeControl *volume_control_ptr = nullptr;

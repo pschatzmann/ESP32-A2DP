@@ -22,11 +22,6 @@ extern "C" {
 
 #define APP_SIG_WORK_DISPATCH (0x01)
 
-#ifndef AUTOCONNECT_TRY_NUM
-#define AUTOCONNECT_TRY_NUM 1
-#endif
-
-
 #ifndef BT_AV_TAG
 #define BT_AV_TAG               "BT_AV"
 #endif
@@ -206,6 +201,12 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
         swap_left_right = swap;
     }
 
+    /// Defines the number of times that the system tries to automatically reconnect to the last system
+    virtual void set_try_reconnect_max_count(int count){
+        is_auto_reconnect = true;
+        try_reconnect_max_count = count;
+    }
+
  #ifdef CURRENT_ESP_IDF
     /// Get the name of the connected source device
     virtual const char* get_connected_source_name();
@@ -247,6 +248,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     bool (*address_validator)(esp_bd_addr_t remote_bda) = nullptr;
     void (*sample_rate_callback)(uint16_t rate)=nullptr;
     bool swap_left_right = false;
+    int try_reconnect_max_count = AUTOCONNECT_TRY_NUM;
 
 #ifdef CURRENT_ESP_IDF
     esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap;

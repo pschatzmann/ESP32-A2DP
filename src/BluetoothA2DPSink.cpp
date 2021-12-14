@@ -662,6 +662,7 @@ void BluetoothA2DPSink::handle_connection_state(uint16_t event, void *p_param){
             i2s_stop(i2s_port);
             i2s_zero_dma_buffer(i2s_port);
         }
+        
         if (is_auto_reconnect && has_last_connection()) {
             if ( has_last_connection()  && connection_rety_count < try_reconnect_max_count ){
                 ESP_LOGI(BT_AV_TAG,"Connection try number: %d", connection_rety_count);

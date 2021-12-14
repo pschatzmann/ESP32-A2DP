@@ -206,6 +206,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
         is_auto_reconnect = true;
         try_reconnect_max_count = count;
     }
+    
 
  #ifdef CURRENT_ESP_IDF
     /// Get the name of the connected source device

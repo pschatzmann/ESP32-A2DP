@@ -111,7 +111,7 @@ void BluetoothA2DPSink::set_on_volumechange(void (*callBack)(int)){
 }
 
 void BluetoothA2DPSink::start(const char* name, bool auto_reconnect){
-    set_auto_reconnect(auto_reconnect);
+    set_auto_reconnect(auto_reconnect, false, AUTOCONNECT_TRY_NUM);
     start(name);
 }
 /** 
@@ -630,6 +630,7 @@ void BluetoothA2DPSink::handle_audio_state(uint16_t event, void *p_param){
     }
 }
 
+
 void BluetoothA2DPSink::handle_connection_state(uint16_t event, void *p_param){
     ESP_LOGD(BT_AV_TAG, "%s evt %d", __func__, event);
     esp_a2d_cb_param_t* a2d = (esp_a2d_cb_param_t *)(p_param);
@@ -663,7 +664,7 @@ void BluetoothA2DPSink::handle_connection_state(uint16_t event, void *p_param){
             i2s_zero_dma_buffer(i2s_port);
         }
         
-        if (is_auto_reconnect && has_last_connection()) {
+        if (is_reconnect(a2d->conn_stat.disc_rsn) && is_auto_reconnect && has_last_connection()) {
             if ( has_last_connection()  && connection_rety_count < try_reconnect_max_count ){
                 ESP_LOGI(BT_AV_TAG,"Connection try number: %d", connection_rety_count);
                 connect_to_last_device();

@@ -8,7 +8,7 @@
 #endif
 
 #ifndef AUTOCONNECT_TRY_NUM
-#define AUTOCONNECT_TRY_NUM 10
+#define AUTOCONNECT_TRY_NUM 1000
 #endif
 
 // Enable CURRENT_ESP_IDF if we are using a current version of ESP IDF e.g. 4.3

@@ -67,17 +67,17 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
     ~BluetoothA2DPSource();
 
     /// activate Secure Simple Pairing 
-    void set_ssp_enabled(bool active){
+    virtual void set_ssp_enabled(bool active){
       this->ssp_enabled = active;
     }
 
     /// activate / deactivate the automatic reconnection to the last address (per default this is on)
-    void set_auto_reconnect(bool active){
+    virtual void set_auto_reconnect(bool active){
       this->is_auto_reconnect = active;
     }
 
     /// automatically tries to reconnect to the indicated address
-    void set_auto_reconnect(esp_bd_addr_t addr){
+    virtual void set_auto_reconnect(esp_bd_addr_t addr){
       this->is_auto_reconnect = true;
     	memcpy(last_connection,addr,ESP_BD_ADDR_LEN);
     }

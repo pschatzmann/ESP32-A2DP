@@ -202,8 +202,9 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     }
 
     /// Defines the number of times that the system tries to automatically reconnect to the last system
-    virtual void set_try_reconnect_max_count(int count){
-        is_auto_reconnect = true;
+    virtual void set_auto_reconnect(bool reconnect, bool afterNormalDisconnect=false, int count=AUTOCONNECT_TRY_NUM ){
+        is_auto_reconnect = reconnect;
+        reconnect_on_normal_disconnect = afterNormalDisconnect;
         try_reconnect_max_count = count;
     }
     
@@ -250,6 +251,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     void (*sample_rate_callback)(uint16_t rate)=nullptr;
     bool swap_left_right = false;
     int try_reconnect_max_count = AUTOCONNECT_TRY_NUM;
+    bool reconnect_on_normal_disconnect = false;
 
 #ifdef CURRENT_ESP_IDF
     esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap;
@@ -273,6 +275,11 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     virtual const char* last_bda_nvs_name() {
         return "last_bda";
     }
+
+    virtual bool is_reconnect(esp_a2d_disc_rsn_t type) {
+        return reconnect_on_normal_disconnect || type==ESP_A2D_DISC_RSN_ABNORMAL;
+    }
+
     /**
      * Wrappbed methods called from callbacks
      */
@@ -297,6 +304,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     virtual void handle_connection_state(uint16_t event, void *p_param);
     virtual void handle_audio_state(uint16_t event, void *p_param);
     virtual void handle_audio_cfg(uint16_t event, void *p_param);
+
 
 #ifdef CURRENT_ESP_IDF
     virtual void volume_set_by_local_host(uint8_t volume);

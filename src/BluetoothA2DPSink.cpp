@@ -62,7 +62,7 @@ BluetoothA2DPSink::~BluetoothA2DPSink() {
 void BluetoothA2DPSink::end(bool release_memory) {
     // reconnect should not work after end
     BluetoothA2DPCommon::end(release_memory);
-
+    active = false;
     // stop I2S
     if (is_i2s_output){
         ESP_LOGI(BT_AV_TAG,"uninstall i2s");
@@ -113,6 +113,7 @@ void BluetoothA2DPSink::set_on_volumechange(void (*callBack)(int)){
 void BluetoothA2DPSink::start(const char* name, bool auto_reconnect){
     set_auto_reconnect(auto_reconnect, false, AUTOCONNECT_TRY_NUM);
     start(name);
+    active = true;
 }
 /** 
  * Main function to start the Bluetooth Processing
@@ -147,6 +148,8 @@ void BluetoothA2DPSink::start(const char* name)
 
     // create application task 
     app_task_start_up();
+
+    active = true;
 
     // Bluetooth device name, connection mode and profile set up 
     app_work_dispatch(ccall_av_hdl_stack_evt, BT_APP_EVT_STACK_UP, NULL, 0);
@@ -1032,6 +1035,7 @@ void BluetoothA2DPSink::pause(){
 
 void BluetoothA2DPSink::stop(){
     execute_avrc_command(ESP_AVRC_PT_CMD_STOP);
+    active = false;
 }
 
 void BluetoothA2DPSink::next(){
@@ -1095,6 +1099,8 @@ void BluetoothA2DPSink::confirm_pin_code(int code)
         break;
   }
 }
+
+
 
 /**
  * public Callbacks 

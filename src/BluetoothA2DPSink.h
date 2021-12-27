@@ -207,6 +207,11 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
         reconnect_on_normal_disconnect = afterNormalDisconnect;
         try_reconnect_max_count = count;
     }
+
+    /// determines if the player is active
+    virtual bool isActive() {
+        return active;
+    }
     
 
  #ifdef CURRENT_ESP_IDF
@@ -252,6 +257,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     bool swap_left_right = false;
     int try_reconnect_max_count = AUTOCONNECT_TRY_NUM;
     bool reconnect_on_normal_disconnect = false;
+    bool active = false;
 
 #ifdef CURRENT_ESP_IDF
     esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap;

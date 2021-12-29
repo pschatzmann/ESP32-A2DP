@@ -121,6 +121,7 @@ void BluetoothA2DPSink::start(const char* name, bool auto_reconnect){
 void BluetoothA2DPSink::start(const char* name)
 {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
+    end_in_progress = false;
     log_free_heap();
 
     if (is_start_disabled){

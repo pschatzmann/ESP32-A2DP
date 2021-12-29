@@ -61,6 +61,7 @@ BluetoothA2DPSink::~BluetoothA2DPSink() {
 
 void BluetoothA2DPSink::end(bool release_memory) {
     // reconnect should not work after end
+    end_in_progress = true;
     BluetoothA2DPCommon::end(release_memory);
 
     // stop I2S
@@ -664,21 +665,23 @@ void BluetoothA2DPSink::handle_connection_state(uint16_t event, void *p_param){
             i2s_zero_dma_buffer(i2s_port);
         }
         
-        if (is_reconnect(a2d->conn_stat.disc_rsn) && is_auto_reconnect && has_last_connection()) {
-            if ( has_last_connection()  && connection_rety_count < try_reconnect_max_count ){
-                ESP_LOGI(BT_AV_TAG,"Connection try number: %d", connection_rety_count);
-                connect_to_last_device();
-                // when we lost the connection we do allow any others to connect after 2 trials
-                if (connection_rety_count==2) set_scan_mode_connectable(true);
+        if (!end_in_progress) {
+            if (is_reconnect(a2d->conn_stat.disc_rsn) && is_auto_reconnect && has_last_connection()) {
+                if ( has_last_connection()  && connection_rety_count < try_reconnect_max_count ){
+                    ESP_LOGI(BT_AV_TAG,"Connection try number: %d", connection_rety_count);
+                    connect_to_last_device();
+                    // when we lost the connection we do allow any others to connect after 2 trials
+                    if (connection_rety_count==2) set_scan_mode_connectable(true);
 
-            } else {
-                if ( has_last_connection() && a2d->conn_stat.disc_rsn == ESP_A2D_DISC_RSN_NORMAL ){
-                    clean_last_connection();
+                } else {
+                    if ( has_last_connection() && a2d->conn_stat.disc_rsn == ESP_A2D_DISC_RSN_NORMAL ){
+                        clean_last_connection();
+                    }
+                    set_scan_mode_connectable(true);
                 }
-                set_scan_mode_connectable(true);
+            } else {
+                set_scan_mode_connectable(true);   
             }
-        } else {
-            set_scan_mode_connectable(true);   
         }
     } else if (a2d->conn_stat.state == ESP_A2D_CONNECTION_STATE_CONNECTED){
         ESP_LOGI(BT_AV_TAG, "ESP_A2D_CONNECTION_STATE_CONNECTED");

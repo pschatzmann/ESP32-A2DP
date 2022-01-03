@@ -431,6 +431,10 @@ void BluetoothA2DPSink::app_gap_callback(esp_bt_gap_cb_event_t event, esp_bt_gap
 
             } else {
                 ESP_LOGE(BT_AV_TAG, "authentication failed, status:%d", param->auth_cmpl.stat);
+                // reset pin_code data to "undefined" after authentication failure
+                // just like when in disconnected state
+                pin_code_int = 0;
+                pin_code_request = Undefined;
             }
             break;
         }

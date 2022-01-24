@@ -860,7 +860,7 @@ void BluetoothA2DPSink::av_hdl_stack_evt(uint16_t event, void *p_param)
                 esp_avrc_tg_register_callback(ccall_app_rc_tg_callback);
                 esp_avrc_rn_evt_cap_mask_t evt_set = {0};
                 esp_avrc_rn_evt_bit_mask_operation(ESP_AVRC_BIT_MASK_OP_SET, &evt_set, ESP_AVRC_RN_VOLUME_CHANGE);
-                if(esp_avrc_tg_set_rn_evt_cap(&evt_set) == ESP_OK){
+                if(esp_avrc_tg_set_rn_evt_cap(&evt_set) != ESP_OK){
                     ESP_LOGE(BT_AV_TAG,"esp_avrc_tg_set_rn_evt_cap failed");
                 }
             } else {

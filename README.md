@@ -1,6 +1,9 @@
 # A Simple Arduino Bluetooth Music Receiver and Sender for the ESP32
 
-The ESP32 provides a Bluetooth A2DP API that receives sound data e.g. from your Mobile Phone and makes it available via a callback method. The output is a PCM data stream decoded from SBC format. The documentation can be found [here](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/peripherals/i2s.html). 
+The ESP32 is a microcontroller that provides a Bluetooth A2DP API which can be used to receive sound data e.g. from your 
+Mobile Phone and makes it available via a callback method. The output is a PCM data stream decoded from SBC format. The documentation can be found [here](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/peripherals/i2s.html). 
+
+![esp32](https://pschatzmann.github.io/ESP32-A2DP/img/esp32.jpeg)
 
 I2S is an electrical serial bus interface standard used for connecting digital audio devices together. It is used to communicate PCM audio data between integrated circuits in an electronic device.
 

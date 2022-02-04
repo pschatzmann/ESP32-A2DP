@@ -617,7 +617,7 @@ void BluetoothA2DPSink::handle_audio_state(uint16_t event, void *p_param){
     
     // callback on state change
     audio_state = a2d->audio_stat.state;
-    if (audio_state_callback!=nullptr && audio_state){
+    if (audio_state_callback!=nullptr){
         audio_state_callback(a2d->audio_stat.state, audio_state_obj);
     }
 

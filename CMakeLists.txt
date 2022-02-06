@@ -8,4 +8,4 @@ idf_component_register(
     REQUIRES bt esp_common freertos hal log nvs_flash
 )
 
-target_compile_options(${COMPONENT_LIB} PUBLIC "-Wno-unused-variable" "-Wno-missing-field-initializers" "-fpermissive" "-DCURRENT_ESP_IDF" )
+target_compile_options(${COMPONENT_LIB} PUBLIC "-Wno-unused-variable" "-Wno-missing-field-initializers" "-fpermissive")

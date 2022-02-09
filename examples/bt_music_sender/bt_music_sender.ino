@@ -46,4 +46,6 @@ void setup() {
 }
 
 void loop() {
+  // to prevent watchdog in release > 1.0.6
+  delay(10);
 }

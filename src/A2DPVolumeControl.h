@@ -27,6 +27,8 @@
 class A2DPVolumeControl {
 
     protected:
+        bool is_volume_used = false;
+        bool mono_downmix = false;
         int32_t volumeFactor;
         int32_t volumeFactorMax;
 
@@ -35,7 +37,7 @@ class A2DPVolumeControl {
             volumeFactorMax = 0x1000;
         }
 
-        virtual void update_audio_data(Frame* data, uint16_t frameCount, bool mono_downmix, bool is_volume_used) {
+        virtual void update_audio_data(Frame* data, uint16_t frameCount) {
             if (data!=nullptr && frameCount>0 && ( mono_downmix || is_volume_used)) {
                 ESP_LOGD("VolumeControl", "update_audio_data");
                 for (int i=0;i<frameCount;i++){
@@ -64,6 +66,14 @@ class A2DPVolumeControl {
         // provides the max factor value 4096
         int32_t get_volume_factor_max() {
             return volumeFactorMax;
+        }
+
+        void set_enabled(bool enabled) {
+            is_volume_used = enabled;
+        }
+
+        void set_mono_downmix(bool enabled) {
+            mono_downmix = enabled;
         }
 
         virtual void set_volume(uint8_t volume) = 0;
@@ -127,6 +137,6 @@ class A2DPLinearVolumeControl : public A2DPVolumeControl {
  */
 class A2DPNoVolumeControl : public A2DPVolumeControl {
     public:
-        virtual void update_audio_data(Frame* data, uint16_t frameCount, bool mono_downmix, bool ivolume_used) {
+        virtual void update_audio_data(Frame* data, uint16_t frameCount) {
         }
 };

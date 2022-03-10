@@ -171,7 +171,9 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
         set_mono_downmix(channels==I2S_CHANNEL_MONO);
     }
     /// mix stereo into single mono signal
-    virtual void set_mono_downmix(bool enabled) { mono_downmix = enabled; }
+    virtual void set_mono_downmix(bool enabled) {
+        volume_control()->set_mono_downmix(enabled);
+    }
     /// Defines the bits per sample for output (if > 16 output will be expanded)
     virtual void set_bits_per_sample(int bps) { i2s_config.bits_per_sample = (i2s_bits_per_sample_t) bps; }
     
@@ -231,7 +233,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     char pin_code_str[20] = {0};
     bool is_i2s_output = true;
     bool player_init = false;
-    bool mono_downmix = false;
     i2s_channel_t i2s_channels = I2S_CHANNEL_STEREO;
     i2s_port_t i2s_port = I2S_NUM_0; 
     int connection_rety_count = 0;
@@ -239,7 +240,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     static const esp_spp_mode_t esp_spp_mode = ESP_SPP_MODE_CB;
     _lock_t s_volume_lock;
     uint8_t s_volume = 0;
-    bool is_volume_used = false;
     bool s_volume_notify;
     int pin_code_int = 0;
     PinCodeRequest pin_code_request = Undefined;

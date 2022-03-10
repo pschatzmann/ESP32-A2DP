@@ -88,7 +88,7 @@ extern "C" int32_t ccall_bt_app_a2d_data_cb(uint8_t *data, int32_t len){
     int32_t result = (*(self_BluetoothA2DPSource->data_stream_callback))(data, len);
     // adapt volume
     if (result > 0 && self_BluetoothA2DPSource->is_volume_used){
-        self_BluetoothA2DPSource->volume_control()->update_audio_data((Frame*)data, result/4, false, true);
+        self_BluetoothA2DPSource->volume_control()->update_audio_data((Frame*)data, result/4);
     }
     return result;
 }

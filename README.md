@@ -178,6 +178,8 @@ I have added the following AVRC commmands, that you can use to 'control' your A2
 - stop();
 - next();
 - previous();
+- fast_forward();
+- rewind();
 
 
 ## A2DP Source (Music Sender)

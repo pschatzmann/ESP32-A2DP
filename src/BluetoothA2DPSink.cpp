@@ -1048,6 +1048,12 @@ void BluetoothA2DPSink::next(){
 void BluetoothA2DPSink::previous(){
     execute_avrc_command(ESP_AVRC_PT_CMD_BACKWARD);
 }
+void BluetoothA2DPSink::fast_forward(){
+    execute_avrc_command(ESP_AVRC_PT_CMD_FAST_FORWARD);
+}
+void BluetoothA2DPSink::rewind(){
+    execute_avrc_command(ESP_AVRC_PT_CMD_REWIND);
+}
 
 void BluetoothA2DPSink::set_volume(uint8_t volume)
 {

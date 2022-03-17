@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['next_39',['next',['../class_bluetooth_a2_d_p_sink.html#a296fb7aaf8d8e78991d9d505353de94f',1,'BluetoothA2DPSink']]],
-  ['novolumecontrol_40',['NoVolumeControl',['../class_no_volume_control.html',1,'']]]
+  ['linearvolumecontrol_38',['LinearVolumeControl',['../class_linear_volume_control.html',1,'']]],
+  ['log_5ffree_5fheap_39',['log_free_heap',['../class_bluetooth_a2_d_p_common.html#a791432e5c800e75fb11b858071cff651',1,'BluetoothA2DPCommon']]]
 ];

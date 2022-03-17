@@ -177,8 +177,16 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="separator:a296fb7aaf8d8e78991d9d505353de94f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a341024c18eabdb06c734c2242d5ba505"><td class="memItemLeft" align="right" valign="top"><a id="a341024c18eabdb06c734c2242d5ba505"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a341024c18eabdb06c734c2242d5ba505">previous</a> ()</td></tr>
-<tr class="memdesc:a341024c18eabdb06c734c2242d5ba505"><td class="mdescLeft">&#160;</td><td class="mdescRight">AVRC previouse. <br /></td></tr>
+<tr class="memdesc:a341024c18eabdb06c734c2242d5ba505"><td class="mdescLeft">&#160;</td><td class="mdescRight">AVRC previous. <br /></td></tr>
 <tr class="separator:a341024c18eabdb06c734c2242d5ba505"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42e01689353026b1ef9883fd5d32f00c"><td class="memItemLeft" align="right" valign="top"><a id="a42e01689353026b1ef9883fd5d32f00c"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a42e01689353026b1ef9883fd5d32f00c">fast_forward</a> ()</td></tr>
+<tr class="memdesc:a42e01689353026b1ef9883fd5d32f00c"><td class="mdescLeft">&#160;</td><td class="mdescRight">AVRC fast_forward. <br /></td></tr>
+<tr class="separator:a42e01689353026b1ef9883fd5d32f00c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ee01e6d11ee3c6c546a510029a23a12"><td class="memItemLeft" align="right" valign="top"><a id="a9ee01e6d11ee3c6c546a510029a23a12"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a9ee01e6d11ee3c6c546a510029a23a12">rewind</a> ()</td></tr>
+<tr class="memdesc:a9ee01e6d11ee3c6c546a510029a23a12"><td class="mdescLeft">&#160;</td><td class="mdescRight">AVRC rewind. <br /></td></tr>
+<tr class="separator:a9ee01e6d11ee3c6c546a510029a23a12"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abc8a4564e135ace22d31c2231f1a0696"><td class="memItemLeft" align="right" valign="top"><a id="abc8a4564e135ace22d31c2231f1a0696"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#abc8a4564e135ace22d31c2231f1a0696">set_channels</a> (i2s_channel_t channels)</td></tr>
 <tr class="memdesc:abc8a4564e135ace22d31c2231f1a0696"><td class="mdescLeft">&#160;</td><td class="mdescRight">set output to I2S_CHANNEL_STEREO (default) or I2S_CHANNEL_MONO <br /></td></tr>
@@ -223,6 +231,10 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a14d982730e2b9ea772fe9ede1563ed22">set_swap_lr_channels</a> (bool swap)</td></tr>
 <tr class="memdesc:a14d982730e2b9ea772fe9ede1563ed22"><td class="mdescLeft">&#160;</td><td class="mdescRight">swaps the left and right channel <br /></td></tr>
 <tr class="separator:a14d982730e2b9ea772fe9ede1563ed22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7ba90ebbed89f38e292de7a0ac1bdb0"><td class="memItemLeft" align="right" valign="top"><a id="ac7ba90ebbed89f38e292de7a0ac1bdb0"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#ac7ba90ebbed89f38e292de7a0ac1bdb0">set_auto_reconnect</a> (bool reconnect, bool afterNormalDisconnect=false, int count=AUTOCONNECT_TRY_NUM)</td></tr>
+<tr class="memdesc:ac7ba90ebbed89f38e292de7a0ac1bdb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the number of times that the system tries to automatically reconnect to the last system. <br /></td></tr>
+<tr class="separator:ac7ba90ebbed89f38e292de7a0ac1bdb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a537d576b12d1158eb0681a6195b258de"><td class="memItemLeft" align="right" valign="top"><a id="a537d576b12d1158eb0681a6195b258de"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a537d576b12d1158eb0681a6195b258de">set_auto_reconnect</a> (bool active)</td></tr>
 <tr class="memdesc:a537d576b12d1158eb0681a6195b258de"><td class="mdescLeft">&#160;</td><td class="mdescRight">activate / deactivate the automatic reconnection to the last address (per default this is on) <br /></td></tr>
@@ -314,6 +326,9 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>execute_avrc_
 <tr class="memitem:a6e9b33f70cd118d78b9d5015529c0d53"><td class="memItemLeft" align="right" valign="top"><a id="a6e9b33f70cd118d78b9d5015529c0d53"></a>
 virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><b>last_bda_nvs_name</b> ()</td></tr>
 <tr class="separator:a6e9b33f70cd118d78b9d5015529c0d53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ef94c2b1e035eec0162d91d72132165"><td class="memItemLeft" align="right" valign="top"><a id="a0ef94c2b1e035eec0162d91d72132165"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_reconnect</b> (esp_a2d_disc_rsn_t type)</td></tr>
+<tr class="separator:a0ef94c2b1e035eec0162d91d72132165"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a361f80944f06806b7e42302f95171675"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a361f80944f06806b7e42302f95171675">app_task_handler</a> (void *arg)</td></tr>
 <tr class="separator:a361f80944f06806b7e42302f95171675"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a32d94525aad2b16e301e15e17816d8ab"><td class="memItemLeft" align="right" valign="top"><a id="a32d94525aad2b16e301e15e17816d8ab"></a>
@@ -337,6 +352,15 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>av_hdl_a2d_ev
 <tr class="memitem:afa1e8675ff5ee96ed74d2491d3505c37"><td class="memItemLeft" align="right" valign="top"><a id="afa1e8675ff5ee96ed74d2491d3505c37"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>av_hdl_avrc_evt</b> (uint16_t event, void *p_param)</td></tr>
 <tr class="separator:afa1e8675ff5ee96ed74d2491d3505c37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad52be2adb0bf68e3a1484166c4502e3f"><td class="memItemLeft" align="right" valign="top"><a id="ad52be2adb0bf68e3a1484166c4502e3f"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>handle_connection_state</b> (uint16_t event, void *p_param)</td></tr>
+<tr class="separator:ad52be2adb0bf68e3a1484166c4502e3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b547f25c7fa20a4a1b4e999708c258c"><td class="memItemLeft" align="right" valign="top"><a id="a1b547f25c7fa20a4a1b4e999708c258c"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>handle_audio_state</b> (uint16_t event, void *p_param)</td></tr>
+<tr class="separator:a1b547f25c7fa20a4a1b4e999708c258c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a718c4723206c6fdcd1649cfe2342e91a"><td class="memItemLeft" align="right" valign="top"><a id="a718c4723206c6fdcd1649cfe2342e91a"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>handle_audio_cfg</b> (uint16_t event, void *p_param)</td></tr>
+<tr class="separator:a718c4723206c6fdcd1649cfe2342e91a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2347a681512b9487691e80a4d975f699"><td class="memItemLeft" align="right" valign="top"><a id="a2347a681512b9487691e80a4d975f699"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>av_notify_evt_handler</b> (uint8_t event_id, uint32_t event_parameter)</td></tr>
 <tr class="separator:a2347a681512b9487691e80a4d975f699"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -461,9 +485,18 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><b>sample_rate_callbac
 <tr class="memitem:a00954e585dd50ef40719d208a972adda"><td class="memItemLeft" align="right" valign="top"><a id="a00954e585dd50ef40719d208a972adda"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>swap_left_right</b> = false</td></tr>
 <tr class="separator:a00954e585dd50ef40719d208a972adda"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab25afeb6de7c13cfde65caeac0cf24a2"><td class="memItemLeft" align="right" valign="top"><a id="ab25afeb6de7c13cfde65caeac0cf24a2"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>auto_reconnect</b> =true</td></tr>
-<tr class="separator:ab25afeb6de7c13cfde65caeac0cf24a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab90b3d60f915bab9c9d2d9f4b27e93fe"><td class="memItemLeft" align="right" valign="top"><a id="ab90b3d60f915bab9c9d2d9f4b27e93fe"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>try_reconnect_max_count</b> = AUTOCONNECT_TRY_NUM</td></tr>
+<tr class="separator:ab90b3d60f915bab9c9d2d9f4b27e93fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a821a93584902ea463e3974ad594144b3"><td class="memItemLeft" align="right" valign="top"><a id="a821a93584902ea463e3974ad594144b3"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>reconnect_on_normal_disconnect</b> = false</td></tr>
+<tr class="separator:a821a93584902ea463e3974ad594144b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17ecf8ab2757f6fdab38bbae18f19941"><td class="memItemLeft" align="right" valign="top"><a id="a17ecf8ab2757f6fdab38bbae18f19941"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>end_in_progress</b> = false</td></tr>
+<tr class="separator:a17ecf8ab2757f6fdab38bbae18f19941"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae07c63cafc1692273d6fa3758bd37678"><td class="memItemLeft" align="right" valign="top"><a id="ae07c63cafc1692273d6fa3758bd37678"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_auto_reconnect</b> =true</td></tr>
+<tr class="separator:ae07c63cafc1692273d6fa3758bd37678"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad04d173227dbd77d1956747cc10837c4"><td class="memItemLeft" align="right" valign="top"><a id="ad04d173227dbd77d1956747cc10837c4"></a>
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>debounce_ms</b> = 0</td></tr>
 <tr class="separator:ad04d173227dbd77d1956747cc10837c4"><td class="memSeparator" colspan="2">&#160;</td></tr>

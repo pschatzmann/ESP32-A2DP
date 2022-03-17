@@ -65,9 +65,10 @@ $(function() {
 <div class="title">A Simple Arduino Bluetooth Music Receiver and Sender for the ESP32 </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md_README"></a> The ESP32 provides a Bluetooth A2DP API that receives sound data e.g. from your Mobile Phone and makes it available via a callback method. The output is a PCM data stream decoded from SBC format. The documentation can be found <a href="https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/peripherals/i2s.html">here</a>.</p>
+<div class="textblock"><p><a class="anchor" id="md_README"></a> The ESP32 is a microcontroller that provides a Bluetooth A2DP API which can be used to receive sound data e.g. from your Mobile Phone and makes it available via a callback method. The output is a PCM data stream decoded from SBC format. The documentation can be found <a href="https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/peripherals/i2s.html">here</a>.</p>
+<p><img src="https://pschatzmann.github.io/ESP32-A2DP/img/esp32.jpeg" alt="esp32" class="inline"/></p>
 <p>I2S is an electrical serial bus interface standard used for connecting digital audio devices together. It is used to communicate PCM audio data between integrated circuits in an electronic device.</p>
-<p>So we can just feed the input from Bluetooth to the I2S output: An example for this from Expressive can be found on <a href="https://github.com/espressif/esp-idf/tree/master/examples/bluetooth/bluedroid/classic_bt/a2dp_sink">Github</a>.</p>
+<p>So we can just feed the input from Bluetooth to the I2S output: An example for this from Espressif can be found on <a href="https://github.com/espressif/esp-idf/tree/master/examples/bluetooth/bluedroid/classic_bt/a2dp_sink">Github</a>.</p>
 <p>Unfortunately this example did not make me happy so I decided to convert it into a simple <b>Arduino Library</b> that is very easy to use from an Arduino Software IDE.</p>
 <h1><a class="anchor" id="autotoc_md1"></a>
 A2DP Sink (Music Receiver)</h1>
@@ -182,6 +183,8 @@ Accessing the Sink Data Stream with Callbacks</h2>
 <div class="line">// Then somewhere in your sketch:</div>
 <div class="line">void read_data_stream(const uint8_t *data, uint32_t length)</div>
 <div class="line">{</div>
+<div class="line">  int16_t *samples = (int16_t*) data;</div>
+<div class="line">  uint32_t sample_count = length/2;</div>
 <div class="line">  // Do something with the data packet</div>
 <div class="line">}</div>
 </div><!-- fragment --><p> In the <code>a2dp_sink.set_stream_reader()</code> method you can provide an optional parameter that defines if you want the output to I2S to be active or deactive - So you can use this method to e.g. to switch off I2S just by calling <code>a2dp_sink.set_stream_reader(read_data_stream, false)</code></p>
@@ -203,6 +206,8 @@ Support for AVRC Commands</h2>
 <li>stop();</li>
 <li>next();</li>
 <li>previous();</li>
+<li>fast_forward();</li>
+<li>rewind();</li>
 </ul>
 <h1><a class="anchor" id="autotoc_md9"></a>
 A2DP Source (Music Sender)</h1>

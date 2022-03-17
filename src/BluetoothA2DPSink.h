@@ -159,8 +159,12 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     virtual void stop();
     /// AVRC next
     virtual void next();
-    /// AVRC previouse
+    /// AVRC previous
     virtual void previous();
+    /// AVRC fast_forward
+    virtual void fast_forward();
+    /// AVRC rewind
+    virtual void rewind();
     
     /// set output to I2S_CHANNEL_STEREO (default) or I2S_CHANNEL_MONO
     virtual void set_channels(i2s_channel_t channels) {

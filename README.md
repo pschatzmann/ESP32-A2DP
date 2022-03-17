@@ -146,6 +146,8 @@ a2dp_sink.set_stream_reader(read_data_stream);
 // Then somewhere in your sketch:
 void read_data_stream(const uint8_t *data, uint32_t length)
 {
+  int16_t *samples = (int16_t*) data;
+  uint32_t sample_count = length/2;
   // Do something with the data packet
 }
 ```
@@ -176,6 +178,8 @@ I have added the following AVRC commmands, that you can use to 'control' your A2
 - stop();
 - next();
 - previous();
+- fast_forward();
+- rewind();
 
 
 ## A2DP Source (Music Sender)

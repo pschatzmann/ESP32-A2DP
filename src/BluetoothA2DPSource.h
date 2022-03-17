@@ -162,7 +162,7 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
     const char *dev_name = "ESP32_A2DP_SRC";
 
     bool ssp_enabled=false;
-    const char* bt_name;
+    const char* bt_name = {0};
     std::vector<const char*> bt_names;
 
     esp_bt_pin_type_t pin_type;
@@ -171,18 +171,18 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
 
     esp_bd_addr_t s_peer_bda;
     uint8_t s_peer_bdname[ESP_BT_GAP_MAX_BDNAME_LEN + 1];
-    int s_a2d_state; // Next Target Connection State
-    int s_media_state;
+    int s_a2d_state=0; // Next Target Connection State
+    int s_media_state=0;
     int s_intv_cnt=0;
     int s_connecting_intv;
     uint32_t s_pkt_cnt;
     TimerHandle_t s_tmr;
-    xQueueHandle s_bt_app_task_queue;
-    xTaskHandle s_bt_app_task_handle;
+    xQueueHandle s_bt_app_task_queue = nullptr;
+    xTaskHandle s_bt_app_task_handle = nullptr;
     // support for raw data
-    SoundData *sound_data;
-    int32_t sound_data_current_pos;
-    bool hasSoundData;
+    SoundData *sound_data = nullptr;
+    int32_t sound_data_current_pos = 0;
+    bool hasSoundData = false;
 
     // initialization
     bool nvs_init = true;

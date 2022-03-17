@@ -536,7 +536,7 @@ void BluetoothA2DPSource::bt_av_hdl_stack_evt(uint16_t event, void *p_param)
             set_scan_mode_connectable(true);
 
             if (is_auto_reconnect && has_last_connection()) {
-                ESP_LOGI(BT_AV_TAG, "Reconnecting to %s", to_str(last_connection));
+                ESP_LOGW(BT_AV_TAG, "Reconnecting to %s", to_str(last_connection));
                 memcpy(s_peer_bda,last_connection,ESP_BD_ADDR_LEN);
                 esp_a2d_source_connect(last_connection);
                 s_a2d_state = APP_AV_STATE_CONNECTING;
@@ -548,11 +548,9 @@ void BluetoothA2DPSource::bt_av_hdl_stack_evt(uint16_t event, void *p_param)
             }
 
             // create and start heart beat timer 
-            do {
-                int tmr_id = 0;
-                s_tmr = xTimerCreate("connTmr", (10000 / portTICK_RATE_MS), pdTRUE, (void *)tmr_id, ccall_a2d_app_heart_beat);
-                xTimerStart(s_tmr, portMAX_DELAY);
-            } while (0);
+            int tmr_id = 0;
+            s_tmr = xTimerCreate("connTmr", (10000 / portTICK_RATE_MS), pdTRUE, (void *)tmr_id, ccall_a2d_app_heart_beat);
+            xTimerStart(s_tmr, portMAX_DELAY);
             
             break;
         }

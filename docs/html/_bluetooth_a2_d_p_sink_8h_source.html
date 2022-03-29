@@ -236,20 +236,20 @@ $(function() {
 <div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160; </div>
 <div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;  <span class="keyword">protected</span>:</div>
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;    <span class="comment">// protected data</span></div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    xQueueHandle app_task_queue;</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    xTaskHandle app_task_handle;</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    xQueueHandle app_task_queue = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    xTaskHandle app_task_handle = <span class="keyword">nullptr</span>;</div>
 <div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    i2s_config_t i2s_config;</div>
 <div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    i2s_pin_config_t pin_config;    </div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">char</span> * bt_name;</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">char</span> * bt_name = <span class="keyword">nullptr</span>;</div>
 <div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    uint32_t m_pkt_cnt = 0;</div>
 <div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    <span class="comment">//esp_a2d_audio_state_t m_audio_state = ESP_A2D_AUDIO_STATE_STOPPED;</span></div>
 <div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    esp_a2d_mct_t audio_type;</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    <span class="keywordtype">char</span> pin_code_str[20];</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    <span class="keywordtype">char</span> pin_code_str[20] = {0};</div>
 <div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    <span class="keywordtype">bool</span> is_i2s_output = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    <span class="keywordtype">bool</span> player_init = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    <span class="keywordtype">bool</span> mono_downmix = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    i2s_channel_t i2s_channels = I2S_CHANNEL_STEREO;</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    i2s_port_t i2s_port; </div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    i2s_port_t i2s_port = I2S_NUM_0; </div>
 <div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    <span class="keywordtype">int</span> connection_rety_count = 0;</div>
 <div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    esp_bd_addr_t peer_bd_addr = {0};</div>
 <div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> esp_spp_mode_t esp_spp_mode = ESP_SPP_MODE_CB;</div>

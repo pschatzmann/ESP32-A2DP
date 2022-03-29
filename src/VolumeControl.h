@@ -81,7 +81,7 @@ class DefaultVolumeControl : public VolumeControl {
 };
 
 /**
- * Simple exponentional volume control
+ * @brief  Exponentional volume control
  * @author rbruelma
  */
 class SimpleExponentialVolumeControl : public VolumeControl {

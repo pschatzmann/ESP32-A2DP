@@ -325,7 +325,7 @@ const char *&#160;</td><td class="memItemRight" valign="bottom"><b>dev_name</b> 
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>ssp_enabled</b> =false</td></tr>
 <tr class="separator:a63d502a55a545054c10bae478c01f66c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a24501f1143c44ca81217819d675827cd"><td class="memItemLeft" align="right" valign="top"><a id="a24501f1143c44ca81217819d675827cd"></a>
-const char *&#160;</td><td class="memItemRight" valign="bottom"><b>bt_name</b></td></tr>
+const char *&#160;</td><td class="memItemRight" valign="bottom"><b>bt_name</b> = {0}</td></tr>
 <tr class="separator:a24501f1143c44ca81217819d675827cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5e6134502e7b189074516cac8ad84000"><td class="memItemLeft" align="right" valign="top"><a id="a5e6134502e7b189074516cac8ad84000"></a>
 std::vector&lt; const char * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>bt_names</b></td></tr>
@@ -346,10 +346,10 @@ esp_bd_addr_t&#160;</td><td class="memItemRight" valign="bottom"><b>s_peer_bda</
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>s_peer_bdname</b> [ESP_BT_GAP_MAX_BDNAME_LEN+1]</td></tr>
 <tr class="separator:a633e599632e5bcd466b37294ed4bf8b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2020e86e6bbce20debee2bb2e4cf2ced"><td class="memItemLeft" align="right" valign="top"><a id="a2020e86e6bbce20debee2bb2e4cf2ced"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>s_a2d_state</b></td></tr>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>s_a2d_state</b> =0</td></tr>
 <tr class="separator:a2020e86e6bbce20debee2bb2e4cf2ced"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9ee4922232755bcb43038fab3748dbcb"><td class="memItemLeft" align="right" valign="top"><a id="a9ee4922232755bcb43038fab3748dbcb"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>s_media_state</b></td></tr>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>s_media_state</b> =0</td></tr>
 <tr class="separator:a9ee4922232755bcb43038fab3748dbcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa71fda71754508b0857edbd00ee6ee3d"><td class="memItemLeft" align="right" valign="top"><a id="aa71fda71754508b0857edbd00ee6ee3d"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>s_intv_cnt</b> =0</td></tr>
@@ -364,19 +364,19 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>s_pkt_cnt</b></td
 TimerHandle_t&#160;</td><td class="memItemRight" valign="bottom"><b>s_tmr</b></td></tr>
 <tr class="separator:a2675e1945024bcfc5d124cd34f4d8578"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5359902d284fdfc6307d9cd4d2bd3193"><td class="memItemLeft" align="right" valign="top"><a id="a5359902d284fdfc6307d9cd4d2bd3193"></a>
-xQueueHandle&#160;</td><td class="memItemRight" valign="bottom"><b>s_bt_app_task_queue</b></td></tr>
+xQueueHandle&#160;</td><td class="memItemRight" valign="bottom"><b>s_bt_app_task_queue</b> = nullptr</td></tr>
 <tr class="separator:a5359902d284fdfc6307d9cd4d2bd3193"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af65d6167cd879c39a73b5a62e39c1524"><td class="memItemLeft" align="right" valign="top"><a id="af65d6167cd879c39a73b5a62e39c1524"></a>
-xTaskHandle&#160;</td><td class="memItemRight" valign="bottom"><b>s_bt_app_task_handle</b></td></tr>
+xTaskHandle&#160;</td><td class="memItemRight" valign="bottom"><b>s_bt_app_task_handle</b> = nullptr</td></tr>
 <tr class="separator:af65d6167cd879c39a73b5a62e39c1524"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a82a24b6f0b9af6bd5ca880b4e30906"><td class="memItemLeft" align="right" valign="top"><a id="a5a82a24b6f0b9af6bd5ca880b4e30906"></a>
-<a class="el" href="class_sound_data.html">SoundData</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>sound_data</b></td></tr>
+<a class="el" href="class_sound_data.html">SoundData</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>sound_data</b> = nullptr</td></tr>
 <tr class="separator:a5a82a24b6f0b9af6bd5ca880b4e30906"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6a74b3dc3c33528bc628bda84ea8ed7a"><td class="memItemLeft" align="right" valign="top"><a id="a6a74b3dc3c33528bc628bda84ea8ed7a"></a>
-int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>sound_data_current_pos</b></td></tr>
+int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>sound_data_current_pos</b> = 0</td></tr>
 <tr class="separator:a6a74b3dc3c33528bc628bda84ea8ed7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac4ec2f21797135f6670de01566fff082"><td class="memItemLeft" align="right" valign="top"><a id="ac4ec2f21797135f6670de01566fff082"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>hasSoundData</b></td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>hasSoundData</b> = false</td></tr>
 <tr class="separator:ac4ec2f21797135f6670de01566fff082"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af34d6e4890bf2b59d25b043c9a8b41ae"><td class="memItemLeft" align="right" valign="top"><a id="af34d6e4890bf2b59d25b043c9a8b41ae"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>nvs_init</b> = true</td></tr>

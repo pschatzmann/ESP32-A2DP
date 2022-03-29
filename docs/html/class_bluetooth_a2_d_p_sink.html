@@ -390,10 +390,10 @@ virtual <a class="el" href="class_volume_control.html">VolumeControl</a> *&#160;
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:ab659a79f8359e559bd8aefb79b0f7199"><td class="memItemLeft" align="right" valign="top"><a id="ab659a79f8359e559bd8aefb79b0f7199"></a>
-xQueueHandle&#160;</td><td class="memItemRight" valign="bottom"><b>app_task_queue</b></td></tr>
+xQueueHandle&#160;</td><td class="memItemRight" valign="bottom"><b>app_task_queue</b> = nullptr</td></tr>
 <tr class="separator:ab659a79f8359e559bd8aefb79b0f7199"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adc8f09d352db2d5cb39d8843728da2db"><td class="memItemLeft" align="right" valign="top"><a id="adc8f09d352db2d5cb39d8843728da2db"></a>
-xTaskHandle&#160;</td><td class="memItemRight" valign="bottom"><b>app_task_handle</b></td></tr>
+xTaskHandle&#160;</td><td class="memItemRight" valign="bottom"><b>app_task_handle</b> = nullptr</td></tr>
 <tr class="separator:adc8f09d352db2d5cb39d8843728da2db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ade4543c13b6ca2a83f0385dd08e13b5c"><td class="memItemLeft" align="right" valign="top"><a id="ade4543c13b6ca2a83f0385dd08e13b5c"></a>
 i2s_config_t&#160;</td><td class="memItemRight" valign="bottom"><b>i2s_config</b></td></tr>
@@ -402,7 +402,7 @@ i2s_config_t&#160;</td><td class="memItemRight" valign="bottom"><b>i2s_config</b
 i2s_pin_config_t&#160;</td><td class="memItemRight" valign="bottom"><b>pin_config</b></td></tr>
 <tr class="separator:aef204cf6b9fd3061778cc175001c9aac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aca6abec56c06d0376cbd91ec2f4520e7"><td class="memItemLeft" align="right" valign="top"><a id="aca6abec56c06d0376cbd91ec2f4520e7"></a>
-const char *&#160;</td><td class="memItemRight" valign="bottom"><b>bt_name</b></td></tr>
+const char *&#160;</td><td class="memItemRight" valign="bottom"><b>bt_name</b> = nullptr</td></tr>
 <tr class="separator:aca6abec56c06d0376cbd91ec2f4520e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad558d5c64a96982632b63103197d6927"><td class="memItemLeft" align="right" valign="top"><a id="ad558d5c64a96982632b63103197d6927"></a>
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_pkt_cnt</b> = 0</td></tr>
@@ -411,7 +411,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_pkt_cnt</b> = 0
 esp_a2d_mct_t&#160;</td><td class="memItemRight" valign="bottom"><b>audio_type</b></td></tr>
 <tr class="separator:a91cc0f7e05ce24e311be3aa6281f4322"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0097f5adbcf09b2c857528afa568c53f"><td class="memItemLeft" align="right" valign="top"><a id="a0097f5adbcf09b2c857528afa568c53f"></a>
-char&#160;</td><td class="memItemRight" valign="bottom"><b>pin_code_str</b> [20]</td></tr>
+char&#160;</td><td class="memItemRight" valign="bottom"><b>pin_code_str</b> [20] = {0}</td></tr>
 <tr class="separator:a0097f5adbcf09b2c857528afa568c53f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3046175ecb053f03df6596775ccfa560"><td class="memItemLeft" align="right" valign="top"><a id="a3046175ecb053f03df6596775ccfa560"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_i2s_output</b> = true</td></tr>
@@ -426,7 +426,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>mono_downmix</b> = fa
 i2s_channel_t&#160;</td><td class="memItemRight" valign="bottom"><b>i2s_channels</b> = I2S_CHANNEL_STEREO</td></tr>
 <tr class="separator:a70cba1227c116caeb8e444ee1d9b9cfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aef11accb488e670e1526abac8953ca4a"><td class="memItemLeft" align="right" valign="top"><a id="aef11accb488e670e1526abac8953ca4a"></a>
-i2s_port_t&#160;</td><td class="memItemRight" valign="bottom"><b>i2s_port</b></td></tr>
+i2s_port_t&#160;</td><td class="memItemRight" valign="bottom"><b>i2s_port</b> = I2S_NUM_0</td></tr>
 <tr class="separator:aef11accb488e670e1526abac8953ca4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a24fb2e82758a45d60d820d8877153563"><td class="memItemLeft" align="right" valign="top"><a id="a24fb2e82758a45d60d820d8877153563"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>connection_rety_count</b> = 0</td></tr>

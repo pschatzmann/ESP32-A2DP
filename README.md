@@ -299,7 +299,7 @@ Before you clone the project, please read the following information which can be
 
 ## Show and Tell
 
-Get some inspiration [from projects that were using this library](https://github.com/pschatzmann/ESP32-A2DP/discussions/categories/show-and-tell)
+Get some inspiration [from projects that were using this library](https://github.com/pschatzmann/ESP32-A2DP/discussions/categories/show-and-tell) and share your projects with the community.
 
 ## Installation
 

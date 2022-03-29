@@ -54,19 +54,13 @@ extern "C" unsigned long millis();
 #endif
 
 // Support for old and new IDF version
-#if !defined(CURRENT_ESP_IDF) && !defined(I2S_COMM_FORMAT_STAND_I2S)
+#if !defined(ESP_IDF_4) && !defined(I2S_COMM_FORMAT_STAND_I2S)
 // support for old idf releases
 # define I2S_COMM_FORMAT_STAND_I2S (I2S_COMM_FORMAT_I2S | I2S_COMM_FORMAT_I2S_MSB)
 # define I2S_COMM_FORMAT_STAND_MSB (I2S_COMM_FORMAT_I2S | I2S_COMM_FORMAT_I2S_LSB)
 # define I2S_COMM_FORMAT_STAND_PCM_LONG (I2S_COMM_FORMAT_PCM | I2S_COMM_FORMAT_PCM_LONG)
 # define I2S_COMM_FORMAT_STAND_PCM_SHORT (I2S_COMM_FORMAT_PCM | I2S_COMM_FORMAT_PCM_SHORT)
 
-#endif
-
-// prevent compile errors for ESP32C3
-#ifdef ESP32C3
-// DAC mode not supported!
-#define I2S_MODE_DAC_BUILT_IN 0
 #endif
 
 /**
@@ -163,7 +157,7 @@ class BluetoothA2DPCommon {
             task_priority = priority;
         }
 
-#ifdef CURRENT_ESP_IDF
+#ifdef ESP_IDF_4
     /// Bluetooth discoverability
     virtual void set_discoverability(esp_bt_discovery_mode_t d);
 #endif        
@@ -184,7 +178,7 @@ class BluetoothA2DPCommon {
         esp_a2d_audio_state_t audio_state = ESP_A2D_AUDIO_STATE_STOPPED;
         esp_a2d_connection_state_t connection_state = ESP_A2D_CONNECTION_STATE_DISCONNECTED;
         UBaseType_t task_priority = configMAX_PRIORITIES - 3;
-#ifdef CURRENT_ESP_IDF
+#ifdef ESP_IDF_4
         esp_bt_discovery_mode_t discoverability = ESP_BT_GENERAL_DISCOVERABLE;
 #endif
 

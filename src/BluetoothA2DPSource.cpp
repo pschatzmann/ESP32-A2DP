@@ -509,7 +509,7 @@ void BluetoothA2DPSource::bt_app_gap_callback(esp_bt_gap_cb_event_t event, esp_b
             ESP_LOGI(BT_AV_TAG, "ESP_BT_GAP_KEY_REQ_EVT Please enter passkey!");
             break;
 
-#ifdef CURRENT_ESP_IDF
+#ifdef ESP_IDF_4
          case ESP_BT_GAP_MODE_CHG_EVT:
              ESP_LOGI(BT_AV_TAG, "ESP_BT_GAP_MODE_CHG_EVT mode:%d", param->mode_chg.mode);
              break;
@@ -537,7 +537,7 @@ void BluetoothA2DPSource::bt_av_hdl_stack_evt(uint16_t event, void *p_param)
             esp_avrc_ct_init();
             esp_avrc_ct_register_callback(ccall_bt_app_rc_ct_cb);
 
-#ifdef CURRENT_ESP_IDF
+#ifdef ESP_IDF_4
             // activate volume change
             esp_avrc_rn_evt_cap_mask_t evt_set = {0};
             esp_avrc_rn_evt_bit_mask_operation(ESP_AVRC_BIT_MASK_OP_SET, &evt_set, ESP_AVRC_RN_VOLUME_CHANGE);
@@ -843,7 +843,7 @@ void BluetoothA2DPSource::bt_app_rc_ct_cb(esp_avrc_ct_cb_event_t event, esp_avrc
     }
 }
 
-#ifdef CURRENT_ESP_IDF
+#ifdef ESP_IDF_4
 
 void BluetoothA2DPSource::bt_av_volume_changed(void)
 {
@@ -877,7 +877,7 @@ void BluetoothA2DPSource::bt_av_hdl_avrc_ct_evt(uint16_t event, void *p_param)
             ESP_LOGI(BT_RC_CT_TAG, "AVRC conn_state evt: state %d, [%02x:%02x:%02x:%02x:%02x:%02x]",
                     rc->conn_stat.connected, bda[0], bda[1], bda[2], bda[3], bda[4], bda[5]);
 
-#ifdef CURRENT_ESP_IDF
+#ifdef ESP_IDF_4
             if (rc->conn_stat.connected) {
                 // get remote supported event_ids of peer AVRCP Target
                 esp_avrc_ct_send_get_rn_capabilities_cmd(APP_RC_CT_TL_GET_CAPS);
@@ -899,7 +899,7 @@ void BluetoothA2DPSource::bt_av_hdl_avrc_ct_evt(uint16_t event, void *p_param)
         }
         case ESP_AVRC_CT_CHANGE_NOTIFY_EVT: {
             ESP_LOGI(BT_RC_CT_TAG, "AVRC event notification: %d", rc->change_ntf.event_id);
-#ifdef CURRENT_ESP_IDF
+#ifdef ESP_IDF_4
             bt_av_notify_evt_handler(rc->change_ntf.event_id, (esp_avrc_rn_param_t *) &rc->change_ntf.event_parameter);
 #endif
             break;

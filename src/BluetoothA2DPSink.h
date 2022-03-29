@@ -40,7 +40,7 @@ extern "C" void ccall_av_hdl_stack_evt(uint16_t event, void *p_param);
 extern "C" void ccall_av_hdl_a2d_evt(uint16_t event, void *p_param);
 extern "C" void ccall_av_hdl_avrc_evt(uint16_t event, void *p_param);
 
-#ifdef CURRENT_ESP_IDF
+#ifdef ESP_IDF_4
 extern "C" void ccall_app_rc_tg_callback(esp_avrc_tg_cb_event_t event, esp_avrc_tg_cb_param_t *param);
 extern "C" void ccall_av_hdl_avrc_tg_evt(uint16_t event, void *p_param);
 #endif    
@@ -75,7 +75,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     /// avrc event handler 
     friend void ccall_av_hdl_avrc_evt(uint16_t event, void *p_param);
 
-#ifdef CURRENT_ESP_IDF
+#ifdef ESP_IDF_4
 
     /// handle esp_avrc_tg_cb_event_t
     friend void ccall_app_rc_tg_callback(esp_avrc_tg_cb_event_t event, esp_avrc_tg_cb_param_t *param);
@@ -213,7 +213,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     }
     
 
- #ifdef CURRENT_ESP_IDF
+ #ifdef ESP_IDF_4
     /// Get the name of the connected source device
     virtual const char* get_connected_source_name();
  #endif
@@ -258,7 +258,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     bool reconnect_on_normal_disconnect = false;
     bool end_in_progress = false;
 
-#ifdef CURRENT_ESP_IDF
+#ifdef ESP_IDF_4
     esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap;
     char remote_name[ESP_BT_GAP_MAX_BDNAME_LEN + 1];
 #endif
@@ -311,7 +311,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     virtual void handle_audio_cfg(uint16_t event, void *p_param);
 
 
-#ifdef CURRENT_ESP_IDF
+#ifdef ESP_IDF_4
     virtual void volume_set_by_local_host(uint8_t volume);
     virtual void volume_set_by_controller(uint8_t volume);
     virtual void av_notify_evt_handler(uint8_t& event_id, esp_avrc_rn_param_t& event_parameter);

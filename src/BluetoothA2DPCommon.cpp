@@ -227,7 +227,7 @@ const char* BluetoothA2DPCommon::to_str(esp_bd_addr_t bda){
 
 
 
-#ifdef CURRENT_ESP_IDF
+#ifdef ESP_IDF_4
 
 /// Defines if the bluetooth is discoverable
 void BluetoothA2DPCommon::set_discoverability(esp_bt_discovery_mode_t d) {

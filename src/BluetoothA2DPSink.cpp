@@ -191,11 +191,6 @@ void BluetoothA2DPSink::init_i2s() {
             player_init = false; //reset player
         }
 
-#ifdef ESP32C3
-        if (i2s_set_pin(i2s_port, &pin_config) != ESP_OK) {
-            ESP_LOGE(BT_AV_TAG,"i2s_set_pin failed");
-        }
-#else
         // pins are only relevant when music is not sent to internal DAC
         if (i2s_config.mode & I2S_MODE_DAC_BUILT_IN) {
             if (i2s_set_pin(i2s_port, nullptr)!= ESP_OK) {
@@ -210,11 +205,9 @@ void BluetoothA2DPSink::init_i2s() {
                 ESP_LOGE(BT_AV_TAG,"i2s_set_pin failed");
             }
         }
-#endif
     }
 }
 
-#ifndef ESP32C3
 esp_err_t BluetoothA2DPSink::i2s_mclk_pin_select(const uint8_t pin) {
     if(pin != 0 && pin != 1 && pin != 3) {
         ESP_LOGE(BT_APP_TAG, "Only support GPIO0/GPIO1/GPIO3, gpio_num:%d", pin);
@@ -238,7 +231,6 @@ esp_err_t BluetoothA2DPSink::i2s_mclk_pin_select(const uint8_t pin) {
     }
     return ESP_OK;
 }
-#endif
 
 
 bool BluetoothA2DPSink::is_connected() {
@@ -249,7 +241,7 @@ esp_a2d_mct_t BluetoothA2DPSink::get_audio_type() {
     return audio_type;
 }
 
-#ifdef CURRENT_ESP_IDF
+#ifdef ESP_IDF_4
 const char* BluetoothA2DPSink::get_connected_source_name() {
     if (is_connected()){
         return(remote_name);
@@ -468,7 +460,7 @@ void BluetoothA2DPSink::app_gap_callback(esp_bt_gap_cb_event_t event, esp_bt_gap
             } 
             break;
 
-#ifdef CURRENT_ESP_IDF
+#ifdef ESP_IDF_4
         case ESP_BT_GAP_READ_REMOTE_NAME_EVT: {
                 ESP_LOGI(BT_AV_TAG, "ESP_BT_GAP_READ_REMOTE_NAME_EVT stat:%d", param->read_rmt_name.stat);
                 if (param->read_rmt_name.stat == ESP_BT_STATUS_SUCCESS ) {
@@ -515,7 +507,7 @@ void BluetoothA2DPSink::app_rc_ct_callback(esp_avrc_ct_cb_event_t event, esp_avr
             break;
         }
 
-#ifdef CURRENT_ESP_IDF
+#ifdef ESP_IDF_4
 
         case ESP_AVRC_CT_GET_RN_CAPABILITIES_RSP_EVT: {
             ESP_LOGD(BT_AV_TAG, "%s ESP_AVRC_CT_GET_RN_CAPABILITIES_RSP_EVT", __func__);
@@ -552,7 +544,7 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
             
         } break;
 
-#ifdef CURRENT_ESP_IDF
+#ifdef ESP_IDF_4
 
         case ESP_A2D_PROF_STATE_EVT: {
             a2d = (esp_a2d_cb_param_t *)(p_param);
@@ -718,7 +710,7 @@ void BluetoothA2DPSink::handle_connection_state(uint16_t event, void *p_param){
         if (is_auto_reconnect && is_valid) {
             set_last_connection(a2d->conn_stat.remote_bda);
         }
-#ifdef CURRENT_ESP_IDF
+#ifdef ESP_IDF_4
         // ask for the remote name
         esp_err_t esp_err = esp_bt_gap_read_remote_name(a2d->conn_stat.remote_bda);
 #endif                 
@@ -741,7 +733,7 @@ void BluetoothA2DPSink::av_new_track()
     esp_avrc_ct_send_register_notification_cmd(1, ESP_AVRC_RN_TRACK_CHANGE, 0);
 }
 
-#ifdef CURRENT_ESP_IDF
+#ifdef ESP_IDF_4
 void BluetoothA2DPSink::av_notify_evt_handler(uint8_t& event_id, esp_avrc_rn_param_t& event_parameter)
 #else
 void BluetoothA2DPSink::av_notify_evt_handler(uint8_t event_id, uint32_t event_parameter)
@@ -767,7 +759,7 @@ void BluetoothA2DPSink::av_hdl_avrc_evt(uint16_t event, void *p_param)
     case ESP_AVRC_CT_CONNECTION_STATE_EVT: {
         ESP_LOGI(BT_AV_TAG, "AVRC conn_state evt: state %d, [%s]", rc->conn_stat.connected, to_str(rc->conn_stat.remote_bda));
 
-#ifdef CURRENT_ESP_IDF
+#ifdef ESP_IDF_4
         if (rc->conn_stat.connected) {
             av_new_track();
              // get remote supported event_ids of peer AVRCP Target
@@ -808,7 +800,7 @@ void BluetoothA2DPSink::av_hdl_avrc_evt(uint16_t event, void *p_param)
         break;
     }
 
-#ifdef CURRENT_ESP_IDF
+#ifdef ESP_IDF_4
 
     case ESP_AVRC_CT_GET_RN_CAPABILITIES_RSP_EVT: {
         ESP_LOGI(BT_AV_TAG, "remote rn_cap: count %d, bitmask 0x%x", rc->get_rn_caps_rsp.cap_count,
@@ -853,7 +845,7 @@ void BluetoothA2DPSink::av_hdl_stack_evt(uint16_t event, void *p_param)
                 ESP_LOGE(BT_AV_TAG,"esp_avrc_ct_init: %d",result);
             }
             
-#ifdef CURRENT_ESP_IDF
+#ifdef ESP_IDF_4
             
             /* initialize AVRCP target */
             if (esp_avrc_tg_init() == ESP_OK){
@@ -919,7 +911,7 @@ void BluetoothA2DPSink::app_a2d_callback(esp_a2d_cb_event_t event, esp_a2d_cb_pa
         break;
     }
     
-#ifdef CURRENT_ESP_IDF
+#ifdef ESP_IDF_4
     case ESP_A2D_PROF_STATE_EVT: {
         ESP_LOGD(BT_AV_TAG, "%s ESP_A2D_AUDIO_CFG_EVT", __func__);
         app_work_dispatch(ccall_av_hdl_a2d_evt, event, param, sizeof(esp_a2d_cb_param_t));
@@ -1064,7 +1056,7 @@ void BluetoothA2DPSink::set_volume(uint8_t volume)
   } 
   s_volume = volume & 0x7f;
 
-#ifdef CURRENT_ESP_IDF
+#ifdef ESP_IDF_4
   volume_set_by_local_host(s_volume);
 #endif
 
@@ -1168,7 +1160,7 @@ void ccall_av_hdl_a2d_evt(uint16_t event, void *param){
 //------------------------------------------------------------
 // ==> Methods which are only supported in new ESP Release 4
 
-#ifdef CURRENT_ESP_IDF
+#ifdef ESP_IDF_4
 
 void BluetoothA2DPSink::app_rc_tg_callback(esp_avrc_tg_cb_event_t event, esp_avrc_tg_cb_param_t *param)
 {

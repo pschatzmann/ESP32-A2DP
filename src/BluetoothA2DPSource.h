@@ -193,7 +193,7 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
     uint8_t volume_value = 0;
     bool is_volume_used = false;
 
-#ifdef CURRENT_ESP_IDF
+#ifdef ESP_IDF_4
     esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap;
 #endif
 
@@ -241,7 +241,7 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
     /// resets the last connectioin so that we can reconnect
     virtual void reset_last_connection();
 
-#ifdef CURRENT_ESP_IDF
+#ifdef ESP_IDF_4
     void bt_av_notify_evt_handler(uint8_t event, esp_avrc_rn_param_t *param);
     void bt_av_volume_changed(void);
 #endif

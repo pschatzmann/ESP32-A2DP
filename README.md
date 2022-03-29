@@ -297,6 +297,10 @@ Before you clone the project, please read the following information which can be
 - You can also find further information in the [Wiki](https://github.com/pschatzmann/ESP32-A2DP/wiki)
 
 
+## Show and Tell
+
+Get some inspiration [from projects that were using this library](https://github.com/pschatzmann/ESP32-A2DP/discussions/categories/show-and-tell)
+
 ## Installation
 
 For Arduino you can download the library as zip and call include Library -> zip library. Or you can git clone this project into the Arduino libraries folder e.g. with

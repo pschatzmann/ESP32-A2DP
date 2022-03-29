@@ -377,8 +377,8 @@ void BluetoothA2DPSource::filter_inquiry_scan_result(esp_bt_gap_cb_param_t *para
     int32_t rssi = -129; /* invalid value */
     uint8_t *eir = NULL;
     esp_bt_gap_dev_prop_t *p;
-
-    ESP_LOGI(BT_AV_TAG, "Scanned device: %s", to_str(param->disc_res.bda));
+	
+	ESP_LOGI(BT_AV_TAG, "Scanned device: %s", to_str(param->disc_res.bda));
     for (int i = 0; i < param->disc_res.num_prop; i++) {
         p = param->disc_res.prop + i;
         switch (p->type) {
@@ -398,37 +398,51 @@ void BluetoothA2DPSource::filter_inquiry_scan_result(esp_bt_gap_cb_param_t *para
             break;
         }
     }
+    /* search for device with MAJOR DEVICE class as "Audio/Visual" in COD */
+    if ((esp_bt_gap_get_cod_major_dev(cod) == ESP_BT_COD_MAJOR_DEV_AV))
+	{
+		/* search for device name in its extended inqury response */
+		if (eir)
+		{
+			ESP_LOGI(BT_AV_TAG, "--Compatiblity: Compatible");
+			get_name_from_eir(eir, s_peer_bdname, NULL);
+			ESP_LOGI(BT_AV_TAG, "--Name: %s", s_peer_bdname);
 
-    /* search for device with MAJOR service class as "rendering" in COD */
-    if (!esp_bt_gap_is_valid_cod(cod) ||
-            !(esp_bt_gap_get_cod_srvc(cod) & ESP_BT_COD_SRVC_RENDERING)) {
-        return;
-    }
-
-    /* search for device name in its extended inqury response */
-    if (eir) {
-        get_name_from_eir(eir, s_peer_bdname, NULL);
-        ESP_LOGI(BT_AV_TAG, "Device discovery found: %s", s_peer_bdname);
-
-        bool found = false;
-        for (const char* name : bt_names){
-            int len = strlen(name);
-            ESP_LOGI(BT_AV_TAG, "Checking name: %s", name);
-            if (strncmp((char *)s_peer_bdname, name, len) == 0) {
-                this->bt_name = (char *) s_peer_bdname;
-                found = true;
-                break;
-            }
-        }
-        if (found){
-            ESP_LOGI(BT_AV_TAG, "Found a target device, address %s, name %s", to_str(param->disc_res.bda), s_peer_bdname);
-            s_a2d_state = APP_AV_STATE_DISCOVERED;
-            memcpy(s_peer_bda, param->disc_res.bda, ESP_BD_ADDR_LEN);
-            set_last_connection(s_peer_bda);
-            ESP_LOGI(BT_AV_TAG, "Cancel device discovery ...");
-            esp_bt_gap_cancel_discovery();
-        }
-    }
+			bool found = false;
+			for (const char* name : bt_names)
+			{
+				int len = strlen(name);
+				ESP_LOGI(BT_AV_TAG, "--Checking match: %s", name);
+				if (strncmp((char *)s_peer_bdname, name, len) == 0) {
+					this->bt_name = (char *) s_peer_bdname;
+					found = true;
+					break;
+				}
+			}
+			if (found)
+			{
+				ESP_LOGI(BT_AV_TAG, "--Result: Target device found");
+				s_a2d_state = APP_AV_STATE_DISCOVERED;
+				memcpy(s_peer_bda, param->disc_res.bda, ESP_BD_ADDR_LEN);
+				set_last_connection(s_peer_bda);
+				ESP_LOGI(BT_AV_TAG, "Cancel device discovery ...");
+				esp_bt_gap_cancel_discovery();
+			}
+			else
+			{
+				ESP_LOGI(BT_AV_TAG, "--Result: Target device not found");
+			}
+		}
+		else
+		{
+			ESP_LOGI(BT_AV_TAG, "--Compatiblity: Scanned Device not Compatible");
+		}
+	}
+	else{
+		ESP_LOGI(BT_AV_TAG, "--Compatiblity: Scanned Device not Compatible.");
+	}
+	
+	
 }
 
 

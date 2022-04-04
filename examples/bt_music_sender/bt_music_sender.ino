@@ -42,7 +42,9 @@ int32_t get_data_channels(Frame *frame, int32_t channel_len) {
 
 
 void setup() {
-  a2dp_source.start("RadioPlayer", get_data_channels);  
+  //a2dp_source.set_auto_reconnect(false);
+  a2dp_source.start("LEXON MINO L", get_data_channels);  
+  a2dp_source.set_volume(30);
 }
 
 void loop() {

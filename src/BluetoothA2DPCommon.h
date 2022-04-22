@@ -39,7 +39,8 @@
 #include "nvs.h"
 #include "nvs_flash.h"
 #include "SoundData.h"
-#include "VolumeControl.h"
+#include "A2DPVolumeControl.h"
+#include "esp_task_wdt.h"
 
 #ifdef ARDUINO_ARCH_ESP32
 #include "esp32-hal-log.h"
@@ -121,7 +122,7 @@ class BluetoothA2DPCommon {
         virtual int get_volume() = 0;
 
         /// you can define a custom VolumeControl implementation
-        virtual void set_volume_control(VolumeControl *ptr){
+        virtual void set_volume_control(A2DPVolumeControl *ptr){
             volume_control_ptr = ptr;
         }
 
@@ -165,8 +166,8 @@ class BluetoothA2DPCommon {
     protected:
         bool is_auto_reconnect=true;
         uint32_t debounce_ms = 0;
-        DefaultVolumeControl default_volume_control;
-        VolumeControl *volume_control_ptr = nullptr;
+        A2DPDefaultVolumeControl default_volume_control;
+        A2DPVolumeControl *volume_control_ptr = nullptr;
         esp_bd_addr_t last_connection = {0,0,0,0,0,0};
         bool is_start_disabled = false;
         void (*connection_state_callback)(esp_a2d_connection_state_t state, void* obj) = nullptr;
@@ -192,7 +193,7 @@ class BluetoothA2DPCommon {
         virtual void set_scan_mode_connectable(bool connectable);
 
         /// provides access to the VolumeControl object
-        virtual VolumeControl* volume_control() {
+        virtual A2DPVolumeControl* volume_control() {
             return volume_control_ptr !=nullptr ? volume_control_ptr : &default_volume_control;
         }
 

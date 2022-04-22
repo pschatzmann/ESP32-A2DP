@@ -24,7 +24,7 @@
  * @copyright Apache License Version 2
  */
 
-class VolumeControl {
+class A2DPVolumeControl {
     public:
         virtual void update_audio_data(Frame* data, uint16_t frameCount, uint8_t volume, bool mono_downmix, bool is_volume_used) {
             if (data!=nullptr && frameCount>0 && ( mono_downmix || is_volume_used)) {
@@ -63,7 +63,7 @@ class VolumeControl {
  * @author elehobica
  * @copyright Apache License Version 2
  */
-class DefaultVolumeControl : public VolumeControl {
+class A2DPDefaultVolumeControl : public A2DPVolumeControl {
         // provides a factor in the range of 0 to 4096
         virtual int32_t get_volume_factor(uint8_t volume) {
             constexpr double base = 1.4;
@@ -84,7 +84,7 @@ class DefaultVolumeControl : public VolumeControl {
  * @brief  Exponentional volume control
  * @author rbruelma
  */
-class SimpleExponentialVolumeControl : public VolumeControl {
+class A2DPSimpleExponentialVolumeControl : public A2DPVolumeControl {
         // provides a factor in the range of 0 to 4096
         virtual int32_t get_volume_factor(uint8_t volume) {
             double volumeFactorFloat = volume;
@@ -103,7 +103,7 @@ class SimpleExponentialVolumeControl : public VolumeControl {
  * @author pschatzmann
  * @copyright Apache License Version 2
  */
-class LinearVolumeControl : public VolumeControl {
+class A2DPLinearVolumeControl : public A2DPVolumeControl {
         // provides a factor in the range of 0 to 4096
         virtual int32_t get_volume_factor(uint8_t volume) {
             return volume;
@@ -118,7 +118,7 @@ class LinearVolumeControl : public VolumeControl {
  * @author pschatzmann
  * @copyright Apache License Version 2
  */
-class NoVolumeControl : public VolumeControl {
+class A2DPNoVolumeControl : public A2DPVolumeControl {
     public:
         virtual void update_audio_data(Frame* data, uint16_t frameCount, uint8_t volume, bool mono_downmix, bool ivolume_used) {
         }

@@ -216,7 +216,7 @@ $(function() {
 <div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    uint8_t volume_value = 0;</div>
 <div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    <span class="keywordtype">bool</span> is_volume_used = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160; </div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;<span class="preprocessor">#ifdef CURRENT_ESP_IDF</span></div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;<span class="preprocessor">#ifdef ESP_IDF_4</span></div>
 <div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap;</div>
 <div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160; </div>
@@ -255,13 +255,13 @@ $(function() {
 <div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_source.html#ae9f14078c1d5dd00c93049fa8b2e283e">bt_av_hdl_avrc_ct_evt</a>(uint16_t event, <span class="keywordtype">void</span> *p_param);</div>
 <div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_source.html#a190c59464f53e2d4c3f121afbb7a3c21">reset_last_connection</a>();</div>
 <div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160; </div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;<span class="preprocessor">#ifdef CURRENT_ESP_IDF</span></div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;<span class="preprocessor">#ifdef ESP_IDF_4</span></div>
 <div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;    <span class="keywordtype">void</span> bt_av_notify_evt_handler(uint8_t event, esp_avrc_rn_param_t *param);</div>
 <div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;    <span class="keywordtype">void</span> bt_av_volume_changed(<span class="keywordtype">void</span>);</div>
 <div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160; </div>
 <div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;};</div>
-<div class="ttc" id="aclass_bluetooth_a2_d_p_common_html"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html">BluetoothA2DPCommon</a></div><div class="ttdoc">Common Bluetooth A2DP functions.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:98</div></div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_common_html"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html">BluetoothA2DPCommon</a></div><div class="ttdoc">Common Bluetooth A2DP functions.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:93</div></div>
 <div class="ttc" id="aclass_bluetooth_a2_d_p_source_html"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html">BluetoothA2DPSource</a></div><div class="ttdoc">A2DP Bluetooth Source.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSource.h:48</div></div>
 <div class="ttc" id="aclass_bluetooth_a2_d_p_source_html_a0a5976c3d81ae96e5e3be06fd6a662da"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html#a0a5976c3d81ae96e5e3be06fd6a662da">BluetoothA2DPSource::write_data</a></div><div class="ttdeci">virtual bool write_data(SoundData *data)</div><div class="ttdoc">write sound data: In some cases it is very difficult to use the callback function....</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSource.cpp:923</div></div>
 <div class="ttc" id="aclass_bluetooth_a2_d_p_source_html_a190c59464f53e2d4c3f121afbb7a3c21"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html#a190c59464f53e2d4c3f121afbb7a3c21">BluetoothA2DPSource::reset_last_connection</a></div><div class="ttdeci">virtual void reset_last_connection()</div><div class="ttdoc">resets the last connectioin so that we can reconnect</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSource.cpp:234</div></div>
@@ -287,7 +287,7 @@ $(function() {
 <div class="ttc" id="aclass_bluetooth_a2_d_p_source_html_ae9f14078c1d5dd00c93049fa8b2e283e"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html#ae9f14078c1d5dd00c93049fa8b2e283e">BluetoothA2DPSource::bt_av_hdl_avrc_ct_evt</a></div><div class="ttdeci">virtual void bt_av_hdl_avrc_ct_evt(uint16_t event, void *p_param)</div><div class="ttdoc">avrc CT event handler</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSource.cpp:870</div></div>
 <div class="ttc" id="aclass_bluetooth_a2_d_p_source_html_aed760968d1114bf993325302deef0fb1"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html#aed760968d1114bf993325302deef0fb1">BluetoothA2DPSource::start_raw</a></div><div class="ttdeci">virtual void start_raw(const char *name, music_data_cb_t callback=NULL)</div><div class="ttdoc">starts the bluetooth source</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSource.cpp:165</div></div>
 <div class="ttc" id="aclass_sound_data_html"><div class="ttname"><a href="class_sound_data.html">SoundData</a></div><div class="ttdoc">Sound data as byte stream. We support TwoChannelSoundData (uint16_t + uint16_t) and OneChannelSoundDa...</div><div class="ttdef"><b>Definition:</b> SoundData.h:67</div></div>
-<div class="ttc" id="astructapp__msg__t_html"><div class="ttname"><a href="structapp__msg__t.html">app_msg_t</a></div><div class="ttdoc">Internal message to be sent for BluetoothA2DPSink and BluetoothA2DPSource.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:78</div></div>
+<div class="ttc" id="astructapp__msg__t_html"><div class="ttname"><a href="structapp__msg__t.html">app_msg_t</a></div><div class="ttdoc">Internal message to be sent for BluetoothA2DPSink and BluetoothA2DPSource.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:73</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

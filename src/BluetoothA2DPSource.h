@@ -141,17 +141,6 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
      */
     virtual void set_reset_ble(bool doInit);
 
-    /// Sets the volume (range 0 - 255)
-    virtual void set_volume(uint8_t volume){
-      ESP_LOGI(BT_AV_TAG, "set_volume: %d", volume);
-      volume_value = volume;
-      is_volume_used = true;
-    }
-        
-    /// Determines the actual volume
-    virtual int get_volume(){
-      return is_volume_used ? volume_value : 0;
-    }
 
     /// callback for data
     virtual int32_t get_data_default(uint8_t *data, int32_t len);
@@ -189,9 +178,6 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
     bool reset_ble = true;
     music_data_cb_t data_stream_callback;
 
-    // volume 
-    uint8_t volume_value = 0;
-    bool is_volume_used = false;
 
 #ifdef ESP_IDF_4
     esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap;

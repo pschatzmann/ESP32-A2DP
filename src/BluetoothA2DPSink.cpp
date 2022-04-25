@@ -49,6 +49,9 @@ BluetoothA2DPSink::BluetoothA2DPSink() {
             .data_in_num = I2S_PIN_NO_CHANGE
         };
     }
+#ifdef ESP_IDF_4
+    _lock_init(&s_volume_lock);
+#endif
 }
 
 BluetoothA2DPSink::~BluetoothA2DPSink() {

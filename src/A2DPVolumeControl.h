@@ -25,12 +25,21 @@
  */
 
 class A2DPVolumeControl {
+
+    protected:
+        bool is_volume_used = false;
+        bool mono_downmix = false;
+        int32_t volumeFactor;
+        int32_t volumeFactorMax;
+
     public:
-        virtual void update_audio_data(Frame* data, uint16_t frameCount, uint8_t volume, bool mono_downmix, bool is_volume_used) {
+        A2DPVolumeControl() {
+            volumeFactorMax = 0x1000;
+        }
+
+        virtual void update_audio_data(Frame* data, uint16_t frameCount) {
             if (data!=nullptr && frameCount>0 && ( mono_downmix || is_volume_used)) {
                 ESP_LOGD("VolumeControl", "update_audio_data");
-                int32_t volumeFactor = get_volume_factor(volume);
-                int32_t max = get_volume_factor_max();
                 for (int i=0;i<frameCount;i++){
                     int32_t pcmLeft = data[i].channel1;
                     int32_t pcmRight = data[i].channel2;
@@ -40,8 +49,8 @@ class A2DPVolumeControl {
                     }
                     // adjust the volume
                     if (is_volume_used) {
-                        pcmLeft = pcmLeft * volumeFactor / max; 
-                        pcmRight = pcmRight * volumeFactor / max; 
+                        pcmLeft = pcmLeft * volumeFactor / volumeFactorMax;
+                        pcmRight = pcmRight * volumeFactor / volumeFactorMax;
                     }
                     data[i].channel1 = pcmLeft;
                     data[i].channel2 = pcmRight;
@@ -50,12 +59,24 @@ class A2DPVolumeControl {
         }
 
         // provides a factor in the range of 0 to 4096
-        virtual int32_t get_volume_factor(uint8_t volume) = 0;
+        int32_t get_volume_factor() {
+            return volumeFactor;
+        }
 
         // provides the max factor value 4096
-        virtual int32_t get_volume_factor_max() {
-            return 0x1000;
+        int32_t get_volume_factor_max() {
+            return volumeFactorMax;
         }
+
+        void set_enabled(bool enabled) {
+            is_volume_used = enabled;
+        }
+
+        void set_mono_downmix(bool enabled) {
+            mono_downmix = enabled;
+        }
+
+        virtual void set_volume(uint8_t volume) = 0;
 };
 
 /**
@@ -64,20 +85,18 @@ class A2DPVolumeControl {
  * @copyright Apache License Version 2
  */
 class A2DPDefaultVolumeControl : public A2DPVolumeControl {
-        // provides a factor in the range of 0 to 4096
-        virtual int32_t get_volume_factor(uint8_t volume) {
+
+        virtual void set_volume(uint8_t volume) {
             constexpr double base = 1.4;
             constexpr double bits = 12;
             constexpr double zero_ofs = pow(base, -bits);
             constexpr double scale = pow(2.0, bits);
             double volumeFactorFloat = (pow(base, volume * bits / 127.0 - bits) - zero_ofs) * scale / (1.0 - zero_ofs);
-            int32_t volumeFactor = volumeFactorFloat;
+            volumeFactor = volumeFactorFloat;
             if (volumeFactor > 0x1000) {
                 volumeFactor = 0x1000;
             }
-            return volumeFactor;
         }
-
 };
 
 /**
@@ -85,17 +104,14 @@ class A2DPDefaultVolumeControl : public A2DPVolumeControl {
  * @author rbruelma
  */
 class A2DPSimpleExponentialVolumeControl : public A2DPVolumeControl {
-        // provides a factor in the range of 0 to 4096
-        virtual int32_t get_volume_factor(uint8_t volume) {
+        virtual void set_volume(uint8_t volume) {
             double volumeFactorFloat = volume;
             volumeFactorFloat = pow(2.0, volumeFactorFloat * 12.0 / 127.0);
             int32_t volumeFactor = volumeFactorFloat - 1.0;
             if (volumeFactor > 0xfff) {
                 volumeFactor = 0xfff;
             }
-            return volumeFactor;
         }
-
 };
 
 /**
@@ -104,12 +120,13 @@ class A2DPSimpleExponentialVolumeControl : public A2DPVolumeControl {
  * @copyright Apache License Version 2
  */
 class A2DPLinearVolumeControl : public A2DPVolumeControl {
-        // provides a factor in the range of 0 to 4096
-        virtual int32_t get_volume_factor(uint8_t volume) {
-            return volume;
+
+        A2DPLinearVolumeControl() {
+            volumeFactorMax = 128;
         }
-        virtual int32_t get_volume_factor_max() {
-            return 128;
+
+        virtual void set_volume(uint8_t volume) {
+            volumeFactor = volume;
         }
 };
 
@@ -120,6 +137,6 @@ class A2DPLinearVolumeControl : public A2DPVolumeControl {
  */
 class A2DPNoVolumeControl : public A2DPVolumeControl {
     public:
-        virtual void update_audio_data(Frame* data, uint16_t frameCount, uint8_t volume, bool mono_downmix, bool ivolume_used) {
+        virtual void update_audio_data(Frame* data, uint16_t frameCount) {
         }
 };

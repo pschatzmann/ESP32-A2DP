@@ -63,6 +63,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="class_a2_d_p_no_volume_control-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">A2DPNoVolumeControl Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -85,15 +86,39 @@ Inheritance diagram for A2DPNoVolumeControl:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a722ff3b5ebc0c10bfd3da701902a3d86"><td class="memItemLeft" align="right" valign="top"><a id="a722ff3b5ebc0c10bfd3da701902a3d86"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>update_audio_data</b> (Frame *data, uint16_t frameCount, uint8_t volume, bool mono_downmix, bool ivolume_used)</td></tr>
-<tr class="separator:a722ff3b5ebc0c10bfd3da701902a3d86"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16065df84fe90575f959c895f20a2c3a"><td class="memItemLeft" align="right" valign="top"><a id="a16065df84fe90575f959c895f20a2c3a"></a>
-virtual int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>get_volume_factor</b> (uint8_t volume)=0</td></tr>
-<tr class="separator:a16065df84fe90575f959c895f20a2c3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af1c13ce175bbd36e4923b0d95eb9db78"><td class="memItemLeft" align="right" valign="top"><a id="af1c13ce175bbd36e4923b0d95eb9db78"></a>
-virtual int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>get_volume_factor_max</b> ()</td></tr>
-<tr class="separator:af1c13ce175bbd36e4923b0d95eb9db78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afef3772d7efb2045e228f84af5c2bf1a"><td class="memItemLeft" align="right" valign="top"><a id="afef3772d7efb2045e228f84af5c2bf1a"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>update_audio_data</b> (Frame *data, uint16_t frameCount)</td></tr>
+<tr class="separator:afef3772d7efb2045e228f84af5c2bf1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6af31a3ffaad03ffa06930bbb3d3d285"><td class="memItemLeft" align="right" valign="top"><a id="a6af31a3ffaad03ffa06930bbb3d3d285"></a>
+int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>get_volume_factor</b> ()</td></tr>
+<tr class="separator:a6af31a3ffaad03ffa06930bbb3d3d285"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5ff3aa2b2b615e7eb01c8a8f164ef60"><td class="memItemLeft" align="right" valign="top"><a id="ae5ff3aa2b2b615e7eb01c8a8f164ef60"></a>
+int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>get_volume_factor_max</b> ()</td></tr>
+<tr class="separator:ae5ff3aa2b2b615e7eb01c8a8f164ef60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abdb9256f6a30b6c716193af7fadeee9c"><td class="memItemLeft" align="right" valign="top"><a id="abdb9256f6a30b6c716193af7fadeee9c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_enabled</b> (bool enabled)</td></tr>
+<tr class="separator:abdb9256f6a30b6c716193af7fadeee9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a533745afd59e80e2549c9dfa80e05423"><td class="memItemLeft" align="right" valign="top"><a id="a533745afd59e80e2549c9dfa80e05423"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_mono_downmix</b> (bool enabled)</td></tr>
+<tr class="separator:a533745afd59e80e2549c9dfa80e05423"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a40e553f8c15a2cecb6f2f71fa0464c"><td class="memItemLeft" align="right" valign="top"><a id="a4a40e553f8c15a2cecb6f2f71fa0464c"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>set_volume</b> (uint8_t volume)=0</td></tr>
+<tr class="separator:a4a40e553f8c15a2cecb6f2f71fa0464c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a7982efce1f1a1ab6c902900f8e0bb696"><td class="memItemLeft" align="right" valign="top"><a id="a7982efce1f1a1ab6c902900f8e0bb696"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_volume_used</b> = false</td></tr>
+<tr class="separator:a7982efce1f1a1ab6c902900f8e0bb696"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b449f76c7c931cf590732a3d73acaea"><td class="memItemLeft" align="right" valign="top"><a id="a8b449f76c7c931cf590732a3d73acaea"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>mono_downmix</b> = false</td></tr>
+<tr class="separator:a8b449f76c7c931cf590732a3d73acaea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc84ddb465e3fed9c0903a9f3e565be8"><td class="memItemLeft" align="right" valign="top"><a id="adc84ddb465e3fed9c0903a9f3e565be8"></a>
+int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>volumeFactor</b></td></tr>
+<tr class="separator:adc84ddb465e3fed9c0903a9f3e565be8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf01b0f44d8f482ed5119f088958595e"><td class="memItemLeft" align="right" valign="top"><a id="adf01b0f44d8f482ed5119f088958595e"></a>
+int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>volumeFactorMax</b></td></tr>
+<tr class="separator:adf01b0f44d8f482ed5119f088958595e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Keeps the audio data as is -&gt; no volume control! </p>

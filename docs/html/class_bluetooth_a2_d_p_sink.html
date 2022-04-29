@@ -419,9 +419,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_i2s_output</b> = t
 <tr class="memitem:a3589ffe4b88230d5e4d38c9eae6b67e4"><td class="memItemLeft" align="right" valign="top"><a id="a3589ffe4b88230d5e4d38c9eae6b67e4"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>player_init</b> = false</td></tr>
 <tr class="separator:a3589ffe4b88230d5e4d38c9eae6b67e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a14cb3b2d7baf00deadcc9f5532164c03"><td class="memItemLeft" align="right" valign="top"><a id="a14cb3b2d7baf00deadcc9f5532164c03"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>mono_downmix</b> = false</td></tr>
-<tr class="separator:a14cb3b2d7baf00deadcc9f5532164c03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a70cba1227c116caeb8e444ee1d9b9cfb"><td class="memItemLeft" align="right" valign="top"><a id="a70cba1227c116caeb8e444ee1d9b9cfb"></a>
 i2s_channel_t&#160;</td><td class="memItemRight" valign="bottom"><b>i2s_channels</b> = I2S_CHANNEL_STEREO</td></tr>
 <tr class="separator:a70cba1227c116caeb8e444ee1d9b9cfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -440,9 +437,6 @@ _lock_t&#160;</td><td class="memItemRight" valign="bottom"><b>s_volume_lock</b><
 <tr class="memitem:ac450046d5182d0574059f7ddf4a5c611"><td class="memItemLeft" align="right" valign="top"><a id="ac450046d5182d0574059f7ddf4a5c611"></a>
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>s_volume</b> = 0</td></tr>
 <tr class="separator:ac450046d5182d0574059f7ddf4a5c611"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab435e7877071ecb22e0b4d10d285cb98"><td class="memItemLeft" align="right" valign="top"><a id="ab435e7877071ecb22e0b4d10d285cb98"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_volume_used</b> = false</td></tr>
-<tr class="separator:ab435e7877071ecb22e0b4d10d285cb98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a811dc6271aff552907551c78331eea8f"><td class="memItemLeft" align="right" valign="top"><a id="a811dc6271aff552907551c78331eea8f"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>s_volume_notify</b></td></tr>
 <tr class="separator:a811dc6271aff552907551c78331eea8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -539,6 +533,12 @@ esp_a2d_connection_state_t&#160;</td><td class="memItemRight" valign="bottom"><b
 <tr class="memitem:a2e218a2956baea1be621e8c31d2875c8"><td class="memItemLeft" align="right" valign="top"><a id="a2e218a2956baea1be621e8c31d2875c8"></a>
 UBaseType_t&#160;</td><td class="memItemRight" valign="bottom"><b>task_priority</b> = configMAX_PRIORITIES - 3</td></tr>
 <tr class="separator:a2e218a2956baea1be621e8c31d2875c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf02ccde9ba626cea64870a255672dba"><td class="memItemLeft" align="right" valign="top"><a id="aaf02ccde9ba626cea64870a255672dba"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>volume_value</b> = 0</td></tr>
+<tr class="separator:aaf02ccde9ba626cea64870a255672dba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3f1abcd092657807bd4a4cab205ba88"><td class="memItemLeft" align="right" valign="top"><a id="aa3f1abcd092657807bd4a4cab205ba88"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_volume_used</b> = false</td></tr>
+<tr class="separator:aa3f1abcd092657807bd4a4cab205ba88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-attribs"></a>
 Static Protected Attributes</h2></td></tr>

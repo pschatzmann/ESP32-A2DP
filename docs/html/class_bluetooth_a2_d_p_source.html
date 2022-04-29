@@ -150,14 +150,6 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_source.html#a5efcc4c32c6ec8ce7eac2c1acb59f27c">set_reset_ble</a> (bool doInit)</td></tr>
 <tr class="memdesc:a5efcc4c32c6ec8ce7eac2c1acb59f27c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines if the BLE should be reset on start. <br /></td></tr>
 <tr class="separator:a5efcc4c32c6ec8ce7eac2c1acb59f27c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a32fe2630dc4d39068b1a2b75c2807c7f"><td class="memItemLeft" align="right" valign="top"><a id="a32fe2630dc4d39068b1a2b75c2807c7f"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_source.html#a32fe2630dc4d39068b1a2b75c2807c7f">set_volume</a> (uint8_t volume)</td></tr>
-<tr class="memdesc:a32fe2630dc4d39068b1a2b75c2807c7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the volume (range 0 - 255) <br /></td></tr>
-<tr class="separator:a32fe2630dc4d39068b1a2b75c2807c7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8e6319a02fb3340628d7cb76b82a53f"><td class="memItemLeft" align="right" valign="top"><a id="aa8e6319a02fb3340628d7cb76b82a53f"></a>
-virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_source.html#aa8e6319a02fb3340628d7cb76b82a53f">get_volume</a> ()</td></tr>
-<tr class="memdesc:aa8e6319a02fb3340628d7cb76b82a53f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines the actual volume. <br /></td></tr>
-<tr class="separator:aa8e6319a02fb3340628d7cb76b82a53f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab199a1240a5850a43738f3872805c9ba"><td class="memItemLeft" align="right" valign="top"><a id="ab199a1240a5850a43738f3872805c9ba"></a>
 virtual int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_source.html#ab199a1240a5850a43738f3872805c9ba">get_data_default</a> (uint8_t *data, int32_t len)</td></tr>
 <tr class="memdesc:ab199a1240a5850a43738f3872805c9ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">callback for data <br /></td></tr>
@@ -170,6 +162,14 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a76e329bf0587ebf41792871acc69188b">end</a> (bool releaseMemory=false)</td></tr>
 <tr class="memdesc:a76e329bf0587ebf41792871acc69188b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes the connection and stops A2DP. <br /></td></tr>
 <tr class="separator:a76e329bf0587ebf41792871acc69188b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0bab92d9317837ecaeacbfe26814e28c"><td class="memItemLeft" align="right" valign="top"><a id="a0bab92d9317837ecaeacbfe26814e28c"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a0bab92d9317837ecaeacbfe26814e28c">set_volume</a> (uint8_t volume)</td></tr>
+<tr class="memdesc:a0bab92d9317837ecaeacbfe26814e28c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the volume (range 0 - 255) <br /></td></tr>
+<tr class="separator:a0bab92d9317837ecaeacbfe26814e28c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e570c2c2f9db40873286e0571f0d93a"><td class="memItemLeft" align="right" valign="top"><a id="a0e570c2c2f9db40873286e0571f0d93a"></a>
+virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a0e570c2c2f9db40873286e0571f0d93a">get_volume</a> ()</td></tr>
+<tr class="memdesc:a0e570c2c2f9db40873286e0571f0d93a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines the actual volume. <br /></td></tr>
+<tr class="separator:a0e570c2c2f9db40873286e0571f0d93a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7757ddbf424aeb909dc952d7c40fc241"><td class="memItemLeft" align="right" valign="top"><a id="a7757ddbf424aeb909dc952d7c40fc241"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a7757ddbf424aeb909dc952d7c40fc241">set_volume_control</a> (<a class="el" href="class_a2_d_p_volume_control.html">A2DPVolumeControl</a> *ptr)</td></tr>
 <tr class="memdesc:a7757ddbf424aeb909dc952d7c40fc241"><td class="mdescLeft">&#160;</td><td class="mdescRight">you can define a custom VolumeControl implementation <br /></td></tr>
@@ -387,12 +387,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>reset_ble</b> = true<
 <tr class="memitem:ac90f56d2694ebe1b23ab229699c9d456"><td class="memItemLeft" align="right" valign="top"><a id="ac90f56d2694ebe1b23ab229699c9d456"></a>
 music_data_cb_t&#160;</td><td class="memItemRight" valign="bottom"><b>data_stream_callback</b></td></tr>
 <tr class="separator:ac90f56d2694ebe1b23ab229699c9d456"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a36920302b75ed2d386dd7bb869197c39"><td class="memItemLeft" align="right" valign="top"><a id="a36920302b75ed2d386dd7bb869197c39"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>volume_value</b> = 0</td></tr>
-<tr class="separator:a36920302b75ed2d386dd7bb869197c39"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a444071e109950aa7be003fce1f46d82c"><td class="memItemLeft" align="right" valign="top"><a id="a444071e109950aa7be003fce1f46d82c"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_volume_used</b> = false</td></tr>
-<tr class="separator:a444071e109950aa7be003fce1f46d82c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae07c63cafc1692273d6fa3758bd37678"><td class="memItemLeft" align="right" valign="top"><a id="ae07c63cafc1692273d6fa3758bd37678"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_auto_reconnect</b> =true</td></tr>
 <tr class="separator:ae07c63cafc1692273d6fa3758bd37678"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -438,6 +432,12 @@ esp_a2d_connection_state_t&#160;</td><td class="memItemRight" valign="bottom"><b
 <tr class="memitem:a2e218a2956baea1be621e8c31d2875c8"><td class="memItemLeft" align="right" valign="top"><a id="a2e218a2956baea1be621e8c31d2875c8"></a>
 UBaseType_t&#160;</td><td class="memItemRight" valign="bottom"><b>task_priority</b> = configMAX_PRIORITIES - 3</td></tr>
 <tr class="separator:a2e218a2956baea1be621e8c31d2875c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf02ccde9ba626cea64870a255672dba"><td class="memItemLeft" align="right" valign="top"><a id="aaf02ccde9ba626cea64870a255672dba"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>volume_value</b> = 0</td></tr>
+<tr class="separator:aaf02ccde9ba626cea64870a255672dba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3f1abcd092657807bd4a4cab205ba88"><td class="memItemLeft" align="right" valign="top"><a id="aa3f1abcd092657807bd4a4cab205ba88"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_volume_used</b> = false</td></tr>
+<tr class="separator:aa3f1abcd092657807bd4a4cab205ba88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>

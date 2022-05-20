@@ -213,7 +213,12 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
         reconnect_on_normal_disconnect = afterNormalDisconnect;
         try_reconnect_max_count = count;
     }
-    
+
+    /// Provides the address of the connected device
+    virtual esp_bd_addr_t* get_current_peer_address() {
+        return &peer_bd_addr;
+    }
+
 
  #ifdef ESP_IDF_4
     /// Get the name of the connected source device

@@ -166,6 +166,11 @@ class BluetoothA2DPCommon {
             task_priority = priority;
         }
 
+        /// Provides the address of the last device
+        virtual esp_bd_addr_t* get_last_peer_address() {
+            return &last_connection;
+        }
+
 
 #ifdef ESP_IDF_4
     /// Bluetooth discoverability

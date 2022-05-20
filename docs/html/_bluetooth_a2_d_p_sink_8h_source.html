@@ -230,120 +230,124 @@ $(function() {
 <div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;        reconnect_on_normal_disconnect = afterNormalDisconnect;</div>
 <div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;        try_reconnect_max_count = count;</div>
 <div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;    }</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;    </div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160; </div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;<span class="preprocessor"> #ifdef ESP_IDF_4</span></div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* get_connected_source_name();</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;<span class="preprocessor"> #endif</span></div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160; </div>
+<div class="line"><a name="l00218"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_sink.html#ac08fff859e0ccfbb12cbb6b119dba438">  218</a></span>&#160;    <span class="keyword">virtual</span> esp_bd_addr_t* <a class="code" href="class_bluetooth_a2_d_p_sink.html#ac08fff859e0ccfbb12cbb6b119dba438">get_current_peer_address</a>() {</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;        <span class="keywordflow">return</span> &amp;peer_bd_addr;</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    }</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160; </div>
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160; </div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;  <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    <span class="comment">// protected data</span></div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    xQueueHandle app_task_queue = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    xTaskHandle app_task_handle = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    i2s_config_t i2s_config;</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    i2s_pin_config_t pin_config;    </div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">char</span> * bt_name = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    uint32_t m_pkt_cnt = 0;</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    <span class="comment">//esp_a2d_audio_state_t m_audio_state = ESP_A2D_AUDIO_STATE_STOPPED;</span></div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    esp_a2d_mct_t audio_type;</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    <span class="keywordtype">char</span> pin_code_str[20] = {0};</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    <span class="keywordtype">bool</span> is_i2s_output = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    <span class="keywordtype">bool</span> player_init = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    i2s_channel_t i2s_channels = I2S_CHANNEL_STEREO;</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    i2s_port_t i2s_port = I2S_NUM_0; </div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    <span class="keywordtype">int</span> connection_rety_count = 0;</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    esp_bd_addr_t peer_bd_addr = {0};</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> esp_spp_mode_t esp_spp_mode = ESP_SPP_MODE_CB;</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;    _lock_t s_volume_lock;</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;    uint8_t s_volume = 0;</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;    <span class="keywordtype">bool</span> s_volume_notify;</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;    <span class="keywordtype">int</span> pin_code_int = 0;</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;    PinCodeRequest pin_code_request = Undefined;</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;    <span class="keywordtype">bool</span> is_pin_code_active = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;    <span class="keywordtype">int</span> avrc_metadata_flags = ESP_AVRC_MD_ATTR_TITLE | ESP_AVRC_MD_ATTR_ARTIST | ESP_AVRC_MD_ATTR_ALBUM | ESP_AVRC_MD_ATTR_TRACK_NUM | ESP_AVRC_MD_ATTR_NUM_TRACKS | ESP_AVRC_MD_ATTR_GENRE;</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;    void (*bt_volumechange)(int) = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;    void (*bt_dis_connected)() = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;    void (*bt_connected)() = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;    void (*data_received)() = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;    void (*stream_reader)(<span class="keyword">const</span> uint8_t*, uint32_t) = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    void (*avrc_metadata_callback)(uint8_t, <span class="keyword">const</span> uint8_t*) = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;    bool (*address_validator)(esp_bd_addr_t remote_bda) = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;    void (*sample_rate_callback)(uint16_t rate)=<span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;    <span class="keywordtype">bool</span> swap_left_right = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    <span class="keywordtype">int</span> try_reconnect_max_count = AUTOCONNECT_TRY_NUM;</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    <span class="keywordtype">bool</span> reconnect_on_normal_disconnect = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;    <span class="keywordtype">bool</span> end_in_progress = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160; </div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;<span class="preprocessor">#ifdef ESP_IDF_4</span></div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap;</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;    <span class="keywordtype">char</span> remote_name[ESP_BT_GAP_MAX_BDNAME_LEN + 1];</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;<span class="preprocessor"> #ifdef ESP_IDF_4</span></div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* get_connected_source_name();</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;<span class="preprocessor"> #endif</span></div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160; </div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;  <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    <span class="comment">// protected data</span></div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    xQueueHandle app_task_queue = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    xTaskHandle app_task_handle = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    i2s_config_t i2s_config;</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    i2s_pin_config_t pin_config;    </div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">char</span> * bt_name = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    uint32_t m_pkt_cnt = 0;</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    <span class="comment">//esp_a2d_audio_state_t m_audio_state = ESP_A2D_AUDIO_STATE_STOPPED;</span></div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    esp_a2d_mct_t audio_type;</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    <span class="keywordtype">char</span> pin_code_str[20] = {0};</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    <span class="keywordtype">bool</span> is_i2s_output = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;    <span class="keywordtype">bool</span> player_init = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;    i2s_channel_t i2s_channels = I2S_CHANNEL_STEREO;</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;    i2s_port_t i2s_port = I2S_NUM_0; </div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;    <span class="keywordtype">int</span> connection_rety_count = 0;</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;    esp_bd_addr_t peer_bd_addr = {0};</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> esp_spp_mode_t esp_spp_mode = ESP_SPP_MODE_CB;</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;    _lock_t s_volume_lock;</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;    uint8_t s_volume = 0;</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;    <span class="keywordtype">bool</span> s_volume_notify;</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;    <span class="keywordtype">int</span> pin_code_int = 0;</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;    PinCodeRequest pin_code_request = Undefined;</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;    <span class="keywordtype">bool</span> is_pin_code_active = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;    <span class="keywordtype">int</span> avrc_metadata_flags = ESP_AVRC_MD_ATTR_TITLE | ESP_AVRC_MD_ATTR_ARTIST | ESP_AVRC_MD_ATTR_ALBUM | ESP_AVRC_MD_ATTR_TRACK_NUM | ESP_AVRC_MD_ATTR_NUM_TRACKS | ESP_AVRC_MD_ATTR_GENRE;</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    void (*bt_volumechange)(int) = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;    void (*bt_dis_connected)() = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;    void (*bt_connected)() = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;    void (*data_received)() = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    void (*stream_reader)(<span class="keyword">const</span> uint8_t*, uint32_t) = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    void (*avrc_metadata_callback)(uint8_t, <span class="keyword">const</span> uint8_t*) = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;    bool (*address_validator)(esp_bd_addr_t remote_bda) = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    void (*sample_rate_callback)(uint16_t rate)=<span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    <span class="keywordtype">bool</span> swap_left_right = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    <span class="keywordtype">int</span> try_reconnect_max_count = AUTOCONNECT_TRY_NUM;</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;    <span class="keywordtype">bool</span> reconnect_on_normal_disconnect = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    <span class="keywordtype">bool</span> end_in_progress = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160; </div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;    <span class="comment">// protected methods</span></div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">int</span> init_bluetooth();</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> init_i2s();</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> app_task_start_up(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> app_task_shut_down(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> app_send_msg(<a class="code" href="structapp__msg__t.html">app_msg_t</a> *msg);</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> app_work_dispatch(app_callback_t p_cback, uint16_t event, <span class="keywordtype">void</span> *p_params, <span class="keywordtype">int</span> param_len);</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> app_work_dispatched(<a class="code" href="structapp__msg__t.html">app_msg_t</a> *msg);</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> app_alloc_meta_buffer(esp_avrc_ct_cb_param_t *param);</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> av_new_track();</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> init_nvs();</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;    <span class="comment">// execute AVRC command</span></div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> execute_avrc_command(<span class="keywordtype">int</span> cmd);</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160; </div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* last_bda_nvs_name() {</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;        <span class="keywordflow">return</span> <span class="stringliteral">&quot;last_bda&quot;</span>;</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;    }</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160; </div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> is_reconnect(esp_a2d_disc_rsn_t type) {</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;        <span class="keywordflow">return</span> reconnect_on_normal_disconnect || type==ESP_A2D_DISC_RSN_ABNORMAL;</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;    }</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160; </div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;    <span class="comment">// task handler</span></div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_sink.html#a361f80944f06806b7e42302f95171675">app_task_handler</a>(<span class="keywordtype">void</span> *arg);</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;    <span class="comment">// a2d callback</span></div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> app_a2d_callback(esp_a2d_cb_event_t event, esp_a2d_cb_param_t *param);</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;    <span class="comment">// GAP callback</span></div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> app_gap_callback(esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *param);</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;    <span class="comment">// avrc callback</span></div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> app_rc_ct_callback(esp_avrc_ct_cb_event_t event, esp_avrc_ct_cb_param_t *param);</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;    <span class="comment">// Callback for music stream </span></div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> audio_data_callback(<span class="keyword">const</span> uint8_t *data, uint32_t len);</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;    <span class="comment">// av event handler</span></div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> av_hdl_stack_evt(uint16_t event, <span class="keywordtype">void</span> *p_param);</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;    <span class="comment">// a2dp event handler </span></div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> av_hdl_a2d_evt(uint16_t event, <span class="keywordtype">void</span> *p_param);</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;    <span class="comment">// avrc event handler </span></div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> av_hdl_avrc_evt(uint16_t event, <span class="keywordtype">void</span> *p_param);</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160; </div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;    <span class="comment">// split up long handlers</span></div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> handle_connection_state(uint16_t event, <span class="keywordtype">void</span> *p_param);</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> handle_audio_state(uint16_t event, <span class="keywordtype">void</span> *p_param);</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> handle_audio_cfg(uint16_t event, <span class="keywordtype">void</span> *p_param);</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;<span class="preprocessor">#ifdef ESP_IDF_4</span></div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;    esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap;</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    <span class="keywordtype">char</span> remote_name[ESP_BT_GAP_MAX_BDNAME_LEN + 1];</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160; </div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    <span class="comment">// protected methods</span></div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">int</span> init_bluetooth();</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> init_i2s();</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> app_task_start_up(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> app_task_shut_down(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> app_send_msg(<a class="code" href="structapp__msg__t.html">app_msg_t</a> *msg);</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> app_work_dispatch(app_callback_t p_cback, uint16_t event, <span class="keywordtype">void</span> *p_params, <span class="keywordtype">int</span> param_len);</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> app_work_dispatched(<a class="code" href="structapp__msg__t.html">app_msg_t</a> *msg);</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> app_alloc_meta_buffer(esp_avrc_ct_cb_param_t *param);</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> av_new_track();</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> init_nvs();</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;    <span class="comment">// execute AVRC command</span></div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> execute_avrc_command(<span class="keywordtype">int</span> cmd);</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160; </div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;    <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* last_bda_nvs_name() {</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;        <span class="keywordflow">return</span> <span class="stringliteral">&quot;last_bda&quot;</span>;</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;    }</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160; </div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> is_reconnect(esp_a2d_disc_rsn_t type) {</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;        <span class="keywordflow">return</span> reconnect_on_normal_disconnect || type==ESP_A2D_DISC_RSN_ABNORMAL;</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;    }</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160; </div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;    <span class="comment">// task handler</span></div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_sink.html#a361f80944f06806b7e42302f95171675">app_task_handler</a>(<span class="keywordtype">void</span> *arg);</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;    <span class="comment">// a2d callback</span></div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> app_a2d_callback(esp_a2d_cb_event_t event, esp_a2d_cb_param_t *param);</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;    <span class="comment">// GAP callback</span></div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> app_gap_callback(esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *param);</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;    <span class="comment">// avrc callback</span></div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> app_rc_ct_callback(esp_avrc_ct_cb_event_t event, esp_avrc_ct_cb_param_t *param);</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;    <span class="comment">// Callback for music stream </span></div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> audio_data_callback(<span class="keyword">const</span> uint8_t *data, uint32_t len);</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;    <span class="comment">// av event handler</span></div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> av_hdl_stack_evt(uint16_t event, <span class="keywordtype">void</span> *p_param);</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;    <span class="comment">// a2dp event handler </span></div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> av_hdl_a2d_evt(uint16_t event, <span class="keywordtype">void</span> *p_param);</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;    <span class="comment">// avrc event handler </span></div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> av_hdl_avrc_evt(uint16_t event, <span class="keywordtype">void</span> *p_param);</div>
 <div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160; </div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160; </div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;<span class="preprocessor">#ifdef ESP_IDF_4</span></div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> volume_set_by_local_host(uint8_t volume);</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> volume_set_by_controller(uint8_t volume);</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> av_notify_evt_handler(uint8_t&amp; event_id, esp_avrc_rn_param_t&amp; event_parameter);</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> app_rc_tg_callback(esp_avrc_tg_cb_event_t event, esp_avrc_tg_cb_param_t *param);</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> av_hdl_avrc_tg_evt(uint16_t event, <span class="keywordtype">void</span> *p_param);</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> av_notify_evt_handler(uint8_t event_id, uint32_t event_parameter);</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;<span class="preprocessor">#endif    </span></div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;        </div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;};</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160; </div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160; </div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;}</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;    <span class="comment">// split up long handlers</span></div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> handle_connection_state(uint16_t event, <span class="keywordtype">void</span> *p_param);</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> handle_audio_state(uint16_t event, <span class="keywordtype">void</span> *p_param);</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> handle_audio_cfg(uint16_t event, <span class="keywordtype">void</span> *p_param);</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160; </div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160; </div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;<span class="preprocessor">#ifdef ESP_IDF_4</span></div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> volume_set_by_local_host(uint8_t volume);</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> volume_set_by_controller(uint8_t volume);</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> av_notify_evt_handler(uint8_t&amp; event_id, esp_avrc_rn_param_t&amp; event_parameter);</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> app_rc_tg_callback(esp_avrc_tg_cb_event_t event, esp_avrc_tg_cb_param_t *param);</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> av_hdl_avrc_tg_evt(uint16_t event, <span class="keywordtype">void</span> *p_param);</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> av_notify_evt_handler(uint8_t event_id, uint32_t event_parameter);</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;<span class="preprocessor">#endif    </span></div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;        </div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;};</div>
 <div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160; </div>
 <div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160; </div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;}</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160; </div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160; </div>
 <div class="ttc" id="aclass_bluetooth_a2_d_p_common_html"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html">BluetoothA2DPCommon</a></div><div class="ttdoc">Common Bluetooth A2DP functions.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:93</div></div>
-<div class="ttc" id="aclass_bluetooth_a2_d_p_common_html_a6fec0cfd3d0d9017b7ffcf82630ab89a"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html#a6fec0cfd3d0d9017b7ffcf82630ab89a">BluetoothA2DPCommon::volume_control</a></div><div class="ttdeci">virtual A2DPVolumeControl * volume_control()</div><div class="ttdoc">provides access to the VolumeControl object</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:209</div></div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_common_html_a6fec0cfd3d0d9017b7ffcf82630ab89a"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html#a6fec0cfd3d0d9017b7ffcf82630ab89a">BluetoothA2DPCommon::volume_control</a></div><div class="ttdeci">virtual A2DPVolumeControl * volume_control()</div><div class="ttdoc">provides access to the VolumeControl object</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:214</div></div>
 <div class="ttc" id="aclass_bluetooth_a2_d_p_sink_html"><div class="ttname"><a href="class_bluetooth_a2_d_p_sink.html">BluetoothA2DPSink</a></div><div class="ttdoc">A2DP Bluethooth Sink - We initialize and start the Bluetooth A2DP Sink. The example https://github....</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSink.h:59</div></div>
 <div class="ttc" id="aclass_bluetooth_a2_d_p_sink_html_a09a8b269e2a936c5517bd9f88f666a1c"><div class="ttname"><a href="class_bluetooth_a2_d_p_sink.html#a09a8b269e2a936c5517bd9f88f666a1c">BluetoothA2DPSink::sample_rate</a></div><div class="ttdeci">virtual uint16_t sample_rate()</div><div class="ttdoc">Provides the actually set data rate (in samples per second)</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSink.cpp:726</div></div>
 <div class="ttc" id="aclass_bluetooth_a2_d_p_sink_html_a0f83dea1a97baeb360e4e1221c0aeaa9"><div class="ttname"><a href="class_bluetooth_a2_d_p_sink.html#a0f83dea1a97baeb360e4e1221c0aeaa9">BluetoothA2DPSink::~BluetoothA2DPSink</a></div><div class="ttdeci">virtual ~BluetoothA2DPSink()</div><div class="ttdoc">Destructor - stops the playback and releases all resources.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSink.cpp:57</div></div>
@@ -379,6 +383,7 @@ $(function() {
 <div class="ttc" id="aclass_bluetooth_a2_d_p_sink_html_aafd2afad1960db8ab73d7c6977aeb686"><div class="ttname"><a href="class_bluetooth_a2_d_p_sink.html#aafd2afad1960db8ab73d7c6977aeb686">BluetoothA2DPSink::play</a></div><div class="ttdeci">virtual void play()</div><div class="ttdoc">Starts to play music using AVRC.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSink.cpp:1028</div></div>
 <div class="ttc" id="aclass_bluetooth_a2_d_p_sink_html_ab4e52dff7ef08f17cfce4e011cdd6542"><div class="ttname"><a href="class_bluetooth_a2_d_p_sink.html#ab4e52dff7ef08f17cfce4e011cdd6542">BluetoothA2DPSink::set_i2s_port</a></div><div class="ttdeci">virtual void set_i2s_port(i2s_port_t i2s_num)</div><div class="ttdoc">Define an alternative i2s port other then 0.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSink.cpp:88</div></div>
 <div class="ttc" id="aclass_bluetooth_a2_d_p_sink_html_abc8a4564e135ace22d31c2231f1a0696"><div class="ttname"><a href="class_bluetooth_a2_d_p_sink.html#abc8a4564e135ace22d31c2231f1a0696">BluetoothA2DPSink::set_channels</a></div><div class="ttdeci">virtual void set_channels(i2s_channel_t channels)</div><div class="ttdoc">set output to I2S_CHANNEL_STEREO (default) or I2S_CHANNEL_MONO</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSink.h:170</div></div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_sink_html_ac08fff859e0ccfbb12cbb6b119dba438"><div class="ttname"><a href="class_bluetooth_a2_d_p_sink.html#ac08fff859e0ccfbb12cbb6b119dba438">BluetoothA2DPSink::get_current_peer_address</a></div><div class="ttdeci">virtual esp_bd_addr_t * get_current_peer_address()</div><div class="ttdoc">Provides the address of the connected device.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSink.h:218</div></div>
 <div class="ttc" id="aclass_bluetooth_a2_d_p_sink_html_ac0e3ebab2d32e289ec52a08bcfa2e978"><div class="ttname"><a href="class_bluetooth_a2_d_p_sink.html#ac0e3ebab2d32e289ec52a08bcfa2e978">BluetoothA2DPSink::ccall_audio_data_callback</a></div><div class="ttdeci">friend void ccall_audio_data_callback(const uint8_t *data, uint32_t len)</div><div class="ttdoc">Callback for music stream.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSink.cpp:1119</div></div>
 <div class="ttc" id="aclass_bluetooth_a2_d_p_sink_html_ac245103d3d5c47b0414c2de21c0d52a7"><div class="ttname"><a href="class_bluetooth_a2_d_p_sink.html#ac245103d3d5c47b0414c2de21c0d52a7">BluetoothA2DPSink::set_on_volumechange</a></div><div class="ttdeci">virtual void set_on_volumechange(void(*callBack)(int))</div><div class="ttdoc">Set the callback that is called when they change the volume.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSink.cpp:113</div></div>
 <div class="ttc" id="aclass_bluetooth_a2_d_p_sink_html_ac7ba90ebbed89f38e292de7a0ac1bdb0"><div class="ttname"><a href="class_bluetooth_a2_d_p_sink.html#ac7ba90ebbed89f38e292de7a0ac1bdb0">BluetoothA2DPSink::set_auto_reconnect</a></div><div class="ttdeci">virtual void set_auto_reconnect(bool reconnect, bool afterNormalDisconnect=false, int count=AUTOCONNECT_TRY_NUM)</div><div class="ttdoc">Defines the number of times that the system tries to automatically reconnect to the last system.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSink.h:211</div></div>

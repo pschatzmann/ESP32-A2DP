@@ -956,17 +956,18 @@ void BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) {
         }
     }
 
-    // put data into ringbuffer
-    write_ringbuf(data, len);
-
-      /*
     if (is_i2s_output) {
-        // special case for internal DAC output, the incomming PCM buffer needs 
-        // to be converted from signed 16bit to unsigned
-        int16_t* data16 = (int16_t*) data;
+        // put data into ringbuffer
+        write_ringbuf(data, len);
+    }
 
+    /*
+    if (is_i2s_output) {
         if (this->i2s_config.mode & I2S_MODE_DAC_BUILT_IN) {
-    
+            // special case for internal DAC output, the incomming PCM buffer needs 
+            // to be converted from signed 16bit to unsigned
+            int16_t* data16 = (int16_t*) data;
+            
             //HACK: this is here to remove the const restriction to replace the data in place as per
             //https://github.com/espressif/esp-idf/blob/178b122/components/bt/host/bluedroid/api/include/api/esp_a2dp_api.h
             //the buffer is anyway static block of memory possibly overwritten by next incomming data.
@@ -1308,6 +1309,21 @@ void BluetoothA2DPSink::i2s_task_handler(void *arg)
         data = (uint8_t *)xRingbufferReceive(s_ringbuf_i2s, &item_size, (portTickType)portMAX_DELAY);
 
         if (item_size != 0){
+            if (this->i2s_config.mode & I2S_MODE_DAC_BUILT_IN) {
+                // special case for internal DAC output, the incomming PCM buffer needs 
+                // to be converted from signed 16bit to unsigned
+                int16_t* data16 = (int16_t*) data;
+                
+                //HACK: this is here to remove the const restriction to replace the data in place as per
+                //https://github.com/espressif/esp-idf/blob/178b122/components/bt/host/bluedroid/api/include/api/esp_a2dp_api.h
+                //the buffer is anyway static block of memory possibly overwritten by next incomming data.
+
+                for (int i=0; i<item_size/2; i++) {
+                    int16_t sample = data[i*2] | data[i*2+1]<<8;
+                    data16[i]= sample + 0x8000;
+                }
+            } 
+
             if (i2s_config.bits_per_sample == I2S_BITS_PER_SAMPLE_16BIT){
                 // standard logic with 16 bits
                 if (i2s_write(i2s_port,(void*) data, item_size, &i2s_bytes_written, portMAX_DELAY)!=ESP_OK){

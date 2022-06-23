@@ -219,6 +219,16 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
         return &peer_bd_addr;
     }
 
+    /// Defines the queue size of the event task
+    void set_event_queue_size(int size){
+        event_queue_size = size;
+    }
+
+    /// Defines the stack size of the event task
+    void set_event_stack_size(int size){
+        event_stack_size = size;
+    }
+
 
  #ifdef ESP_IDF_4
     /// Get the name of the connected source device
@@ -262,6 +272,8 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     int try_reconnect_max_count = AUTOCONNECT_TRY_NUM;
     bool reconnect_on_normal_disconnect = false;
     bool end_in_progress = false;
+    int event_queue_size = 20;
+    int event_stack_size = 3072;
 
 #ifdef ESP_IDF_4
     esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap;

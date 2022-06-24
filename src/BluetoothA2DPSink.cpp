@@ -981,47 +981,7 @@ void BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) {
         write_ringbuf(data, len);
     }
 
-    /*
-    if (is_i2s_output) {
-        if (this->i2s_config.mode & I2S_MODE_DAC_BUILT_IN) {
-            // special case for internal DAC output, the incomming PCM buffer needs 
-            // to be converted from signed 16bit to unsigned
-            int16_t* data16 = (int16_t*) data;
-            
-            //HACK: this is here to remove the const restriction to replace the data in place as per
-            //https://github.com/espressif/esp-idf/blob/178b122/components/bt/host/bluedroid/api/include/api/esp_a2dp_api.h
-            //the buffer is anyway static block of memory possibly overwritten by next incomming data.
-
-            for (int i=0; i<len/2; i++) {
-                int16_t sample = data[i*2] | data[i*2+1]<<8;
-                data16[i]= sample + 0x8000;
-            }
-        }    
-
-        size_t i2s_bytes_written;
-        if (i2s_config.bits_per_sample==I2S_BITS_PER_SAMPLE_16BIT){
-            // standard logic with 16 bits
-            if (i2s_write(i2s_port,(void*) data, len, &i2s_bytes_written, portMAX_DELAY)!=ESP_OK){
-                ESP_LOGE(BT_AV_TAG, "i2s_write has failed");    
-            }
-            //ESP_LOGI(BT_AV_TAG, "i2s_write: %u bytes with range %d - %d avg: %d", i2s_bytes_written, minV, maxV, avg);
-        } else {
-            if (i2s_config.bits_per_sample>16){
-                // expand e.g to 32 bit for dacs which do not support 16 bits
-                if (i2s_write_expand(i2s_port,(void*) data, len, I2S_BITS_PER_SAMPLE_16BIT, i2s_config.bits_per_sample, &i2s_bytes_written, portMAX_DELAY) != ESP_OK){
-                    ESP_LOGE(BT_AV_TAG, "i2s_write has failed");    
-                }
-            } else {
-                ESP_LOGE(BT_AV_TAG, "invalid bits_per_sample: %d", i2s_config.bits_per_sample);    
-            }
-        }
-
-        if (i2s_bytes_written<len){
-            ESP_LOGE(BT_AV_TAG, "Timeout: not all bytes were written to I2S");
-        }
-    }
-    */
-
+    // data_received callback
     if (data_received!=nullptr){
         ESP_LOGD(BT_AV_TAG, "data_received");
            (*data_received)();

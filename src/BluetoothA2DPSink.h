@@ -15,6 +15,7 @@
 
 #pragma once
 #include "BluetoothA2DPCommon.h"
+#include "freertos/ringbuf.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -35,6 +36,7 @@ extern "C" void ccall_app_a2d_callback(esp_a2d_cb_event_t event, esp_a2d_cb_para
 extern "C" void ccall_app_rc_ct_callback(esp_avrc_ct_cb_event_t event, esp_avrc_ct_cb_param_t *param);
 extern "C" void ccall_app_gap_callback(esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *param);
 extern "C" void ccall_app_task_handler(void *arg);
+extern "C" void ccall_i2s_task_handler(void *arg);
 extern "C" void ccall_audio_data_callback(const uint8_t *data, uint32_t len);
 extern "C" void ccall_av_hdl_stack_evt(uint16_t event, void *p_param);
 extern "C" void ccall_av_hdl_a2d_evt(uint16_t event, void *p_param);
@@ -66,6 +68,8 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     friend void ccall_app_gap_callback(esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *param);
     /// task handler
     friend void ccall_app_task_handler(void *arg);
+    /// task hander for i2s 
+    friend void ccall_i2s_task_handler(void *arg);
     /// Callback for music stream 
     friend void ccall_audio_data_callback(const uint8_t *data, uint32_t len);
     /// av event handler
@@ -239,6 +243,9 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     // protected data
     xQueueHandle app_task_queue = nullptr;
     xTaskHandle app_task_handle = nullptr;
+    xTaskHandle s_bt_i2s_task_handle = NULL;  /* handle of I2S task */
+    RingbufHandle_t s_ringbuf_i2s = NULL;     /* handle of ringbuffer for I2S */
+
     i2s_config_t i2s_config;
     i2s_pin_config_t pin_config;    
     const char * bt_name = nullptr;
@@ -337,6 +344,12 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
 #else
     virtual void av_notify_evt_handler(uint8_t event_id, uint32_t event_parameter);
 #endif    
+
+    private:
+        size_t write_ringbuf(const uint8_t *data, size_t size);
+        void i2s_task_handler(void *arg);
+        void bt_i2s_task_start_up(void);
+        void bt_i2s_task_shut_down(void);
         
 };
 

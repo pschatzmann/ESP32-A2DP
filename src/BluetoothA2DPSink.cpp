@@ -33,7 +33,7 @@ BluetoothA2DPSink::BluetoothA2DPSink() {
             .sample_rate = 44100,
             .bits_per_sample = (i2s_bits_per_sample_t)16,
             .channel_format = I2S_CHANNEL_FMT_RIGHT_LEFT,
-            .communication_format = (i2s_comm_format_t) (I2S_COMM_FORMAT_STAND_I2S),
+            .communication_format = I2S_COMM_FORMAT_STAND_I2S,
             .intr_alloc_flags = 0, // default interrupt priority
             .dma_buf_count = 8,
             .dma_buf_len = 64,
@@ -660,6 +660,9 @@ void BluetoothA2DPSink::handle_connection_state(uint16_t event, void *p_param){
         }    
         
         if (is_i2s_output) {
+
+            bt_i2s_task_shut_down();
+
             ESP_LOGI(BT_AV_TAG, "i2s_stop");
             i2s_stop(i2s_port);
             i2s_zero_dma_buffer(i2s_port);
@@ -704,6 +707,9 @@ void BluetoothA2DPSink::handle_connection_state(uint16_t event, void *p_param){
         set_scan_mode_connectable(false);   
         connection_rety_count = 0;
         if (is_i2s_output) {
+
+            bt_i2s_task_start_up();
+
             ESP_LOGI(BT_AV_TAG,"i2s_start");
             if (i2s_start(i2s_port)!=ESP_OK){
                 ESP_LOGE(BT_AV_TAG, "i2s_start");
@@ -950,14 +956,18 @@ void BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) {
         }
     }
 
-
     if (is_i2s_output) {
-        // special case for internal DAC output, the incomming PCM buffer needs 
-        // to be converted from signed 16bit to unsigned
-        int16_t* data16 = (int16_t*) data;
+        // put data into ringbuffer
+        write_ringbuf(data, len);
+    }
 
+    /*
+    if (is_i2s_output) {
         if (this->i2s_config.mode & I2S_MODE_DAC_BUILT_IN) {
-    
+            // special case for internal DAC output, the incomming PCM buffer needs 
+            // to be converted from signed 16bit to unsigned
+            int16_t* data16 = (int16_t*) data;
+            
             //HACK: this is here to remove the const restriction to replace the data in place as per
             //https://github.com/espressif/esp-idf/blob/178b122/components/bt/host/bluedroid/api/include/api/esp_a2dp_api.h
             //the buffer is anyway static block of memory possibly overwritten by next incomming data.
@@ -990,6 +1000,7 @@ void BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) {
             ESP_LOGE(BT_AV_TAG, "Timeout: not all bytes were written to I2S");
         }
     }
+    */
 
     if (data_received!=nullptr){
         ESP_LOGD(BT_AV_TAG, "data_received");
@@ -1110,6 +1121,12 @@ void BluetoothA2DPSink::confirm_pin_code(int code)
  * public Callbacks 
  * 
  */
+void ccall_i2s_task_handler(void *arg) {
+  ESP_LOGD(BT_AV_TAG, "%s", __func__);
+  if (actual_bluetooth_a2dp_sink)
+    actual_bluetooth_a2dp_sink->i2s_task_handler(arg);
+}
+
 void ccall_app_task_handler(void *arg) {
   ESP_LOGD(BT_AV_TAG, "%s", __func__);
   if (actual_bluetooth_a2dp_sink)
@@ -1279,7 +1296,85 @@ void BluetoothA2DPSink::av_hdl_avrc_tg_evt(uint16_t event, void *p_param)
 }
 
 
+/* NEW I2S Task & ring buffer */
+
+void BluetoothA2DPSink::i2s_task_handler(void *arg)
+{
+    uint8_t *data = NULL;
+    size_t item_size = 0;
+    size_t i2s_bytes_written = 0;
+
+    for (;;) {
+        /* receive data from ringbuffer and write it to I2S DMA transmit buffer */
+        data = (uint8_t *)xRingbufferReceive(s_ringbuf_i2s, &item_size, (portTickType)portMAX_DELAY);
+
+        if (item_size != 0){
+            if (this->i2s_config.mode & I2S_MODE_DAC_BUILT_IN) {
+                // special case for internal DAC output, the incomming PCM buffer needs 
+                // to be converted from signed 16bit to unsigned
+                int16_t* data16 = (int16_t*) data;
+                
+                //HACK: this is here to remove the const restriction to replace the data in place as per
+                //https://github.com/espressif/esp-idf/blob/178b122/components/bt/host/bluedroid/api/include/api/esp_a2dp_api.h
+                //the buffer is anyway static block of memory possibly overwritten by next incomming data.
+
+                for (int i=0; i<item_size/2; i++) {
+                    int16_t sample = data[i*2] | data[i*2+1]<<8;
+                    data16[i]= sample + 0x8000;
+                }
+            } 
+
+            if (i2s_config.bits_per_sample == I2S_BITS_PER_SAMPLE_16BIT){
+                // standard logic with 16 bits
+                if (i2s_write(i2s_port,(void*) data, item_size, &i2s_bytes_written, portMAX_DELAY)!=ESP_OK){
+                    ESP_LOGE(BT_AV_TAG, "i2s_write has failed");    
+                }
+            } else {
+                if (i2s_config.bits_per_sample > 16){
+                    // expand e.g to 32 bit for dacs which do not support 16 bits
+                    if (i2s_write_expand(i2s_port,(void*) data, item_size, I2S_BITS_PER_SAMPLE_16BIT, i2s_config.bits_per_sample, &i2s_bytes_written, portMAX_DELAY) != ESP_OK){
+                        ESP_LOGE(BT_AV_TAG, "i2s_write has failed");    
+                    }
+                } else {
+                    ESP_LOGE(BT_AV_TAG, "invalid bits_per_sample: %d", i2s_config.bits_per_sample);    
+                }
+            }
+
+            vRingbufferReturnItem(s_ringbuf_i2s, (void *)data);
+        }
+    }
+}
+
+size_t BluetoothA2DPSink::write_ringbuf(const uint8_t *data, size_t size)
+{
+    BaseType_t done = xRingbufferSend(s_ringbuf_i2s, (void *)data, size, (portTickType)portMAX_DELAY);
+
+    return done ? size : 0;
+}
+
+void BluetoothA2DPSink::bt_i2s_task_start_up(void)
+{
+    if ((s_ringbuf_i2s = xRingbufferCreate(4 * 1024, RINGBUF_TYPE_BYTEBUF)) == NULL) {
+        return;
+    }
+    xTaskCreate(ccall_i2s_task_handler, "BtI2STask", 2048, NULL, configMAX_PRIORITIES - 3, &s_bt_i2s_task_handle);
+
+    ESP_LOGI(BT_AV_TAG, "BtI2STask Started");
+}
+
+void BluetoothA2DPSink::bt_i2s_task_shut_down(void)
+{
+    if (s_bt_i2s_task_handle) {
+        vTaskDelete(s_bt_i2s_task_handle);
+        s_bt_i2s_task_handle = NULL;
+    }
+    if (s_ringbuf_i2s) {
+        vRingbufferDelete(s_ringbuf_i2s);
+        s_ringbuf_i2s = NULL;
+    }
+
+    ESP_LOGI(BT_AV_TAG, "BtI2STask shutdown");
+}
+
+
 #endif
-
-
-

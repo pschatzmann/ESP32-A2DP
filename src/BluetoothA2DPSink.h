@@ -243,6 +243,21 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
         i2s_ringbuffer_size = size;
     }
 
+    /// Activates the rssi reporting
+    void set_rssi_active(bool active){
+        rssi_active = active;
+    }
+
+    /// provides the last rssi parameters
+    esp_bt_gap_cb_param_t::read_rssi_delta_param get_last_rssi() {
+        return last_rssi_delta;
+    }
+
+    /// Defines the callback that is called when we get an new rssi value
+    void set_rssi_callback(void (*callback)(esp_bt_gap_cb_param_t::read_rssi_delta_param &rssi)){
+        rssi_callbak = callback;
+    }
+
  #ifdef ESP_IDF_4
     /// Get the name of the connected source device
     virtual const char* get_connected_source_name();
@@ -294,8 +309,13 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     bool end_in_progress = false;
     int event_queue_size = 20;
     int event_stack_size = 3072;
+    // I2S task
     int i2s_stack_size = 2048;
     int i2s_ringbuffer_size = 4 * 1024;
+    // RSSI support
+    esp_bt_gap_cb_param_t::read_rssi_delta_param last_rssi_delta;
+    bool rssi_active = false;
+    void (*rssi_callbak)(esp_bt_gap_cb_param_t::read_rssi_delta_param &rssi) = nullptr;
 
 #ifdef ESP_IDF_4
     esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap;

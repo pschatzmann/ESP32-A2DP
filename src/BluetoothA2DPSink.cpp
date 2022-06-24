@@ -33,7 +33,7 @@ BluetoothA2DPSink::BluetoothA2DPSink() {
             .sample_rate = 44100,
             .bits_per_sample = (i2s_bits_per_sample_t)16,
             .channel_format = I2S_CHANNEL_FMT_RIGHT_LEFT,
-            .communication_format = I2S_COMM_FORMAT_STAND_I2S,
+            .communication_format = (i2s_comm_format_t) I2S_COMM_FORMAT_STAND_I2S,
             .intr_alloc_flags = 0, // default interrupt priority
             .dma_buf_count = 8,
             .dma_buf_len = 64,
@@ -463,6 +463,15 @@ void BluetoothA2DPSink::app_gap_callback(esp_bt_gap_cb_event_t event, esp_bt_gap
             } 
             break;
 
+        case ESP_BT_GAP_READ_RSSI_DELTA_EVT: {
+            last_rssi_delta = param->read_rssi_delta;
+            if (rssi_callbak!=nullptr){
+                rssi_callbak(last_rssi_delta);
+            }
+            break;
+        }
+
+
 #ifdef ESP_IDF_4
         case ESP_BT_GAP_READ_REMOTE_NAME_EVT: {
                 ESP_LOGI(BT_AV_TAG, "ESP_BT_GAP_READ_REMOTE_NAME_EVT stat:%d", param->read_rmt_name.stat);
@@ -722,7 +731,14 @@ void BluetoothA2DPSink::handle_connection_state(uint16_t event, void *p_param){
 #ifdef ESP_IDF_4
         // ask for the remote name
         esp_err_t esp_err = esp_bt_gap_read_remote_name(a2d->conn_stat.remote_bda);
-#endif                 
+#endif     
+
+        // Get RSSI
+        if (rssi_active){
+            esp_bt_gap_read_rssi_delta(a2d->conn_stat.remote_bda);
+        }
+
+
     } else if (a2d->conn_stat.state == ESP_A2D_CONNECTION_STATE_CONNECTING){
         ESP_LOGI(BT_AV_TAG, "ESP_A2D_CONNECTION_STATE_CONNECTING");
         connection_rety_count++;

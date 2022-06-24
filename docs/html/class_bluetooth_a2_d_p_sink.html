@@ -256,6 +256,18 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a5e5d13f82d40279028631248b51e1382">set_i2s_ringbuffer_size</a> (int size)</td></tr>
 <tr class="memdesc:a5e5d13f82d40279028631248b51e1382"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the ringbuffer size used by the i2s task (in bytes) <br /></td></tr>
 <tr class="separator:a5e5d13f82d40279028631248b51e1382"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a452b509a46930ab1ed58188a4181c67b"><td class="memItemLeft" align="right" valign="top"><a id="a452b509a46930ab1ed58188a4181c67b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a452b509a46930ab1ed58188a4181c67b">set_rssi_active</a> (bool active)</td></tr>
+<tr class="memdesc:a452b509a46930ab1ed58188a4181c67b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Activates the rssi reporting. <br /></td></tr>
+<tr class="separator:a452b509a46930ab1ed58188a4181c67b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a770be98d977a8df916d8cc044b310c"><td class="memItemLeft" align="right" valign="top"><a id="a5a770be98d977a8df916d8cc044b310c"></a>
+esp_bt_gap_cb_param_t::read_rssi_delta_param&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a5a770be98d977a8df916d8cc044b310c">get_last_rssi</a> ()</td></tr>
+<tr class="memdesc:a5a770be98d977a8df916d8cc044b310c"><td class="mdescLeft">&#160;</td><td class="mdescRight">provides the last rssi parameters <br /></td></tr>
+<tr class="separator:a5a770be98d977a8df916d8cc044b310c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97c80237061c6e80d7c6e1e5e45773c8"><td class="memItemLeft" align="right" valign="top"><a id="a97c80237061c6e80d7c6e1e5e45773c8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a97c80237061c6e80d7c6e1e5e45773c8">set_rssi_callback</a> (void(*callback)(esp_bt_gap_cb_param_t::read_rssi_delta_param &amp;rssi))</td></tr>
+<tr class="memdesc:a97c80237061c6e80d7c6e1e5e45773c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the callback that is called when we get an new rssi value. <br /></td></tr>
+<tr class="separator:a97c80237061c6e80d7c6e1e5e45773c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a537d576b12d1158eb0681a6195b258de"><td class="memItemLeft" align="right" valign="top"><a id="a537d576b12d1158eb0681a6195b258de"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a537d576b12d1158eb0681a6195b258de">set_auto_reconnect</a> (bool active)</td></tr>
 <tr class="memdesc:a537d576b12d1158eb0681a6195b258de"><td class="mdescLeft">&#160;</td><td class="mdescRight">activate / deactivate the automatic reconnection to the last address (per default this is on) <br /></td></tr>
@@ -548,6 +560,15 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>i2s_stack_size</b> = 2
 <tr class="memitem:ae08f591ddf169cf7039eacf725f67a5c"><td class="memItemLeft" align="right" valign="top"><a id="ae08f591ddf169cf7039eacf725f67a5c"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>i2s_ringbuffer_size</b> = 4 * 1024</td></tr>
 <tr class="separator:ae08f591ddf169cf7039eacf725f67a5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd684815c84a3d29da78377615878fd6"><td class="memItemLeft" align="right" valign="top"><a id="acd684815c84a3d29da78377615878fd6"></a>
+esp_bt_gap_cb_param_t::read_rssi_delta_param&#160;</td><td class="memItemRight" valign="bottom"><b>last_rssi_delta</b></td></tr>
+<tr class="separator:acd684815c84a3d29da78377615878fd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7746332ebc078d642b043bfd8be7e6b6"><td class="memItemLeft" align="right" valign="top"><a id="a7746332ebc078d642b043bfd8be7e6b6"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>rssi_active</b> = false</td></tr>
+<tr class="separator:a7746332ebc078d642b043bfd8be7e6b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a281e8176841885f19fc0ee9f3a0f119b"><td class="memItemLeft" align="right" valign="top"><a id="a281e8176841885f19fc0ee9f3a0f119b"></a>
+void(*&#160;</td><td class="memItemRight" valign="bottom"><b>rssi_callbak</b> )(esp_bt_gap_cb_param_t::read_rssi_delta_param &amp;rssi) = nullptr</td></tr>
+<tr class="separator:a281e8176841885f19fc0ee9f3a0f119b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae07c63cafc1692273d6fa3758bd37678"><td class="memItemLeft" align="right" valign="top"><a id="ae07c63cafc1692273d6fa3758bd37678"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_auto_reconnect</b> =true</td></tr>
 <tr class="separator:ae07c63cafc1692273d6fa3758bd37678"><td class="memSeparator" colspan="2">&#160;</td></tr>

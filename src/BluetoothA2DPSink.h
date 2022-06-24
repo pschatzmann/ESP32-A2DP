@@ -405,6 +405,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
  */
 class BluetoothA2DPSinkMinRAM : public BluetoothA2DPSink {
     public:
+        BluetoothA2DPSinkMinRAM() = default;
         void bt_i2s_task_start_up(void) override {}
         void bt_i2s_task_shut_down(void) override {}
         void i2s_task_handler(void *arg) override {}

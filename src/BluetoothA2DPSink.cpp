@@ -709,33 +709,37 @@ void BluetoothA2DPSink::handle_connection_state(uint16_t event, void *p_param){
             }
         }
 
-        if (bt_connected!=nullptr){
-            (*bt_connected)();
-        }                
-        
-        set_scan_mode_connectable(false);   
-        connection_rety_count = 0;
-        if (is_i2s_output) {
+        if (is_valid){
 
-            bt_i2s_task_start_up();
+            if (bt_connected!=nullptr){
+                (*bt_connected)();
+            }                
+            
+            set_scan_mode_connectable(false);   
+            connection_rety_count = 0;
+            if (is_i2s_output) {
 
-            ESP_LOGI(BT_AV_TAG,"i2s_start");
-            if (i2s_start(i2s_port)!=ESP_OK){
-                ESP_LOGE(BT_AV_TAG, "i2s_start");
+                bt_i2s_task_start_up();
+
+                ESP_LOGI(BT_AV_TAG,"i2s_start");
+                if (i2s_start(i2s_port)!=ESP_OK){
+                    ESP_LOGE(BT_AV_TAG, "i2s_start");
+                }
             }
-        }
-        // record current connection
-        if (is_auto_reconnect && is_valid) {
-            set_last_connection(a2d->conn_stat.remote_bda);
-        }
+            // record current connection
+            if (is_auto_reconnect && is_valid) {
+                set_last_connection(a2d->conn_stat.remote_bda);
+            }
 #ifdef ESP_IDF_4
-        // ask for the remote name
-        esp_err_t esp_err = esp_bt_gap_read_remote_name(a2d->conn_stat.remote_bda);
+            // ask for the remote name
+            esp_err_t esp_err = esp_bt_gap_read_remote_name(a2d->conn_stat.remote_bda);
 #endif     
 
-        // Get RSSI
-        if (rssi_active){
-            esp_bt_gap_read_rssi_delta(a2d->conn_stat.remote_bda);
+            // Get RSSI
+            if (rssi_active){
+                esp_bt_gap_read_rssi_delta(a2d->conn_stat.remote_bda);
+            }
+
         }
 
 

@@ -21,7 +21,7 @@ class BluetoothA2DPSink32 : public BluetoothA2DPSink {
             int32_t volumeFactor = 0x1000;
             
             if (is_volume_used) {
-                volumeFactor = volume_control()->get_volume_factor(s_volume);
+                volumeFactor = volume_control()->get_volume_factor();
             }
 
             while (rest_len>0) {

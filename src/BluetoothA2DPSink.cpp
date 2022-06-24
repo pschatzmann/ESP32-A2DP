@@ -1264,7 +1264,7 @@ void BluetoothA2DPSink::bt_i2s_task_start_up(void)
     if ((s_ringbuf_i2s = xRingbufferCreate(i2s_ringbuffer_size, RINGBUF_TYPE_BYTEBUF)) == NULL) {
         return;
     }
-    xTaskCreate(ccall_i2s_task_handler, "BtI2STask", i2s_stack_size, NULL, configMAX_PRIORITIES - 3, &s_bt_i2s_task_handle);
+    xTaskCreate(ccall_i2s_task_handler, "BtI2STask", i2s_stack_size, NULL, i2s_task_priority, &s_bt_i2s_task_handle);
 
     ESP_LOGI(BT_AV_TAG, "BtI2STask Started");
 }

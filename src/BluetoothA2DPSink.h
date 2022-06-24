@@ -243,6 +243,11 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
         i2s_ringbuffer_size = size;
     }
 
+    /// Defines the priority of the I2S task
+    void set_i2s_task_priority(UBaseType_t prio){
+        i2s_task_priority = prio;
+    }
+
     /// Activates the rssi reporting
     void set_rssi_active(bool active){
         rssi_active = active;
@@ -312,6 +317,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     // I2S task
     int i2s_stack_size = 2048;
     int i2s_ringbuffer_size = 4 * 1024;
+    UBaseType_t i2s_task_priority = configMAX_PRIORITIES - 3;
     // RSSI support
     esp_bt_gap_cb_param_t::read_rssi_delta_param last_rssi_delta;
     bool rssi_active = false;

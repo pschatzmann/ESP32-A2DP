@@ -246,6 +246,10 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
  #ifdef ESP_IDF_4
     /// Get the name of the connected source device
     virtual const char* get_connected_source_name();
+    /// Provides the result of the last result for the esp_avrc_tg_get_rn_evt_cap() callback (Available from ESP_IDF_4)
+    uint16_t get_avrc_peer_rn_cap_bits() {
+        return s_avrc_peer_rn_cap.bits;
+    }
  #endif
 
   protected:

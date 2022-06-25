@@ -679,14 +679,17 @@ void BluetoothA2DPSink::handle_connection_state(uint16_t event, void *p_param){
         }
         
         if (!end_in_progress) {
-            if (is_reconnect(a2d->conn_stat.disc_rsn) && is_auto_reconnect && has_last_connection()) {
-                if ( has_last_connection()  && connection_rety_count < try_reconnect_max_count ){
+            if (is_reconnect(a2d->conn_stat.disc_rsn)) {
+                if (connection_rety_count < try_reconnect_max_count ){
                     ESP_LOGI(BT_AV_TAG,"Connection try number: %d", connection_rety_count);
+                    // make sure that any open connection is timing out on the target
+                    delay(1000);
                     connect_to_last_device();
                     // when we lost the connection we do allow any others to connect after 2 trials
                     if (connection_rety_count==2) set_scan_mode_connectable(true);
 
                 } else {
+                    ESP_LOGI(BT_AV_TAG, "Reconect retry limit reached");
                     if ( has_last_connection() && a2d->conn_stat.disc_rsn == ESP_A2D_DISC_RSN_NORMAL ){
                         clean_last_connection();
                     }
@@ -1223,6 +1226,7 @@ size_t BluetoothA2DPSink::write_ringbuf(const uint8_t *data, size_t size)
 void BluetoothA2DPSink::bt_i2s_task_start_up(void)
 {
     if ((s_ringbuf_i2s = xRingbufferCreate(i2s_ringbuffer_size, RINGBUF_TYPE_BYTEBUF)) == NULL) {
+        ESP_LOGE(BT_AV_TAG, "xRingbufferCreate");    
         return;
     }
     xTaskCreate(ccall_i2s_task_handler, "BtI2STask", i2s_stack_size, NULL, i2s_task_priority, &s_bt_i2s_task_handle);

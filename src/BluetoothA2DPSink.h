@@ -351,7 +351,9 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     }
 
     virtual bool is_reconnect(esp_a2d_disc_rsn_t type) {
-        return reconnect_on_normal_disconnect || type==ESP_A2D_DISC_RSN_ABNORMAL;
+        bool result = reconnect_on_normal_disconnect || type==ESP_A2D_DISC_RSN_ABNORMAL && is_auto_reconnect && has_last_connection();
+        ESP_LOGI(BT_AV_TAG,"is_reconnect: %s", result ? "true":"false");
+        return result;
     }
 
     /**

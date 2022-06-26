@@ -24,7 +24,6 @@ BluetoothA2DPSink* actual_bluetooth_a2dp_sink;
 BluetoothA2DPSink::BluetoothA2DPSink() {
   actual_bluetooth_a2dp_sink = this;
   if (is_i2s_output) {
-        s_avrc_peer_rn_cap.bits = 0;
         // default i2s port is 0
         i2s_port = (i2s_port_t) 0;
 
@@ -51,6 +50,7 @@ BluetoothA2DPSink::BluetoothA2DPSink() {
         };
     }
 #ifdef ESP_IDF_4
+    s_avrc_peer_rn_cap.bits = 0;
     _lock_init(&s_volume_lock);
 #endif
 }

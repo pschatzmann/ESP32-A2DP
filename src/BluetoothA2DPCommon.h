@@ -192,7 +192,7 @@ class BluetoothA2DPCommon {
         const char *m_a2d_audio_state_str[3] = {"Suspended", "Stopped", "Started"};
         esp_a2d_audio_state_t audio_state = ESP_A2D_AUDIO_STATE_STOPPED;
         esp_a2d_connection_state_t connection_state = ESP_A2D_CONNECTION_STATE_DISCONNECTED;
-        UBaseType_t task_priority = configMAX_PRIORITIES - 3;
+        UBaseType_t task_priority = configMAX_PRIORITIES - 10;
         // volume 
         uint8_t volume_value = 0;
         bool is_volume_used = false;

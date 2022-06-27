@@ -103,17 +103,25 @@ class BluetoothA2DPCommon {
         /// Closes the connection
         virtual void disconnect();
 
+        /// Reconnects to the last device
+        virtual void reconnect() {
+            is_connecting = true;
+            esp_a2d_source_connect(peer_bd_addr);
+        }
+        /// Calls disconnect or reconnect
+        virtual void set_connected(bool active){
+            if (active){
+                reconnect();
+            } else {
+                disconnect();
+            }
+        }
+
         /// Closes the connection and stops A2DP
         virtual void end(bool releaseMemory=false);
 
         /// Checks if A2DP is connected
         virtual  bool is_connected() = 0;
-
-        // /// obsolete: please use is_connected
-        // DEPRECATED
-        // virtual bool isConnected(){
-        //     return is_connected();
-        // }
 
         /// Sets the volume (range 0 - 255)
         virtual void set_volume(uint8_t volume){
@@ -178,7 +186,9 @@ class BluetoothA2DPCommon {
 #endif        
 
     protected:
+        esp_bd_addr_t peer_bd_addr;
         bool is_auto_reconnect=true;
+        bool is_connecting = true;
         uint32_t debounce_ms = 0;
         A2DPDefaultVolumeControl default_volume_control;
         A2DPVolumeControl *volume_control_ptr = nullptr;

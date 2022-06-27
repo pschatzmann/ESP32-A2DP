@@ -27,13 +27,17 @@ esp_a2d_connection_state_t BluetoothA2DPCommon::get_connection_state() {
 void BluetoothA2DPCommon::disconnect()
 {
     ESP_LOGI(BT_AV_TAG, "disconect a2d: %s", to_str(last_connection));
+
+    // Prevent automatic reconnect
+    set_auto_reconnect(false);
+    is_connecting = false;
+
     esp_err_t status = esp_a2d_sink_disconnect(last_connection);
-    if (status == ESP_FAIL)
-    {
+    if (status == ESP_FAIL) {
         ESP_LOGE(BT_AV_TAG, "Failed disconnecting to device!");
     }
     // reconnect should not work after end
-    clean_last_connection();
+    // clean_last_connection();
 }
 
 

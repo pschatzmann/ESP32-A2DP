@@ -158,12 +158,11 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
     esp_bt_pin_code_t pin_code;
     uint32_t pin_code_len;
 
-    esp_bd_addr_t s_peer_bda;
     uint8_t s_peer_bdname[ESP_BT_GAP_MAX_BDNAME_LEN + 1];
     int s_a2d_state=0; // Next Target Connection State
     int s_media_state=0;
     int s_intv_cnt=0;
-    int s_connecting_intv;
+    int s_connecting_heatbeat_count;
     uint32_t s_pkt_cnt;
     TimerHandle_t s_tmr;
     xQueueHandle s_bt_app_task_queue = nullptr;
@@ -171,7 +170,7 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
     // support for raw data
     SoundData *sound_data = nullptr;
     int32_t sound_data_current_pos = 0;
-    bool hasSoundData = false;
+    bool has_sound_data_flag = false;
 
     // initialization
     bool nvs_init = true;

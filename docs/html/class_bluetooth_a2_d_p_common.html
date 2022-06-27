@@ -101,6 +101,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#ab63e627832d6377be32dd700130bf0d8">disconnect</a> ()</td></tr>
 <tr class="memdesc:ab63e627832d6377be32dd700130bf0d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes the connection. <br /></td></tr>
 <tr class="separator:ab63e627832d6377be32dd700130bf0d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca9eebdad8d5525cb3dc1406e2c455c2"><td class="memItemLeft" align="right" valign="top"><a id="aca9eebdad8d5525cb3dc1406e2c455c2"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#aca9eebdad8d5525cb3dc1406e2c455c2">reconnect</a> ()</td></tr>
+<tr class="memdesc:aca9eebdad8d5525cb3dc1406e2c455c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reconnects to the last device. <br /></td></tr>
+<tr class="separator:aca9eebdad8d5525cb3dc1406e2c455c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fdeaf51df336473114a5f8d593703b1"><td class="memItemLeft" align="right" valign="top"><a id="a9fdeaf51df336473114a5f8d593703b1"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a9fdeaf51df336473114a5f8d593703b1">set_connected</a> (bool active)</td></tr>
+<tr class="memdesc:a9fdeaf51df336473114a5f8d593703b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls disconnect or reconnect. <br /></td></tr>
+<tr class="separator:a9fdeaf51df336473114a5f8d593703b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a76e329bf0587ebf41792871acc69188b"><td class="memItemLeft" align="right" valign="top"><a id="a76e329bf0587ebf41792871acc69188b"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a76e329bf0587ebf41792871acc69188b">end</a> (bool releaseMemory=false)</td></tr>
 <tr class="memdesc:a76e329bf0587ebf41792871acc69188b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes the connection and stops A2DP. <br /></td></tr>
@@ -196,9 +204,15 @@ virtual <a class="el" href="class_a2_d_p_volume_control.html">A2DPVolumeControl<
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
+<tr class="memitem:a83cff3bdeb407a6c19618ba208438604"><td class="memItemLeft" align="right" valign="top"><a id="a83cff3bdeb407a6c19618ba208438604"></a>
+esp_bd_addr_t&#160;</td><td class="memItemRight" valign="bottom"><b>peer_bd_addr</b></td></tr>
+<tr class="separator:a83cff3bdeb407a6c19618ba208438604"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae07c63cafc1692273d6fa3758bd37678"><td class="memItemLeft" align="right" valign="top"><a id="ae07c63cafc1692273d6fa3758bd37678"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_auto_reconnect</b> =true</td></tr>
 <tr class="separator:ae07c63cafc1692273d6fa3758bd37678"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac59a58ee6e34bcf66d44b563350b01d7"><td class="memItemLeft" align="right" valign="top"><a id="ac59a58ee6e34bcf66d44b563350b01d7"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_connecting</b> = true</td></tr>
+<tr class="separator:ac59a58ee6e34bcf66d44b563350b01d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad04d173227dbd77d1956747cc10837c4"><td class="memItemLeft" align="right" valign="top"><a id="ad04d173227dbd77d1956747cc10837c4"></a>
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>debounce_ms</b> = 0</td></tr>
 <tr class="separator:ad04d173227dbd77d1956747cc10837c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -239,7 +253,7 @@ esp_a2d_audio_state_t&#160;</td><td class="memItemRight" valign="bottom"><b>audi
 esp_a2d_connection_state_t&#160;</td><td class="memItemRight" valign="bottom"><b>connection_state</b> = ESP_A2D_CONNECTION_STATE_DISCONNECTED</td></tr>
 <tr class="separator:ac11aaa770b2754858223a4bcdae83b5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2e218a2956baea1be621e8c31d2875c8"><td class="memItemLeft" align="right" valign="top"><a id="a2e218a2956baea1be621e8c31d2875c8"></a>
-UBaseType_t&#160;</td><td class="memItemRight" valign="bottom"><b>task_priority</b> = configMAX_PRIORITIES - 3</td></tr>
+UBaseType_t&#160;</td><td class="memItemRight" valign="bottom"><b>task_priority</b> = configMAX_PRIORITIES - 10</td></tr>
 <tr class="separator:a2e218a2956baea1be621e8c31d2875c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf02ccde9ba626cea64870a255672dba"><td class="memItemLeft" align="right" valign="top"><a id="aaf02ccde9ba626cea64870a255672dba"></a>
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>volume_value</b> = 0</td></tr>

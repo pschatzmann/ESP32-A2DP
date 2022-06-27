@@ -238,7 +238,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memdesc:a14d982730e2b9ea772fe9ede1563ed22"><td class="mdescLeft">&#160;</td><td class="mdescRight">swaps the left and right channel <br /></td></tr>
 <tr class="separator:a14d982730e2b9ea772fe9ede1563ed22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac7ba90ebbed89f38e292de7a0ac1bdb0"><td class="memItemLeft" align="right" valign="top"><a id="ac7ba90ebbed89f38e292de7a0ac1bdb0"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#ac7ba90ebbed89f38e292de7a0ac1bdb0">set_auto_reconnect</a> (bool reconnect, bool afterNormalDisconnect=false, int count=AUTOCONNECT_TRY_NUM)</td></tr>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#ac7ba90ebbed89f38e292de7a0ac1bdb0">set_auto_reconnect</a> (bool <a class="el" href="class_bluetooth_a2_d_p_common.html#aca9eebdad8d5525cb3dc1406e2c455c2">reconnect</a>, bool afterNormalDisconnect=false, int count=AUTOCONNECT_TRY_NUM)</td></tr>
 <tr class="memdesc:ac7ba90ebbed89f38e292de7a0ac1bdb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the number of times that the system tries to automatically reconnect to the last system. <br /></td></tr>
 <tr class="separator:ac7ba90ebbed89f38e292de7a0ac1bdb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a537d576b12d1158eb0681a6195b258de"><td class="memItemLeft" align="right" valign="top"><a id="a537d576b12d1158eb0681a6195b258de"></a>
@@ -265,6 +265,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a5e5d13f82d40279028631248b51e1382">set_i2s_ringbuffer_size</a> (int size)</td></tr>
 <tr class="memdesc:a5e5d13f82d40279028631248b51e1382"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the ringbuffer size used by the i2s task (in bytes) <br /></td></tr>
 <tr class="separator:a5e5d13f82d40279028631248b51e1382"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9261a4a966cfc552ce31059029ed0de"><td class="memItemLeft" align="right" valign="top"><a id="ad9261a4a966cfc552ce31059029ed0de"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#ad9261a4a966cfc552ce31059029ed0de">set_i2s_task_priority</a> (UBaseType_t prio)</td></tr>
+<tr class="memdesc:ad9261a4a966cfc552ce31059029ed0de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the priority of the I2S task. <br /></td></tr>
+<tr class="separator:ad9261a4a966cfc552ce31059029ed0de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a452b509a46930ab1ed58188a4181c67b"><td class="memItemLeft" align="right" valign="top"><a id="a452b509a46930ab1ed58188a4181c67b"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a452b509a46930ab1ed58188a4181c67b">set_rssi_active</a> (bool active)</td></tr>
 <tr class="memdesc:a452b509a46930ab1ed58188a4181c67b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Activates the rssi reporting. <br /></td></tr>
@@ -281,6 +285,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#ab63e627832d6377be32dd700130bf0d8">disconnect</a> ()</td></tr>
 <tr class="memdesc:ab63e627832d6377be32dd700130bf0d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes the connection. <br /></td></tr>
 <tr class="separator:ab63e627832d6377be32dd700130bf0d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca9eebdad8d5525cb3dc1406e2c455c2"><td class="memItemLeft" align="right" valign="top"><a id="aca9eebdad8d5525cb3dc1406e2c455c2"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#aca9eebdad8d5525cb3dc1406e2c455c2">reconnect</a> ()</td></tr>
+<tr class="memdesc:aca9eebdad8d5525cb3dc1406e2c455c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reconnects to the last device. <br /></td></tr>
+<tr class="separator:aca9eebdad8d5525cb3dc1406e2c455c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fdeaf51df336473114a5f8d593703b1"><td class="memItemLeft" align="right" valign="top"><a id="a9fdeaf51df336473114a5f8d593703b1"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a9fdeaf51df336473114a5f8d593703b1">set_connected</a> (bool active)</td></tr>
+<tr class="memdesc:a9fdeaf51df336473114a5f8d593703b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls disconnect or reconnect. <br /></td></tr>
+<tr class="separator:a9fdeaf51df336473114a5f8d593703b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7757ddbf424aeb909dc952d7c40fc241"><td class="memItemLeft" align="right" valign="top"><a id="a7757ddbf424aeb909dc952d7c40fc241"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a7757ddbf424aeb909dc952d7c40fc241">set_volume_control</a> (<a class="el" href="class_a2_d_p_volume_control.html">A2DPVolumeControl</a> *ptr)</td></tr>
 <tr class="memdesc:a7757ddbf424aeb909dc952d7c40fc241"><td class="mdescLeft">&#160;</td><td class="mdescRight">you can define a custom VolumeControl implementation <br /></td></tr>
@@ -480,9 +492,6 @@ i2s_port_t&#160;</td><td class="memItemRight" valign="bottom"><b>i2s_port</b> = 
 <tr class="memitem:a24fb2e82758a45d60d820d8877153563"><td class="memItemLeft" align="right" valign="top"><a id="a24fb2e82758a45d60d820d8877153563"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>connection_rety_count</b> = 0</td></tr>
 <tr class="separator:a24fb2e82758a45d60d820d8877153563"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3004e94f98bb0505df3b0fdb8d342791"><td class="memItemLeft" align="right" valign="top"><a id="a3004e94f98bb0505df3b0fdb8d342791"></a>
-esp_bd_addr_t&#160;</td><td class="memItemRight" valign="bottom"><b>peer_bd_addr</b> = {0}</td></tr>
-<tr class="separator:a3004e94f98bb0505df3b0fdb8d342791"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aab99c6480299a2b88fa5b0e1ad01fee6"><td class="memItemLeft" align="right" valign="top"><a id="aab99c6480299a2b88fa5b0e1ad01fee6"></a>
 _lock_t&#160;</td><td class="memItemRight" valign="bottom"><b>s_volume_lock</b></td></tr>
 <tr class="separator:aab99c6480299a2b88fa5b0e1ad01fee6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -552,6 +561,9 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>i2s_stack_size</b> = 2
 <tr class="memitem:ae08f591ddf169cf7039eacf725f67a5c"><td class="memItemLeft" align="right" valign="top"><a id="ae08f591ddf169cf7039eacf725f67a5c"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>i2s_ringbuffer_size</b> = 4 * 1024</td></tr>
 <tr class="separator:ae08f591ddf169cf7039eacf725f67a5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1725eafed3ebe2412766d2cb86196133"><td class="memItemLeft" align="right" valign="top"><a id="a1725eafed3ebe2412766d2cb86196133"></a>
+UBaseType_t&#160;</td><td class="memItemRight" valign="bottom"><b>i2s_task_priority</b> = configMAX_PRIORITIES - 3</td></tr>
+<tr class="separator:a1725eafed3ebe2412766d2cb86196133"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acd684815c84a3d29da78377615878fd6"><td class="memItemLeft" align="right" valign="top"><a id="acd684815c84a3d29da78377615878fd6"></a>
 esp_bt_gap_cb_param_t::read_rssi_delta_param&#160;</td><td class="memItemRight" valign="bottom"><b>last_rssi_delta</b></td></tr>
 <tr class="separator:acd684815c84a3d29da78377615878fd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -561,9 +573,15 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>rssi_active</b> = fal
 <tr class="memitem:a281e8176841885f19fc0ee9f3a0f119b"><td class="memItemLeft" align="right" valign="top"><a id="a281e8176841885f19fc0ee9f3a0f119b"></a>
 void(*&#160;</td><td class="memItemRight" valign="bottom"><b>rssi_callbak</b> )(esp_bt_gap_cb_param_t::read_rssi_delta_param &amp;rssi) = nullptr</td></tr>
 <tr class="separator:a281e8176841885f19fc0ee9f3a0f119b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83cff3bdeb407a6c19618ba208438604"><td class="memItemLeft" align="right" valign="top"><a id="a83cff3bdeb407a6c19618ba208438604"></a>
+esp_bd_addr_t&#160;</td><td class="memItemRight" valign="bottom"><b>peer_bd_addr</b></td></tr>
+<tr class="separator:a83cff3bdeb407a6c19618ba208438604"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae07c63cafc1692273d6fa3758bd37678"><td class="memItemLeft" align="right" valign="top"><a id="ae07c63cafc1692273d6fa3758bd37678"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_auto_reconnect</b> =true</td></tr>
 <tr class="separator:ae07c63cafc1692273d6fa3758bd37678"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac59a58ee6e34bcf66d44b563350b01d7"><td class="memItemLeft" align="right" valign="top"><a id="ac59a58ee6e34bcf66d44b563350b01d7"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_connecting</b> = true</td></tr>
+<tr class="separator:ac59a58ee6e34bcf66d44b563350b01d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad04d173227dbd77d1956747cc10837c4"><td class="memItemLeft" align="right" valign="top"><a id="ad04d173227dbd77d1956747cc10837c4"></a>
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>debounce_ms</b> = 0</td></tr>
 <tr class="separator:ad04d173227dbd77d1956747cc10837c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -604,7 +622,7 @@ esp_a2d_audio_state_t&#160;</td><td class="memItemRight" valign="bottom"><b>audi
 esp_a2d_connection_state_t&#160;</td><td class="memItemRight" valign="bottom"><b>connection_state</b> = ESP_A2D_CONNECTION_STATE_DISCONNECTED</td></tr>
 <tr class="separator:ac11aaa770b2754858223a4bcdae83b5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2e218a2956baea1be621e8c31d2875c8"><td class="memItemLeft" align="right" valign="top"><a id="a2e218a2956baea1be621e8c31d2875c8"></a>
-UBaseType_t&#160;</td><td class="memItemRight" valign="bottom"><b>task_priority</b> = configMAX_PRIORITIES - 3</td></tr>
+UBaseType_t&#160;</td><td class="memItemRight" valign="bottom"><b>task_priority</b> = configMAX_PRIORITIES - 10</td></tr>
 <tr class="separator:a2e218a2956baea1be621e8c31d2875c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf02ccde9ba626cea64870a255672dba"><td class="memItemLeft" align="right" valign="top"><a id="aaf02ccde9ba626cea64870a255672dba"></a>
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>volume_value</b> = 0</td></tr>

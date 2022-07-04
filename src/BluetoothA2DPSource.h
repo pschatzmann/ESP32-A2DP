@@ -73,12 +73,12 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
 
     /// activate / deactivate the automatic reconnection to the last address (per default this is on)
     virtual void set_auto_reconnect(bool active){
-      this->is_auto_reconnect = active;
+      this->reconnect_status = active ? AutoReconnect:NoReconnect;
     }
 
     /// automatically tries to reconnect to the indicated address
     virtual void set_auto_reconnect(esp_bd_addr_t addr){
-      this->is_auto_reconnect = true;
+      set_auto_reconnect(true);
     	memcpy(last_connection,addr,ESP_BD_ADDR_LEN);
     }
 
@@ -225,6 +225,10 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
     virtual void bt_av_hdl_avrc_ct_evt(uint16_t event, void *p_param);
     /// resets the last connectioin so that we can reconnect
     virtual void reset_last_connection();
+
+    virtual esp_err_t esp_a2d_connect(esp_bd_addr_t peer) {
+        return esp_a2d_source_connect(peer);
+    }
 
 #ifdef ESP_IDF_4
     void bt_av_notify_evt_handler(uint8_t event, esp_avrc_rn_param_t *param);

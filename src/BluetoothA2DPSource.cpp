@@ -171,14 +171,14 @@ void BluetoothA2DPSource::start_raw(std::vector<const char*> names, music_data_c
     ESP_LOGD(BT_APP_TAG, "%s, ", __func__);
     this->bt_names = names;
     this->data_stream_callback = callback;
-    is_connecting = true;
+    is_autoreconnect_allowed = true;
     
     // get last connection if not available
     if(!has_last_connection()){
         get_last_connection();
     }
     // reset last connection if we do not reconnect
-    if (!is_auto_reconnect){
+    if (reconnect_status==NoReconnect){
         reset_last_connection();
     }
 
@@ -323,7 +323,9 @@ void BluetoothA2DPSource::bt_app_task_start_up(void)
 {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
     s_bt_app_task_queue = xQueueCreate(10, sizeof(app_msg_t));
-    xTaskCreate(ccall_bt_app_task_handler, "BtAppT", 2048, NULL, task_priority, &s_bt_app_task_handle);
+    if (xTaskCreatePinnedToCore(ccall_bt_app_task_handler, "BtAppT", 2048, NULL, task_priority, &s_bt_app_task_handle, task_core)!=pdPASS){
+          ESP_LOGE(BT_AV_TAG, "xTaskCreatePinnedToCore");      
+    }
     return;
 }
 
@@ -462,7 +464,7 @@ void BluetoothA2DPSource::bt_app_gap_callback(esp_bt_gap_cb_event_t event, esp_b
                     s_a2d_state = APP_AV_STATE_CONNECTING;
                     ESP_LOGI(BT_AV_TAG, "Device discovery stopped.");
                     ESP_LOGI(BT_AV_TAG, "a2dp connecting to peer: %s", s_peer_bdname);
-                    esp_a2d_source_connect(peer_bd_addr);
+                    connect_to(peer_bd_addr);
                 } else {
                     // not discovered, continue to discover
                     ESP_LOGI(BT_AV_TAG, "Device discovery failed, continue to discover...");
@@ -552,10 +554,10 @@ void BluetoothA2DPSource::bt_av_hdl_stack_evt(uint16_t event, void *p_param)
             esp_a2d_source_init();
             set_scan_mode_connectable(true);
 
-            if (is_auto_reconnect && has_last_connection()) {
+            if (reconnect_status==AutoReconnect && has_last_connection()) {
                 ESP_LOGW(BT_AV_TAG, "Reconnecting to %s", to_str(last_connection));
                 memcpy(peer_bd_addr,last_connection,ESP_BD_ADDR_LEN);
-                esp_a2d_source_connect(last_connection);
+                connect_to(last_connection);
                 s_a2d_state = APP_AV_STATE_CONNECTING;
             } else {
             //  start device discovery 
@@ -654,9 +656,14 @@ void BluetoothA2DPSource::bt_app_av_state_unconnected(uint16_t event, void *para
     switch (event) {
         case ESP_A2D_CONNECTION_STATE_EVT: {
                 esp_a2d_cb_param_t *a2d = (esp_a2d_cb_param_t *)(param);
-                if (a2d->conn_stat.state == ESP_A2D_CONNECTION_STATE_CONNECTED) {
-                    ESP_LOGI(BT_AV_TAG, "a2dp connected");
-                    s_a2d_state =  APP_AV_STATE_CONNECTED;
+                switch(a2d->conn_stat.state){
+                    case  ESP_A2D_CONNECTION_STATE_CONNECTED:
+                        ESP_LOGI(BT_AV_TAG, "ESP_A2D_CONNECTION_STATE_CONNECTED");
+                        s_a2d_state =  APP_AV_STATE_CONNECTED;
+                        break;
+                    case ESP_A2D_CONNECTION_STATE_DISCONNECTED:
+                        ESP_LOGI(BT_AV_TAG, "ESP_A2D_CONNECTION_STATE_DISCONNECTED");
+                        break;
                 }
             } break;
         case ESP_A2D_AUDIO_STATE_EVT:
@@ -664,10 +671,10 @@ void BluetoothA2DPSource::bt_app_av_state_unconnected(uint16_t event, void *para
         case ESP_A2D_MEDIA_CTRL_ACK_EVT:
             break;
         case BT_APP_HEART_BEAT_EVT: {
-            if (is_connecting){
+            if (is_autoreconnect_allowed){
                 uint8_t *p = peer_bd_addr;
                 ESP_LOGI(BT_AV_TAG, "a2dp connecting to peer: %02x:%02x:%02x:%02x:%02x:%02x", p[0], p[1], p[2], p[3], p[4], p[5]);
-                esp_a2d_source_connect(peer_bd_addr);
+                connect_to(peer_bd_addr);
                 s_a2d_state = APP_AV_STATE_CONNECTING;
                 s_connecting_heatbeat_count = 0;
             }

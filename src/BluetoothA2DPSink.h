@@ -204,9 +204,8 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     }
 
     /// Defines the number of times that the system tries to automatically reconnect to the last system
-    virtual void set_auto_reconnect(bool reconnect, bool afterNormalDisconnect=false, int count=AUTOCONNECT_TRY_NUM ){
-        is_auto_reconnect = reconnect;
-        reconnect_on_normal_disconnect = afterNormalDisconnect;
+    virtual void set_auto_reconnect(bool reconnect, int count=AUTOCONNECT_TRY_NUM ){
+        reconnect_status = reconnect ? AutoReconnect : NoReconnect;
         try_reconnect_max_count = count;
     }
 
@@ -272,8 +271,8 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     // protected data
     xQueueHandle app_task_queue = nullptr;
     xTaskHandle app_task_handle = nullptr;
-    xTaskHandle s_bt_i2s_task_handle = NULL;  /* handle of I2S task */
-    RingbufHandle_t s_ringbuf_i2s = NULL;     /* handle of ringbuffer for I2S */
+    xTaskHandle s_bt_i2s_task_handle = nullptr;  /* handle of I2S task */
+    RingbufHandle_t s_ringbuf_i2s = nullptr;     /* handle of ringbuffer for I2S */
 
     i2s_config_t i2s_config;
     i2s_pin_config_t pin_config;    
@@ -305,14 +304,12 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     void (*sample_rate_callback)(uint16_t rate)=nullptr;
     bool swap_left_right = false;
     int try_reconnect_max_count = AUTOCONNECT_TRY_NUM;
-    bool reconnect_on_normal_disconnect = false;
-    bool end_in_progress = false;
     int event_queue_size = 20;
     int event_stack_size = 3072;
     // I2S task
     int i2s_stack_size = 2048;
-    int i2s_ringbuffer_size = 4 * 1024;
-    UBaseType_t i2s_task_priority = configMAX_PRIORITIES - 3;
+    int i2s_ringbuffer_size = 3 * 5120;
+    UBaseType_t i2s_task_priority = configMAX_PRIORITIES - 0;
     // RSSI support
     esp_bt_gap_cb_param_t::read_rssi_delta_param last_rssi_delta;
     bool rssi_active = false;
@@ -342,7 +339,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     }
 
     virtual bool is_reconnect(esp_a2d_disc_rsn_t type) {
-        bool result = reconnect_on_normal_disconnect || type==ESP_A2D_DISC_RSN_ABNORMAL && is_auto_reconnect && has_last_connection();
+        bool result = is_autoreconnect_allowed && (reconnect_status==AutoReconnect || reconnect_status==IsReconnecting) && has_last_connection();
         ESP_LOGI(BT_AV_TAG,"is_reconnect: %s", result ? "true":"false");
         return result;
     }
@@ -390,7 +387,11 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     virtual void bt_i2s_task_shut_down(void);
     /// writes the data to i2s
     size_t i2s_write_data(const uint8_t* data, size_t item_size);
-        
+
+    virtual esp_err_t esp_a2d_connect(esp_bd_addr_t peer) {
+        return esp_a2d_sink_connect(peer);
+    }
+
 };
 
 

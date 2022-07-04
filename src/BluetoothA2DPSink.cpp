@@ -791,6 +791,9 @@ void BluetoothA2DPSink::handle_connection_state(uint16_t event, void *p_param){
 #ifdef ESP_IDF_4
                 // ask for the remote name
                 esp_err_t esp_err = esp_bt_gap_read_remote_name(a2d->conn_stat.remote_bda);
+                if (esp_err!=ESP_OK){
+                    ESP_LOGE(BT_AV_TAG,"esp_bt_gap_read_remote_name");
+                }
 #endif     
 
                 // Get RSSI

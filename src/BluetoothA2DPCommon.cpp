@@ -169,7 +169,6 @@ void BluetoothA2DPCommon::get_last_connection(){
     if (err == ESP_OK) {
         memcpy(last_connection,bda,size);
     } 
-    char bda_str[18];
     ESP_LOGD(BT_AV_TAG, "=> %s", to_str(last_connection));
 
 }

@@ -254,6 +254,11 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
         rssi_callbak = callback;
     }
 
+    /// Defines the delay that is added to delay the startup when we automatically reconnect
+    void set_reconnect_delay(int delay){
+        reconnect_delay = delay;
+    }
+
  #ifdef ESP_IDF_4
     /// Get the name of the connected source device
     virtual const char* get_connected_source_name();
@@ -314,6 +319,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     esp_bt_gap_cb_param_t::read_rssi_delta_param last_rssi_delta;
     bool rssi_active = false;
     void (*rssi_callbak)(esp_bt_gap_cb_param_t::read_rssi_delta_param &rssi) = nullptr;
+    int reconnect_delay = 1000;
 
 #ifdef ESP_IDF_4
     esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap;

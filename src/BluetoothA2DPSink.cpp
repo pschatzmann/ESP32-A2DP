@@ -146,10 +146,14 @@ void BluetoothA2DPSink::start(const char* name)
     if (reconnect_status==AutoReconnect){
         get_last_connection();
         memcpy(peer_bd_addr, last_connection,ESP_BD_ADDR_LEN);
+
         // force disconnect first so that a subsequent connect has a chance to work
 #ifdef A2DP_EXPERIMENTAL_DISCONNECT_ON_START
         ESP_LOGW(BT_AV_TAG,"A2DP_EXPERIMENTAL_DISCONNECT_ON_START");
         disconnect();
+#else
+        // trigger timeout
+        delay(reconnect_delay);
 #endif
     }
 

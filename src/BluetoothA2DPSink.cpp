@@ -1236,10 +1236,10 @@ void BluetoothA2DPSink::i2s_task_handler(void *arg)
 
         if (item_size != 0){
             i2s_write_data(data, item_size);
-            ESP_LOGI(BT_AV_TAG, "i2s_task_handler->%d",item_size);    
+            ESP_LOGD(BT_AV_TAG, "i2s_task_handler->%d",item_size);    
             vRingbufferReturnItem(s_ringbuf_i2s, (void *)data);
         } else {
-            ESP_LOGI(BT_AV_TAG, "i2s_task_handler-> no data");    
+            ESP_LOGD(BT_AV_TAG, "i2s_task_handler-> no data");    
         }
     }
 }

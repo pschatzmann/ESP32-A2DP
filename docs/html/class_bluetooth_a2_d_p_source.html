@@ -158,14 +158,17 @@ virtual int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el"
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#ab63e627832d6377be32dd700130bf0d8">disconnect</a> ()</td></tr>
 <tr class="memdesc:ab63e627832d6377be32dd700130bf0d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes the connection. <br /></td></tr>
 <tr class="separator:ab63e627832d6377be32dd700130bf0d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca9eebdad8d5525cb3dc1406e2c455c2"><td class="memItemLeft" align="right" valign="top"><a id="aca9eebdad8d5525cb3dc1406e2c455c2"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#aca9eebdad8d5525cb3dc1406e2c455c2">reconnect</a> ()</td></tr>
-<tr class="memdesc:aca9eebdad8d5525cb3dc1406e2c455c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reconnects to the last device. <br /></td></tr>
-<tr class="separator:aca9eebdad8d5525cb3dc1406e2c455c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9fdeaf51df336473114a5f8d593703b1"><td class="memItemLeft" align="right" valign="top"><a id="a9fdeaf51df336473114a5f8d593703b1"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a9fdeaf51df336473114a5f8d593703b1">set_connected</a> (bool active)</td></tr>
-<tr class="memdesc:a9fdeaf51df336473114a5f8d593703b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls disconnect or reconnect. <br /></td></tr>
-<tr class="separator:a9fdeaf51df336473114a5f8d593703b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac795a023f85438355a1b00644f2b040f"><td class="memItemLeft" align="right" valign="top"><a id="ac795a023f85438355a1b00644f2b040f"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#ac795a023f85438355a1b00644f2b040f">reconnect</a> ()</td></tr>
+<tr class="memdesc:ac795a023f85438355a1b00644f2b040f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reconnects to the last device. <br /></td></tr>
+<tr class="separator:ac795a023f85438355a1b00644f2b040f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a788d81fe538021f912d737de72ed6be6"><td class="memItemLeft" align="right" valign="top"><a id="a788d81fe538021f912d737de72ed6be6"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>connect_to</b> (esp_bd_addr_t peer)</td></tr>
+<tr class="separator:a788d81fe538021f912d737de72ed6be6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a8a860a325348cdf210637e8d1159e6"><td class="memItemLeft" align="right" valign="top"><a id="a0a8a860a325348cdf210637e8d1159e6"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a0a8a860a325348cdf210637e8d1159e6">set_connected</a> (bool active)</td></tr>
+<tr class="memdesc:a0a8a860a325348cdf210637e8d1159e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls disconnect or reconnect. <br /></td></tr>
+<tr class="separator:a0a8a860a325348cdf210637e8d1159e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a76e329bf0587ebf41792871acc69188b"><td class="memItemLeft" align="right" valign="top"><a id="a76e329bf0587ebf41792871acc69188b"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a76e329bf0587ebf41792871acc69188b">end</a> (bool releaseMemory=false)</td></tr>
 <tr class="memdesc:a76e329bf0587ebf41792871acc69188b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes the connection and stops A2DP. <br /></td></tr>
@@ -220,12 +223,16 @@ const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="separator:afa76a15aa8922301e72a745b540b040c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a68f9e168839f0faeb72705ccabbb6b7a"><td class="memItemLeft" align="right" valign="top"><a id="a68f9e168839f0faeb72705ccabbb6b7a"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a68f9e168839f0faeb72705ccabbb6b7a">set_task_priority</a> (UBaseType_t priority)</td></tr>
-<tr class="memdesc:a68f9e168839f0faeb72705ccabbb6b7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">defines the task priority (the default value is configMAX_PRIORITIES - 3) <br /></td></tr>
+<tr class="memdesc:a68f9e168839f0faeb72705ccabbb6b7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">defines the task priority (the default value is configMAX_PRIORITIES - 10) <br /></td></tr>
 <tr class="separator:a68f9e168839f0faeb72705ccabbb6b7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac21e1dbd2f5f475da871a7e778ba1a40"><td class="memItemLeft" align="right" valign="top"><a id="ac21e1dbd2f5f475da871a7e778ba1a40"></a>
 virtual esp_bd_addr_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#ac21e1dbd2f5f475da871a7e778ba1a40">get_last_peer_address</a> ()</td></tr>
 <tr class="memdesc:ac21e1dbd2f5f475da871a7e778ba1a40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides the address of the last device. <br /></td></tr>
 <tr class="separator:ac21e1dbd2f5f475da871a7e778ba1a40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a694940fad2a2d498875cfbdf52eea58b"><td class="memItemLeft" align="right" valign="top"><a id="a694940fad2a2d498875cfbdf52eea58b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a694940fad2a2d498875cfbdf52eea58b">set_task_core</a> (BaseType_t core)</td></tr>
+<tr class="memdesc:a694940fad2a2d498875cfbdf52eea58b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the core which is used to start the tasks (to process the events and audio queue) <br /></td></tr>
+<tr class="separator:a694940fad2a2d498875cfbdf52eea58b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -302,6 +309,9 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_source.html#a190c59464f53e2d4c3f121afbb7a3c21">reset_last_connection</a> ()</td></tr>
 <tr class="memdesc:a190c59464f53e2d4c3f121afbb7a3c21"><td class="mdescLeft">&#160;</td><td class="mdescRight">resets the last connectioin so that we can reconnect <br /></td></tr>
 <tr class="separator:a190c59464f53e2d4c3f121afbb7a3c21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2626298e32edfc399ddb0bf5efc32fc7"><td class="memItemLeft" align="right" valign="top"><a id="a2626298e32edfc399ddb0bf5efc32fc7"></a>
+virtual esp_err_t&#160;</td><td class="memItemRight" valign="bottom"><b>esp_a2d_connect</b> (esp_bd_addr_t peer)</td></tr>
+<tr class="separator:a2626298e32edfc399ddb0bf5efc32fc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3771c6d300c7709f2b76ab8847574cf4"><td class="memItemLeft" align="right" valign="top"><a id="a3771c6d300c7709f2b76ab8847574cf4"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>get_last_connection</b> ()</td></tr>
 <tr class="separator:a3771c6d300c7709f2b76ab8847574cf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -311,9 +321,6 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>set_last_conn
 <tr class="memitem:a962cc9aef396b06c7eb6f56462a743ac"><td class="memItemLeft" align="right" valign="top"><a id="a962cc9aef396b06c7eb6f56462a743ac"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>clean_last_connection</b> ()</td></tr>
 <tr class="separator:a962cc9aef396b06c7eb6f56462a743ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa3d74fa80f9992e6f831bd0ba4c06339"><td class="memItemLeft" align="right" valign="top"><a id="aa3d74fa80f9992e6f831bd0ba4c06339"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>connect_to_last_device</b> ()</td></tr>
-<tr class="separator:aa3d74fa80f9992e6f831bd0ba4c06339"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4f98f07ba4cf5962a7cdda50317b3112"><td class="memItemLeft" align="right" valign="top"><a id="a4f98f07ba4cf5962a7cdda50317b3112"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>has_last_connection</b> ()</td></tr>
 <tr class="separator:a4f98f07ba4cf5962a7cdda50317b3112"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -399,12 +406,18 @@ music_data_cb_t&#160;</td><td class="memItemRight" valign="bottom"><b>data_strea
 <tr class="memitem:a83cff3bdeb407a6c19618ba208438604"><td class="memItemLeft" align="right" valign="top"><a id="a83cff3bdeb407a6c19618ba208438604"></a>
 esp_bd_addr_t&#160;</td><td class="memItemRight" valign="bottom"><b>peer_bd_addr</b></td></tr>
 <tr class="separator:a83cff3bdeb407a6c19618ba208438604"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae07c63cafc1692273d6fa3758bd37678"><td class="memItemLeft" align="right" valign="top"><a id="ae07c63cafc1692273d6fa3758bd37678"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_auto_reconnect</b> =true</td></tr>
-<tr class="separator:ae07c63cafc1692273d6fa3758bd37678"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac59a58ee6e34bcf66d44b563350b01d7"><td class="memItemLeft" align="right" valign="top"><a id="ac59a58ee6e34bcf66d44b563350b01d7"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_connecting</b> = true</td></tr>
-<tr class="separator:ac59a58ee6e34bcf66d44b563350b01d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e0c2fae7d742947d47bae41a690a712"><td class="memItemLeft" align="right" valign="top"><a id="a0e0c2fae7d742947d47bae41a690a712"></a>
+ReconnectStatus&#160;</td><td class="memItemRight" valign="bottom"><b>reconnect_status</b> = AutoReconnect</td></tr>
+<tr class="separator:a0e0c2fae7d742947d47bae41a690a712"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa350c922076ae8584f26d1693edc0ba8"><td class="memItemLeft" align="right" valign="top"><a id="aa350c922076ae8584f26d1693edc0ba8"></a>
+unsigned long&#160;</td><td class="memItemRight" valign="bottom"><b>reconnect_timout</b> =0</td></tr>
+<tr class="separator:aa350c922076ae8584f26d1693edc0ba8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa84a9c336d81ce5f8a64ce9f3b03fdc6"><td class="memItemLeft" align="right" valign="top"><a id="aa84a9c336d81ce5f8a64ce9f3b03fdc6"></a>
+unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>default_reconnect_timout</b> =10000</td></tr>
+<tr class="separator:aa84a9c336d81ce5f8a64ce9f3b03fdc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad383ee1fca4929326b02b671aa03ee44"><td class="memItemLeft" align="right" valign="top"><a id="ad383ee1fca4929326b02b671aa03ee44"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_autoreconnect_allowed</b> = false</td></tr>
+<tr class="separator:ad383ee1fca4929326b02b671aa03ee44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad04d173227dbd77d1956747cc10837c4"><td class="memItemLeft" align="right" valign="top"><a id="ad04d173227dbd77d1956747cc10837c4"></a>
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>debounce_ms</b> = 0</td></tr>
 <tr class="separator:ad04d173227dbd77d1956747cc10837c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -453,6 +466,9 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>volume_value</b> =
 <tr class="memitem:aa3f1abcd092657807bd4a4cab205ba88"><td class="memItemLeft" align="right" valign="top"><a id="aa3f1abcd092657807bd4a4cab205ba88"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_volume_used</b> = false</td></tr>
 <tr class="separator:aa3f1abcd092657807bd4a4cab205ba88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b0acd3b6c295785607d326128eaa52e"><td class="memItemLeft" align="right" valign="top"><a id="a5b0acd3b6c295785607d326128eaa52e"></a>
+BaseType_t&#160;</td><td class="memItemRight" valign="bottom"><b>task_core</b> = 1</td></tr>
+<tr class="separator:a5b0acd3b6c295785607d326128eaa52e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>

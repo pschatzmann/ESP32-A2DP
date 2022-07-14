@@ -83,6 +83,7 @@ typedef struct {
 #define BT_APP_TAG       "BT_API"
 #define APP_RC_CT_TL_GET_CAPS   (0)
 
+enum ReconnectStatus { NoReconnect, AutoReconnect, IsReconnecting};
 
 
 /** 
@@ -96,26 +97,16 @@ class BluetoothA2DPCommon {
         virtual ~BluetoothA2DPCommon() = default;
     
         /// activate / deactivate the automatic reconnection to the last address (per default this is on)
-        void set_auto_reconnect(bool active){
-            this->is_auto_reconnect = active;
-        }
-
+        void set_auto_reconnect(bool active);
         /// Closes the connection
         virtual void disconnect();
 
         /// Reconnects to the last device
-        virtual void reconnect() {
-            is_connecting = true;
-            esp_a2d_source_connect(peer_bd_addr);
-        }
+        virtual bool reconnect();
+
+        virtual bool connect_to(esp_bd_addr_t peer);
         /// Calls disconnect or reconnect
-        virtual void set_connected(bool active){
-            if (active){
-                reconnect();
-            } else {
-                disconnect();
-            }
-        }
+        virtual void set_connected(bool active);
 
         /// Closes the connection and stops A2DP
         virtual void end(bool releaseMemory=false);
@@ -169,7 +160,7 @@ class BluetoothA2DPCommon {
         /// converts a esp_bd_addr_t to a string - the string is 18 characters long! 
         const char* to_str(esp_bd_addr_t bda);
 
-        /// defines the task priority (the default value is configMAX_PRIORITIES - 3)
+        /// defines the task priority (the default value is configMAX_PRIORITIES - 10)
         void set_task_priority(UBaseType_t priority){
             task_priority = priority;
         }
@@ -177,6 +168,11 @@ class BluetoothA2DPCommon {
         /// Provides the address of the last device
         virtual esp_bd_addr_t* get_last_peer_address() {
             return &last_connection;
+        }
+
+        /// Defines the core which is used to start the tasks (to process the events and audio queue)
+        void set_task_core(BaseType_t core){
+            task_core = core;
         }
 
 
@@ -187,8 +183,10 @@ class BluetoothA2DPCommon {
 
     protected:
         esp_bd_addr_t peer_bd_addr;
-        bool is_auto_reconnect=true;
-        bool is_connecting = true;
+        ReconnectStatus reconnect_status = AutoReconnect;
+        unsigned long reconnect_timout=0;
+        unsigned int default_reconnect_timout=10000;
+        bool is_autoreconnect_allowed = false; 
         uint32_t debounce_ms = 0;
         A2DPDefaultVolumeControl default_volume_control;
         A2DPVolumeControl *volume_control_ptr = nullptr;
@@ -206,16 +204,17 @@ class BluetoothA2DPCommon {
         // volume 
         uint8_t volume_value = 0;
         bool is_volume_used = false;
+        BaseType_t task_core = 1;
 
 #ifdef ESP_IDF_4
         esp_bt_discovery_mode_t discoverability = ESP_BT_GENERAL_DISCOVERABLE;
 #endif
 
+        virtual esp_err_t esp_a2d_connect(esp_bd_addr_t peer) = 0;
         virtual const char* last_bda_nvs_name() = 0;
         virtual void get_last_connection();
         virtual void set_last_connection(esp_bd_addr_t bda);
         virtual void clean_last_connection();
-        virtual void connect_to_last_device();
         virtual bool has_last_connection();
         // change the scan mode
         virtual void set_scan_mode_connectable(bool connectable);
@@ -224,8 +223,5 @@ class BluetoothA2DPCommon {
         virtual A2DPVolumeControl* volume_control() {
             return volume_control_ptr !=nullptr ? volume_control_ptr : &default_volume_control;
         }
-
-
-
 };
 

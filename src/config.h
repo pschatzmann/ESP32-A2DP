@@ -1,6 +1,6 @@
 #pragma once
 
-#define DEPRECATED __attribute__((deprecated))
+#define A2DP_DEPRECATED __attribute__((deprecated))
 
 // Enable ESP_IDF_4 if we are using a current version of ESP IDF e.g. 4.3
 // ESP Arduino 2.0 is using ESP IDF 4.4

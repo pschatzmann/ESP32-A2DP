@@ -204,9 +204,8 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     }
 
     /// Defines the number of times that the system tries to automatically reconnect to the last system
-    virtual void set_auto_reconnect(bool reconnect, bool afterNormalDisconnect=false, int count=AUTOCONNECT_TRY_NUM ){
-        is_auto_reconnect = reconnect;
-        reconnect_on_normal_disconnect = afterNormalDisconnect;
+    virtual void set_auto_reconnect(bool reconnect, int count=AUTOCONNECT_TRY_NUM ){
+        reconnect_status = reconnect ? AutoReconnect : NoReconnect;
         try_reconnect_max_count = count;
     }
 
@@ -225,20 +224,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
         event_stack_size = size;
     }
 
-    /// Defines the stack size of the i2s task (in bytes)
-    void set_i2s_stack_size(int size){
-        i2s_stack_size = size;
-    }
-
-    /// Defines the ringbuffer size used by the i2s task (in bytes)
-    void set_i2s_ringbuffer_size(int size){
-        i2s_ringbuffer_size = size;
-    }
-
-    /// Defines the priority of the I2S task
-    void set_i2s_task_priority(UBaseType_t prio){
-        i2s_task_priority = prio;
-    }
 
     /// Activates the rssi reporting
     void set_rssi_active(bool active){
@@ -253,6 +238,11 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     /// Defines the callback that is called when we get an new rssi value
     void set_rssi_callback(void (*callback)(esp_bt_gap_cb_param_t::read_rssi_delta_param &rssi)){
         rssi_callbak = callback;
+    }
+
+    /// Defines the delay that is added to delay the startup when we automatically reconnect
+    void set_reconnect_delay(int delay){
+        reconnect_delay = delay;
     }
 
  #ifdef ESP_IDF_4
@@ -272,8 +262,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     // protected data
     xQueueHandle app_task_queue = nullptr;
     xTaskHandle app_task_handle = nullptr;
-    xTaskHandle s_bt_i2s_task_handle = NULL;  /* handle of I2S task */
-    RingbufHandle_t s_ringbuf_i2s = NULL;     /* handle of ringbuffer for I2S */
 
     i2s_config_t i2s_config;
     i2s_pin_config_t pin_config;    
@@ -305,18 +293,14 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     void (*sample_rate_callback)(uint16_t rate)=nullptr;
     bool swap_left_right = false;
     int try_reconnect_max_count = AUTOCONNECT_TRY_NUM;
-    bool reconnect_on_normal_disconnect = false;
-    bool end_in_progress = false;
     int event_queue_size = 20;
     int event_stack_size = 3072;
-    // I2S task
-    int i2s_stack_size = 2048;
-    int i2s_ringbuffer_size = 4 * 1024;
-    UBaseType_t i2s_task_priority = configMAX_PRIORITIES - 3;
+   
     // RSSI support
     esp_bt_gap_cb_param_t::read_rssi_delta_param last_rssi_delta;
     bool rssi_active = false;
     void (*rssi_callbak)(esp_bt_gap_cb_param_t::read_rssi_delta_param &rssi) = nullptr;
+    int reconnect_delay = 1000;
 
 #ifdef ESP_IDF_4
     esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap;
@@ -342,7 +326,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     }
 
     virtual bool is_reconnect(esp_a2d_disc_rsn_t type) {
-        bool result = reconnect_on_normal_disconnect || type==ESP_A2D_DISC_RSN_ABNORMAL && is_auto_reconnect && has_last_connection();
+        bool result = is_autoreconnect_allowed && (reconnect_status==AutoReconnect || reconnect_status==IsReconnecting) && has_last_connection();
         ESP_LOGI(BT_AV_TAG,"is_reconnect: %s", result ? "true":"false");
         return result;
     }
@@ -383,33 +367,25 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     virtual void av_notify_evt_handler(uint8_t event_id, uint32_t event_parameter);
 #endif    
 
-    /// i2s task with ringubffer
-    virtual size_t write_ringbuf(const uint8_t *data, size_t size);
-    virtual void i2s_task_handler(void *arg);
-    virtual void bt_i2s_task_start_up(void);
-    virtual void bt_i2s_task_shut_down(void);
+    /// output audio data e.g. to i2s or to queue
+    virtual size_t write_audio(const uint8_t *data, size_t size){
+        return i2s_write_data(data, size);
+    }
+
+    /// dummy functions needed for BluetoothA2DPSinkQueued
+    virtual void i2s_task_handler(void *arg) {}
+    virtual void bt_i2s_task_start_up(void) {}
+    virtual void bt_i2s_task_shut_down(void) {}
+
     /// writes the data to i2s
     size_t i2s_write_data(const uint8_t* data, size_t item_size);
-        
+
+    virtual esp_err_t esp_a2d_connect(esp_bd_addr_t peer) {
+        return esp_a2d_sink_connect(peer);
+    }
+
 };
 
-
-/**
- * @brief BluetoothA2DPSinkMinRAM. The BluetoothA2DPSink is using a separate Task with an additinal Queue to write the I2S data.
- * This implementation is using the legacy logic which writes directly to I2S w/o task. This leaves more RAM available to the
- * application.
- * 
- */
-class BluetoothA2DPSinkMinRAM : public BluetoothA2DPSink {
-    public:
-        BluetoothA2DPSinkMinRAM() = default;
-        void bt_i2s_task_start_up(void) override {}
-        void bt_i2s_task_shut_down(void) override {}
-        void i2s_task_handler(void *arg) override {}
-        size_t write_ringbuf(const uint8_t *data, size_t size){
-            return i2s_write_data(data, size);
-        }
-};
 
 
 #ifdef __cplusplus

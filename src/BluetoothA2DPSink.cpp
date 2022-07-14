@@ -655,7 +655,6 @@ void BluetoothA2DPSink::handle_audio_state(uint16_t event, void *p_param){
     if (is_i2s_output){
         if (ESP_A2D_AUDIO_STATE_STARTED == a2d->audio_stat.state) { 
             m_pkt_cnt = 0; 
-            //bt_i2s_task_start_up();
             ESP_LOGI(BT_AV_TAG,"i2s_start");
             if (i2s_start(i2s_port)!=ESP_OK){
                 ESP_LOGE(BT_AV_TAG, "i2s_start");
@@ -665,7 +664,6 @@ void BluetoothA2DPSink::handle_audio_state(uint16_t event, void *p_param){
             ESP_LOGW(BT_AV_TAG,"i2s_stop");
             i2s_stop(i2s_port);
             i2s_zero_dma_buffer(i2s_port);
-            //bt_i2s_task_shut_down();
         }
     }
 }
@@ -1033,7 +1031,7 @@ void BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) {
 
     if (is_i2s_output) {
         // put data into ringbuffer
-        write_ringbuf(data, len);
+        write_audio(data, len);
     }
 
     // data_received callback
@@ -1213,26 +1211,6 @@ void ccall_av_hdl_a2d_evt(uint16_t event, void *param){
     }
 }
 
-/* NEW I2S Task & ring buffer */
-
-void BluetoothA2DPSink::i2s_task_handler(void *arg)
-{
-    uint8_t *data = NULL;
-    size_t item_size = 0;
-
-    while (true) {
-        /* receive data from ringbuffer and write it to I2S DMA transmit buffer */
-        data = (uint8_t *)xRingbufferReceive(s_ringbuf_i2s, &item_size, (portTickType)portMAX_DELAY);
-
-        if (item_size != 0){
-            i2s_write_data(data, item_size);
-            ESP_LOGD(BT_AV_TAG, "i2s_task_handler->%d",item_size);    
-            vRingbufferReturnItem(s_ringbuf_i2s, (void *)data);
-        } else {
-            ESP_LOGD(BT_AV_TAG, "i2s_task_handler-> no data");    
-        }
-    }
-}
 
 size_t BluetoothA2DPSink::i2s_write_data(const uint8_t* data, size_t item_size){
     size_t i2s_bytes_written = 0;
@@ -1270,50 +1248,6 @@ size_t BluetoothA2DPSink::i2s_write_data(const uint8_t* data, size_t item_size){
 }
 
 
-size_t BluetoothA2DPSink::write_ringbuf(const uint8_t *data, size_t size)
-{
-    size_t result = size;
-    if (s_ringbuf_i2s==nullptr){
-        ESP_LOGE(BT_AV_TAG, "s_ringbuf_i2s is null");    
-        result = 0;
-    }
-
-    BaseType_t rc = xRingbufferSend(s_ringbuf_i2s, (void *)data, size, (portTickType)portMAX_DELAY);
-    if (rc==pdFALSE){
-        ESP_LOGE(BT_AV_TAG, "xRingbufferSend: %d", size);    
-        result = 0;
-    } 
-    return result;
-}
-
-void BluetoothA2DPSink::bt_i2s_task_start_up(void)
-{
-    if ((s_ringbuf_i2s = xRingbufferCreate(i2s_ringbuffer_size, RINGBUF_TYPE_BYTEBUF)) == NULL) {
-        ESP_LOGE(BT_AV_TAG, "xRingbufferCreate");    
-        return;
-    }
-    BaseType_t result = xTaskCreatePinnedToCore(ccall_i2s_task_handler, "BtI2STask", i2s_stack_size, NULL, i2s_task_priority, &s_bt_i2s_task_handle, task_core);
-    if (result!=pdPASS){
-        ESP_LOGE(BT_AV_TAG, "xTaskCreatePinnedToCore");
-    } else {
-        ESP_LOGI(BT_AV_TAG, "BtI2STask Started");
-    }
-
-}
-
-void BluetoothA2DPSink::bt_i2s_task_shut_down(void)
-{
-    if (s_bt_i2s_task_handle) {
-        vTaskDelete(s_bt_i2s_task_handle);
-        s_bt_i2s_task_handle = nullptr;
-    }
-    if (s_ringbuf_i2s) {
-        vRingbufferDelete(s_ringbuf_i2s);
-        s_ringbuf_i2s = nullptr;
-    }
-
-    ESP_LOGI(BT_AV_TAG, "BtI2STask shutdown");
-}
 
 //------------------------------------------------------------
 // ==> Methods which are only supported in new ESP Release 4

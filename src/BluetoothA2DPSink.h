@@ -224,20 +224,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
         event_stack_size = size;
     }
 
-    /// Defines the stack size of the i2s task (in bytes)
-    void set_i2s_stack_size(int size){
-        i2s_stack_size = size;
-    }
-
-    /// Defines the ringbuffer size used by the i2s task (in bytes)
-    void set_i2s_ringbuffer_size(int size){
-        i2s_ringbuffer_size = size;
-    }
-
-    /// Defines the priority of the I2S task
-    void set_i2s_task_priority(UBaseType_t prio){
-        i2s_task_priority = prio;
-    }
 
     /// Activates the rssi reporting
     void set_rssi_active(bool active){
@@ -276,8 +262,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     // protected data
     xQueueHandle app_task_queue = nullptr;
     xTaskHandle app_task_handle = nullptr;
-    xTaskHandle s_bt_i2s_task_handle = nullptr;  /* handle of I2S task */
-    RingbufHandle_t s_ringbuf_i2s = nullptr;     /* handle of ringbuffer for I2S */
 
     i2s_config_t i2s_config;
     i2s_pin_config_t pin_config;    
@@ -311,10 +295,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     int try_reconnect_max_count = AUTOCONNECT_TRY_NUM;
     int event_queue_size = 20;
     int event_stack_size = 3072;
-    // I2S task
-    int i2s_stack_size = 2048;
-    int i2s_ringbuffer_size = 3 * 5120;
-    UBaseType_t i2s_task_priority = configMAX_PRIORITIES - 0;
+   
     // RSSI support
     esp_bt_gap_cb_param_t::read_rssi_delta_param last_rssi_delta;
     bool rssi_active = false;
@@ -386,11 +367,16 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     virtual void av_notify_evt_handler(uint8_t event_id, uint32_t event_parameter);
 #endif    
 
-    /// i2s task with ringubffer
-    virtual size_t write_ringbuf(const uint8_t *data, size_t size);
-    virtual void i2s_task_handler(void *arg);
-    virtual void bt_i2s_task_start_up(void);
-    virtual void bt_i2s_task_shut_down(void);
+    /// output audio data e.g. to i2s or to queue
+    virtual size_t write_audio(const uint8_t *data, size_t size){
+        return i2s_write_data(data, size);
+    }
+
+    /// dummy functions needed for BluetoothA2DPSinkQueued
+    virtual void i2s_task_handler(void *arg) {}
+    virtual void bt_i2s_task_start_up(void) {}
+    virtual void bt_i2s_task_shut_down(void) {}
+
     /// writes the data to i2s
     size_t i2s_write_data(const uint8_t* data, size_t item_size);
 
@@ -400,23 +386,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
 
 };
 
-
-/**
- * @brief BluetoothA2DPSinkMinRAM. The BluetoothA2DPSink is using a separate Task with an additinal Queue to write the I2S data.
- * This implementation is using the legacy logic which writes directly to I2S w/o task. This leaves more RAM available to the
- * application.
- * 
- */
-class BluetoothA2DPSinkMinRAM : public BluetoothA2DPSink {
-    public:
-        BluetoothA2DPSinkMinRAM() = default;
-        void bt_i2s_task_start_up(void) override {}
-        void bt_i2s_task_shut_down(void) override {}
-        void i2s_task_handler(void *arg) override {}
-        size_t write_ringbuf(const uint8_t *data, size_t size){
-            return i2s_write_data(data, size);
-        }
-};
 
 
 #ifdef __cplusplus

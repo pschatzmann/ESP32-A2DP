@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Arduino A2DP: BluetoothA2DPSink Class Reference</title>
+<title>Arduino A2DP: BluetoothA2DPSinkQueued Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -66,37 +66,41 @@ $(function() {
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="#pro-static-attribs">Static Protected Attributes</a> &#124;
-<a href="#friends">Friends</a> &#124;
-<a href="class_bluetooth_a2_d_p_sink-members.html">List of all members</a>  </div>
+<a href="class_bluetooth_a2_d_p_sink_queued-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">BluetoothA2DPSink Class Reference</div>  </div>
+<div class="title">BluetoothA2DPSinkQueued Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>A2DP Bluethooth Sink - We initialize and start the Bluetooth A2DP Sink. The example <a href="https://github.com/espressif/esp-idf/tree/master/examples/bluetooth/bluedroid/classic_bt/a2dp_sink">https://github.com/espressif/esp-idf/tree/master/examples/bluetooth/bluedroid/classic_bt/a2dp_sink</a> was refactered into a C++ class.  
- <a href="class_bluetooth_a2_d_p_sink.html#details">More...</a></p>
+<p>The <a class="el" href="class_bluetooth_a2_d_p_sink_queued.html" title="The BluetoothA2DPSinkQueued is using a separate Task with an additinal Queue to write the I2S data....">BluetoothA2DPSinkQueued</a> is using a separate Task with an additinal Queue to write the I2S data. application.  
+ <a href="class_bluetooth_a2_d_p_sink_queued.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="_bluetooth_a2_d_p_sink_8h_source.html">BluetoothA2DPSink.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="_bluetooth_a2_d_p_sink_queued_8h_source.html">BluetoothA2DPSinkQueued.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for BluetoothA2DPSink:</div>
+Inheritance diagram for BluetoothA2DPSinkQueued:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="class_bluetooth_a2_d_p_sink.png" usemap="#BluetoothA2DPSink_map" alt=""/>
-  <map id="BluetoothA2DPSink_map" name="BluetoothA2DPSink_map">
+  <img src="class_bluetooth_a2_d_p_sink_queued.png" usemap="#BluetoothA2DPSinkQueued_map" alt=""/>
+  <map id="BluetoothA2DPSinkQueued_map" name="BluetoothA2DPSinkQueued_map">
+<area href="class_bluetooth_a2_d_p_sink.html" title="A2DP Bluethooth Sink - We initialize and start the Bluetooth A2DP Sink. The example https://github...." alt="BluetoothA2DPSink" shape="rect" coords="0,56,166,80"/>
 <area href="class_bluetooth_a2_d_p_common.html" title="Common Bluetooth A2DP functions." alt="BluetoothA2DPCommon" shape="rect" coords="0,0,166,24"/>
-<area href="class_bluetooth_a2_d_p_sink_queued.html" title="The BluetoothA2DPSinkQueued is using a separate Task with an additinal Queue to write the I2S data...." alt="BluetoothA2DPSinkQueued" shape="rect" coords="0,112,166,136"/>
   </map>
 </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a2a383635d7b050833f56ee79867716bd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a2a383635d7b050833f56ee79867716bd">BluetoothA2DPSink</a> ()</td></tr>
-<tr class="memdesc:a2a383635d7b050833f56ee79867716bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="class_bluetooth_a2_d_p_sink.html#a2a383635d7b050833f56ee79867716bd">More...</a><br /></td></tr>
-<tr class="separator:a2a383635d7b050833f56ee79867716bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f83dea1a97baeb360e4e1221c0aeaa9"><td class="memItemLeft" align="right" valign="top"><a id="a0f83dea1a97baeb360e4e1221c0aeaa9"></a>
-virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a0f83dea1a97baeb360e4e1221c0aeaa9">~BluetoothA2DPSink</a> ()</td></tr>
-<tr class="memdesc:a0f83dea1a97baeb360e4e1221c0aeaa9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor - stops the playback and releases all resources. <br /></td></tr>
-<tr class="separator:a0f83dea1a97baeb360e4e1221c0aeaa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8450f09c7af817cacc78ae9a3544ee28"><td class="memItemLeft" align="right" valign="top"><a id="a8450f09c7af817cacc78ae9a3544ee28"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink_queued.html#a8450f09c7af817cacc78ae9a3544ee28">set_i2s_stack_size</a> (int size)</td></tr>
+<tr class="memdesc:a8450f09c7af817cacc78ae9a3544ee28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the stack size of the i2s task (in bytes) <br /></td></tr>
+<tr class="separator:a8450f09c7af817cacc78ae9a3544ee28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc0410c71c7278cd3a858d037fdc1edc"><td class="memItemLeft" align="right" valign="top"><a id="acc0410c71c7278cd3a858d037fdc1edc"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink_queued.html#acc0410c71c7278cd3a858d037fdc1edc">set_i2s_ringbuffer_size</a> (int size)</td></tr>
+<tr class="memdesc:acc0410c71c7278cd3a858d037fdc1edc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the ringbuffer size used by the i2s task (in bytes) <br /></td></tr>
+<tr class="separator:acc0410c71c7278cd3a858d037fdc1edc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a430f730deb72b7edf5601e740c9b8563"><td class="memItemLeft" align="right" valign="top"><a id="a430f730deb72b7edf5601e740c9b8563"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink_queued.html#a430f730deb72b7edf5601e740c9b8563">set_i2s_task_priority</a> (UBaseType_t prio)</td></tr>
+<tr class="memdesc:a430f730deb72b7edf5601e740c9b8563"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the priority of the I2S task. <br /></td></tr>
+<tr class="separator:a430f730deb72b7edf5601e740c9b8563"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af7ce8131af4f085e94eb81e3fcbfc4af"><td class="memItemLeft" align="right" valign="top"><a id="af7ce8131af4f085e94eb81e3fcbfc4af"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#af7ce8131af4f085e94eb81e3fcbfc4af">set_pin_config</a> (i2s_pin_config_t pin_config)</td></tr>
 <tr class="memdesc:af7ce8131af4f085e94eb81e3fcbfc4af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define the pins. <br /></td></tr>
@@ -236,6 +240,10 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#af7d10cfe632a3c2f95409f6a23daecdd">set_auto_reconnect</a> (bool <a class="el" href="class_bluetooth_a2_d_p_common.html#ac795a023f85438355a1b00644f2b040f">reconnect</a>, int count=AUTOCONNECT_TRY_NUM)</td></tr>
 <tr class="memdesc:af7d10cfe632a3c2f95409f6a23daecdd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the number of times that the system tries to automatically reconnect to the last system. <br /></td></tr>
 <tr class="separator:af7d10cfe632a3c2f95409f6a23daecdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a537d576b12d1158eb0681a6195b258de"><td class="memItemLeft" align="right" valign="top"><a id="a537d576b12d1158eb0681a6195b258de"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a537d576b12d1158eb0681a6195b258de">set_auto_reconnect</a> (bool active)</td></tr>
+<tr class="memdesc:a537d576b12d1158eb0681a6195b258de"><td class="mdescLeft">&#160;</td><td class="mdescRight">activate / deactivate the automatic reconnection to the last address (per default this is on) <br /></td></tr>
+<tr class="separator:a537d576b12d1158eb0681a6195b258de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac08fff859e0ccfbb12cbb6b119dba438"><td class="memItemLeft" align="right" valign="top"><a id="ac08fff859e0ccfbb12cbb6b119dba438"></a>
 virtual esp_bd_addr_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#ac08fff859e0ccfbb12cbb6b119dba438">get_current_peer_address</a> ()</td></tr>
 <tr class="memdesc:ac08fff859e0ccfbb12cbb6b119dba438"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides the address of the connected device. <br /></td></tr>
@@ -264,10 +272,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a96b4fabd27e7952fc3ea5edca3b95cbb">set_reconnect_delay</a> (int delay)</td></tr>
 <tr class="memdesc:a96b4fabd27e7952fc3ea5edca3b95cbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the delay that is added to delay the startup when we automatically reconnect. <br /></td></tr>
 <tr class="separator:a96b4fabd27e7952fc3ea5edca3b95cbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a537d576b12d1158eb0681a6195b258de"><td class="memItemLeft" align="right" valign="top"><a id="a537d576b12d1158eb0681a6195b258de"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a537d576b12d1158eb0681a6195b258de">set_auto_reconnect</a> (bool active)</td></tr>
-<tr class="memdesc:a537d576b12d1158eb0681a6195b258de"><td class="mdescLeft">&#160;</td><td class="mdescRight">activate / deactivate the automatic reconnection to the last address (per default this is on) <br /></td></tr>
-<tr class="separator:a537d576b12d1158eb0681a6195b258de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab63e627832d6377be32dd700130bf0d8"><td class="memItemLeft" align="right" valign="top"><a id="ab63e627832d6377be32dd700130bf0d8"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#ab63e627832d6377be32dd700130bf0d8">disconnect</a> ()</td></tr>
 <tr class="memdesc:ab63e627832d6377be32dd700130bf0d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes the connection. <br /></td></tr>
@@ -338,6 +342,20 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
+<tr class="memitem:aeba0334f407a691b0fdf3fac3e0697df"><td class="memItemLeft" align="right" valign="top"><a id="aeba0334f407a691b0fdf3fac3e0697df"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>bt_i2s_task_start_up</b> (void) override</td></tr>
+<tr class="separator:aeba0334f407a691b0fdf3fac3e0697df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11c39dd08fe3c82f0db3663862729080"><td class="memItemLeft" align="right" valign="top"><a id="a11c39dd08fe3c82f0db3663862729080"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>bt_i2s_task_shut_down</b> (void) override</td></tr>
+<tr class="separator:a11c39dd08fe3c82f0db3663862729080"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a914815f36b15b259d328da372b6c3d08"><td class="memItemLeft" align="right" valign="top"><a id="a914815f36b15b259d328da372b6c3d08"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink_queued.html#a914815f36b15b259d328da372b6c3d08">i2s_task_handler</a> (void *arg) override</td></tr>
+<tr class="memdesc:a914815f36b15b259d328da372b6c3d08"><td class="mdescLeft">&#160;</td><td class="mdescRight">dummy functions needed for <a class="el" href="class_bluetooth_a2_d_p_sink_queued.html" title="The BluetoothA2DPSinkQueued is using a separate Task with an additinal Queue to write the I2S data....">BluetoothA2DPSinkQueued</a> <br /></td></tr>
+<tr class="separator:a914815f36b15b259d328da372b6c3d08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1846088388d294f04469885b9bb560e4"><td class="memItemLeft" align="right" valign="top"><a id="a1846088388d294f04469885b9bb560e4"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink_queued.html#a1846088388d294f04469885b9bb560e4">write_audio</a> (const uint8_t *data, size_t size) override</td></tr>
+<tr class="memdesc:a1846088388d294f04469885b9bb560e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">output audio data e.g. to i2s or to queue <br /></td></tr>
+<tr class="separator:a1846088388d294f04469885b9bb560e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7501000b48fb46f9d6ae5f376d523aac"><td class="memItemLeft" align="right" valign="top"><a id="a7501000b48fb46f9d6ae5f376d523aac"></a>
 virtual int&#160;</td><td class="memItemRight" valign="bottom"><b>init_bluetooth</b> ()</td></tr>
 <tr class="separator:a7501000b48fb46f9d6ae5f376d523aac"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -412,20 +430,6 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>handle_audio_
 <tr class="memitem:a2347a681512b9487691e80a4d975f699"><td class="memItemLeft" align="right" valign="top"><a id="a2347a681512b9487691e80a4d975f699"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>av_notify_evt_handler</b> (uint8_t event_id, uint32_t event_parameter)</td></tr>
 <tr class="separator:a2347a681512b9487691e80a4d975f699"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa211fefd101a639938a20dc3478b48ae"><td class="memItemLeft" align="right" valign="top"><a id="aa211fefd101a639938a20dc3478b48ae"></a>
-virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#aa211fefd101a639938a20dc3478b48ae">write_audio</a> (const uint8_t *data, size_t size)</td></tr>
-<tr class="memdesc:aa211fefd101a639938a20dc3478b48ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">output audio data e.g. to i2s or to queue <br /></td></tr>
-<tr class="separator:aa211fefd101a639938a20dc3478b48ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afdc2f08c0547393704fd6fb56bde204f"><td class="memItemLeft" align="right" valign="top"><a id="afdc2f08c0547393704fd6fb56bde204f"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#afdc2f08c0547393704fd6fb56bde204f">i2s_task_handler</a> (void *arg)</td></tr>
-<tr class="memdesc:afdc2f08c0547393704fd6fb56bde204f"><td class="mdescLeft">&#160;</td><td class="mdescRight">dummy functions needed for <a class="el" href="class_bluetooth_a2_d_p_sink_queued.html" title="The BluetoothA2DPSinkQueued is using a separate Task with an additinal Queue to write the I2S data....">BluetoothA2DPSinkQueued</a> <br /></td></tr>
-<tr class="separator:afdc2f08c0547393704fd6fb56bde204f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a559fdf1996d0c1e99ed07dfe1f95d9a2"><td class="memItemLeft" align="right" valign="top"><a id="a559fdf1996d0c1e99ed07dfe1f95d9a2"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>bt_i2s_task_start_up</b> (void)</td></tr>
-<tr class="separator:a559fdf1996d0c1e99ed07dfe1f95d9a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af467f11e174f150e1aff8df08f56119a"><td class="memItemLeft" align="right" valign="top"><a id="af467f11e174f150e1aff8df08f56119a"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>bt_i2s_task_shut_down</b> (void)</td></tr>
-<tr class="separator:af467f11e174f150e1aff8df08f56119a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab59e6c716d9b5aaed69272e7d2a3d12a"><td class="memItemLeft" align="right" valign="top"><a id="ab59e6c716d9b5aaed69272e7d2a3d12a"></a>
 size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#ab59e6c716d9b5aaed69272e7d2a3d12a">i2s_write_data</a> (const uint8_t *data, size_t item_size)</td></tr>
 <tr class="memdesc:ab59e6c716d9b5aaed69272e7d2a3d12a"><td class="mdescLeft">&#160;</td><td class="mdescRight">writes the data to i2s <br /></td></tr>
@@ -455,6 +459,21 @@ virtual <a class="el" href="class_a2_d_p_volume_control.html">A2DPVolumeControl<
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
+<tr class="memitem:ac06106d134a84471ff01848e9cf830dd"><td class="memItemLeft" align="right" valign="top"><a id="ac06106d134a84471ff01848e9cf830dd"></a>
+xTaskHandle&#160;</td><td class="memItemRight" valign="bottom"><b>s_bt_i2s_task_handle</b> = nullptr</td></tr>
+<tr class="separator:ac06106d134a84471ff01848e9cf830dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55b7a212984cba14d34611188e1a86f4"><td class="memItemLeft" align="right" valign="top"><a id="a55b7a212984cba14d34611188e1a86f4"></a>
+RingbufHandle_t&#160;</td><td class="memItemRight" valign="bottom"><b>s_ringbuf_i2s</b> = nullptr</td></tr>
+<tr class="separator:a55b7a212984cba14d34611188e1a86f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:addd683e286ff92e680ad656f8df88db4"><td class="memItemLeft" align="right" valign="top"><a id="addd683e286ff92e680ad656f8df88db4"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>i2s_stack_size</b> = 2048</td></tr>
+<tr class="separator:addd683e286ff92e680ad656f8df88db4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a71c15e77cf95cd3434434213b70afa"><td class="memItemLeft" align="right" valign="top"><a id="a9a71c15e77cf95cd3434434213b70afa"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>i2s_ringbuffer_size</b> = 3 * 5120</td></tr>
+<tr class="separator:a9a71c15e77cf95cd3434434213b70afa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1ea2ef1be55f1801dff88be862b7fe2"><td class="memItemLeft" align="right" valign="top"><a id="ab1ea2ef1be55f1801dff88be862b7fe2"></a>
+UBaseType_t&#160;</td><td class="memItemRight" valign="bottom"><b>i2s_task_priority</b> = configMAX_PRIORITIES - 0</td></tr>
+<tr class="separator:ab1ea2ef1be55f1801dff88be862b7fe2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab659a79f8359e559bd8aefb79b0f7199"><td class="memItemLeft" align="right" valign="top"><a id="ab659a79f8359e559bd8aefb79b0f7199"></a>
 xQueueHandle&#160;</td><td class="memItemRight" valign="bottom"><b>app_task_queue</b> = nullptr</td></tr>
 <tr class="separator:ab659a79f8359e559bd8aefb79b0f7199"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -635,71 +654,10 @@ Static Protected Attributes</h2></td></tr>
 <tr class="memitem:a001de9410aa1158a8af4185af93fc75c"><td class="memItemLeft" align="right" valign="top"><a id="a001de9410aa1158a8af4185af93fc75c"></a>
 static const esp_spp_mode_t&#160;</td><td class="memItemRight" valign="bottom"><b>esp_spp_mode</b> = ESP_SPP_MODE_CB</td></tr>
 <tr class="separator:a001de9410aa1158a8af4185af93fc75c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
-Friends</h2></td></tr>
-<tr class="memitem:a4321b5374a1413fafafaec82f896eb1c"><td class="memItemLeft" align="right" valign="top"><a id="a4321b5374a1413fafafaec82f896eb1c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a4321b5374a1413fafafaec82f896eb1c">ccall_app_a2d_callback</a> (esp_a2d_cb_event_t event, esp_a2d_cb_param_t *param)</td></tr>
-<tr class="memdesc:a4321b5374a1413fafafaec82f896eb1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">handle esp_a2d_cb_event_t <br /></td></tr>
-<tr class="separator:a4321b5374a1413fafafaec82f896eb1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88292248eabbb77aee7c6d390bd23f62"><td class="memItemLeft" align="right" valign="top"><a id="a88292248eabbb77aee7c6d390bd23f62"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a88292248eabbb77aee7c6d390bd23f62">ccall_app_rc_ct_callback</a> (esp_avrc_ct_cb_event_t event, esp_avrc_ct_cb_param_t *param)</td></tr>
-<tr class="memdesc:a88292248eabbb77aee7c6d390bd23f62"><td class="mdescLeft">&#160;</td><td class="mdescRight">handle esp_avrc_ct_cb_event_t <br /></td></tr>
-<tr class="separator:a88292248eabbb77aee7c6d390bd23f62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad11e4bda6ef98605d8df00e510e2703f"><td class="memItemLeft" align="right" valign="top"><a id="ad11e4bda6ef98605d8df00e510e2703f"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#ad11e4bda6ef98605d8df00e510e2703f">ccall_app_gap_callback</a> (esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *param)</td></tr>
-<tr class="memdesc:ad11e4bda6ef98605d8df00e510e2703f"><td class="mdescLeft">&#160;</td><td class="mdescRight">GAP callback. <br /></td></tr>
-<tr class="separator:ad11e4bda6ef98605d8df00e510e2703f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acc5b990ea466f26e3a38a1aebb0c2ca2"><td class="memItemLeft" align="right" valign="top"><a id="acc5b990ea466f26e3a38a1aebb0c2ca2"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#acc5b990ea466f26e3a38a1aebb0c2ca2">ccall_app_task_handler</a> (void *arg)</td></tr>
-<tr class="memdesc:acc5b990ea466f26e3a38a1aebb0c2ca2"><td class="mdescLeft">&#160;</td><td class="mdescRight">task handler <br /></td></tr>
-<tr class="separator:acc5b990ea466f26e3a38a1aebb0c2ca2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac18463dacb2427d3687ef8b930cb9a8d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#ac18463dacb2427d3687ef8b930cb9a8d">ccall_i2s_task_handler</a> (void *arg)</td></tr>
-<tr class="memdesc:ac18463dacb2427d3687ef8b930cb9a8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">task hander for i2s  <a href="class_bluetooth_a2_d_p_sink.html#ac18463dacb2427d3687ef8b930cb9a8d">More...</a><br /></td></tr>
-<tr class="separator:ac18463dacb2427d3687ef8b930cb9a8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac0e3ebab2d32e289ec52a08bcfa2e978"><td class="memItemLeft" align="right" valign="top"><a id="ac0e3ebab2d32e289ec52a08bcfa2e978"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#ac0e3ebab2d32e289ec52a08bcfa2e978">ccall_audio_data_callback</a> (const uint8_t *data, uint32_t len)</td></tr>
-<tr class="memdesc:ac0e3ebab2d32e289ec52a08bcfa2e978"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback for music stream. <br /></td></tr>
-<tr class="separator:ac0e3ebab2d32e289ec52a08bcfa2e978"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a38e69e5d70cecace49c90db414b97970"><td class="memItemLeft" align="right" valign="top"><a id="a38e69e5d70cecace49c90db414b97970"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a38e69e5d70cecace49c90db414b97970">ccall_av_hdl_stack_evt</a> (uint16_t event, void *p_param)</td></tr>
-<tr class="memdesc:a38e69e5d70cecace49c90db414b97970"><td class="mdescLeft">&#160;</td><td class="mdescRight">av event handler <br /></td></tr>
-<tr class="separator:a38e69e5d70cecace49c90db414b97970"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ab56fe60162fa9c07bf0ab8f523bfbf"><td class="memItemLeft" align="right" valign="top"><a id="a9ab56fe60162fa9c07bf0ab8f523bfbf"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a9ab56fe60162fa9c07bf0ab8f523bfbf">ccall_av_hdl_a2d_evt</a> (uint16_t event, void *p_param)</td></tr>
-<tr class="memdesc:a9ab56fe60162fa9c07bf0ab8f523bfbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">a2dp event handler <br /></td></tr>
-<tr class="separator:a9ab56fe60162fa9c07bf0ab8f523bfbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f773677a4da51d582e6cadd5a2cc514"><td class="memItemLeft" align="right" valign="top"><a id="a2f773677a4da51d582e6cadd5a2cc514"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a2f773677a4da51d582e6cadd5a2cc514">ccall_av_hdl_avrc_evt</a> (uint16_t event, void *p_param)</td></tr>
-<tr class="memdesc:a2f773677a4da51d582e6cadd5a2cc514"><td class="mdescLeft">&#160;</td><td class="mdescRight">avrc event handler <br /></td></tr>
-<tr class="separator:a2f773677a4da51d582e6cadd5a2cc514"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A2DP Bluethooth Sink - We initialize and start the Bluetooth A2DP Sink. The example <a href="https://github.com/espressif/esp-idf/tree/master/examples/bluetooth/bluedroid/classic_bt/a2dp_sink">https://github.com/espressif/esp-idf/tree/master/examples/bluetooth/bluedroid/classic_bt/a2dp_sink</a> was refactered into a C++ class. </p>
-<dl class="section author"><dt>Author</dt><dd>Phil Schatzmann </dd></dl>
-<dl class="section copyright"><dt>Copyright</dt><dd>Apache License Version 2 </dd></dl>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a2a383635d7b050833f56ee79867716bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2a383635d7b050833f56ee79867716bd">&#9670;&nbsp;</a></span>BluetoothA2DPSink()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">BluetoothA2DPSink::BluetoothA2DPSink </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Constructor. </p>
-<p>Constructor </p>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
+<div class="textblock"><p>The <a class="el" href="class_bluetooth_a2_d_p_sink_queued.html" title="The BluetoothA2DPSinkQueued is using a separate Task with an additinal Queue to write the I2S data....">BluetoothA2DPSinkQueued</a> is using a separate Task with an additinal Queue to write the I2S data. application. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a361f80944f06806b7e42302f95171675"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a361f80944f06806b7e42302f95171675">&#9670;&nbsp;</a></span>app_task_handler()</h2>
 
@@ -719,7 +677,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span><span class="mlabel">inherited</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -746,7 +704,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">inherited</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -756,39 +714,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
-<h2 class="groupheader">Friends And Related Function Documentation</h2>
-<a id="ac18463dacb2427d3687ef8b930cb9a8d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac18463dacb2427d3687ef8b930cb9a8d">&#9670;&nbsp;</a></span>ccall_i2s_task_handler</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ccall_i2s_task_handler </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>arg</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>task hander for i2s </p>
-<p>public Callbacks </p>
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>src/<a class="el" href="_bluetooth_a2_d_p_sink_8h_source.html">BluetoothA2DPSink.h</a></li>
-<li>src/BluetoothA2DPSink.cpp</li>
+<li>src/<a class="el" href="_bluetooth_a2_d_p_sink_queued_8h_source.html">BluetoothA2DPSinkQueued.h</a></li>
+<li>src/BluetoothA2DPSinkQueued.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

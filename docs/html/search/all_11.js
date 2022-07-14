@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['write_5fdata_102',['write_data',['../class_bluetooth_a2_d_p_source.html#a0a5976c3d81ae96e5e3be06fd6a662da',1,'BluetoothA2DPSource']]],
-  ['write_5fringbuf_103',['write_ringbuf',['../class_bluetooth_a2_d_p_sink.html#a25a6eac0d135d6b29289e53877185304',1,'BluetoothA2DPSink::write_ringbuf()'],['../class_bluetooth_a2_d_p_sink_min_r_a_m.html#af584c3b4db5ccc746cf59b95c977be27',1,'BluetoothA2DPSinkMinRAM::write_ringbuf()']]]
+  ['write_5faudio_106',['write_audio',['../class_bluetooth_a2_d_p_sink.html#aa211fefd101a639938a20dc3478b48ae',1,'BluetoothA2DPSink::write_audio()'],['../class_bluetooth_a2_d_p_sink_queued.html#a1846088388d294f04469885b9bb560e4',1,'BluetoothA2DPSinkQueued::write_audio()']]],
+  ['write_5fdata_107',['write_data',['../class_bluetooth_a2_d_p_source.html#a0a5976c3d81ae96e5e3be06fd6a662da',1,'BluetoothA2DPSource']]]
 ];

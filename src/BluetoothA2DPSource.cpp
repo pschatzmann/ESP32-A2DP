@@ -664,6 +664,8 @@ void BluetoothA2DPSource::bt_app_av_state_unconnected(uint16_t event, void *para
                     case ESP_A2D_CONNECTION_STATE_DISCONNECTED:
                         ESP_LOGI(BT_AV_TAG, "ESP_A2D_CONNECTION_STATE_DISCONNECTED");
                         break;
+                    default:
+                        break;
                 }
             } break;
         case ESP_A2D_AUDIO_STATE_EVT:

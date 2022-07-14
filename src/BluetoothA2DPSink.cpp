@@ -655,7 +655,7 @@ void BluetoothA2DPSink::handle_audio_state(uint16_t event, void *p_param){
     if (is_i2s_output){
         if (ESP_A2D_AUDIO_STATE_STARTED == a2d->audio_stat.state) { 
             m_pkt_cnt = 0; 
-            bt_i2s_task_start_up();
+            //bt_i2s_task_start_up();
             ESP_LOGI(BT_AV_TAG,"i2s_start");
             if (i2s_start(i2s_port)!=ESP_OK){
                 ESP_LOGE(BT_AV_TAG, "i2s_start");
@@ -665,7 +665,7 @@ void BluetoothA2DPSink::handle_audio_state(uint16_t event, void *p_param){
             ESP_LOGW(BT_AV_TAG,"i2s_stop");
             i2s_stop(i2s_port);
             i2s_zero_dma_buffer(i2s_port);
-            bt_i2s_task_shut_down();
+            //bt_i2s_task_shut_down();
         }
     }
 }
@@ -710,14 +710,9 @@ void BluetoothA2DPSink::handle_connection_state(uint16_t event, void *p_param){
                 (*bt_dis_connected)();
             }    
             
-            // if (is_i2s_output) {
-
-            //     bt_i2s_task_shut_down();
-
-            //     ESP_LOGI(BT_AV_TAG, "i2s_stop");
-            //     i2s_stop(i2s_port);
-            //     i2s_zero_dma_buffer(i2s_port);
-            // }
+            if (is_i2s_output) {
+                bt_i2s_task_shut_down();
+            }
             
             // RECONNECTION MGMT
             // do not auto reconnect when disconnect was requested from device
@@ -778,15 +773,10 @@ void BluetoothA2DPSink::handle_connection_state(uint16_t event, void *p_param){
                 
                 set_scan_mode_connectable(false);   
                 connection_rety_count = 0;
-                // if (is_i2s_output) {
-
-                //     bt_i2s_task_start_up();
-
-                //     ESP_LOGI(BT_AV_TAG,"i2s_start");
-                //     if (i2s_start(i2s_port)!=ESP_OK){
-                //         ESP_LOGE(BT_AV_TAG, "i2s_start");
-                //     }
-                // }
+                
+                if (is_i2s_output) {
+                    bt_i2s_task_start_up();
+                }
 
                 // record current connection
                 if (reconnect_status==AutoReconnect && is_valid) {

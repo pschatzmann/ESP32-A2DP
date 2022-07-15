@@ -508,6 +508,12 @@ void BluetoothA2DPSink::app_gap_callback(esp_bt_gap_cb_event_t event, esp_bt_gap
                 }
             } 
             break;
+
+        case ESP_BT_GAP_MODE_CHG_EVT: {
+                ESP_LOGI(BT_AV_TAG, "ESP_BT_GAP_MODE_CHG_EVT");
+                log_free_heap();
+           }
+           break;    
 #endif
 
         default: {

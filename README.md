@@ -13,6 +13,8 @@ Unfortunately this example did not make me happy so I decided to convert it into
 
 ## A2DP Sink (Music Receiver)
 
+This can be used e.g. to build your own Bluetooth Speaker.
+
 ### A Simple I2S Example (A2DS Sink) using default Pins
 Here is the simplest example which just uses the proper default settings:
 
@@ -183,6 +185,9 @@ I have added the following AVRC commmands, that you can use to 'control' your A2
 
 
 ## A2DP Source (Music Sender)
+
+This can be used to feed e.g. your Bluetooth Speaker with your audio data.
+
 
 ### Sending Data from a A2DS Data Source with a Callback
 

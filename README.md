@@ -204,10 +204,11 @@ function' that generates the sound data:
 BluetoothA2DPSource a2dp_source;
 
 // callback 
-int32_t get_sound_data(Frame *data, int32_t len) {
+int32_t get_sound_data(Frame *data, int32_t frameCount) {
     // generate your sound data 
-    // return the effective length (in bytes) of the generated sound  (which usually is identical with the requested len)
-    return len;
+    // return the effective length (in frames) of the generated sound  (which usually is identical with the requested len)
+    // 1 frame is 2 channels * 2 bytes = 4 bytes
+    return frameCount;
 }
 
 void setup() {

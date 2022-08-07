@@ -215,10 +215,19 @@ void BluetoothA2DPCommon::set_on_connection_state_changed(void (*callBack)(esp_a
 }
 
 /// Set the callback that is called when the audio state is changed
+/// This callback is called before the I2S bus is changed.
 void BluetoothA2DPCommon::set_on_audio_state_changed(void (*callBack)(esp_a2d_audio_state_t state, void*), void* obj){
     audio_state_callback = callBack;
     audio_state_obj = obj;
 }
+
+/// Set the callback that is called after the audio state has changed.
+/// This callback is called after the I2S bus has changed.
+void BluetoothA2DPCommon::set_on_audio_state_changed_post(void (*callBack)(esp_a2d_audio_state_t state, void*), void* obj){
+    audio_state_callback_post = callBack;
+    audio_state_obj_post = obj;
+}
+
 
 /// Prevents that the same method is executed multiple times within the indicated time limit
 void BluetoothA2DPCommon::debounce(void(*cb)(void),int ms){

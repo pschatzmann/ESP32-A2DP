@@ -671,6 +671,10 @@ void BluetoothA2DPSink::handle_audio_state(uint16_t event, void *p_param){
             i2s_stop(i2s_port);
             i2s_zero_dma_buffer(i2s_port);
         }
+
+        if (audio_state_callback_post!=nullptr){
+            audio_state_callback_post(a2d->audio_stat.state, audio_state_obj_post);
+        }    
     }
 }
 

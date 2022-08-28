@@ -282,6 +282,9 @@ OneChannelSoundData(int16_t *data, int32_t frameCount, bool loop=false, ChannelI
 OneChannel8BitSoundData(int8_t *data, int32_t frameCount, bool loop=false, ChannelInfo channelInfo=Both);
 
 ```
+## Logging
+
+This library uses the ESP32 logger that you can activate in Arduino in - Tools - Core Debug Log.
 
 ## Architecture / Dependencies / Frameworks
 

@@ -20,17 +20,16 @@ class BluetoothA2DPSink32 : public BluetoothA2DPSink {
             uint32_t rest_len = len;
             int32_t volumeFactor = 0x1000;
             
-            if (is_volume_used) {
-                volumeFactor = volume_control()->get_volume_factor();
-            }
+            // adjust the volume
+            volume_control()->update_audio_data((Frame*)data, len/4);
 
             while (rest_len>0) {
                 uint32_t blk_len = (rest_len>=blk_size) ? blk_size : rest_len;
                 for (int i=0; i<blk_len/4; i++) {
                     int32_t pcmLeft = frame->channel1;
                     int32_t pcmRight = frame->channel2;
-                    pcmLeft = pcmLeft * volumeFactor * 16;
-                    pcmRight = pcmRight * volumeFactor * 16;
+                    pcmLeft = pcmLeft  * 16;
+                    pcmRight = pcmRight  * 16;
                     data32[i*2+0] = pcmLeft;
                     data32[i*2+1] = pcmRight;
                     frame++;

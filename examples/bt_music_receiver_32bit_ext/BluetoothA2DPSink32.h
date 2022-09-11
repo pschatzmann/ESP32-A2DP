@@ -28,8 +28,8 @@ class BluetoothA2DPSink32 : public BluetoothA2DPSink {
                 for (int i=0; i<blk_len/4; i++) {
                     int32_t pcmLeft = frame->channel1;
                     int32_t pcmRight = frame->channel2;
-                    pcmLeft = pcmLeft  * 16;
-                    pcmRight = pcmRight  * 16;
+                    pcmLeft = pcmLeft  * volumeFactor;
+                    pcmRight = pcmRight  * volumeFactor;
                     data32[i*2+0] = pcmLeft;
                     data32[i*2+1] = pcmRight;
                     frame++;

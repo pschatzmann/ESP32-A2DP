@@ -91,9 +91,14 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
      * @brief starts the bluetooth source
      * @param name: Bluetooth name of the device to connect to
      * @param callback: function that provides the audio stream as array of Frame
-     * @param is_ssp_enabled: Flag to activate Secure Simple Pairing 
      */
     virtual void start(const char* name, music_data_channels_cb_t callback = NULL);
+
+    /// Starts w/o indicating the name. Connections will be managed via set_ssid_callback()
+    virtual void start(music_data_channels_cb_t callback = NULL) {
+        std::vector<const char*> names; // empty vector
+        start(names, callback);
+    }
 
     /// starts the bluetooth source. Supports multiple alternative names
     virtual void start(std::vector<const char*> names, music_data_channels_cb_t callback = NULL);
@@ -141,9 +146,13 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
      */
     virtual void set_reset_ble(bool doInit);
 
-
     /// callback for data
     virtual int32_t get_data_default(uint8_t *data, int32_t len);
+
+    /// Define callback to be notified about the found ssids
+    void set_ssid_callback(bool(*callback)(const char*ssid, esp_bd_addr_t address, int rrsi)){
+      ssid_callback = callback;
+    }
 
 
   protected:
@@ -177,6 +186,7 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
     bool reset_ble = true;
     music_data_cb_t data_stream_callback;
 
+    bool(*ssid_callback)(const char*ssid, esp_bd_addr_t address, int rrsi) = nullptr;
 
 #ifdef ESP_IDF_4
     esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap;

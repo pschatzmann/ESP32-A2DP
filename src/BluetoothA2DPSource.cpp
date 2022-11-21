@@ -412,19 +412,24 @@ void BluetoothA2DPSource::filter_inquiry_scan_result(esp_bt_gap_cb_param_t *para
 			get_name_from_eir(eir, s_peer_bdname, NULL);
 			ESP_LOGI(BT_AV_TAG, "--Name: %s", s_peer_bdname);
 
+            // check ssid names from provided list
 			bool found = false;
-			for (const char* name : bt_names)
-			{
-				int len = strlen(name);
-				ESP_LOGI(BT_AV_TAG, "--Checking match: %s", name);
-				if (strncmp((char *)s_peer_bdname, name, len) == 0) {
-					this->bt_name = (char *) s_peer_bdname;
-					found = true;
-					break;
-				}
-			}
-			if (found)
-			{
+            // ssid callback
+            if (ssid_callback!=nullptr){
+                found = ssid_callback((const char*)s_peer_bdname, param->disc_res.bda, rssi);
+            } else {
+                // if no callback we use the list
+                for (const char* name : bt_names){
+                    int len = strlen(name);
+                    ESP_LOGI(BT_AV_TAG, "--Checking match: %s", name);
+                    if (strncmp((char *)s_peer_bdname, name, len) == 0) {
+                        this->bt_name = (char *) s_peer_bdname;
+                        found = true;
+                        break;
+                    }
+                }
+            }
+			if (found) {
 				ESP_LOGI(BT_AV_TAG, "--Result: Target device found");
 				s_a2d_state = APP_AV_STATE_DISCOVERED;
 				memcpy(peer_bd_addr, param->disc_res.bda, ESP_BD_ADDR_LEN);
@@ -445,8 +450,6 @@ void BluetoothA2DPSource::filter_inquiry_scan_result(esp_bt_gap_cb_param_t *para
 	else{
 		ESP_LOGI(BT_AV_TAG, "--Compatiblity: Scanned Device not Compatible.");
 	}
-	
-	
 }
 
 

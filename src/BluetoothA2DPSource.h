@@ -114,6 +114,12 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
      */ 
     virtual void start_raw(const char* name, music_data_cb_t callback = NULL);
 
+    /// Starts w/o indicating the name. Connections will be managed via set_ssid_callback()
+    virtual void start_raw(music_data_cb_t callback = NULL) {
+        std::vector<const char*> names; // empty vector
+        start_raw(names, callback);
+    }
+
     /// start_raw which supports multiple alternative names
     virtual void start_raw(std::vector<const char*> names, music_data_cb_t callback = NULL);
 

@@ -286,7 +286,7 @@ OneChannel8BitSoundData(int8_t *data, int32_t frameCount, bool loop=false, Chann
 
 This library uses the ESP32 logger that you can activate in Arduino in - Tools - Core Debug Log.
 
-## Architecture / Dependencies / Frameworks
+## Architecture / Dependencies 
 
 The current code is purely dependent on the ESP-IDF (which is also provided by the Arduino ESP32 core). There are no other dependencies and this includes the Arduino API! 
 
@@ -296,15 +296,18 @@ Therefore we support:
 - [PlatformIO](https://github.com/pschatzmann/ESP32-A2DP/wiki/PlatformIO)
 - [Espressif IDF](https://github.com/pschatzmann/ESP32-A2DP/wiki/Espressif-IDF-as-a-Component)
 
-This restriction limits however the provided examples. Please have a look at the [audio-tools](https://github.com/pschatzmann/arduino-audio-tools) project: There I demonstrate e.g. how to connect different microphones, use SD cards and different Audio File Formats.
+This restriction limits however the provided examples. 
 
 Before you clone the project, please read the following information which can be found in the [Wiki](https://github.com/pschatzmann/ESP32-A2DP/wiki/Design-Overview).
+
+## Digital Sound Processing
+
+You can use this library stand alone, but it is part of my [audio-tools](https://github.com/pschatzmann/arduino-audio-tools) project. So you can easily enhance this functionality with sound effects, use filters, use alternative audio sinks or audio sources, do FFT etc
 
 ## Documentation
 
 - The [class documentation can be found here](https://pschatzmann.github.io/ESP32-A2DP/html/annotated.html)
 - You can also find further information in the [Wiki](https://github.com/pschatzmann/ESP32-A2DP/wiki)
-
 
 ## Show and Tell
 

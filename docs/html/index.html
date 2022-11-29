@@ -290,7 +290,7 @@ Sending Data from a A2DS Data Source with Recorded Data</h2>
 Logging</h1>
 <p >This library uses the ESP32 logger that you can activate in Arduino in - Tools - Core Debug Log.</p>
 <h1><a class="anchor" id="autotoc_md13"></a>
-Architecture / Dependencies / Frameworks</h1>
+Architecture / Dependencies</h1>
 <p >The current code is purely dependent on the ESP-IDF (which is also provided by the Arduino ESP32 core). There are no other dependencies and this includes the Arduino API!</p>
 <p >Therefore we support:</p>
 <ul>
@@ -298,25 +298,35 @@ Architecture / Dependencies / Frameworks</h1>
 <li><a href="https://github.com/pschatzmann/ESP32-A2DP/wiki/PlatformIO">PlatformIO</a></li>
 <li><a href="https://github.com/pschatzmann/ESP32-A2DP/wiki/Espressif-IDF-as-a-Component">Espressif IDF</a></li>
 </ul>
-<p >This restriction limits however the provided examples. Please have a look at the <a href="https://github.com/pschatzmann/arduino-audio-tools">audio-tools</a> project: There I demonstrate e.g. how to connect different microphones, use SD cards and different Audio File Formats.</p>
+<p >This restriction limits however the provided examples.</p>
 <p >Before you clone the project, please read the following information which can be found in the <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki/Design-Overview">Wiki</a>.</p>
 <h1><a class="anchor" id="autotoc_md14"></a>
+Digital Sound Processing</h1>
+<p >You can use this library stand alone, but it is part of my <a href="https://github.com/pschatzmann/arduino-audio-tools">audio-tools</a> project. So you can easily enhance this functionality with sound effects, use filters, use alternative audio sinks or audio sources, do FFT etc. Here is a <a href="https://github.com/pschatzmann/arduino-audio-tools/blob/main/examples/examples-basic-api/basic-a2dp-fft/basic-a2dp-fft.ino">simple example</a> how you can analyse the audio data with FFT.</p>
+<h1><a class="anchor" id="autotoc_md15"></a>
 Documentation</h1>
 <ul>
 <li>The <a href="https://pschatzmann.github.io/ESP32-A2DP/html/annotated.html">class documentation can be found here</a></li>
 <li>You can also find further information in the <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki">Wiki</a></li>
 </ul>
-<h1><a class="anchor" id="autotoc_md15"></a>
+<h1><a class="anchor" id="autotoc_md16"></a>
 Show and Tell</h1>
 <p >Get some inspiration <a href="https://github.com/pschatzmann/ESP32-A2DP/discussions/categories/show-and-tell">from projects that were using this library</a> and share your projects with the community.</p>
-<h1><a class="anchor" id="autotoc_md16"></a>
+<h1><a class="anchor" id="autotoc_md17"></a>
 Installation</h1>
 <p >For Arduino you can download the library as zip and call include Library -&gt; zip library. Or you can git clone this project into the Arduino libraries folder e.g. with </p><div class="fragment"><div class="line">cd  ~/Documents/Arduino/libraries</div>
 <div class="line">git clone pschatzmann/ESP32-A2DP.git</div>
 </div><!-- fragment --><p >For other frameworks <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki">see the Wiki</a></p>
-<h1><a class="anchor" id="autotoc_md17"></a>
+<h1><a class="anchor" id="autotoc_md18"></a>
 Change History</h1>
-<p >The <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki/Change-History">Change History can be found in the Wiki</a> </p>
+<p >The <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki/Change-History">Change History can be found in the Wiki</a></p>
+<h1><a class="anchor" id="autotoc_md19"></a>
+Sponsor Me</h1>
+<p >This software is totally free, but you can make me happy by rewarding me with a treat</p>
+<ul>
+<li><a href="https://www.buymeacoffee.com/philschatzh">Buy me a coffee</a></li>
+<li><a href="https://paypal.me/pschatzmann?country.x=CH&amp;locale.x=en_US">Paypal me</a> </li>
+</ul>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->

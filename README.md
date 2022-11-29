@@ -328,4 +328,10 @@ For other frameworks [see the Wiki](https://github.com/pschatzmann/ESP32-A2DP/wi
 The [Change History can be found in the Wiki](https://github.com/pschatzmann/ESP32-A2DP/wiki/Change-History)
 
 
+## Sponsor Me
+
+This software is totally free, but you can make me happy by rewarding me with a treat
+
+- [Buy me a coffee](https://www.buymeacoffee.com/philschatzh)
+- [Paypal me](https://paypal.me/pschatzmann?country.x=CH&locale.x=en_US)
 

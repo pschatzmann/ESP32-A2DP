@@ -38,6 +38,9 @@ struct __attribute__((packed)) Frame {
 
 };
 
+// support for legacy name;
+using Channels = Frame;
+
 /**
  * @brief Channel Information
  * @author Phil Schatzmann

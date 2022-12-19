@@ -67,6 +67,7 @@ void BluetoothA2DPSink::end(bool release_memory) {
     // reconnect should not work after end
     is_autoreconnect_allowed = false;
     BluetoothA2DPCommon::end(release_memory);
+    app_task_shut_down();
 
     // stop I2S
     if (is_i2s_output){

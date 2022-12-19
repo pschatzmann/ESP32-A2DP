@@ -14,6 +14,7 @@
 // Copyright 2015-2016 Espressif Systems (Shanghai) PTE LTD
 
 #pragma once
+
 #include "BluetoothA2DPCommon.h"
 #include "freertos/ringbuf.h"
 

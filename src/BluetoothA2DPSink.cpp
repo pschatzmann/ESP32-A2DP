@@ -38,15 +38,21 @@ BluetoothA2DPSink::BluetoothA2DPSink() {
             .dma_buf_count = 8,
             .dma_buf_len = 64,
             .use_apll = false,
-            .tx_desc_auto_clear = true, // avoiding noise in case of data unavailability
+            #ifdef ESP_IDF_4
+			.tx_desc_auto_clear = true, // avoiding noise in case of data unavailability
             .fixed_mclk = 0,
             .mclk_multiple = I2S_MCLK_MULTIPLE_DEFAULT,
             .bits_per_chan = I2S_BITS_PER_CHAN_DEFAULT
+			#else
+			.tx_desc_auto_clear = true // avoiding noise in case of data unavailability
+            #endif
         };
 
         // setup default pins
         pin_config = {
+            #ifdef ESP_IDF_4
             .mck_io_num = 0,
+            #endif
             .bck_io_num = 26,
             .ws_io_num = 25,
             .data_out_num = 22,

@@ -18,7 +18,7 @@
 
 #include "BluetoothA2DPSink.h"
 
-BluetoothA2DPSinkMinRAM a2dp_sink;
+BluetoothA2DPSink a2dp_sink;
 
 void setup() {
   a2dp_sink.start("MyMusicMinRAM");  

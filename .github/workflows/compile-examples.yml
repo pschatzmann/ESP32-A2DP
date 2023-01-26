@@ -1,0 +1,25 @@
+name: Compile Examples
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  compile-sketches-esp32:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      fail-fast: false
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Compile examples
+        uses: arduino/compile-sketches@v1
+        with:
+          fqbn: esp32:esp32:esp32:PartitionScheme=huge_app
+          platforms: |
+            - name: esp32:esp32
+              source-url: https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
+          libraries: |
+            - source-path: ./

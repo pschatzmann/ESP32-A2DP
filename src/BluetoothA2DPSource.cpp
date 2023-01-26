@@ -233,7 +233,7 @@ void BluetoothA2DPSource::start_raw(std::vector<const char*> names, music_data_c
 
 void BluetoothA2DPSource::reset_last_connection() {
     ESP_LOGD(BT_APP_TAG, "%s, ", __func__);
-    const char *bda_str = to_str(last_connection);
+    [[maybe_unused]] const char *bda_str = to_str(last_connection);
     ESP_LOGD(BT_APP_TAG, "last connection %s, ", bda_str);
     if (has_last_connection()){
         // the device might not have noticed that we are diconnected
@@ -677,7 +677,7 @@ void BluetoothA2DPSource::bt_app_av_state_unconnected(uint16_t event, void *para
             break;
         case BT_APP_HEART_BEAT_EVT: {
             if (is_autoreconnect_allowed){
-                uint8_t *p = peer_bd_addr;
+                [[maybe_unused]] uint8_t *p = peer_bd_addr;
                 ESP_LOGI(BT_AV_TAG, "a2dp connecting to peer: %02x:%02x:%02x:%02x:%02x:%02x", p[0], p[1], p[2], p[3], p[4], p[5]);
                 connect_to(peer_bd_addr);
                 s_a2d_state = APP_AV_STATE_CONNECTING;
@@ -898,7 +898,7 @@ void BluetoothA2DPSource::bt_av_hdl_avrc_ct_evt(uint16_t event, void *p_param)
     esp_avrc_ct_cb_param_t *rc = (esp_avrc_ct_cb_param_t *)(p_param);
     switch (event) {
         case ESP_AVRC_CT_CONNECTION_STATE_EVT: {
-            uint8_t *bda = rc->conn_stat.remote_bda;
+            [[maybe_unused]] uint8_t *bda = rc->conn_stat.remote_bda;
             ESP_LOGI(BT_RC_CT_TAG, "AVRC conn_state evt: state %d, [%02x:%02x:%02x:%02x:%02x:%02x]",
                     rc->conn_stat.connected, bda[0], bda[1], bda[2], bda[3], bda[4], bda[5]);
 

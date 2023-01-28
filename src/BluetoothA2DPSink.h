@@ -131,6 +131,9 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     /// Define callback which is called when we receive data: This callback provides access to the data
     virtual void set_stream_reader(void (*callBack)(const uint8_t*, uint32_t), bool i2s_output=true);
 
+    /// Define a callback that is called before the volume changes: this callback provides access to the data
+    virtual void set_raw_stream_reader(void (*callBack)(const uint8_t*, uint32_t));
+
     /// Define callback which is called when we receive data
     virtual void set_on_data_received(void (*callBack)());
     
@@ -289,6 +292,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     void (*bt_connected)() = nullptr;
     void (*data_received)() = nullptr;
     void (*stream_reader)(const uint8_t*, uint32_t) = nullptr;
+    void (*raw_stream_reader)(const uint8_t*, uint32_t) = nullptr;
     void (*avrc_metadata_callback)(uint8_t, const uint8_t*) = nullptr;
     bool (*address_validator)(esp_bd_addr_t remote_bda) = nullptr;
     void (*sample_rate_callback)(uint16_t rate)=nullptr;

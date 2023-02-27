@@ -677,13 +677,16 @@ void BluetoothA2DPSink::handle_audio_state(uint16_t event, void *p_param){
         if (ESP_A2D_AUDIO_STATE_STARTED == a2d->audio_stat.state) { 
             m_pkt_cnt = 0; 
             ESP_LOGI(BT_AV_TAG,"i2s_start");
-            if (i2s_start(i2s_port)!=ESP_OK){
+            if (i2s_start(i2s_port)==ESP_OK){
+                is_i2s_active = true;
+            } else {
                 ESP_LOGE(BT_AV_TAG, "i2s_start");
             }
 
         } else if ( ESP_A2D_AUDIO_STATE_REMOTE_SUSPEND == a2d->audio_stat.state || ESP_A2D_AUDIO_STATE_STOPPED == a2d->audio_stat.state ) { 
             ESP_LOGW(BT_AV_TAG,"i2s_stop");
             i2s_stop(i2s_port);
+            is_i2s_active = false;
             i2s_zero_dma_buffer(i2s_port);
         }
 
@@ -1245,6 +1248,10 @@ void ccall_av_hdl_a2d_evt(uint16_t event, void *param){
 
 size_t BluetoothA2DPSink::i2s_write_data(const uint8_t* data, size_t item_size){
     size_t i2s_bytes_written = 0;
+    if (!is_i2s_active){
+        ESP_LOGE(BT_AV_TAG, "%s failed - inactive", __func__);
+        return 0;
+    }
     if (this->i2s_config.mode & I2S_MODE_DAC_BUILT_IN) {
         // special case for internal DAC output, the incomming PCM buffer needs 
         // to be converted from signed 16bit to unsigned

@@ -297,6 +297,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     bool (*address_validator)(esp_bd_addr_t remote_bda) = nullptr;
     void (*sample_rate_callback)(uint16_t rate)=nullptr;
     bool swap_left_right = false;
+    bool is_i2s_active = false;
     int try_reconnect_max_count = AUTOCONNECT_TRY_NUM;
     int event_queue_size = 20;
     int event_stack_size = 3072;

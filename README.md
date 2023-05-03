@@ -1,7 +1,6 @@
 # A Simple Arduino Bluetooth Music Receiver and Sender for the ESP32
 
-The ESP32 is a microcontroller that provides a Bluetooth A2DP API which can be used to receive sound data e.g. from your 
-Mobile Phone and makes it available via a callback method. The output is a PCM data stream decoded from SBC format. The documentation can be found [here](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/peripherals/i2s.html). 
+The ESP32 is a microcontroller that provides an API for Bluetooth A2DP which can be used to receive sound data e.g. from your Mobile Phone and makes it available via a callback method. The output is a PCM data stream, decoded from SBC format. The documentation can be found [here](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/peripherals/i2s.html). 
 
 ![esp32](https://pschatzmann.github.io/ESP32-A2DP/img/esp32.jpeg)
 
@@ -10,6 +9,13 @@ I2S is an electrical serial bus interface standard used for connecting digital a
 So we can just feed the input from Bluetooth to the I2S output: An example for this from Espressif can be found on [Github](https://github.com/espressif/esp-idf/tree/master/examples/bluetooth/bluedroid/classic_bt/a2dp_sink).
 
 Unfortunately this example did not make me happy so I decided to convert it into a simple __Arduino Library__ that is very easy to use from an Arduino Software IDE.
+
+## Bluetooth Protocols
+
+As the name of this libariy implies, it supports the A2DP [Bluetooth protocol](https://en.wikipedia.org/wiki/List_of_Bluetooth_profiles): This only provides audio streaming! 
+
+The Hands-Free Profile (HFP) and Headset Profile (HSP) are __not__ supported!
+
 
 ## A2DP Sink (Music Receiver)
 
@@ -308,6 +314,8 @@ You can use this library stand alone, but it is part of my [audio-tools](https:/
 
 - The [class documentation can be found here](https://pschatzmann.github.io/ESP32-A2DP/html/annotated.html)
 - You can also find further information in the [Wiki](https://github.com/pschatzmann/ESP32-A2DP/wiki)
+
+Please read the documentation and check the issues and discussions before posting any new ones on Github.
 
 ## Show and Tell
 

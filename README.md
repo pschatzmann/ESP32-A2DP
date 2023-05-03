@@ -10,11 +10,13 @@ So we can just feed the input from Bluetooth to the I2S output: An example for t
 
 Unfortunately this example did not make me happy so I decided to convert it into a simple __Arduino Library__ that is very easy to use from an Arduino Software IDE.
 
-## Bluetooth Protocols
+## Supported Bluetooth Protocols
 
-As the name of this libariy implies, it supports the A2DP [Bluetooth protocol](https://en.wikipedia.org/wiki/List_of_Bluetooth_profiles): This only provides audio streaming! 
+As the name of this libariy implies, it supports the A2DP [Bluetooth protocol](https://en.wikipedia.org/wiki/List_of_Bluetooth_profiles) which only provides audio streaming! 
 
-The Hands-Free Profile (HFP) and Headset Profile (HSP) are __not__ supported!
+It also supports Audio/Video Remote Control Profile (AVRCP) together with A2DP.
+
+The Hands-Free Profile (HFP), Headset Profile (HSP) and stand alone AVRCP without A2DP are __not__ supported!
 
 
 ## A2DP Sink (Music Receiver)

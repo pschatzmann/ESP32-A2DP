@@ -21,8 +21,13 @@
 #endif
 
 #ifndef AUTOCONNECT_TRY_NUM
-#define AUTOCONNECT_TRY_NUM 1000
+#  define AUTOCONNECT_TRY_NUM 1000
+#endif
 
+// If you use #include "I2S.h" the i2s functionality is hidden in a namespace
+// this hack prevents any error messages
+#ifdef _I2S_H_INCLUDED
+using namespace esp_i2s;
 #endif
 
 // Compile ESP32C3

@@ -328,7 +328,7 @@ Get some inspiration [from projects that were using this library](https://github
 For Arduino you can download the library as zip and call include Library -> zip library. Or you can git clone this project into the Arduino libraries folder e.g. with
 ```
 cd  ~/Documents/Arduino/libraries
-git clone pschatzmann/ESP32-A2DP.git
+git clone https://github.com/pschatzmann/ESP32-A2DP.git
 ```
 
 For other frameworks [see the Wiki](https://github.com/pschatzmann/ESP32-A2DP/wiki)

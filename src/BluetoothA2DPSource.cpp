@@ -322,8 +322,8 @@ void BluetoothA2DPSource::bt_app_task_handler(void *arg)
 void BluetoothA2DPSource::bt_app_task_start_up(void)
 {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
-    s_bt_app_task_queue = xQueueCreate(10, sizeof(app_msg_t));
-    if (xTaskCreatePinnedToCore(ccall_bt_app_task_handler, "BtAppT", 2048, NULL, task_priority, &s_bt_app_task_handle, task_core)!=pdPASS){
+    s_bt_app_task_queue = xQueueCreate(event_queue_size, sizeof(app_msg_t));
+    if (xTaskCreatePinnedToCore(ccall_bt_app_task_handler, "BtAppT", event_stack_size, NULL, task_priority, &s_bt_app_task_handle, task_core)!=pdPASS){
           ESP_LOGE(BT_AV_TAG, "xTaskCreatePinnedToCore");      
     }
     return;

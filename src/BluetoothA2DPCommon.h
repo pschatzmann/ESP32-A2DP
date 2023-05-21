@@ -170,16 +170,26 @@ class BluetoothA2DPCommon {
             task_priority = priority;
         }
 
-        /// Provides the address of the last device
-        virtual esp_bd_addr_t* get_last_peer_address() {
-            return &last_connection;
-        }
 
         /// Defines the core which is used to start the tasks (to process the events and audio queue)
         void set_task_core(BaseType_t core){
             task_core = core;
         }
 
+        /// Defines the queue size of the event task 
+        void set_event_queue_size(int size){
+            event_queue_size = size;
+        }
+
+        /// Defines the stack size of the event task (in bytes)
+        void set_event_stack_size(int size){
+            event_stack_size = size;
+        }
+
+        /// Provides the address of the last device
+        virtual esp_bd_addr_t* get_last_peer_address() {
+            return &last_connection;
+        }
 
 #ifdef ESP_IDF_4
     /// Bluetooth discoverability
@@ -212,6 +222,10 @@ class BluetoothA2DPCommon {
         uint8_t volume_value = 0;
         bool is_volume_used = false;
         BaseType_t task_core = 1;
+
+        int event_queue_size = 20;
+        int event_stack_size = 3072;
+
 
 #ifdef ESP_IDF_4
         esp_bt_discovery_mode_t discoverability = ESP_BT_GENERAL_DISCOVERABLE;

@@ -218,16 +218,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
         return &peer_bd_addr;
     }
 
-    /// Defines the queue size of the event task 
-    void set_event_queue_size(int size){
-        event_queue_size = size;
-    }
-
-    /// Defines the stack size of the event task (in bytes)
-    void set_event_stack_size(int size){
-        event_stack_size = size;
-    }
-
 
     /// Activates the rssi reporting
     void set_rssi_active(bool active){
@@ -299,8 +289,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     bool swap_left_right = false;
     bool is_i2s_active = false;
     int try_reconnect_max_count = AUTOCONNECT_TRY_NUM;
-    int event_queue_size = 20;
-    int event_stack_size = 3072;
    
     // RSSI support
     esp_bt_gap_cb_param_t::read_rssi_delta_param last_rssi_delta;

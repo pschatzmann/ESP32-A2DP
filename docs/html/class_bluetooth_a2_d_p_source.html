@@ -240,14 +240,22 @@ const char *&#160;</td><td class="memItemRight" valign="bottom"><b>to_str</b> (e
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set_task_priority</b> (UBaseType_t priority)</td></tr>
 <tr class="memdesc:a68f9e168839f0faeb72705ccabbb6b7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">defines the task priority (the default value is configMAX_PRIORITIES - 10) <br /></td></tr>
 <tr class="separator:a68f9e168839f0faeb72705ccabbb6b7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acf924bb9f5e348c85e65879c337a4bde"><td class="memItemLeft" align="right" valign="top"><a id="acf924bb9f5e348c85e65879c337a4bde" name="acf924bb9f5e348c85e65879c337a4bde"></a>
-virtual esp_bd_addr_t *&#160;</td><td class="memItemRight" valign="bottom"><b>get_last_peer_address</b> ()</td></tr>
-<tr class="memdesc:acf924bb9f5e348c85e65879c337a4bde"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides the address of the last device. <br /></td></tr>
-<tr class="separator:acf924bb9f5e348c85e65879c337a4bde"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a694940fad2a2d498875cfbdf52eea58b"><td class="memItemLeft" align="right" valign="top"><a id="a694940fad2a2d498875cfbdf52eea58b" name="a694940fad2a2d498875cfbdf52eea58b"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set_task_core</b> (BaseType_t core)</td></tr>
 <tr class="memdesc:a694940fad2a2d498875cfbdf52eea58b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the core which is used to start the tasks (to process the events and audio queue) <br /></td></tr>
 <tr class="separator:a694940fad2a2d498875cfbdf52eea58b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5e96c34428c50873a0ca7423a6b5402"><td class="memItemLeft" align="right" valign="top"><a id="ae5e96c34428c50873a0ca7423a6b5402" name="ae5e96c34428c50873a0ca7423a6b5402"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_event_queue_size</b> (int size)</td></tr>
+<tr class="memdesc:ae5e96c34428c50873a0ca7423a6b5402"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the queue size of the event task. <br /></td></tr>
+<tr class="separator:ae5e96c34428c50873a0ca7423a6b5402"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04bc52a4279a503203084492fe20c32e"><td class="memItemLeft" align="right" valign="top"><a id="a04bc52a4279a503203084492fe20c32e" name="a04bc52a4279a503203084492fe20c32e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_event_stack_size</b> (int size)</td></tr>
+<tr class="memdesc:a04bc52a4279a503203084492fe20c32e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the stack size of the event task (in bytes) <br /></td></tr>
+<tr class="separator:a04bc52a4279a503203084492fe20c32e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf924bb9f5e348c85e65879c337a4bde"><td class="memItemLeft" align="right" valign="top"><a id="acf924bb9f5e348c85e65879c337a4bde" name="acf924bb9f5e348c85e65879c337a4bde"></a>
+virtual esp_bd_addr_t *&#160;</td><td class="memItemRight" valign="bottom"><b>get_last_peer_address</b> ()</td></tr>
+<tr class="memdesc:acf924bb9f5e348c85e65879c337a4bde"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides the address of the last device. <br /></td></tr>
+<tr class="separator:acf924bb9f5e348c85e65879c337a4bde"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -491,6 +499,12 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_volume_used</b> = 
 <tr class="memitem:a5b0acd3b6c295785607d326128eaa52e"><td class="memItemLeft" align="right" valign="top"><a id="a5b0acd3b6c295785607d326128eaa52e" name="a5b0acd3b6c295785607d326128eaa52e"></a>
 BaseType_t&#160;</td><td class="memItemRight" valign="bottom"><b>task_core</b> = 1</td></tr>
 <tr class="separator:a5b0acd3b6c295785607d326128eaa52e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6737dd3e78e2f979815615b143fcfda"><td class="memItemLeft" align="right" valign="top"><a id="ae6737dd3e78e2f979815615b143fcfda" name="ae6737dd3e78e2f979815615b143fcfda"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>event_queue_size</b> = 20</td></tr>
+<tr class="separator:ae6737dd3e78e2f979815615b143fcfda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abdc17e14de376b611b41974052b4dd2c"><td class="memItemLeft" align="right" valign="top"><a id="abdc17e14de376b611b41974052b4dd2c" name="abdc17e14de376b611b41974052b4dd2c"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>event_stack_size</b> = 3072</td></tr>
+<tr class="separator:abdc17e14de376b611b41974052b4dd2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
 Friends</h2></td></tr>

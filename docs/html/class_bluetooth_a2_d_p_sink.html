@@ -247,14 +247,6 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>set_auto_reco
 virtual esp_bd_addr_t *&#160;</td><td class="memItemRight" valign="bottom"><b>get_current_peer_address</b> ()</td></tr>
 <tr class="memdesc:a84491fcf5f42ca5ac2f5dcff5a0d4508"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides the address of the connected device. <br /></td></tr>
 <tr class="separator:a84491fcf5f42ca5ac2f5dcff5a0d4508"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3061ae4cc5bd536094f5fa836fffc081"><td class="memItemLeft" align="right" valign="top"><a id="a3061ae4cc5bd536094f5fa836fffc081" name="a3061ae4cc5bd536094f5fa836fffc081"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_event_queue_size</b> (int size)</td></tr>
-<tr class="memdesc:a3061ae4cc5bd536094f5fa836fffc081"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the queue size of the event task. <br /></td></tr>
-<tr class="separator:a3061ae4cc5bd536094f5fa836fffc081"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b32be65a83a744869c8a9565a170cf3"><td class="memItemLeft" align="right" valign="top"><a id="a6b32be65a83a744869c8a9565a170cf3" name="a6b32be65a83a744869c8a9565a170cf3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_event_stack_size</b> (int size)</td></tr>
-<tr class="memdesc:a6b32be65a83a744869c8a9565a170cf3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the stack size of the event task (in bytes) <br /></td></tr>
-<tr class="separator:a6b32be65a83a744869c8a9565a170cf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a452b509a46930ab1ed58188a4181c67b"><td class="memItemLeft" align="right" valign="top"><a id="a452b509a46930ab1ed58188a4181c67b" name="a452b509a46930ab1ed58188a4181c67b"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set_rssi_active</b> (bool active)</td></tr>
 <tr class="memdesc:a452b509a46930ab1ed58188a4181c67b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Activates the rssi reporting. <br /></td></tr>
@@ -334,14 +326,22 @@ const char *&#160;</td><td class="memItemRight" valign="bottom"><b>to_str</b> (e
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set_task_priority</b> (UBaseType_t priority)</td></tr>
 <tr class="memdesc:a68f9e168839f0faeb72705ccabbb6b7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">defines the task priority (the default value is configMAX_PRIORITIES - 10) <br /></td></tr>
 <tr class="separator:a68f9e168839f0faeb72705ccabbb6b7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acf924bb9f5e348c85e65879c337a4bde"><td class="memItemLeft" align="right" valign="top"><a id="acf924bb9f5e348c85e65879c337a4bde" name="acf924bb9f5e348c85e65879c337a4bde"></a>
-virtual esp_bd_addr_t *&#160;</td><td class="memItemRight" valign="bottom"><b>get_last_peer_address</b> ()</td></tr>
-<tr class="memdesc:acf924bb9f5e348c85e65879c337a4bde"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides the address of the last device. <br /></td></tr>
-<tr class="separator:acf924bb9f5e348c85e65879c337a4bde"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a694940fad2a2d498875cfbdf52eea58b"><td class="memItemLeft" align="right" valign="top"><a id="a694940fad2a2d498875cfbdf52eea58b" name="a694940fad2a2d498875cfbdf52eea58b"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set_task_core</b> (BaseType_t core)</td></tr>
 <tr class="memdesc:a694940fad2a2d498875cfbdf52eea58b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the core which is used to start the tasks (to process the events and audio queue) <br /></td></tr>
 <tr class="separator:a694940fad2a2d498875cfbdf52eea58b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5e96c34428c50873a0ca7423a6b5402"><td class="memItemLeft" align="right" valign="top"><a id="ae5e96c34428c50873a0ca7423a6b5402" name="ae5e96c34428c50873a0ca7423a6b5402"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_event_queue_size</b> (int size)</td></tr>
+<tr class="memdesc:ae5e96c34428c50873a0ca7423a6b5402"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the queue size of the event task. <br /></td></tr>
+<tr class="separator:ae5e96c34428c50873a0ca7423a6b5402"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04bc52a4279a503203084492fe20c32e"><td class="memItemLeft" align="right" valign="top"><a id="a04bc52a4279a503203084492fe20c32e" name="a04bc52a4279a503203084492fe20c32e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_event_stack_size</b> (int size)</td></tr>
+<tr class="memdesc:a04bc52a4279a503203084492fe20c32e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the stack size of the event task (in bytes) <br /></td></tr>
+<tr class="separator:a04bc52a4279a503203084492fe20c32e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf924bb9f5e348c85e65879c337a4bde"><td class="memItemLeft" align="right" valign="top"><a id="acf924bb9f5e348c85e65879c337a4bde" name="acf924bb9f5e348c85e65879c337a4bde"></a>
+virtual esp_bd_addr_t *&#160;</td><td class="memItemRight" valign="bottom"><b>get_last_peer_address</b> ()</td></tr>
+<tr class="memdesc:acf924bb9f5e348c85e65879c337a4bde"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides the address of the last device. <br /></td></tr>
+<tr class="separator:acf924bb9f5e348c85e65879c337a4bde"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -548,15 +548,12 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><b>sample_rate_callbac
 <tr class="memitem:a00954e585dd50ef40719d208a972adda"><td class="memItemLeft" align="right" valign="top"><a id="a00954e585dd50ef40719d208a972adda" name="a00954e585dd50ef40719d208a972adda"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>swap_left_right</b> = false</td></tr>
 <tr class="separator:a00954e585dd50ef40719d208a972adda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8175ab0c610d3b3412be2778d35ca15"><td class="memItemLeft" align="right" valign="top"><a id="af8175ab0c610d3b3412be2778d35ca15" name="af8175ab0c610d3b3412be2778d35ca15"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_i2s_active</b> = false</td></tr>
+<tr class="separator:af8175ab0c610d3b3412be2778d35ca15"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab90b3d60f915bab9c9d2d9f4b27e93fe"><td class="memItemLeft" align="right" valign="top"><a id="ab90b3d60f915bab9c9d2d9f4b27e93fe" name="ab90b3d60f915bab9c9d2d9f4b27e93fe"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>try_reconnect_max_count</b> = AUTOCONNECT_TRY_NUM</td></tr>
 <tr class="separator:ab90b3d60f915bab9c9d2d9f4b27e93fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5a77e4633ef21aecd693bb26da2fdb70"><td class="memItemLeft" align="right" valign="top"><a id="a5a77e4633ef21aecd693bb26da2fdb70" name="a5a77e4633ef21aecd693bb26da2fdb70"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>event_queue_size</b> = 20</td></tr>
-<tr class="separator:a5a77e4633ef21aecd693bb26da2fdb70"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c6c4fd7156175610f58ec80cc597613"><td class="memItemLeft" align="right" valign="top"><a id="a7c6c4fd7156175610f58ec80cc597613" name="a7c6c4fd7156175610f58ec80cc597613"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>event_stack_size</b> = 3072</td></tr>
-<tr class="separator:a7c6c4fd7156175610f58ec80cc597613"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acd684815c84a3d29da78377615878fd6"><td class="memItemLeft" align="right" valign="top"><a id="acd684815c84a3d29da78377615878fd6" name="acd684815c84a3d29da78377615878fd6"></a>
 esp_bt_gap_cb_param_t::read_rssi_delta_param&#160;</td><td class="memItemRight" valign="bottom"><b>last_rssi_delta</b></td></tr>
 <tr class="separator:acd684815c84a3d29da78377615878fd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -641,6 +638,12 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_volume_used</b> = 
 <tr class="memitem:a5b0acd3b6c295785607d326128eaa52e"><td class="memItemLeft" align="right" valign="top"><a id="a5b0acd3b6c295785607d326128eaa52e" name="a5b0acd3b6c295785607d326128eaa52e"></a>
 BaseType_t&#160;</td><td class="memItemRight" valign="bottom"><b>task_core</b> = 1</td></tr>
 <tr class="separator:a5b0acd3b6c295785607d326128eaa52e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6737dd3e78e2f979815615b143fcfda"><td class="memItemLeft" align="right" valign="top"><a id="ae6737dd3e78e2f979815615b143fcfda" name="ae6737dd3e78e2f979815615b143fcfda"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>event_queue_size</b> = 20</td></tr>
+<tr class="separator:ae6737dd3e78e2f979815615b143fcfda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abdc17e14de376b611b41974052b4dd2c"><td class="memItemLeft" align="right" valign="top"><a id="abdc17e14de376b611b41974052b4dd2c" name="abdc17e14de376b611b41974052b4dd2c"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>event_stack_size</b> = 3072</td></tr>
+<tr class="separator:abdc17e14de376b611b41974052b4dd2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-static-attribs" name="pro-static-attribs"></a>
 Static Protected Attributes</h2></td></tr>

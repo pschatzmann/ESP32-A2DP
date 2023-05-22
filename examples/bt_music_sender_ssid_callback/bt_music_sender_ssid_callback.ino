@@ -23,21 +23,21 @@ BluetoothA2DPSource a2dp_source;
 
 // The supported audio codec in ESP32 A2DP is SBC. SBC audio stream is encoded
 // from PCM data normally formatted as 44.1kHz sampling rate, two-channel 16-bit sample data
-int32_t get_data_channels(Frame *frame, int32_t channel_len) {
-    static double m_time = 0.0;
-    double m_amplitude = 10000.0;  // -32,768 to 32,767
-    double m_deltaTime = 1.0 / 44100.0;
-    double m_phase = 0.0;
-    double double_Pi = PI * 2.0;
+int32_t get_data_frames(Frame *frame, int32_t frame_count) {
+    static float m_time = 0.0;
+    float m_amplitude = 10000.0;  // -32,768 to 32,767
+    float m_deltaTime = 1.0 / 44100.0;
+    float m_phase = 0.0;
+    float float_Pi = PI * 2.0;
     // fill the channel data
-    for (int sample = 0; sample < channel_len; ++sample) {
-        double angle = double_Pi * c3_frequency * m_time + m_phase;
+    for (int sample = 0; sample < frame_count; ++sample) {
+        float angle = float_Pi * c3_frequency * m_time + m_phase;
         frame[sample].channel1 = m_amplitude * sin(angle);
         frame[sample].channel2 = frame[sample].channel1;
         m_time += m_deltaTime;
     }
 
-    return channel_len;
+    return frame_count;
 }
 
 // Return true to connect, false will continue scanning
@@ -52,7 +52,7 @@ void setup() {
 
   a2dp_source.set_ssid_callback(isValid);
   a2dp_source.set_auto_reconnect(false);
-  a2dp_source.start(get_data_channels);  
+  a2dp_source.start(get_data_frames);  
 
   a2dp_source.set_volume(30);
 }

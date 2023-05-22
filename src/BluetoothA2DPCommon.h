@@ -12,6 +12,16 @@
 //
 // Copyright 2020 Phil Schatzmann
 
+/**
+ * @defgroup a2dp ESP32 A2DP
+ * @brief A Simple ESP32 Bluetooth A2DP Library (to implement a Music Receiver or Sender) that supports Arduino, PlatformIO and Espressif IDF
+ * @file BluetoothA2DPCommon.h
+ * @author Phil Schatzmann
+ * @copyright GPLv3
+ */
+
+
+
 #pragma once
 
 #include "config.h"

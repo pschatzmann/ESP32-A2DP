@@ -41,6 +41,7 @@ extern "C" int32_t ccall_get_data_default(uint8_t *data, int32_t len) ;
 
 /**
  * @brief A2DP Bluetooth Source
+ * @ingroup a2dp
  * @author Phil Schatzmann
  * @copyright Apache License Version 2
  */

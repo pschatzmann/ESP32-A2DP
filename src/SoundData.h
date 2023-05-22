@@ -63,6 +63,7 @@ enum ChannelInfo {
  *   - Export -> Export Audio -> Header Raw ; Signed 16 bit PCM
  * - Convert to c file e.g. with "xxd -i file_example_WAV_1MG.raw file_example_WAV_1MG.c"
  *   - add the const qualifier to the array definition. E.g const unsigned char file_example_WAV_1MG_raw[] = {
+ * @ingroup a2dp
  * @author Phil Schatzmann
  * @copyright Apache License Version 2
  */

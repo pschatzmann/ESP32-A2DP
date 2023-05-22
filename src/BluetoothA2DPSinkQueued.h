@@ -5,7 +5,9 @@
 /**
  * @brief The BluetoothA2DPSinkQueued is using a separate Task with an additinal Queue to write the I2S data.
  * application. 
- * 
+ * @ingroup a2dp
+ * @author Phil Schatzmann
+ * @copyright Apache License Version 2
  */
 class BluetoothA2DPSinkQueued : public BluetoothA2DPSink {
     public:

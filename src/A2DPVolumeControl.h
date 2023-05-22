@@ -20,6 +20,7 @@
 
 /**
  * @brief Abstract class for handling of the volume of the audio data
+ * @ingroup a2dp
  * @author Phil Schatzmann
  * @copyright Apache License Version 2
  */

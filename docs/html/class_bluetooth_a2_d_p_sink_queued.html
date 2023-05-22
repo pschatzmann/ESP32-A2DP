@@ -75,7 +75,7 @@ $(function() {
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="#pro-static-attribs">Static Protected Attributes</a> &#124;
 <a href="class_bluetooth_a2_d_p_sink_queued-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">BluetoothA2DPSinkQueued Class Reference</div></div>
+  <div class="headertitle"><div class="title">BluetoothA2DPSinkQueued Class Reference<div class="ingroups"><a class="el" href="group__a2dp.html">ESP32 A2DP</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -375,7 +375,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>app_task_shut
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>app_send_msg</b> (<a class="el" href="structapp__msg__t.html">app_msg_t</a> *msg)</td></tr>
 <tr class="separator:a1386a6655efa1a4ce1bf7da5d980cc13"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aba7d5111b1cf179b8d3859bfde6e88d3"><td class="memItemLeft" align="right" valign="top"><a id="aba7d5111b1cf179b8d3859bfde6e88d3" name="aba7d5111b1cf179b8d3859bfde6e88d3"></a>
-virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>app_work_dispatch</b> (app_callback_t p_cback, uint16_t event, void *p_params, int param_len)</td></tr>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>app_work_dispatch</b> (<a class="el" href="_bluetooth_a2_d_p_common_8h.html#a9bee258e477be3c0e70d6029ed86a019">app_callback_t</a> p_cback, uint16_t event, void *p_params, int param_len)</td></tr>
 <tr class="separator:aba7d5111b1cf179b8d3859bfde6e88d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2b28c1fac6b2d3fac84ca51c57bc6813"><td class="memItemLeft" align="right" valign="top"><a id="a2b28c1fac6b2d3fac84ca51c57bc6813" name="a2b28c1fac6b2d3fac84ca51c57bc6813"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>app_work_dispatched</b> (<a class="el" href="structapp__msg__t.html">app_msg_t</a> *msg)</td></tr>
@@ -670,6 +670,8 @@ static const esp_spp_mode_t&#160;</td><td class="memItemRight" valign="bottom"><
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="class_bluetooth_a2_d_p_sink_queued.html" title="The BluetoothA2DPSinkQueued is using a separate Task with an additinal Queue to write the I2S data....">BluetoothA2DPSinkQueued</a> is using a separate Task with an additinal Queue to write the I2S data. application. </p>
+<dl class="section author"><dt>Author</dt><dd>Phil Schatzmann </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>Apache License Version 2 </dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a361f80944f06806b7e42302f95171675" name="a361f80944f06806b7e42302f95171675"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a361f80944f06806b7e42302f95171675">&#9670;&#160;</a></span>app_task_handler()</h2>

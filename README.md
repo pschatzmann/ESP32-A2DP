@@ -240,7 +240,6 @@ void setup() {
 
 ```
 
-
 ### Sending Data from a A2DS Data Source with Recorded Data
 
 You can also provide the data directly as simple array of uint8_t:
@@ -314,7 +313,7 @@ You can use this library stand alone, but it is part of my [audio-tools](https:/
 
 ## Documentation
 
-- The [class documentation can be found here](https://pschatzmann.github.io/ESP32-A2DP/html/annotated.html)
+- The [class documentation can be found here](https://pschatzmann.github.io/ESP32-A2DP/docs/html/group__a2dp.html)
 - You can also find further information in the [Wiki](https://github.com/pschatzmann/ESP32-A2DP/wiki)
 
 Please read the documentation and check the issues and discussions before posting any new ones on Github.

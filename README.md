@@ -134,7 +134,8 @@ The output goes now to the DAC pins GPIO25 (Channel 1) and GPIO26 (Channel 2).
 
 ### Accessing the Sink Data Stream with Callbacks
 
-You can be notified when a packet is received:
+You can be notified when a packet is received. The API is using PCM data normally formatted as 44.1kHz sampling rate, two-channel 16-bit sample data. 
+
 
 ```
 // In the setup function:
@@ -201,7 +202,7 @@ This can be used to feed e.g. your Bluetooth Speaker with your audio data.
 
 We can also generate sound and send it e.g. to a Bluetooth Speaker.  
 
-The supported audio codec in ESP32 A2DP is SBC: A SBC audio stream is encoded from PCM data normally formatted as 44.1kHz sampling rate, two-channel 16-bit sample data. 
+The supported audio codec in ESP32 A2DP is SBC: The API is using PCM data normally formatted as 44.1kHz sampling rate, two-channel 16-bit sample data. 
 
 When you start the BluetoothA2DPSource, you need to pass the Bluetooth name that you want to connect to and a 'call back
 function' that generates the sound data:

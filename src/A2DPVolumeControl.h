@@ -140,4 +140,6 @@ class A2DPNoVolumeControl : public A2DPVolumeControl {
     public:
         virtual void update_audio_data(Frame* data, uint16_t frameCount) {
         }
+        virtual void set_volume(uint8_t volume) {
+        }
 };

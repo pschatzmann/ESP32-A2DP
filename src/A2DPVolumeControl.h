@@ -87,7 +87,7 @@ class A2DPVolumeControl {
  */
 class A2DPDefaultVolumeControl : public A2DPVolumeControl {
 
-        virtual void set_volume(uint8_t volume) {
+        virtual void set_volume(uint8_t volume) override {
             constexpr double base = 1.4;
             constexpr double bits = 12;
             constexpr double zero_ofs = pow(base, -bits);
@@ -105,7 +105,7 @@ class A2DPDefaultVolumeControl : public A2DPVolumeControl {
  * @author rbruelma
  */
 class A2DPSimpleExponentialVolumeControl : public A2DPVolumeControl {
-        virtual void set_volume(uint8_t volume) {
+        virtual void set_volume(uint8_t volume) override {
             double volumeFactorFloat = volume;
             volumeFactorFloat = pow(2.0, volumeFactorFloat * 12.0 / 127.0);
             int32_t volumeFactor = volumeFactorFloat - 1.0;
@@ -126,7 +126,7 @@ class A2DPLinearVolumeControl : public A2DPVolumeControl {
             volumeFactorMax = 128;
         }
 
-        virtual void set_volume(uint8_t volume) {
+        virtual void set_volume(uint8_t volume) override {
             volumeFactor = volume;
         }
 };
@@ -138,8 +138,8 @@ class A2DPLinearVolumeControl : public A2DPVolumeControl {
  */
 class A2DPNoVolumeControl : public A2DPVolumeControl {
     public:
-        virtual void update_audio_data(Frame* data, uint16_t frameCount) {
+        virtual void update_audio_data(Frame* data, uint16_t frameCount) override {
         }
-        virtual void set_volume(uint8_t volume) {
+        virtual void set_volume(uint8_t volume) override {
         }
 };

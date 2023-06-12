@@ -240,6 +240,11 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
         reconnect_delay = delay;
     }
 
+    /// Activates SSP (Serial protocol)
+    void set_spp_active(bool flag){
+        spp_active = flag;
+    }
+
  #ifdef ESP_IDF_4
     /// Get the name of the connected source device
     virtual const char* get_connected_source_name();
@@ -270,7 +275,8 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     i2s_channel_t i2s_channels = I2S_CHANNEL_STEREO;
     i2s_port_t i2s_port = I2S_NUM_0; 
     int connection_rety_count = 0;
-    static const esp_spp_mode_t esp_spp_mode = ESP_SPP_MODE_CB;
+    bool spp_active = false;
+    esp_spp_mode_t esp_spp_mode = ESP_SPP_MODE_CB;
     _lock_t s_volume_lock;
     uint8_t s_volume = 0;
     bool s_volume_notify;

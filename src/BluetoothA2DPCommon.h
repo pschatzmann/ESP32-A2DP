@@ -85,7 +85,7 @@ typedef struct {
     uint16_t             event;    /*!< message event id */
     app_callback_t       cb;       /*!< context switch callback */
     void                 *param;   /*!< parameter area needs to be last */
-} app_msg_t;
+} bt_app_msg_t;
 
 
 #define BT_AV_TAG        "BT_AV"

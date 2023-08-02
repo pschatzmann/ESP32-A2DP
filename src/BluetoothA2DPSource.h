@@ -24,7 +24,7 @@
 typedef void (* bt_app_cb_t) (uint16_t event, void *param);
 typedef  int32_t (* music_data_cb_t) (uint8_t *data, int32_t len);
 typedef  int32_t (* music_data_channels_cb_t) (Frame *data, int32_t len);
-typedef void (* bt_app_copy_cb_t) (app_msg_t *msg, void *p_dest, void *p_src);
+typedef void (* bt_app_copy_cb_t) (bt_app_msg_t *msg, void *p_dest, void *p_src);
 
 extern "C" void ccall_bt_av_hdl_stack_evt(uint16_t event, void *p_param);
 extern "C" void ccall_bt_app_task_handler(void *arg);
@@ -208,14 +208,14 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
     virtual void bt_app_av_media_proc(uint16_t event, void *param);
 
     /* A2DP application state machine handler for each state */
-    virtual void bt_app_av_state_unconnected(uint16_t event, void *param);
-    virtual void bt_app_av_state_connecting(uint16_t event, void *param);
-    virtual void bt_app_av_state_connected(uint16_t event, void *param);
-    virtual void bt_app_av_state_disconnecting(uint16_t event, void *param);
+    virtual void bt_app_av_state_unconnected_hdlr(uint16_t event, void *param);
+    virtual void bt_app_av_state_connecting_hdlr(uint16_t event, void *param);
+    virtual void bt_app_av_state_connected_hdlr(uint16_t event, void *param);
+    virtual void bt_app_av_state_disconnecting_hdlr(uint16_t event, void *param);
 
 
-    virtual bool bt_app_send_msg(app_msg_t *msg);
-    virtual void bt_app_work_dispatched(app_msg_t *msg);
+    virtual bool bt_app_send_msg(bt_app_msg_t *msg);
+    virtual void bt_app_work_dispatched(bt_app_msg_t *msg);
 
     virtual bool get_name_from_eir(uint8_t *eir, uint8_t *bdname, uint8_t *bdname_len);
     virtual void filter_inquiry_scan_result(esp_bt_gap_cb_param_t *param);

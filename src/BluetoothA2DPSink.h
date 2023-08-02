@@ -313,9 +313,9 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     virtual void init_i2s();
     virtual void app_task_start_up(void);
     virtual void app_task_shut_down(void);
-    virtual bool app_send_msg(app_msg_t *msg);
+    virtual bool app_send_msg(bt_app_msg_t *msg);
     virtual bool app_work_dispatch(app_callback_t p_cback, uint16_t event, void *p_params, int param_len);
-    virtual void app_work_dispatched(app_msg_t *msg);
+    virtual void app_work_dispatched(bt_app_msg_t *msg);
     virtual void app_alloc_meta_buffer(esp_avrc_ct_cb_param_t *param);
     virtual void av_new_track();
     virtual void init_nvs();

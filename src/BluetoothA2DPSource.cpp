@@ -540,6 +540,10 @@ void BluetoothA2DPSource::bt_app_gap_callback(esp_bt_gap_cb_event_t event,
     esp_bt_gap_ssp_confirm_reply(param->cfm_req.bda, true);
     break;
 
+  case ESP_BT_GAP_ACL_CONN_CMPL_STAT_EVT:
+    ESP_LOGI( BT_AV_TAG,"ESP_BT_GAP_ACL_CONN_CMPL_STAT_EVT");
+    break;
+
 #ifdef ESP_IDF_4
   case ESP_BT_GAP_MODE_CHG_EVT:
     ESP_LOGI(BT_AV_TAG, "ESP_BT_GAP_MODE_CHG_EVT mode:%d",

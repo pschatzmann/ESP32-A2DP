@@ -442,7 +442,7 @@ void BluetoothA2DPSource::filter_inquiry_scan_result(
       // if no callback we use the list
       for (const char *name : bt_names) {
         int len = strlen(name);
-        ESP_LOGI(BT_AV_TAG, "--Checking match: %s", name);
+        ESP_LOGD(BT_AV_TAG, "--Checking match: %s", name);
         if (strncmp((char *)s_peer_bdname, name, len) == 0) {
           this->bt_name = (char *)s_peer_bdname;
           found = true;
@@ -656,7 +656,7 @@ void BluetoothA2DPSource::process_user_state_callbacks(uint16_t event,
 }
 
 void BluetoothA2DPSource::bt_app_av_sm_hdlr(uint16_t event, void *param) {
-  ESP_LOGI(BT_AV_TAG, "%s state %d, evt 0x%x", __func__, s_a2d_state, event);
+  ESP_LOGI(BT_AV_TAG, "%s state %s, evt 0x%x", __func__, to_state_str(s_a2d_state), event);
   /* select handler according to different states */
   switch (s_a2d_state) {
   case APP_AV_STATE_DISCOVERING:

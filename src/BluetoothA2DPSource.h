@@ -39,6 +39,17 @@ extern "C" int32_t ccall_get_channel_data_wrapper(uint8_t *data, int32_t len) ;
 extern "C" int32_t ccall_get_data_default(uint8_t *data, int32_t len) ;
 
 
+static char* APP_AV_STATE_STR[]={
+  "APP_AV_STATE_IDLE",
+  "APP_AV_STATE_DISCOVERING",
+  "APP_AV_STATE_DISCOVERED",
+  "APP_AV_STATE_UNCONNECTED",
+  "APP_AV_STATE_CONNECTING",
+  "APP_AV_STATE_CONNECTED",
+  "APP_AV_STATE_DISCONNECTING"
+};
+
+
 /**
  * @brief A2DP Bluetooth Source
  * @ingroup a2dp
@@ -161,7 +172,6 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
       ssid_callback = callback;
     }
 
-
   protected:
     music_data_channels_cb_t data_stream_channels_callback;
     const char *dev_name = "ESP32_A2DP_SRC";
@@ -246,6 +256,11 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
 
     virtual esp_err_t esp_a2d_connect(esp_bd_addr_t peer) {
         return esp_a2d_source_connect(peer);
+    }
+
+    /// converts a APP_AV_STATE_ENUM to a string
+    const char* to_state_str(int state) {
+      return APP_AV_STATE_STR[state];
     }
 
 #ifdef ESP_IDF_4

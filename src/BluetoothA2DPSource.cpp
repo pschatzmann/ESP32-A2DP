@@ -505,14 +505,17 @@ void BluetoothA2DPSource::bt_app_gap_callback(esp_bt_gap_cb_event_t event,
   case ESP_BT_GAP_PIN_REQ_EVT: {
     ESP_LOGI(BT_AV_TAG, "ESP_BT_GAP_PIN_REQ_EVT min_16_digit:%d",
              param->pin_req.min_16_digit);
-    if (param->pin_req.min_16_digit) {
-      ESP_LOGI(BT_AV_TAG, "Input pin code: 0000 0000 0000 0000");
-      esp_bt_pin_code_t pin_code = {0};
-      esp_bt_gap_pin_reply(param->pin_req.bda, true, 16, pin_code);
-    } else {
-      ESP_LOGI(BT_AV_TAG, "Input pin code: 1234");
-      esp_bt_gap_pin_reply(param->pin_req.bda, true, pin_code_len, pin_code);
-    }
+       ESP_LOGI(BT_AV_TAG, "Input pin code: %s", pin_code);
+       esp_bt_gap_pin_reply(param->pin_req.bda, true, pin_code_len, pin_code);
+
+    // if (param->pin_req.min_16_digit) {
+    //   ESP_LOGI(BT_AV_TAG, "Input pin code: 0000 0000 0000 0000");
+    //   esp_bt_pin_code_t pin_code = {0};
+    //   esp_bt_gap_pin_reply(param->pin_req.bda, true, 16, pin_code);
+    // } else {
+    //   ESP_LOGI(BT_AV_TAG, "Input pin code: 1234");
+    //   esp_bt_gap_pin_reply(param->pin_req.bda, true, pin_code_len, pin_code);
+    // }
     break;
   }
 

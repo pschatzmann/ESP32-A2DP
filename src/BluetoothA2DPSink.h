@@ -384,6 +384,9 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     virtual esp_err_t esp_a2d_connect(esp_bd_addr_t peer) {
         return esp_a2d_sink_connect(peer);
     }
+    void set_scan_mode_connectable_default() override {
+        set_scan_mode_connectable(true);
+    }
 
 };
 

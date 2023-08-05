@@ -255,12 +255,17 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
     virtual void reset_last_connection();
 
     virtual esp_err_t esp_a2d_connect(esp_bd_addr_t peer) {
+        ESP_LOGI(BT_AV_TAG, "a2dp connecting to: %s", to_str(peer));
         return esp_a2d_source_connect(peer);
     }
 
     /// converts a APP_AV_STATE_ENUM to a string
     const char* to_state_str(int state) {
       return APP_AV_STATE_STR[state];
+    }
+
+    void set_scan_mode_connectable_default() override {
+        set_scan_mode_connectable(false);
     }
 
 #ifdef ESP_IDF_4

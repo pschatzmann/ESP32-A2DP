@@ -249,6 +249,7 @@ class BluetoothA2DPCommon {
         virtual bool has_last_connection();
         // change the scan mode
         virtual void set_scan_mode_connectable(bool connectable);
+        virtual void set_scan_mode_connectable_default();
 
         /// provides access to the VolumeControl object
         virtual A2DPVolumeControl* volume_control() {

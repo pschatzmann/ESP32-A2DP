@@ -192,10 +192,9 @@ void BluetoothA2DPSource::start_raw(std::vector<const char *> names,
   if (!has_last_connection()) {
     get_last_connection();
   }
+
   // reset last connection if we do not reconnect
-  if (reconnect_status == NoReconnect) {
-    reset_last_connection();
-  }
+  reset_last_connection();
 
   if (nvs_init) {
     // Initialize NVS (Non-volatile storage library).
@@ -249,15 +248,16 @@ void BluetoothA2DPSource::start_raw(std::vector<const char *> names,
 }
 
 void BluetoothA2DPSource::reset_last_connection() {
-  ESP_LOGD(BT_APP_TAG, "%s, ", __func__);
+  ESP_LOGI(BT_APP_TAG, "%s, ", __func__);
   [[maybe_unused]] const char *bda_str = to_str(last_connection);
   ESP_LOGD(BT_APP_TAG, "last connection %s, ", bda_str);
   if (has_last_connection()) {
     // the device might not have noticed that we are diconnected
     disconnect();
+    delay(2000);
     // remove bonding - so that we can reconnect
-    ESP_LOGD(BT_APP_TAG, "resetting %s, ", bda_str);
-    esp_bt_gap_remove_bond_device(last_connection);
+    //ESP_LOGD(BT_APP_TAG, "resetting %s, ", bda_str);
+    //esp_bt_gap_remove_bond_device(last_connection);
   }
 }
 
@@ -696,10 +696,6 @@ void BluetoothA2DPSource::bt_app_av_state_unconnected_hdlr(uint16_t event,
   case ESP_A2D_MEDIA_CTRL_ACK_EVT:
     break;
   case BT_APP_HEART_BEAT_EVT: {
-    [[maybe_unused]] uint8_t *p = peer_bd_addr;
-    ESP_LOGI(BT_AV_TAG,
-             "a2dp connecting to peer: %02x:%02x:%02x:%02x:%02x:%02x", p[0],
-             p[1], p[2], p[3], p[4], p[5]);
     esp_a2d_connect(peer_bd_addr);
     s_a2d_state = APP_AV_STATE_CONNECTING;
     s_connecting_heatbeat_count = 0;

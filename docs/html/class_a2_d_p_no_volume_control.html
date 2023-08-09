@@ -73,7 +73,7 @@ $(function() {
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="class_a2_d_p_no_volume_control-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">A2DPNoVolumeControl Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div></div>
+  <div class="headertitle"><div class="title">A2DPNoVolumeControl Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -93,8 +93,10 @@ Inheritance diagram for A2DPNoVolumeControl:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:afef3772d7efb2045e228f84af5c2bf1a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a2_d_p_no_volume_control.html#afef3772d7efb2045e228f84af5c2bf1a">update_audio_data</a> (Frame *data, uint16_t frameCount)</td></tr>
-<tr class="separator:afef3772d7efb2045e228f84af5c2bf1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabfc29d3cf7ff51d09554a680f6113d6"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a2_d_p_no_volume_control.html#aabfc29d3cf7ff51d09554a680f6113d6">update_audio_data</a> (Frame *data, uint16_t frameCount) override</td></tr>
+<tr class="separator:aabfc29d3cf7ff51d09554a680f6113d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad871171f7aec95f7b6a9847079d45c49"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a2_d_p_no_volume_control.html#ad871171f7aec95f7b6a9847079d45c49">set_volume</a> (uint8_t volume) override</td></tr>
+<tr class="separator:ad871171f7aec95f7b6a9847079d45c49"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6af31a3ffaad03ffa06930bbb3d3d285"><td class="memItemLeft" align="right" valign="top"><a id="a6af31a3ffaad03ffa06930bbb3d3d285" name="a6af31a3ffaad03ffa06930bbb3d3d285"></a>
 int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>get_volume_factor</b> ()</td></tr>
 <tr class="separator:a6af31a3ffaad03ffa06930bbb3d3d285"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -107,9 +109,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>set_enabled</b> (bool
 <tr class="memitem:a533745afd59e80e2549c9dfa80e05423"><td class="memItemLeft" align="right" valign="top"><a id="a533745afd59e80e2549c9dfa80e05423" name="a533745afd59e80e2549c9dfa80e05423"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set_mono_downmix</b> (bool enabled)</td></tr>
 <tr class="separator:a533745afd59e80e2549c9dfa80e05423"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4a40e553f8c15a2cecb6f2f71fa0464c"><td class="memItemLeft" align="right" valign="top"><a id="a4a40e553f8c15a2cecb6f2f71fa0464c" name="a4a40e553f8c15a2cecb6f2f71fa0464c"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>set_volume</b> (uint8_t volume)=0</td></tr>
-<tr class="separator:a4a40e553f8c15a2cecb6f2f71fa0464c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -131,8 +130,36 @@ int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>volumeFactorMax</b
 <dl class="section author"><dt>Author</dt><dd>pschatzmann </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Apache License Version 2 </dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="afef3772d7efb2045e228f84af5c2bf1a" name="afef3772d7efb2045e228f84af5c2bf1a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afef3772d7efb2045e228f84af5c2bf1a">&#9670;&#160;</a></span>update_audio_data()</h2>
+<a id="ad871171f7aec95f7b6a9847079d45c49" name="ad871171f7aec95f7b6a9847079d45c49"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad871171f7aec95f7b6a9847079d45c49">&#9670;&#160;</a></span>set_volume()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void A2DPNoVolumeControl::set_volume </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>volume</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implements <a class="el" href="class_a2_d_p_volume_control.html">A2DPVolumeControl</a>.</p>
+
+</div>
+</div>
+<a id="aabfc29d3cf7ff51d09554a680f6113d6" name="aabfc29d3cf7ff51d09554a680f6113d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aabfc29d3cf7ff51d09554a680f6113d6">&#9670;&#160;</a></span>update_audio_data()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -160,7 +187,7 @@ int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>volumeFactorMax</b
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

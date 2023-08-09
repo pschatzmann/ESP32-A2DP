@@ -180,7 +180,7 @@ Output to the Internal DAC</h2>
 </div><!-- fragment --><p>The output goes now to the DAC pins GPIO25 (Channel 1) and GPIO26 (Channel 2).</p>
 <h2><a class="anchor" id="autotoc_md7"></a>
 Accessing the Sink Data Stream with Callbacks</h2>
-<p>You can be notified when a packet is received:</p>
+<p>You can be notified when a packet is received. The API is using PCM data normally formatted as 44.1kHz sampling rate, two-channel 16-bit sample data.</p>
 <div class="fragment"><div class="line">// In the setup function:</div>
 <div class="line">a2dp_sink.set_on_data_received(data_received_callback);</div>
 <div class="line"> </div>
@@ -229,7 +229,7 @@ A2DP Source (Music Sender)</h1>
 Sending Data from a A2DS Data Source with a Callback</h2>
 <p>We can also generate sound and send it e.g. to a Bluetooth Speaker. <br  />
 </p>
-<p>The supported audio codec in ESP32 A2DP is SBC: A SBC audio stream is encoded from PCM data normally formatted as 44.1kHz sampling rate, two-channel 16-bit sample data.</p>
+<p>The supported audio codec in ESP32 A2DP is SBC: The API is using PCM data normally formatted as 44.1kHz sampling rate, two-channel 16-bit sample data.</p>
 <p>When you start the <a class="el" href="class_bluetooth_a2_d_p_source.html" title="A2DP Bluetooth Source.">BluetoothA2DPSource</a>, you need to pass the Bluetooth name that you want to connect to and a 'call back function' that generates the sound data:</p>
 <div class="fragment"><div class="line">#include &quot;BluetoothA2DPSource.h&quot;</div>
 <div class="line"> </div>
@@ -311,7 +311,7 @@ Digital Sound Processing</h1>
 <h1><a class="anchor" id="autotoc_md16"></a>
 Documentation</h1>
 <ul>
-<li>The <a href="https://pschatzmann.github.io/ESP32-A2DP/docs/html/group__a2dp.html">class documentation can be found here</a></li>
+<li>The <a href="https://pschatzmann.github.io/ESP32-A2DP/html/group__a2dp.html">class documentation can be found here</a></li>
 <li>You can also find further information in the <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki">Wiki</a></li>
 </ul>
 <p>Please read the documentation and check the issues and discussions before posting any new ones on Github.</p>

@@ -73,7 +73,6 @@ $(function() {
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
-<a href="#pro-static-attribs">Static Protected Attributes</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="class_bluetooth_a2_d_p_sink-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">BluetoothA2DPSink Class Reference<div class="ingroups"><a class="el" href="group__a2dp.html">ESP32 A2DP</a></div></div></div>
@@ -263,6 +262,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>set_rssi_callback</b>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set_reconnect_delay</b> (int delay)</td></tr>
 <tr class="memdesc:a96b4fabd27e7952fc3ea5edca3b95cbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the delay that is added to delay the startup when we automatically reconnect. <br /></td></tr>
 <tr class="separator:a96b4fabd27e7952fc3ea5edca3b95cbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe6004e2b95d120d64c10cf947fefb55"><td class="memItemLeft" align="right" valign="top"><a id="abe6004e2b95d120d64c10cf947fefb55" name="abe6004e2b95d120d64c10cf947fefb55"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_spp_active</b> (bool flag)</td></tr>
+<tr class="memdesc:abe6004e2b95d120d64c10cf947fefb55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Activates SSP (Serial protocol) <br /></td></tr>
+<tr class="separator:abe6004e2b95d120d64c10cf947fefb55"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a537d576b12d1158eb0681a6195b258de"><td class="memItemLeft" align="right" valign="top"><a id="a537d576b12d1158eb0681a6195b258de" name="a537d576b12d1158eb0681a6195b258de"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set_auto_reconnect</b> (bool active)</td></tr>
 <tr class="memdesc:a537d576b12d1158eb0681a6195b258de"><td class="mdescLeft">&#160;</td><td class="mdescRight">activate / deactivate the automatic reconnection to the last address (per default this is on) <br /></td></tr>
@@ -342,6 +345,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>set_event_stack_size<
 virtual esp_bd_addr_t *&#160;</td><td class="memItemRight" valign="bottom"><b>get_last_peer_address</b> ()</td></tr>
 <tr class="memdesc:acf924bb9f5e348c85e65879c337a4bde"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides the address of the last device. <br /></td></tr>
 <tr class="separator:acf924bb9f5e348c85e65879c337a4bde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a458bca4d65937c5e2de7bfeb0f454d88"><td class="memItemLeft" align="right" valign="top"><a id="a458bca4d65937c5e2de7bfeb0f454d88" name="a458bca4d65937c5e2de7bfeb0f454d88"></a>
+virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><b>get_name</b> ()</td></tr>
+<tr class="memdesc:a458bca4d65937c5e2de7bfeb0f454d88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides the actual SSID name. <br /></td></tr>
+<tr class="separator:a458bca4d65937c5e2de7bfeb0f454d88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -470,9 +477,6 @@ i2s_config_t&#160;</td><td class="memItemRight" valign="bottom"><b>i2s_config</b
 <tr class="memitem:aef204cf6b9fd3061778cc175001c9aac"><td class="memItemLeft" align="right" valign="top"><a id="aef204cf6b9fd3061778cc175001c9aac" name="aef204cf6b9fd3061778cc175001c9aac"></a>
 i2s_pin_config_t&#160;</td><td class="memItemRight" valign="bottom"><b>pin_config</b></td></tr>
 <tr class="separator:aef204cf6b9fd3061778cc175001c9aac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca6abec56c06d0376cbd91ec2f4520e7"><td class="memItemLeft" align="right" valign="top"><a id="aca6abec56c06d0376cbd91ec2f4520e7" name="aca6abec56c06d0376cbd91ec2f4520e7"></a>
-const char *&#160;</td><td class="memItemRight" valign="bottom"><b>bt_name</b> = nullptr</td></tr>
-<tr class="separator:aca6abec56c06d0376cbd91ec2f4520e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad558d5c64a96982632b63103197d6927"><td class="memItemLeft" align="right" valign="top"><a id="ad558d5c64a96982632b63103197d6927" name="ad558d5c64a96982632b63103197d6927"></a>
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_pkt_cnt</b> = 0</td></tr>
 <tr class="separator:ad558d5c64a96982632b63103197d6927"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -497,6 +501,12 @@ i2s_port_t&#160;</td><td class="memItemRight" valign="bottom"><b>i2s_port</b> = 
 <tr class="memitem:a24fb2e82758a45d60d820d8877153563"><td class="memItemLeft" align="right" valign="top"><a id="a24fb2e82758a45d60d820d8877153563" name="a24fb2e82758a45d60d820d8877153563"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>connection_rety_count</b> = 0</td></tr>
 <tr class="separator:a24fb2e82758a45d60d820d8877153563"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6af94c47c9c4a11c526bc47750faae52"><td class="memItemLeft" align="right" valign="top"><a id="a6af94c47c9c4a11c526bc47750faae52" name="a6af94c47c9c4a11c526bc47750faae52"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>spp_active</b> = false</td></tr>
+<tr class="separator:a6af94c47c9c4a11c526bc47750faae52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafad89f653fffa69c9bdee68b37f3f48"><td class="memItemLeft" align="right" valign="top"><a id="aafad89f653fffa69c9bdee68b37f3f48" name="aafad89f653fffa69c9bdee68b37f3f48"></a>
+esp_spp_mode_t&#160;</td><td class="memItemRight" valign="bottom"><b>esp_spp_mode</b> = ESP_SPP_MODE_CB</td></tr>
+<tr class="separator:aafad89f653fffa69c9bdee68b37f3f48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aab99c6480299a2b88fa5b0e1ad01fee6"><td class="memItemLeft" align="right" valign="top"><a id="aab99c6480299a2b88fa5b0e1ad01fee6" name="aab99c6480299a2b88fa5b0e1ad01fee6"></a>
 _lock_t&#160;</td><td class="memItemRight" valign="bottom"><b>s_volume_lock</b></td></tr>
 <tr class="separator:aab99c6480299a2b88fa5b0e1ad01fee6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -566,6 +576,9 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><b>rssi_callbak</b> )(
 <tr class="memitem:ae2fdcad112e30ca363b03156cc500cf0"><td class="memItemLeft" align="right" valign="top"><a id="ae2fdcad112e30ca363b03156cc500cf0" name="ae2fdcad112e30ca363b03156cc500cf0"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>reconnect_delay</b> = 1000</td></tr>
 <tr class="separator:ae2fdcad112e30ca363b03156cc500cf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e53210a1eeea015457cfc94df7883e1"><td class="memItemLeft" align="right" valign="top"><a id="a6e53210a1eeea015457cfc94df7883e1" name="a6e53210a1eeea015457cfc94df7883e1"></a>
+const char *&#160;</td><td class="memItemRight" valign="bottom"><b>bt_name</b> = {0}</td></tr>
+<tr class="separator:a6e53210a1eeea015457cfc94df7883e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a83cff3bdeb407a6c19618ba208438604"><td class="memItemLeft" align="right" valign="top"><a id="a83cff3bdeb407a6c19618ba208438604" name="a83cff3bdeb407a6c19618ba208438604"></a>
 esp_bd_addr_t&#160;</td><td class="memItemRight" valign="bottom"><b>peer_bd_addr</b></td></tr>
 <tr class="separator:a83cff3bdeb407a6c19618ba208438604"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -644,12 +657,6 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>event_queue_size</b> =
 <tr class="memitem:abdc17e14de376b611b41974052b4dd2c"><td class="memItemLeft" align="right" valign="top"><a id="abdc17e14de376b611b41974052b4dd2c" name="abdc17e14de376b611b41974052b4dd2c"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>event_stack_size</b> = 3072</td></tr>
 <tr class="separator:abdc17e14de376b611b41974052b4dd2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-static-attribs" name="pro-static-attribs"></a>
-Static Protected Attributes</h2></td></tr>
-<tr class="memitem:a001de9410aa1158a8af4185af93fc75c"><td class="memItemLeft" align="right" valign="top"><a id="a001de9410aa1158a8af4185af93fc75c" name="a001de9410aa1158a8af4185af93fc75c"></a>
-static const esp_spp_mode_t&#160;</td><td class="memItemRight" valign="bottom"><b>esp_spp_mode</b> = ESP_SPP_MODE_CB</td></tr>
-<tr class="separator:a001de9410aa1158a8af4185af93fc75c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
 Friends</h2></td></tr>

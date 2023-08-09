@@ -265,7 +265,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
 
     i2s_config_t i2s_config;
     i2s_pin_config_t pin_config;    
-    const char * bt_name = nullptr;
     uint32_t m_pkt_cnt = 0;
     //esp_a2d_audio_state_t m_audio_state = ESP_A2D_AUDIO_STATE_STOPPED;
     esp_a2d_mct_t audio_type;

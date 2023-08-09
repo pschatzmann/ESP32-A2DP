@@ -168,7 +168,6 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
 
     bool ssp_enabled=false;
     bool is_connecting = false;
-    const char* bt_name = {0};
     std::vector<const char*> bt_names;
 
     esp_bt_pin_type_t pin_type;

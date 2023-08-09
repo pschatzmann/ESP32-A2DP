@@ -204,9 +204,15 @@ class BluetoothA2DPCommon {
 #ifdef ESP_IDF_4
     /// Bluetooth discoverability
     virtual void set_discoverability(esp_bt_discovery_mode_t d);
-#endif        
+#endif    
+
+        /// Provides the actual SSID name
+        virtual const char* get_name() {
+            return bt_name;
+        }
 
     protected:
+        const char* bt_name = {0};
         esp_bd_addr_t peer_bd_addr;
         ReconnectStatus reconnect_status = AutoReconnect;
         unsigned long reconnect_timout=0;

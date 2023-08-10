@@ -91,7 +91,14 @@ typedef struct {
 #define BT_AV_TAG        "BT_AV"
 #define BT_RC_CT_TAG     "RCCT"
 #define BT_APP_TAG       "BT_API"
-#define APP_RC_CT_TL_GET_CAPS   (0)
+
+/* AVRCP used transaction labels */
+#define APP_RC_CT_TL_GET_CAPS            (0)
+#define APP_RC_CT_TL_GET_META_DATA       (1)
+#define APP_RC_CT_TL_RN_TRACK_CHANGE     (2)
+#define APP_RC_CT_TL_RN_PLAYBACK_CHANGE  (3)
+#define APP_RC_CT_TL_RN_PLAY_POS_CHANGE  (4)
+
 
 enum ReconnectStatus { NoReconnect, AutoReconnect, IsReconnecting};
 
@@ -108,6 +115,7 @@ class BluetoothA2DPCommon {
     
         /// activate / deactivate the automatic reconnection to the last address (per default this is on)
         void set_auto_reconnect(bool active);
+
         /// Closes the connection
         virtual void disconnect();
 
@@ -115,6 +123,7 @@ class BluetoothA2DPCommon {
         virtual bool reconnect();
 
         virtual bool connect_to(esp_bd_addr_t peer);
+
         /// Calls disconnect or reconnect
         virtual void set_connected(bool active);
 
@@ -175,6 +184,9 @@ class BluetoothA2DPCommon {
         /// converts a esp_bd_addr_t to a string - the string is 18 characters long! 
         const char* to_str(esp_bd_addr_t bda);
 
+        /// converts esp_avrc_playback_stat_t to a string
+        const char* to_str(esp_avrc_playback_stat_t state);
+
         /// defines the task priority (the default value is configMAX_PRIORITIES - 10)
         void set_task_priority(UBaseType_t priority){
             task_priority = priority;
@@ -204,12 +216,20 @@ class BluetoothA2DPCommon {
 #ifdef ESP_IDF_4
     /// Bluetooth discoverability
     virtual void set_discoverability(esp_bt_discovery_mode_t d);
-#endif    
+#endif
 
-        /// Provides the actual SSID name
-        virtual const char* get_name() {
-            return bt_name;
-        }
+    /// Bluetooth connectable
+    virtual void set_connectable(bool connectable) {
+        set_scan_mode_connectable(connectable);
+    }
+
+    /// Provides the actual SSID name
+    virtual const char* get_name() {
+        return bt_name;
+    }
+
+    /// clean last connection (delete)
+    virtual void clean_last_connection();
 
     protected:
         const char* bt_name = {0};
@@ -231,6 +251,7 @@ class BluetoothA2DPCommon {
         void *audio_state_obj_post = nullptr;
         const char *m_a2d_conn_state_str[4] = {"Disconnected", "Connecting", "Connected", "Disconnecting"};
         const char *m_a2d_audio_state_str[3] = {"Suspended", "Stopped", "Started"};
+        const char *m_avrc_playback_state_str[5] = {"stopped", "playing", "paused", "forward seek", "reverse seek"};
         esp_a2d_audio_state_t audio_state = ESP_A2D_AUDIO_STATE_STOPPED;
         esp_a2d_connection_state_t connection_state = ESP_A2D_CONNECTION_STATE_DISCONNECTED;
         UBaseType_t task_priority = configMAX_PRIORITIES - 10;
@@ -251,7 +272,6 @@ class BluetoothA2DPCommon {
         virtual const char* last_bda_nvs_name() = 0;
         virtual void get_last_connection();
         virtual void set_last_connection(esp_bd_addr_t bda);
-        virtual void clean_last_connection();
         virtual bool has_last_connection();
         // change the scan mode
         virtual void set_scan_mode_connectable(bool connectable);

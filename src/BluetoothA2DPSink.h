@@ -119,9 +119,19 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     /// Determine the actual audio type
     virtual esp_a2d_mct_t get_audio_type();
 
+    /// Define a callback method which provides connection state of AVRC service
+    virtual void set_avrc_connection_state_callback(void (*callback)(bool)) {
+      this->avrc_connection_state_callback = callback;
+    }
+
     /// Define a callback method which provides the meta data
     virtual void set_avrc_metadata_callback(void (*callback)(uint8_t, const uint8_t*)) {
       this->avrc_metadata_callback = callback;
+    }
+
+    /// Define a callback method which provides the avrc notifications
+    virtual void set_avrc_rn_playstatus_callback(void (*callback)(esp_avrc_playback_stat_t playback)) {
+      this->avrc_rn_playstatus_callback = callback;
     }
 
     /// Defines the method which will be called with the sample rate is updated
@@ -143,14 +153,23 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
         address_validator = callBack;
     }
 
+    // returns true if the avrc service is connected
+    virtual bool is_avrc_connected();
+
     /// Changes the volume
     virtual void set_volume(uint8_t volume);
     
     /// Determines the volume
     virtual int get_volume();
 
-    /// Set the callback that is called when they change the volume
+    /// Set the callback that is called when they change the volume (kept for compatibility)
     virtual void set_on_volumechange(void (*callBack)(int));
+
+	/// Set the callback that is called when remote changes the volume
+    virtual void set_avrc_rn_volumechange(void (*callBack)(int));
+
+    /// set the callback that the local volume change is notification is received and complete
+    virtual void set_avrc_rn_volumechange_completed(void (*callBack)(int));
 
     /// Starts to play music using AVRC
     virtual void play();
@@ -282,6 +301,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     int pin_code_int = 0;
     PinCodeRequest pin_code_request = Undefined;
     bool is_pin_code_active = false;
+    bool avrc_connection_state = false;
     int avrc_metadata_flags = ESP_AVRC_MD_ATTR_TITLE | ESP_AVRC_MD_ATTR_ARTIST | ESP_AVRC_MD_ATTR_ALBUM | ESP_AVRC_MD_ATTR_TRACK_NUM | ESP_AVRC_MD_ATTR_NUM_TRACKS | ESP_AVRC_MD_ATTR_GENRE;
     void (*bt_volumechange)(int) = nullptr;
     void (*bt_dis_connected)() = nullptr;
@@ -289,7 +309,10 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     void (*data_received)() = nullptr;
     void (*stream_reader)(const uint8_t*, uint32_t) = nullptr;
     void (*raw_stream_reader)(const uint8_t*, uint32_t) = nullptr;
+    void (*avrc_connection_state_callback)(bool connected) = nullptr;
     void (*avrc_metadata_callback)(uint8_t, const uint8_t*) = nullptr;
+    void (*avrc_rn_playstatus_callback)(esp_avrc_playback_stat_t) = nullptr;
+    void (*avrc_rn_volchg_complete_callback)(int) = nullptr;
     bool (*address_validator)(esp_bd_addr_t remote_bda) = nullptr;
     void (*sample_rate_callback)(uint16_t rate)=nullptr;
     bool swap_left_right = false;
@@ -317,6 +340,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     virtual void app_work_dispatched(app_msg_t *msg);
     virtual void app_alloc_meta_buffer(esp_avrc_ct_cb_param_t *param);
     virtual void av_new_track();
+    virtual void av_playback_changed();
     virtual void init_nvs();
     // execute AVRC command
     virtual void execute_avrc_command(int cmd);
@@ -355,12 +379,13 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     virtual void handle_connection_state(uint16_t event, void *p_param);
     virtual void handle_audio_state(uint16_t event, void *p_param);
     virtual void handle_audio_cfg(uint16_t event, void *p_param);
+    virtual void handle_avrc_connection_state(bool connected);
 
 
 #ifdef ESP_IDF_4
     virtual void volume_set_by_local_host(uint8_t volume);
     virtual void volume_set_by_controller(uint8_t volume);
-    virtual void av_notify_evt_handler(uint8_t& event_id, esp_avrc_rn_param_t& event_parameter);
+    virtual void av_notify_evt_handler(uint8_t event_id, esp_avrc_rn_param_t* event_parameter);
     virtual void app_rc_tg_callback(esp_avrc_tg_cb_event_t event, esp_avrc_tg_cb_param_t *param);
     virtual void av_hdl_avrc_tg_evt(uint16_t event, void *p_param);
 #else

@@ -54,4 +54,4 @@ void loop() {
   Serial.print("Connected: ");
   Serial.println(state);
   a2dp_source.set_connected(state);
-}}
+}

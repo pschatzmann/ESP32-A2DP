@@ -321,7 +321,16 @@ You can use this library stand alone, but it is part of my [audio-tools](https:/
 
 I spent a lot of time to provide a comprehensive and complete documentation.
 So please read the documentation first and check the issues and discussions before posting any new ones on Github.
-And above all __don't__ send me any e-mails or post questions on my personal website! 
+
+Open issues only for bugs and if it is not a bug, use a discussion: Provide enough information about 
+- the selected scenario/sketch 
+- what exactly you are trying to do
+- your hardware
+- your software versions
+
+to enable others to understand and reproduce your issue.
+
+Finally above all __don't__ send me any e-mails or post questions on my personal website! 
 
 ## Show and Tell
 

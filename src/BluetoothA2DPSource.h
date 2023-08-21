@@ -85,7 +85,7 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
 
     /// Defines the local name
     virtual void set_local_name(const char* name){
-      bt_name = name;
+      dev_name = name;
     }
 
     /**

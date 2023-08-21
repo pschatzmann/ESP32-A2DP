@@ -88,6 +88,10 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
       bt_name = name;
     }
 
+    virtual void set_dev_name(const char* name){
+      dev_name = name;
+    }
+
     /**
      * @brief starts the bluetooth source
      * @param name: Bluetooth name of the device to connect to

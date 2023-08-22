@@ -114,7 +114,9 @@ class BluetoothA2DPCommon {
         /// Reconnects to the last device
         virtual bool reconnect();
 
+        /// Connnects to the indicated address
         virtual bool connect_to(esp_bd_addr_t peer);
+
         /// Calls disconnect or reconnect
         virtual void set_connected(bool active);
 

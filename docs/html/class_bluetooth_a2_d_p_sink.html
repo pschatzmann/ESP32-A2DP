@@ -268,7 +268,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>set_spp_active</b> (b
 <tr class="separator:abe6004e2b95d120d64c10cf947fefb55"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2d277d15f94823eea70f80a327344939"><td class="memItemLeft" align="right" valign="top"><a id="a2d277d15f94823eea70f80a327344939" name="a2d277d15f94823eea70f80a327344939"></a>
 virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><b>get_connected_source_name</b> ()</td></tr>
-<tr class="memdesc:a2d277d15f94823eea70f80a327344939"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the name of the connected source device. <br /></td></tr>
+<tr class="memdesc:a2d277d15f94823eea70f80a327344939"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the name of the connected source device (obsolete) <br /></td></tr>
 <tr class="separator:a2d277d15f94823eea70f80a327344939"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af5d6399876738c8fa0766ea247476b3f"><td class="memItemLeft" align="right" valign="top"><a id="af5d6399876738c8fa0766ea247476b3f" name="af5d6399876738c8fa0766ea247476b3f"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_avrc_peer_rn_cap</b> (esp_avrc_rn_event_ids_t cmd)</td></tr>
@@ -278,6 +278,10 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_avrc_peer_rn_cap</
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_avrc_peer_rn_cap_available</b> ()</td></tr>
 <tr class="memdesc:a8281ab4339dd58c49d1d651dd74f5711"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the <a class="el" href="class_bluetooth_a2_d_p_sink.html#af5d6399876738c8fa0766ea247476b3f" title="Provides the result of the last result for the esp_avrc_tg_get_rn_evt_cap() callback (Available from ...">is_avrc_peer_rn_cap()</a> method can be called. <br /></td></tr>
 <tr class="separator:a8281ab4339dd58c49d1d651dd74f5711"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71249eb2c03b3f8ef1024ad1121ee4ba"><td class="memItemLeft" align="right" valign="top"><a id="a71249eb2c03b3f8ef1024ad1121ee4ba" name="a71249eb2c03b3f8ef1024ad1121ee4ba"></a>
+virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><b>get_peer_name</b> ()</td></tr>
+<tr class="memdesc:a71249eb2c03b3f8ef1024ad1121ee4ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the name of the connected source device. <br /></td></tr>
+<tr class="separator:a71249eb2c03b3f8ef1024ad1121ee4ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a537d576b12d1158eb0681a6195b258de"><td class="memItemLeft" align="right" valign="top"><a id="a537d576b12d1158eb0681a6195b258de" name="a537d576b12d1158eb0681a6195b258de"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set_auto_reconnect</b> (bool active)</td></tr>
 <tr class="memdesc:a537d576b12d1158eb0681a6195b258de"><td class="mdescLeft">&#160;</td><td class="mdescRight">activate / deactivate the automatic reconnection to the last address (per default this is on) <br /></td></tr>

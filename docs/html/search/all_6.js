@@ -10,5 +10,6 @@ var searchData=
   ['get_5flast_5fpeer_5faddress_7',['get_last_peer_address',['../class_bluetooth_a2_d_p_common.html#acf924bb9f5e348c85e65879c337a4bde',1,'BluetoothA2DPCommon']]],
   ['get_5flast_5frssi_8',['get_last_rssi',['../class_bluetooth_a2_d_p_sink.html#a5a770be98d977a8df916d8cc044b310c',1,'BluetoothA2DPSink']]],
   ['get_5fname_9',['get_name',['../class_bluetooth_a2_d_p_common.html#a458bca4d65937c5e2de7bfeb0f454d88',1,'BluetoothA2DPCommon']]],
-  ['get_5fvolume_10',['get_volume',['../class_bluetooth_a2_d_p_common.html#a0e570c2c2f9db40873286e0571f0d93a',1,'BluetoothA2DPCommon::get_volume()'],['../class_bluetooth_a2_d_p_sink.html#aca1119f20d2321fb950ae859000cce7b',1,'BluetoothA2DPSink::get_volume()']]]
+  ['get_5fpeer_5fname_10',['get_peer_name',['../class_bluetooth_a2_d_p_sink.html#a71249eb2c03b3f8ef1024ad1121ee4ba',1,'BluetoothA2DPSink']]],
+  ['get_5fvolume_11',['get_volume',['../class_bluetooth_a2_d_p_common.html#a0e570c2c2f9db40873286e0571f0d93a',1,'BluetoothA2DPCommon::get_volume()'],['../class_bluetooth_a2_d_p_sink.html#aca1119f20d2321fb950ae859000cce7b',1,'BluetoothA2DPSink::get_volume()']]]
 ];

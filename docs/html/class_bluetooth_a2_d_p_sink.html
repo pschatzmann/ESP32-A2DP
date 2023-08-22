@@ -266,6 +266,18 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>set_reconnect_delay</
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set_spp_active</b> (bool flag)</td></tr>
 <tr class="memdesc:abe6004e2b95d120d64c10cf947fefb55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Activates SSP (Serial protocol) <br /></td></tr>
 <tr class="separator:abe6004e2b95d120d64c10cf947fefb55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d277d15f94823eea70f80a327344939"><td class="memItemLeft" align="right" valign="top"><a id="a2d277d15f94823eea70f80a327344939" name="a2d277d15f94823eea70f80a327344939"></a>
+virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><b>get_connected_source_name</b> ()</td></tr>
+<tr class="memdesc:a2d277d15f94823eea70f80a327344939"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the name of the connected source device. <br /></td></tr>
+<tr class="separator:a2d277d15f94823eea70f80a327344939"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5d6399876738c8fa0766ea247476b3f"><td class="memItemLeft" align="right" valign="top"><a id="af5d6399876738c8fa0766ea247476b3f" name="af5d6399876738c8fa0766ea247476b3f"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_avrc_peer_rn_cap</b> (esp_avrc_rn_event_ids_t cmd)</td></tr>
+<tr class="memdesc:af5d6399876738c8fa0766ea247476b3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides the result of the last result for the esp_avrc_tg_get_rn_evt_cap() callback (Available from ESP_IDF_4) <br /></td></tr>
+<tr class="separator:af5d6399876738c8fa0766ea247476b3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8281ab4339dd58c49d1d651dd74f5711"><td class="memItemLeft" align="right" valign="top"><a id="a8281ab4339dd58c49d1d651dd74f5711" name="a8281ab4339dd58c49d1d651dd74f5711"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_avrc_peer_rn_cap_available</b> ()</td></tr>
+<tr class="memdesc:a8281ab4339dd58c49d1d651dd74f5711"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the <a class="el" href="class_bluetooth_a2_d_p_sink.html#af5d6399876738c8fa0766ea247476b3f" title="Provides the result of the last result for the esp_avrc_tg_get_rn_evt_cap() callback (Available from ...">is_avrc_peer_rn_cap()</a> method can be called. <br /></td></tr>
+<tr class="separator:a8281ab4339dd58c49d1d651dd74f5711"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a537d576b12d1158eb0681a6195b258de"><td class="memItemLeft" align="right" valign="top"><a id="a537d576b12d1158eb0681a6195b258de" name="a537d576b12d1158eb0681a6195b258de"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set_auto_reconnect</b> (bool active)</td></tr>
 <tr class="memdesc:a537d576b12d1158eb0681a6195b258de"><td class="mdescLeft">&#160;</td><td class="mdescRight">activate / deactivate the automatic reconnection to the last address (per default this is on) <br /></td></tr>
@@ -345,6 +357,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>set_event_stack_size<
 virtual esp_bd_addr_t *&#160;</td><td class="memItemRight" valign="bottom"><b>get_last_peer_address</b> ()</td></tr>
 <tr class="memdesc:acf924bb9f5e348c85e65879c337a4bde"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides the address of the last device. <br /></td></tr>
 <tr class="separator:acf924bb9f5e348c85e65879c337a4bde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e53adc58f665113c9ac6a5521e58814"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a8e53adc58f665113c9ac6a5521e58814">set_discoverability</a> (esp_bt_discovery_mode_t d)</td></tr>
+<tr class="memdesc:a8e53adc58f665113c9ac6a5521e58814"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bluetooth discoverability.  <br /></td></tr>
+<tr class="separator:a8e53adc58f665113c9ac6a5521e58814"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a458bca4d65937c5e2de7bfeb0f454d88"><td class="memItemLeft" align="right" valign="top"><a id="a458bca4d65937c5e2de7bfeb0f454d88" name="a458bca4d65937c5e2de7bfeb0f454d88"></a>
 virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><b>get_name</b> ()</td></tr>
 <tr class="memdesc:a458bca4d65937c5e2de7bfeb0f454d88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides the actual SSID name. <br /></td></tr>
@@ -422,9 +437,21 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>handle_audio_
 <tr class="memitem:a718c4723206c6fdcd1649cfe2342e91a"><td class="memItemLeft" align="right" valign="top"><a id="a718c4723206c6fdcd1649cfe2342e91a" name="a718c4723206c6fdcd1649cfe2342e91a"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>handle_audio_cfg</b> (uint16_t event, void *p_param)</td></tr>
 <tr class="separator:a718c4723206c6fdcd1649cfe2342e91a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2347a681512b9487691e80a4d975f699"><td class="memItemLeft" align="right" valign="top"><a id="a2347a681512b9487691e80a4d975f699" name="a2347a681512b9487691e80a4d975f699"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>av_notify_evt_handler</b> (uint8_t event_id, uint32_t event_parameter)</td></tr>
-<tr class="separator:a2347a681512b9487691e80a4d975f699"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abae7601e39f1b343fda2958fbefd83e4"><td class="memItemLeft" align="right" valign="top"><a id="abae7601e39f1b343fda2958fbefd83e4" name="abae7601e39f1b343fda2958fbefd83e4"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>volume_set_by_local_host</b> (uint8_t volume)</td></tr>
+<tr class="separator:abae7601e39f1b343fda2958fbefd83e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ed754bc5f01492be905cc8d0bb12567"><td class="memItemLeft" align="right" valign="top"><a id="a0ed754bc5f01492be905cc8d0bb12567" name="a0ed754bc5f01492be905cc8d0bb12567"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>volume_set_by_controller</b> (uint8_t volume)</td></tr>
+<tr class="separator:a0ed754bc5f01492be905cc8d0bb12567"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af86d675b7cc6dda8068650e79559b3c4"><td class="memItemLeft" align="right" valign="top"><a id="af86d675b7cc6dda8068650e79559b3c4" name="af86d675b7cc6dda8068650e79559b3c4"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>av_notify_evt_handler</b> (uint8_t &amp;event_id, esp_avrc_rn_param_t &amp;event_parameter)</td></tr>
+<tr class="separator:af86d675b7cc6dda8068650e79559b3c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7de77dbd610f8388e0de62d42fff67f"><td class="memItemLeft" align="right" valign="top"><a id="ae7de77dbd610f8388e0de62d42fff67f" name="ae7de77dbd610f8388e0de62d42fff67f"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>app_rc_tg_callback</b> (esp_avrc_tg_cb_event_t event, esp_avrc_tg_cb_param_t *param)</td></tr>
+<tr class="separator:ae7de77dbd610f8388e0de62d42fff67f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bd14c27e34e1e8d4ef1dba2535ccc06"><td class="memItemLeft" align="right" valign="top"><a id="a3bd14c27e34e1e8d4ef1dba2535ccc06" name="a3bd14c27e34e1e8d4ef1dba2535ccc06"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>av_hdl_avrc_tg_evt</b> (uint16_t event, void *p_param)</td></tr>
+<tr class="separator:a3bd14c27e34e1e8d4ef1dba2535ccc06"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa211fefd101a639938a20dc3478b48ae"><td class="memItemLeft" align="right" valign="top">virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#aa211fefd101a639938a20dc3478b48ae">write_audio</a> (const uint8_t *data, size_t size)</td></tr>
 <tr class="memdesc:aa211fefd101a639938a20dc3478b48ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">output audio data e.g. to i2s or to queue  <br /></td></tr>
 <tr class="separator:aa211fefd101a639938a20dc3478b48ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -576,6 +603,12 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><b>rssi_callbak</b> )(
 <tr class="memitem:ae2fdcad112e30ca363b03156cc500cf0"><td class="memItemLeft" align="right" valign="top"><a id="ae2fdcad112e30ca363b03156cc500cf0" name="ae2fdcad112e30ca363b03156cc500cf0"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>reconnect_delay</b> = 1000</td></tr>
 <tr class="separator:ae2fdcad112e30ca363b03156cc500cf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0f5f42d8ee5ebd9cf79c91eb0d9918c"><td class="memItemLeft" align="right" valign="top"><a id="ad0f5f42d8ee5ebd9cf79c91eb0d9918c" name="ad0f5f42d8ee5ebd9cf79c91eb0d9918c"></a>
+esp_avrc_rn_evt_cap_mask_t&#160;</td><td class="memItemRight" valign="bottom"><b>s_avrc_peer_rn_cap</b></td></tr>
+<tr class="separator:ad0f5f42d8ee5ebd9cf79c91eb0d9918c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d8960ea54614b6995ae04c161a0ff82"><td class="memItemLeft" align="right" valign="top"><a id="a3d8960ea54614b6995ae04c161a0ff82" name="a3d8960ea54614b6995ae04c161a0ff82"></a>
+char&#160;</td><td class="memItemRight" valign="bottom"><b>remote_name</b> [ESP_BT_GAP_MAX_BDNAME_LEN+1]</td></tr>
+<tr class="separator:a3d8960ea54614b6995ae04c161a0ff82"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e53210a1eeea015457cfc94df7883e1"><td class="memItemLeft" align="right" valign="top"><a id="a6e53210a1eeea015457cfc94df7883e1" name="a6e53210a1eeea015457cfc94df7883e1"></a>
 const char *&#160;</td><td class="memItemRight" valign="bottom"><b>bt_name</b> = {0}</td></tr>
 <tr class="separator:a6e53210a1eeea015457cfc94df7883e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -657,6 +690,9 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>event_queue_size</b> =
 <tr class="memitem:abdc17e14de376b611b41974052b4dd2c"><td class="memItemLeft" align="right" valign="top"><a id="abdc17e14de376b611b41974052b4dd2c" name="abdc17e14de376b611b41974052b4dd2c"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>event_stack_size</b> = 3072</td></tr>
 <tr class="separator:abdc17e14de376b611b41974052b4dd2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ca23dacb41661dd91b202c0f7939f69"><td class="memItemLeft" align="right" valign="top"><a id="a2ca23dacb41661dd91b202c0f7939f69" name="a2ca23dacb41661dd91b202c0f7939f69"></a>
+esp_bt_discovery_mode_t&#160;</td><td class="memItemRight" valign="bottom"><b>discoverability</b> = ESP_BT_GENERAL_DISCOVERABLE</td></tr>
+<tr class="separator:a2ca23dacb41661dd91b202c0f7939f69"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
 Friends</h2></td></tr>
@@ -695,6 +731,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>ccall_av_hdl_a2d_evt<
 void&#160;</td><td class="memItemRight" valign="bottom"><b>ccall_av_hdl_avrc_evt</b> (uint16_t event, void *p_param)</td></tr>
 <tr class="memdesc:a2f773677a4da51d582e6cadd5a2cc514"><td class="mdescLeft">&#160;</td><td class="mdescRight">avrc event handler <br /></td></tr>
 <tr class="separator:a2f773677a4da51d582e6cadd5a2cc514"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac82ed712dca89857181a7d1835cced7c"><td class="memItemLeft" align="right" valign="top"><a id="ac82ed712dca89857181a7d1835cced7c" name="ac82ed712dca89857181a7d1835cced7c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ccall_app_rc_tg_callback</b> (esp_avrc_tg_cb_event_t event, esp_avrc_tg_cb_param_t *param)</td></tr>
+<tr class="memdesc:ac82ed712dca89857181a7d1835cced7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">handle esp_avrc_tg_cb_event_t <br /></td></tr>
+<tr class="separator:ac82ed712dca89857181a7d1835cced7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0260114b8032359247b14f8e7f613af6"><td class="memItemLeft" align="right" valign="top"><a id="a0260114b8032359247b14f8e7f613af6" name="a0260114b8032359247b14f8e7f613af6"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ccall_av_hdl_avrc_tg_evt</b> (uint16_t event, void *p_param)</td></tr>
+<tr class="separator:a0260114b8032359247b14f8e7f613af6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A2DP Bluethooth Sink - We initialize and start the Bluetooth A2DP Sink. The example <a href="https://github.com/espressif/esp-idf/tree/master/examples/bluetooth/bluedroid/classic_bt/a2dp_sink">https://github.com/espressif/esp-idf/tree/master/examples/bluetooth/bluedroid/classic_bt/a2dp_sink</a> was refactered into a C++ class. </p>
@@ -919,6 +962,35 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>ccall_av_hdl_avrc_evt
 </div><div class="memdoc">
 
 <p>Implements <a class="el" href="class_bluetooth_a2_d_p_common.html">BluetoothA2DPCommon</a>.</p>
+
+</div>
+</div>
+<a id="a8e53adc58f665113c9ac6a5521e58814" name="a8e53adc58f665113c9ac6a5521e58814"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e53adc58f665113c9ac6a5521e58814">&#9670;&#160;</a></span>set_discoverability()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void BluetoothA2DPCommon::set_discoverability </td>
+          <td>(</td>
+          <td class="paramtype">esp_bt_discovery_mode_t&#160;</td>
+          <td class="paramname"><em>d</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Bluetooth discoverability. </p>
+<p>Defines if the bluetooth is discoverable. </p>
 
 </div>
 </div>

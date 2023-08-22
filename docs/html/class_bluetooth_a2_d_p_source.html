@@ -256,6 +256,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>set_event_stack_size<
 virtual esp_bd_addr_t *&#160;</td><td class="memItemRight" valign="bottom"><b>get_last_peer_address</b> ()</td></tr>
 <tr class="memdesc:acf924bb9f5e348c85e65879c337a4bde"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides the address of the last device. <br /></td></tr>
 <tr class="separator:acf924bb9f5e348c85e65879c337a4bde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e53adc58f665113c9ac6a5521e58814"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a8e53adc58f665113c9ac6a5521e58814">set_discoverability</a> (esp_bt_discovery_mode_t d)</td></tr>
+<tr class="memdesc:a8e53adc58f665113c9ac6a5521e58814"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bluetooth discoverability.  <br /></td></tr>
+<tr class="separator:a8e53adc58f665113c9ac6a5521e58814"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a458bca4d65937c5e2de7bfeb0f454d88"><td class="memItemLeft" align="right" valign="top"><a id="a458bca4d65937c5e2de7bfeb0f454d88" name="a458bca4d65937c5e2de7bfeb0f454d88"></a>
 virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><b>get_name</b> ()</td></tr>
 <tr class="memdesc:a458bca4d65937c5e2de7bfeb0f454d88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides the actual SSID name. <br /></td></tr>
@@ -337,6 +340,12 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>reset_last_co
 <tr class="separator:a190c59464f53e2d4c3f121afbb7a3c21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2626298e32edfc399ddb0bf5efc32fc7"><td class="memItemLeft" align="right" valign="top">virtual esp_err_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_source.html#a2626298e32edfc399ddb0bf5efc32fc7">esp_a2d_connect</a> (esp_bd_addr_t peer)</td></tr>
 <tr class="separator:a2626298e32edfc399ddb0bf5efc32fc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a389f69aa8791470ae23800f6e4b6ff3f"><td class="memItemLeft" align="right" valign="top"><a id="a389f69aa8791470ae23800f6e4b6ff3f" name="a389f69aa8791470ae23800f6e4b6ff3f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>bt_av_notify_evt_handler</b> (uint8_t event, esp_avrc_rn_param_t *param)</td></tr>
+<tr class="separator:a389f69aa8791470ae23800f6e4b6ff3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9545946bc03882355f5d15b0611e40e8"><td class="memItemLeft" align="right" valign="top"><a id="a9545946bc03882355f5d15b0611e40e8" name="a9545946bc03882355f5d15b0611e40e8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>bt_av_volume_changed</b> (void)</td></tr>
+<tr class="separator:a9545946bc03882355f5d15b0611e40e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3771c6d300c7709f2b76ab8847574cf4"><td class="memItemLeft" align="right" valign="top"><a id="a3771c6d300c7709f2b76ab8847574cf4" name="a3771c6d300c7709f2b76ab8847574cf4"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>get_last_connection</b> ()</td></tr>
 <tr class="separator:a3771c6d300c7709f2b76ab8847574cf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -431,6 +440,9 @@ music_data_cb_t&#160;</td><td class="memItemRight" valign="bottom"><b>data_strea
 <tr class="memitem:ae8d936972af8aae81f06c17af6e22113"><td class="memItemLeft" align="right" valign="top"><a id="ae8d936972af8aae81f06c17af6e22113" name="ae8d936972af8aae81f06c17af6e22113"></a>
 bool(*&#160;</td><td class="memItemRight" valign="bottom"><b>ssid_callback</b> )(const char *ssid, esp_bd_addr_t address, int rrsi) = nullptr</td></tr>
 <tr class="separator:ae8d936972af8aae81f06c17af6e22113"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a879f4819b7e2a26c7245726a453fcc61"><td class="memItemLeft" align="right" valign="top"><a id="a879f4819b7e2a26c7245726a453fcc61" name="a879f4819b7e2a26c7245726a453fcc61"></a>
+esp_avrc_rn_evt_cap_mask_t&#160;</td><td class="memItemRight" valign="bottom"><b>s_avrc_peer_rn_cap</b></td></tr>
+<tr class="separator:a879f4819b7e2a26c7245726a453fcc61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e53210a1eeea015457cfc94df7883e1"><td class="memItemLeft" align="right" valign="top"><a id="a6e53210a1eeea015457cfc94df7883e1" name="a6e53210a1eeea015457cfc94df7883e1"></a>
 const char *&#160;</td><td class="memItemRight" valign="bottom"><b>bt_name</b> = {0}</td></tr>
 <tr class="separator:a6e53210a1eeea015457cfc94df7883e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -512,6 +524,9 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>event_queue_size</b> =
 <tr class="memitem:abdc17e14de376b611b41974052b4dd2c"><td class="memItemLeft" align="right" valign="top"><a id="abdc17e14de376b611b41974052b4dd2c" name="abdc17e14de376b611b41974052b4dd2c"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>event_stack_size</b> = 3072</td></tr>
 <tr class="separator:abdc17e14de376b611b41974052b4dd2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ca23dacb41661dd91b202c0f7939f69"><td class="memItemLeft" align="right" valign="top"><a id="a2ca23dacb41661dd91b202c0f7939f69" name="a2ca23dacb41661dd91b202c0f7939f69"></a>
+esp_bt_discovery_mode_t&#160;</td><td class="memItemRight" valign="bottom"><b>discoverability</b> = ESP_BT_GENERAL_DISCOVERABLE</td></tr>
+<tr class="separator:a2ca23dacb41661dd91b202c0f7939f69"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
 Friends</h2></td></tr>
@@ -731,6 +746,35 @@ int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>ccall_get_data_def
 </div><div class="memdoc">
 
 <p>Implements <a class="el" href="class_bluetooth_a2_d_p_common.html">BluetoothA2DPCommon</a>.</p>
+
+</div>
+</div>
+<a id="a8e53adc58f665113c9ac6a5521e58814" name="a8e53adc58f665113c9ac6a5521e58814"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e53adc58f665113c9ac6a5521e58814">&#9670;&#160;</a></span>set_discoverability()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void BluetoothA2DPCommon::set_discoverability </td>
+          <td>(</td>
+          <td class="paramtype">esp_bt_discovery_mode_t&#160;</td>
+          <td class="paramname"><em>d</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Bluetooth discoverability. </p>
+<p>Defines if the bluetooth is discoverable. </p>
 
 </div>
 </div>

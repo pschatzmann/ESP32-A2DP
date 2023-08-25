@@ -888,7 +888,7 @@ void BluetoothA2DPSink::av_notify_evt_handler(uint8_t event_id, uint32_t event_p
     case ESP_AVRC_RN_PLAY_STATUS_CHANGE:
         ESP_LOGD(BT_AV_TAG, "%s ESP_AVRC_RN_PLAY_STATUS_CHANGE %d, to %d", __func__, event_id, event_parameter->playback);
         av_playback_changed();
-        // call avrc notifications callback if available
+        // call avrc play status notification callback if available
         if (avrc_rn_playstatus_callback != nullptr){
             avrc_rn_playstatus_callback(event_parameter->playback);
         }

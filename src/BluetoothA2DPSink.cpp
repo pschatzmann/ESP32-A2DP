@@ -126,8 +126,17 @@ void BluetoothA2DPSink::set_on_data_received(void (*callBack)()){
 //   this->bt_dis_connected = callBack;
 // }
 
+// kept for backwards compatibility
 void BluetoothA2DPSink::set_on_volumechange(void (*callBack)(int)){
   this->bt_volumechange = callBack;
+}
+
+void BluetoothA2DPSink::set_avrc_rn_volumechange(void (*callBack)(int)){
+  this->bt_volumechange = callBack;
+}
+
+void BluetoothA2DPSink::set_avrc_rn_volumechange_completed(void (*callBack)(int)) {
+    this->avrc_rn_volchg_complete_callback = callBack;
 }
 
 void BluetoothA2DPSink::start(const char* name, bool auto_reconnect){
@@ -157,9 +166,11 @@ void BluetoothA2DPSink::start(const char* name)
     init_nvs();
 
     // reconnect management
+    // grab last connnectiom, even if we dont use it now for auto reconnect
+    get_last_connection();
+
     is_autoreconnect_allowed = true; // allow automatic reconnect
     if (reconnect_status==AutoReconnect){
-        get_last_connection();
         memcpy(peer_bd_addr, last_connection,ESP_BD_ADDR_LEN);
 
         // force disconnect first so that a subsequent connect has a chance to work
@@ -664,6 +675,14 @@ void BluetoothA2DPSink::handle_audio_cfg(uint16_t event, void *p_param) {
     }
 }
 
+void BluetoothA2DPSink::handle_avrc_connection_state(bool connected){
+    ESP_LOGD(BT_AV_TAG, "%s state %d", __func__, connected);
+    avrc_connection_state = connected;
+    if (avrc_connection_state_callback!=nullptr){
+        avrc_connection_state_callback(connected);
+    }    
+}
+
 void BluetoothA2DPSink::handle_audio_state(uint16_t event, void *p_param){
     ESP_LOGD(BT_AV_TAG, "%s evt %d", __func__, event);
     esp_a2d_cb_param_t* a2d = (esp_a2d_cb_param_t *)(p_param);
@@ -706,12 +725,6 @@ void BluetoothA2DPSink::handle_connection_state(uint16_t event, void *p_param){
     // determine remote BDA
     memcpy(peer_bd_addr, a2d->conn_stat.remote_bda, ESP_BD_ADDR_LEN);
     ESP_LOGI(BT_AV_TAG, "partner address: %s", to_str(peer_bd_addr));
-
-    // callback
-    connection_state = a2d->conn_stat.state;
-    if (connection_state_callback!=nullptr){
-        connection_state_callback(connection_state, connection_state_obj);
-    }
 
     ESP_LOGI(BT_AV_TAG, "A2DP connection state: %s, [%s]", to_str(a2d->conn_stat.state), to_str(a2d->conn_stat.remote_bda));
     switch (a2d->conn_stat.state) {
@@ -827,6 +840,12 @@ void BluetoothA2DPSink::handle_connection_state(uint16_t event, void *p_param){
             break;
 
     } 
+
+    // callback
+    connection_state = a2d->conn_stat.state;
+    if (connection_state_callback!=nullptr){
+        connection_state_callback(connection_state, connection_state_obj);
+    }
 }
 
 uint16_t BluetoothA2DPSink::sample_rate(){
@@ -838,12 +857,24 @@ void BluetoothA2DPSink::av_new_track()
 {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
     //Register notifications and request metadata
-    esp_avrc_ct_send_metadata_cmd(0, avrc_metadata_flags);
-    esp_avrc_ct_send_register_notification_cmd(1, ESP_AVRC_RN_TRACK_CHANGE, 0);
+    esp_avrc_ct_send_metadata_cmd(APP_RC_CT_TL_GET_META_DATA, avrc_metadata_flags);
+    if (esp_avrc_rn_evt_bit_mask_operation(ESP_AVRC_BIT_MASK_OP_TEST, &s_avrc_peer_rn_cap, ESP_AVRC_RN_TRACK_CHANGE)) {
+        esp_avrc_ct_send_register_notification_cmd(APP_RC_CT_TL_RN_TRACK_CHANGE, ESP_AVRC_RN_TRACK_CHANGE, 0);
+    }
 }
 
+
+void BluetoothA2DPSink::av_playback_changed()
+{
+    ESP_LOGD(BT_AV_TAG, "%s", __func__);
+    if (esp_avrc_rn_evt_bit_mask_operation(ESP_AVRC_BIT_MASK_OP_TEST, &s_avrc_peer_rn_cap, ESP_AVRC_RN_PLAY_STATUS_CHANGE)) {
+        esp_avrc_ct_send_register_notification_cmd(APP_RC_CT_TL_RN_PLAYBACK_CHANGE, ESP_AVRC_RN_PLAY_STATUS_CHANGE, 0);
+    }
+}
+
+
 #ifdef ESP_IDF_4
-void BluetoothA2DPSink::av_notify_evt_handler(uint8_t& event_id, esp_avrc_rn_param_t& event_parameter)
+void BluetoothA2DPSink::av_notify_evt_handler(uint8_t event_id, esp_avrc_rn_param_t* event_parameter)
 #else
 void BluetoothA2DPSink::av_notify_evt_handler(uint8_t event_id, uint32_t event_parameter)
 #endif
@@ -853,6 +884,14 @@ void BluetoothA2DPSink::av_notify_evt_handler(uint8_t event_id, uint32_t event_p
     case ESP_AVRC_RN_TRACK_CHANGE:
         ESP_LOGD(BT_AV_TAG, "%s ESP_AVRC_RN_TRACK_CHANGE %d", __func__, event_id);
         av_new_track();
+        break;
+    case ESP_AVRC_RN_PLAY_STATUS_CHANGE:
+        ESP_LOGD(BT_AV_TAG, "%s ESP_AVRC_RN_PLAY_STATUS_CHANGE %d, to %d", __func__, event_id, event_parameter->playback);
+        av_playback_changed();
+        // call avrc play status notification callback if available
+        if (avrc_rn_playstatus_callback != nullptr){
+            avrc_rn_playstatus_callback(event_parameter->playback);
+        }
         break;
     default:
         ESP_LOGE(BT_AV_TAG, "%s unhandled evt %d", __func__, event_id);
@@ -867,20 +906,22 @@ void BluetoothA2DPSink::av_hdl_avrc_evt(uint16_t event, void *p_param)
     switch (event) {
     case ESP_AVRC_CT_CONNECTION_STATE_EVT: {
         ESP_LOGI(BT_AV_TAG, "AVRC conn_state evt: state %d, [%s]", rc->conn_stat.connected, to_str(rc->conn_stat.remote_bda));
+        avrc_connection_state = rc->conn_stat.connected;
 
 #ifdef ESP_IDF_4
-        if (rc->conn_stat.connected) {
-            av_new_track();
-             // get remote supported event_ids of peer AVRCP Target
+        if (avrc_connection_state) {
+            // get remote supported event_ids of peer AVRCP Target
             esp_avrc_ct_send_get_rn_capabilities_cmd(APP_RC_CT_TL_GET_CAPS);
         } else {
             // clear peer notification capability record
             s_avrc_peer_rn_cap.bits = 0;
+            handle_avrc_connection_state(avrc_connection_state);
         }        
 #else
-        if (rc->conn_stat.connected) {
+        if (avrc_connection_state) {
             av_new_track();
         }
+        handle_avrc_connection_state(avrc_connection_state);
 #endif
         break;
 
@@ -901,7 +942,7 @@ void BluetoothA2DPSink::av_hdl_avrc_evt(uint16_t event, void *p_param)
     }
     case ESP_AVRC_CT_CHANGE_NOTIFY_EVT: {
         //ESP_LOGI(BT_AV_TAG, "AVRC event notification: %d, param: %d", (int)rc->change_ntf.event_id, (int)rc->change_ntf.event_parameter);
-        av_notify_evt_handler(rc->change_ntf.event_id, rc->change_ntf.event_parameter);
+        av_notify_evt_handler(rc->change_ntf.event_id, &rc->change_ntf.event_parameter);
         break;
     }
     case ESP_AVRC_CT_REMOTE_FEATURES_EVT: {
@@ -916,8 +957,12 @@ void BluetoothA2DPSink::av_hdl_avrc_evt(uint16_t event, void *p_param)
                  rc->get_rn_caps_rsp.evt_set.bits);
         s_avrc_peer_rn_cap.bits = rc->get_rn_caps_rsp.evt_set.bits;
         av_new_track();
-        //bt_av_playback_changed();
-        //bt_av_play_pos_changed();
+        av_playback_changed();
+        //av_play_pos_changed();
+
+        // now we ready to callback
+        handle_avrc_connection_state(avrc_connection_state);
+
         break;
     }
 
@@ -1087,7 +1132,9 @@ void BluetoothA2DPSink::init_nvs(){
     ESP_ERROR_CHECK( err );
 }
 
-
+bool BluetoothA2DPSink::is_avrc_connected() {
+    return avrc_connection_state;
+}
 
 void BluetoothA2DPSink::execute_avrc_command(int cmd){
     ESP_LOGD(BT_AV_TAG, "execute_avrc_command: %d",cmd);    
@@ -1332,7 +1379,7 @@ void BluetoothA2DPSink::volume_set_by_controller(uint8_t volume)
 
 void BluetoothA2DPSink::volume_set_by_local_host(uint8_t volume)
 {
-    ESP_LOGI(BT_AV_TAG, "Volume is set locally to: %d", (uint32_t)volume * 100 / 0x7f);
+    ESP_LOGI(BT_AV_TAG, "Volume is set locally to: %d%%", (uint32_t)volume * 100 / 0x7f);
 
     _lock_acquire(&s_volume_lock);
     s_volume = volume;
@@ -1376,7 +1423,7 @@ void BluetoothA2DPSink::av_hdl_avrc_tg_evt(uint16_t event, void *p_param)
     }
 
     case ESP_AVRC_TG_SET_ABSOLUTE_VOLUME_CMD_EVT: {
-        ESP_LOGI(BT_AV_TAG, "AVRC set absolute volume: %d%%", (int)rc->set_abs_vol.volume * 100/ 0x7f);    
+        ESP_LOGI(BT_AV_TAG, "AVRC remote set absolute volume: %d%%", (int)rc->set_abs_vol.volume * 100/ 0x7f);    
         volume_set_by_controller(rc->set_abs_vol.volume);
         break;
     }
@@ -1384,13 +1431,14 @@ void BluetoothA2DPSink::av_hdl_avrc_tg_evt(uint16_t event, void *p_param)
     case ESP_AVRC_TG_REGISTER_NOTIFICATION_EVT: {
         ESP_LOGI(BT_AV_TAG, "AVRC register event notification: %d, param: 0x%x", rc->reg_ntf.event_id, rc->reg_ntf.event_parameter);
         if (rc->reg_ntf.event_id == ESP_AVRC_RN_VOLUME_CHANGE) {
-            ESP_LOGI(BT_AV_TAG, "AVRC Volume Changes Supported");
             s_volume_notify = true;
             esp_avrc_rn_param_t rn_param;
             rn_param.volume = s_volume;
-            esp_avrc_tg_send_rn_rsp(ESP_AVRC_RN_VOLUME_CHANGE, ESP_AVRC_RN_RSP_INTERIM, &rn_param);            
-        } else {
-            ESP_LOGW(BT_AV_TAG, "AVRC Volume Changes NOT Supported");
+            esp_avrc_tg_send_rn_rsp(ESP_AVRC_RN_VOLUME_CHANGE, ESP_AVRC_RN_RSP_INTERIM, &rn_param);     
+            // notify user aplication volume change by local is completed
+            if (avrc_rn_volchg_complete_callback!=nullptr){
+                (*avrc_rn_volchg_complete_callback)(s_volume);
+            } 
         }
         break;
     }

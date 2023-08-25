@@ -153,7 +153,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
         address_validator = callBack;
     }
 
-    // returns true if the avrc service is connected
+    /// returns true if the avrc service is connected
     virtual bool is_avrc_connected();
 
     /// Changes the volume

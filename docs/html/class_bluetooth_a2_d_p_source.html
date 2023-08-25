@@ -237,6 +237,9 @@ const char *&#160;</td><td class="memItemRight" valign="bottom"><b>to_str</b> (e
 const char *&#160;</td><td class="memItemRight" valign="bottom"><b>to_str</b> (esp_bd_addr_t bda)</td></tr>
 <tr class="memdesc:afa76a15aa8922301e72a745b540b040c"><td class="mdescLeft">&#160;</td><td class="mdescRight">converts a esp_bd_addr_t to a string - the string is 18 characters long! <br /></td></tr>
 <tr class="separator:afa76a15aa8922301e72a745b540b040c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7896335b8f2cc324da86e16efb1544c9"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a7896335b8f2cc324da86e16efb1544c9">to_str</a> (esp_avrc_playback_stat_t state)</td></tr>
+<tr class="memdesc:a7896335b8f2cc324da86e16efb1544c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">converts esp_avrc_playback_stat_t to a string  <br /></td></tr>
+<tr class="separator:a7896335b8f2cc324da86e16efb1544c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a68f9e168839f0faeb72705ccabbb6b7a"><td class="memItemLeft" align="right" valign="top"><a id="a68f9e168839f0faeb72705ccabbb6b7a" name="a68f9e168839f0faeb72705ccabbb6b7a"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set_task_priority</b> (UBaseType_t priority)</td></tr>
 <tr class="memdesc:a68f9e168839f0faeb72705ccabbb6b7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">defines the task priority (the default value is configMAX_PRIORITIES - 10) <br /></td></tr>
@@ -260,10 +263,18 @@ virtual esp_bd_addr_t *&#160;</td><td class="memItemRight" valign="bottom"><b>ge
 <tr class="memitem:a8e53adc58f665113c9ac6a5521e58814"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a8e53adc58f665113c9ac6a5521e58814">set_discoverability</a> (esp_bt_discovery_mode_t d)</td></tr>
 <tr class="memdesc:a8e53adc58f665113c9ac6a5521e58814"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bluetooth discoverability.  <br /></td></tr>
 <tr class="separator:a8e53adc58f665113c9ac6a5521e58814"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b37f48a6b0bca33fb21b2a9ae9dab7c"><td class="memItemLeft" align="right" valign="top"><a id="a8b37f48a6b0bca33fb21b2a9ae9dab7c" name="a8b37f48a6b0bca33fb21b2a9ae9dab7c"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>set_connectable</b> (bool connectable)</td></tr>
+<tr class="memdesc:a8b37f48a6b0bca33fb21b2a9ae9dab7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bluetooth connectable. <br /></td></tr>
+<tr class="separator:a8b37f48a6b0bca33fb21b2a9ae9dab7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a458bca4d65937c5e2de7bfeb0f454d88"><td class="memItemLeft" align="right" valign="top"><a id="a458bca4d65937c5e2de7bfeb0f454d88" name="a458bca4d65937c5e2de7bfeb0f454d88"></a>
 virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><b>get_name</b> ()</td></tr>
 <tr class="memdesc:a458bca4d65937c5e2de7bfeb0f454d88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides the actual SSID name. <br /></td></tr>
 <tr class="separator:a458bca4d65937c5e2de7bfeb0f454d88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a962cc9aef396b06c7eb6f56462a743ac"><td class="memItemLeft" align="right" valign="top"><a id="a962cc9aef396b06c7eb6f56462a743ac" name="a962cc9aef396b06c7eb6f56462a743ac"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>clean_last_connection</b> ()</td></tr>
+<tr class="memdesc:a962cc9aef396b06c7eb6f56462a743ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">clean last connection (delete) <br /></td></tr>
+<tr class="separator:a962cc9aef396b06c7eb6f56462a743ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -353,14 +364,12 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>get_last_conn
 <tr class="memitem:af3a2ee313a97da4e788ba3489847115c"><td class="memItemLeft" align="right" valign="top"><a id="af3a2ee313a97da4e788ba3489847115c" name="af3a2ee313a97da4e788ba3489847115c"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>set_last_connection</b> (esp_bd_addr_t bda)</td></tr>
 <tr class="separator:af3a2ee313a97da4e788ba3489847115c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a962cc9aef396b06c7eb6f56462a743ac"><td class="memItemLeft" align="right" valign="top"><a id="a962cc9aef396b06c7eb6f56462a743ac" name="a962cc9aef396b06c7eb6f56462a743ac"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>clean_last_connection</b> ()</td></tr>
-<tr class="separator:a962cc9aef396b06c7eb6f56462a743ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4f98f07ba4cf5962a7cdda50317b3112"><td class="memItemLeft" align="right" valign="top"><a id="a4f98f07ba4cf5962a7cdda50317b3112" name="a4f98f07ba4cf5962a7cdda50317b3112"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>has_last_connection</b> ()</td></tr>
 <tr class="separator:a4f98f07ba4cf5962a7cdda50317b3112"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af1e2f14ddbe9266b61f5e721095c3685"><td class="memItemLeft" align="right" valign="top"><a id="af1e2f14ddbe9266b61f5e721095c3685" name="af1e2f14ddbe9266b61f5e721095c3685"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>set_scan_mode_connectable</b> (bool connectable)</td></tr>
+<tr class="memdesc:af1e2f14ddbe9266b61f5e721095c3685"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines if the bluetooth is connectable. <br /></td></tr>
 <tr class="separator:af1e2f14ddbe9266b61f5e721095c3685"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8f1619be2457a0a9e359ff4fefe1dbf6"><td class="memItemLeft" align="right" valign="top"><a id="a8f1619be2457a0a9e359ff4fefe1dbf6" name="a8f1619be2457a0a9e359ff4fefe1dbf6"></a>
 virtual <a class="el" href="class_a2_d_p_volume_control.html">A2DPVolumeControl</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>volume_control</b> ()</td></tr>
@@ -501,6 +510,9 @@ const char *&#160;</td><td class="memItemRight" valign="bottom"><b>m_a2d_conn_st
 <tr class="memitem:abbe69860108ab18edee3cd24fa64be53"><td class="memItemLeft" align="right" valign="top"><a id="abbe69860108ab18edee3cd24fa64be53" name="abbe69860108ab18edee3cd24fa64be53"></a>
 const char *&#160;</td><td class="memItemRight" valign="bottom"><b>m_a2d_audio_state_str</b> [3] = {&quot;Suspended&quot;, &quot;Stopped&quot;, &quot;Started&quot;}</td></tr>
 <tr class="separator:abbe69860108ab18edee3cd24fa64be53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44aeeb4214776fea1bca6ecf2e8e8dc2"><td class="memItemLeft" align="right" valign="top"><a id="a44aeeb4214776fea1bca6ecf2e8e8dc2" name="a44aeeb4214776fea1bca6ecf2e8e8dc2"></a>
+const char *&#160;</td><td class="memItemRight" valign="bottom"><b>m_avrc_playback_state_str</b> [5] = {&quot;stopped&quot;, &quot;playing&quot;, &quot;paused&quot;, &quot;forward seek&quot;, &quot;reverse seek&quot;}</td></tr>
+<tr class="separator:a44aeeb4214776fea1bca6ecf2e8e8dc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d557628ca4cdb883fa005df2f494f32"><td class="memItemLeft" align="right" valign="top"><a id="a1d557628ca4cdb883fa005df2f494f32" name="a1d557628ca4cdb883fa005df2f494f32"></a>
 esp_a2d_audio_state_t&#160;</td><td class="memItemRight" valign="bottom"><b>audio_state</b> = ESP_A2D_AUDIO_STATE_STOPPED</td></tr>
 <tr class="separator:a1d557628ca4cdb883fa005df2f494f32"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1012,6 +1024,35 @@ int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>ccall_get_data_def
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a7896335b8f2cc324da86e16efb1544c9" name="a7896335b8f2cc324da86e16efb1544c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7896335b8f2cc324da86e16efb1544c9">&#9670;&#160;</a></span>to_str()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * BluetoothA2DPCommon::to_str </td>
+          <td>(</td>
+          <td class="paramtype">esp_avrc_playback_stat_t&#160;</td>
+          <td class="paramname"><em>state</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>converts esp_avrc_playback_stat_t to a string </p>
+<p>converts a esp_a2d_audio_state_t to a string </p>
 
 </div>
 </div>

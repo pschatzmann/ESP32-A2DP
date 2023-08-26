@@ -357,8 +357,8 @@ bool BluetoothA2DPSink::app_work_dispatch(app_callback_t p_cback, uint16_t event
 {
     ESP_LOGD(BT_APP_TAG, "%s event 0x%x, param len %d", __func__, event, param_len);
     
-    app_msg_t msg;
-    memset(&msg, 0, sizeof(app_msg_t));
+    bt_app_msg_t msg;
+    memset(&msg, 0, sizeof(bt_app_msg_t));
 
     msg.sig = APP_SIG_WORK_DISPATCH;
     msg.event = event;
@@ -376,7 +376,7 @@ bool BluetoothA2DPSink::app_work_dispatch(app_callback_t p_cback, uint16_t event
     return false;
 }
 
-void BluetoothA2DPSink::app_work_dispatched(app_msg_t *msg)
+void BluetoothA2DPSink::app_work_dispatched(bt_app_msg_t *msg)
 {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
     if (msg->cb) {
@@ -385,7 +385,7 @@ void BluetoothA2DPSink::app_work_dispatched(app_msg_t *msg)
 }
 
 
-bool BluetoothA2DPSink::app_send_msg(app_msg_t *msg)
+bool BluetoothA2DPSink::app_send_msg(bt_app_msg_t *msg)
 {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
     if (msg == NULL || app_task_queue == NULL) {
@@ -404,7 +404,7 @@ bool BluetoothA2DPSink::app_send_msg(app_msg_t *msg)
 void BluetoothA2DPSink::app_task_handler(void *arg)
 {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
-    app_msg_t msg;
+    bt_app_msg_t msg;
     while (true) {
         if (!app_task_queue){
             ESP_LOGE(BT_APP_TAG, "%s, app_task_queue is null", __func__);
@@ -449,7 +449,7 @@ void BluetoothA2DPSink::app_task_start_up(void)
 {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
     if (app_task_queue==NULL) 
-        app_task_queue = xQueueCreate(event_queue_size, sizeof(app_msg_t));
+        app_task_queue = xQueueCreate(event_queue_size, sizeof(bt_app_msg_t));
 
     if (app_task_handle==NULL) {
         if (xTaskCreatePinnedToCore(ccall_app_task_handler, "BtAppT", event_stack_size, NULL, task_priority, &app_task_handle, task_core) != pdPASS){

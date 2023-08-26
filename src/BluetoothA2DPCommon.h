@@ -88,7 +88,7 @@ typedef struct {
     uint16_t             event;    /*!< message event id */
     app_callback_t       cb;       /*!< context switch callback */
     void                 *param;   /*!< parameter area needs to be last */
-} app_msg_t;
+} bt_app_msg_t;
 
 
 #define BT_AV_TAG        "BT_AV"
@@ -279,6 +279,7 @@ class BluetoothA2DPCommon {
         virtual bool has_last_connection();
         // change the scan mode
         virtual void set_scan_mode_connectable(bool connectable);
+        virtual void set_scan_mode_connectable_default();
 
         /// provides access to the VolumeControl object
         virtual A2DPVolumeControl* volume_control() {

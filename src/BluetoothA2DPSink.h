@@ -348,9 +348,9 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     virtual int init_bluetooth();
     virtual void app_task_start_up(void);
     virtual void app_task_shut_down(void);
-    virtual bool app_send_msg(app_msg_t *msg);
+    virtual bool app_send_msg(bt_app_msg_t *msg);
     virtual bool app_work_dispatch(app_callback_t p_cback, uint16_t event, void *p_params, int param_len);
-    virtual void app_work_dispatched(app_msg_t *msg);
+    virtual void app_work_dispatched(bt_app_msg_t *msg);
     virtual void app_alloc_meta_buffer(esp_avrc_ct_cb_param_t *param);
     virtual void av_new_track();
     virtual void av_playback_changed();
@@ -426,6 +426,9 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
 
     virtual esp_err_t esp_a2d_connect(esp_bd_addr_t peer) {
         return esp_a2d_sink_connect(peer);
+    }
+    void set_scan_mode_connectable_default() override {
+        set_scan_mode_connectable(true);
     }
 
 };

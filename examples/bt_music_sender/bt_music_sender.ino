@@ -36,18 +36,20 @@ int32_t get_data_frames(Frame *frame, int32_t frame_count) {
         frame[sample].channel2 = frame[sample].channel1;
         m_time += m_deltaTime;
     }
+    // to prevent watchdog
+    delay(1);
 
     return frame_count;
 }
 
 
 void setup() {
-  //a2dp_source.set_auto_reconnect(false);
+  a2dp_source.set_auto_reconnect(false);
   a2dp_source.start("LEXON MINO L", get_data_frames);  
   a2dp_source.set_volume(30);
 }
 
 void loop() {
   // to prevent watchdog in release > 1.0.6
-  delay(10);
+  delay(1000);
 }

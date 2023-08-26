@@ -77,6 +77,14 @@ extern "C" unsigned long millis();
 
 #endif
 
+// IDF 5 support
+#if ESP_IDF_VERSION_MAJOR >= 5
+#  define xTaskHandle TaskHandle_t
+#  define xQueueHandle QueueHandle_t
+#endif
+
+
+
 /**
  * @brief     handler for the dispatched work
  */

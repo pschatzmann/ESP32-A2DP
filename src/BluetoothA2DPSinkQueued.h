@@ -2,6 +2,8 @@
 
 #include "BluetoothA2DPSink.h"
 
+#if A2DP_I2S_SUPPORT
+
 /**
  * @brief The BluetoothA2DPSinkQueued is using a separate Task with an additinal Queue to write the I2S data.
  * application. 
@@ -42,3 +44,5 @@ class BluetoothA2DPSinkQueued : public BluetoothA2DPSink {
         size_t write_audio(const uint8_t *data, size_t size) override;
 
 };
+
+#endif

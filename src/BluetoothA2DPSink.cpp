@@ -23,6 +23,9 @@ BluetoothA2DPSink* actual_bluetooth_a2dp_sink;
  */
 BluetoothA2DPSink::BluetoothA2DPSink() {
   actual_bluetooth_a2dp_sink = this;
+
+#if A2DP_I2S_SUPPORT
+
   if (is_i2s_output) {
         // default i2s port is 0
         i2s_port = (i2s_port_t) 0;
@@ -59,6 +62,7 @@ BluetoothA2DPSink::BluetoothA2DPSink() {
             .data_in_num = I2S_PIN_NO_CHANGE
         };
     }
+#endif
 #ifdef ESP_IDF_4
     s_avrc_peer_rn_cap.bits = 0;
     _lock_init(&s_volume_lock);
@@ -80,6 +84,7 @@ void BluetoothA2DPSink::end(bool release_memory) {
     app_task_shut_down();
 
     // stop I2S
+#if A2DP_I2S_SUPPORT
     if (is_i2s_output){
         ESP_LOGI(BT_AV_TAG,"uninstall i2s");
         if (i2s_driver_uninstall(i2s_port) != ESP_OK){
@@ -89,9 +94,11 @@ void BluetoothA2DPSink::end(bool release_memory) {
             player_init = false;
         }
     }
+#endif
     log_free_heap();
 }
 
+#if A2DP_I2S_SUPPORT
 
 void BluetoothA2DPSink::set_pin_config(i2s_pin_config_t pin_config){
   this->pin_config = pin_config;
@@ -104,6 +111,8 @@ void BluetoothA2DPSink::set_i2s_port(i2s_port_t i2s_num) {
 void BluetoothA2DPSink::set_i2s_config(i2s_config_t i2s_config){
   this->i2s_config = i2s_config;
 }
+
+#endif
 
 void BluetoothA2DPSink::set_stream_reader(void (*callBack)(const uint8_t*, uint32_t), bool is_i2s){
   this->stream_reader = callBack;
@@ -183,8 +192,10 @@ void BluetoothA2DPSink::start(const char* name)
 #endif
     }
 
+#if A2DP_I2S_SUPPORT
     // setup i2s
     init_i2s();
+#endif
 
     // setup bluetooth
     init_bluetooth();
@@ -220,6 +231,8 @@ void BluetoothA2DPSink::start(const char* name)
 
     log_free_heap();
 }
+
+#if A2DP_I2S_SUPPORT
 
 void BluetoothA2DPSink::init_i2s() { 
     ESP_LOGI(BT_AV_TAG,"init_i2s");
@@ -272,7 +285,7 @@ esp_err_t BluetoothA2DPSink::i2s_mclk_pin_select(const uint8_t pin) {
     }
     return ESP_OK;
 }
-
+#endif
 
 bool BluetoothA2DPSink::is_connected() {
     return connection_state == ESP_A2D_CONNECTION_STATE_CONNECTED;
@@ -643,18 +656,18 @@ void BluetoothA2DPSink::handle_audio_cfg(uint16_t event, void *p_param) {
     ESP_LOGI(BT_AV_TAG, "a2dp audio_cfg_cb , codec type %d", a2d->audio_cfg.mcc.type);
 
     // determine sample rate
-    i2s_config.sample_rate = 16000;
+    m_sample_rate = 16000;
     char oct0 = a2d->audio_cfg.mcc.cie.sbc[0];
     if (oct0 & (0x01 << 6)) {
-        i2s_config.sample_rate = 32000;
+        m_sample_rate = 32000;
     } else if (oct0 & (0x01 << 5)) {
-        i2s_config.sample_rate = 44100;
+        m_sample_rate = 44100;
     } else if (oct0 & (0x01 << 4)) {
-        i2s_config.sample_rate = 48000;
+        m_sample_rate = 48000;
     }
-    ESP_LOGI(BT_AV_TAG, "a2dp audio_cfg_cb , sample_rate %d", i2s_config.sample_rate );
+    ESP_LOGI(BT_AV_TAG, "a2dp audio_cfg_cb , sample_rate %d", m_sample_rate );
     if (sample_rate_callback!=nullptr){
-        sample_rate_callback(i2s_config.sample_rate);
+        sample_rate_callback(m_sample_rate);
     }
 
     // for now only SBC stream is supported
@@ -665,6 +678,8 @@ void BluetoothA2DPSink::handle_audio_cfg(uint16_t event, void *p_param) {
                 a2d->audio_cfg.mcc.cie.sbc[2],
                 a2d->audio_cfg.mcc.cie.sbc[3]);
         
+#if A2DP_I2S_SUPPORT
+        i2s_config.sample_rate = m_sample_rate;
         // setup sample rate and channels
         if (i2s_set_clk(i2s_port, i2s_config.sample_rate, i2s_config.bits_per_sample, i2s_channels)!=ESP_OK){
             ESP_LOGE(BT_AV_TAG, "i2s_set_clk failed with samplerate=%d", i2s_config.sample_rate);
@@ -672,6 +687,9 @@ void BluetoothA2DPSink::handle_audio_cfg(uint16_t event, void *p_param) {
             ESP_LOGI(BT_AV_TAG, "audio player configured, samplerate=%d", i2s_config.sample_rate);
             player_init = true; //init finished
         }
+#else
+        player_init = true; //init finished
+#endif
     }
 }
 
@@ -694,6 +712,7 @@ void BluetoothA2DPSink::handle_audio_state(uint16_t event, void *p_param){
         audio_state_callback(a2d->audio_stat.state, audio_state_obj);
     }
 
+#if A2DP_I2S_SUPPORT
     if (is_i2s_output){
         if (ESP_A2D_AUDIO_STATE_STARTED == a2d->audio_stat.state) { 
             m_pkt_cnt = 0; 
@@ -711,10 +730,12 @@ void BluetoothA2DPSink::handle_audio_state(uint16_t event, void *p_param){
             i2s_zero_dma_buffer(i2s_port);
         }
 
-        if (audio_state_callback_post!=nullptr){
-            audio_state_callback_post(a2d->audio_stat.state, audio_state_obj_post);
-        }    
     }
+#endif
+
+    if (audio_state_callback_post!=nullptr){
+        audio_state_callback_post(a2d->audio_stat.state, audio_state_obj_post);
+    }    
 }
 
 
@@ -751,10 +772,12 @@ void BluetoothA2DPSink::handle_connection_state(uint16_t event, void *p_param){
                 (*bt_dis_connected)();
             }    
             
+#if A2DP_I2S_SUPPORT
             if (is_i2s_output) {
                 bt_i2s_task_shut_down();
             }
-            
+#endif
+
             // RECONNECTION MGMT
             // do not auto reconnect when disconnect was requested from device
             if (is_autoreconnect_allowed) {
@@ -815,10 +838,11 @@ void BluetoothA2DPSink::handle_connection_state(uint16_t event, void *p_param){
                 set_scan_mode_connectable(false);   
                 connection_rety_count = 0;
                 
+#if A2DP_I2S_SUPPORT
                 if (is_i2s_output) {
                     bt_i2s_task_start_up();
                 }
-
+#endif
                 // record current connection
                 if (reconnect_status==AutoReconnect && is_valid) {
                     set_last_connection(a2d->conn_stat.remote_bda);
@@ -846,10 +870,6 @@ void BluetoothA2DPSink::handle_connection_state(uint16_t event, void *p_param){
     if (connection_state_callback!=nullptr){
         connection_state_callback(connection_state, connection_state_obj);
     }
-}
-
-uint16_t BluetoothA2DPSink::sample_rate(){
-    return i2s_config.sample_rate;
 }
 
 
@@ -1110,10 +1130,12 @@ void BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) {
         }
     }
 
+#if A2DP_I2S_SUPPORT
     if (is_i2s_output) {
         // put data into ringbuffer
         write_audio(data, len);
     }
+#endif
 
     // data_received callback
     if (data_received!=nullptr){
@@ -1294,6 +1316,7 @@ void ccall_av_hdl_a2d_evt(uint16_t event, void *param){
     }
 }
 
+#if A2DP_I2S_SUPPORT
 
 size_t BluetoothA2DPSink::i2s_write_data(const uint8_t* data, size_t item_size){
     size_t i2s_bytes_written = 0;
@@ -1333,7 +1356,7 @@ size_t BluetoothA2DPSink::i2s_write_data(const uint8_t* data, size_t item_size){
     }
     return item_size;
 }
-
+#endif
 
 
 //------------------------------------------------------------

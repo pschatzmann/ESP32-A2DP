@@ -95,6 +95,8 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     BluetoothA2DPSink();
     /// Destructor - stops the playback and releases all resources
     virtual ~BluetoothA2DPSink();
+
+#if A2DP_I2S_SUPPORT
     /// Define the pins
     virtual void set_pin_config(i2s_pin_config_t pin_config);
    
@@ -103,6 +105,18 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
    
     /// Define the i2s configuration
     virtual void set_i2s_config(i2s_config_t i2s_config);
+
+    /// set output to I2S_CHANNEL_STEREO (default) or I2S_CHANNEL_MONO
+    virtual void set_channels(i2s_channel_t channels) {
+        set_mono_downmix(channels==I2S_CHANNEL_MONO);
+    }
+
+    /// Defines the bits per sample for output (if > 16 output will be expanded)
+    virtual void set_bits_per_sample(int bps) { i2s_config.bits_per_sample = (i2s_bits_per_sample_t) bps; }
+
+    virtual esp_err_t i2s_mclk_pin_select(const uint8_t pin);
+
+#endif
 
     /// starts the I2S bluetooth sink with the inidicated name
     virtual void start(const char* name, bool auto_reconect);
@@ -186,23 +200,14 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     /// AVRC rewind
     virtual void rewind();
     
-    /// set output to I2S_CHANNEL_STEREO (default) or I2S_CHANNEL_MONO
-    virtual void set_channels(i2s_channel_t channels) {
-        set_mono_downmix(channels==I2S_CHANNEL_MONO);
-    }
     /// mix stereo into single mono signal
     virtual void set_mono_downmix(bool enabled) {
         volume_control()->set_mono_downmix(enabled);
     }
-    /// Defines the bits per sample for output (if > 16 output will be expanded)
-    virtual void set_bits_per_sample(int bps) { i2s_config.bits_per_sample = (i2s_bits_per_sample_t) bps; }
     
     /// Provides the actually set data rate (in samples per second)
-    virtual uint16_t sample_rate();
-    
-    /// Defines the pin for the master clock
-    virtual esp_err_t i2s_mclk_pin_select(const uint8_t pin);
-    
+    virtual uint16_t sample_rate() { return m_sample_rate;}
+        
     /// We need to confirm a new seesion by calling confirm_pin_code()
     virtual void activate_pin_code(bool active);
 
@@ -288,16 +293,20 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     xQueueHandle app_task_queue = nullptr;
     xTaskHandle app_task_handle = nullptr;
 
+    bool is_i2s_output = A2DP_I2S_SUPPORT;
+#if A2DP_I2S_SUPPORT
     i2s_config_t i2s_config;
     i2s_pin_config_t pin_config;    
+    i2s_channel_t i2s_channels = I2S_CHANNEL_STEREO;
+    i2s_port_t i2s_port = I2S_NUM_0; 
+    bool is_i2s_active = false;
+#endif
+    uint16_t m_sample_rate = 0; 
     uint32_t m_pkt_cnt = 0;
     //esp_a2d_audio_state_t m_audio_state = ESP_A2D_AUDIO_STATE_STOPPED;
     esp_a2d_mct_t audio_type;
     char pin_code_str[20] = {0};
-    bool is_i2s_output = true;
     bool player_init = false;
-    i2s_channel_t i2s_channels = I2S_CHANNEL_STEREO;
-    i2s_port_t i2s_port = I2S_NUM_0; 
     int connection_rety_count = 0;
     bool spp_active = false;
     esp_spp_mode_t esp_spp_mode = ESP_SPP_MODE_CB;
@@ -322,7 +331,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     bool (*address_validator)(esp_bd_addr_t remote_bda) = nullptr;
     void (*sample_rate_callback)(uint16_t rate)=nullptr;
     bool swap_left_right = false;
-    bool is_i2s_active = false;
     int try_reconnect_max_count = AUTOCONNECT_TRY_NUM;
    
     // RSSI support
@@ -338,7 +346,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
 
     // protected methods
     virtual int init_bluetooth();
-    virtual void init_i2s();
     virtual void app_task_start_up(void);
     virtual void app_task_shut_down(void);
     virtual bool app_send_msg(app_msg_t *msg);
@@ -398,18 +405,24 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     virtual void av_notify_evt_handler(uint8_t event_id, uint32_t event_parameter);
 #endif    
 
+#if A2DP_I2S_SUPPORT
+    virtual void init_i2s();
+
     /// output audio data e.g. to i2s or to queue
     virtual size_t write_audio(const uint8_t *data, size_t size){
         return i2s_write_data(data, size);
     }
+
+    /// writes the data to i2s
+    size_t i2s_write_data(const uint8_t* data, size_t item_size);
+
 
     /// dummy functions needed for BluetoothA2DPSinkQueued
     virtual void i2s_task_handler(void *arg) {}
     virtual void bt_i2s_task_start_up(void) {}
     virtual void bt_i2s_task_shut_down(void) {}
 
-    /// writes the data to i2s
-    size_t i2s_write_data(const uint8_t* data, size_t item_size);
+#endif
 
     virtual esp_err_t esp_a2d_connect(esp_bd_addr_t peer) {
         return esp_a2d_sink_connect(peer);

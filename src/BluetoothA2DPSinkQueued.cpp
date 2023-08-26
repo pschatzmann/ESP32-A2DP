@@ -1,5 +1,6 @@
 
 #include "BluetoothA2DPSinkQueued.h"
+#if A2DP_I2S_SUPPORT
 
 void BluetoothA2DPSinkQueued::bt_i2s_task_start_up(void)
 {
@@ -66,3 +67,4 @@ size_t BluetoothA2DPSinkQueued::write_audio(const uint8_t *data, size_t size)
     } 
     return result;
 }
+#endif

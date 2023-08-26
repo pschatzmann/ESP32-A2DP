@@ -43,7 +43,6 @@
 #include "esp_bt_device.h"
 #include "esp_gap_bt_api.h"
 #include "esp_a2dp_api.h"
-#include "driver/i2s.h"
 #include "esp_avrc_api.h"
 #include "esp_spp_api.h"
 #include "nvs.h"
@@ -51,6 +50,10 @@
 #include "SoundData.h"
 #include "A2DPVolumeControl.h"
 #include "esp_task_wdt.h"
+
+#if A2DP_I2S_SUPPORT
+#  include "driver/i2s.h"
+#endif
 
 #ifdef ARDUINO_ARCH_ESP32
 #include "esp32-hal-log.h"

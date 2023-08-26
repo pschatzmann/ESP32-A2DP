@@ -611,7 +611,7 @@ void BluetoothA2DPSource::bt_av_hdl_stack_evt(uint16_t event, void *p_param) {
   }
   /* other */
   default: {
-    ESP_LOGE(BT_AV_TAG, "%s unhandled event: %d", __func__, event);
+    ESP_LOGW(BT_AV_TAG, "%s unhandled event: %d", __func__, event);
     break;
   }
   }
@@ -710,7 +710,7 @@ void BluetoothA2DPSource::bt_app_av_state_unconnected_hdlr(uint16_t event,
   //     a2d->a2d_report_delay_value_stat.delay_value); break;
   // }
   default: {
-    ESP_LOGE(BT_AV_TAG, "%s unhandled event: %d", __func__, event);
+    ESP_LOGW(BT_AV_TAG, "%s unhandled event: %d", __func__, event);
     break;
   }
   }
@@ -754,7 +754,7 @@ void BluetoothA2DPSource::bt_app_av_state_connecting_hdlr(uint16_t event,
   //     a2d->a2d_report_delay_value_stat.delay_value); break;
   // }
   default:
-    ESP_LOGE(BT_AV_TAG, "%s unhandled event: %d", __func__, event);
+    ESP_LOGW(BT_AV_TAG, "%s unhandled event: %d", __func__, event);
     break;
   }
 }
@@ -795,7 +795,7 @@ void BluetoothA2DPSource::bt_app_av_state_connected_hdlr(uint16_t event,
   //     a2d->a2d_report_delay_value_stat.delay_value); break;
   // }
   default: {
-    ESP_LOGE(BT_AV_TAG, "%s unhandled event: %d", __func__, event);
+    ESP_LOGW(BT_AV_TAG, "%s unhandled event: %d", __func__, event);
     break;
   }
   }
@@ -827,7 +827,7 @@ void BluetoothA2DPSource::bt_app_av_state_disconnecting_hdlr(uint16_t event,
   //     a2d->a2d_report_delay_value_stat.delay_value); break;
   // }
   default: {
-    ESP_LOGE(BT_AV_TAG, "%s unhandled event: %d", __func__, event);
+    ESP_LOGW(BT_AV_TAG, "%s unhandled event: %d", __func__, event);
     break;
   }
   }
@@ -912,7 +912,7 @@ void BluetoothA2DPSource::bt_app_rc_ct_cb(esp_avrc_ct_cb_event_t event,
     break;
   }
   default: {
-    ESP_LOGE(BT_RC_CT_TAG, "Invalid AVRC event: %d", event);
+    ESP_LOGW(BT_RC_CT_TAG, "Unhandled AVRC event: %d", event);
     break;
   }
   }
@@ -1020,7 +1020,7 @@ void BluetoothA2DPSource::bt_av_hdl_avrc_ct_evt(uint16_t event, void *p_param) {
 #endif
   /* other */
   default: {
-    ESP_LOGE(BT_RC_CT_TAG, "%s unhandled event: %d", __func__, event);
+    ESP_LOGW(BT_RC_CT_TAG, "%s unhandled event: %d", __func__, event);
     break;
   }
   }

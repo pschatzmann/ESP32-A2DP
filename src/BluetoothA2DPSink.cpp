@@ -1167,10 +1167,10 @@ void BluetoothA2DPSink::execute_avrc_command(int cmd){
         if (ok==ESP_OK){
             ESP_LOGD(BT_AV_TAG, "execute_avrc_command: %d -> OK", cmd);    
         } else {
-            ESP_LOGE(BT_AV_TAG,"execute_avrc_command ESP_AVRC_PT_CMD_STATE_PRESSED FAILED: %d",ok);
+            ESP_LOGE(BT_AV_TAG,"execute_avrc_command ESP_AVRC_PT_CMD_STATE_RELEASED FAILED: %d",ok);
         }
     } else {
-        ESP_LOGE(BT_AV_TAG,"execute_avrc_command ESP_AVRC_PT_CMD_STATE_RELEASED FAILED: %d",ok);
+        ESP_LOGE(BT_AV_TAG,"execute_avrc_command ESP_AVRC_PT_CMD_STATE_PRESSED FAILED: %d",ok);
     }
 }
 

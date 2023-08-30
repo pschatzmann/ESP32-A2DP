@@ -196,8 +196,10 @@ class BluetoothA2DPCommon {
         /// converts a esp_bd_addr_t to a string - the string is 18 characters long! 
         const char* to_str(esp_bd_addr_t bda);
 
+#ifdef ESP_IDF_4
         /// converts esp_avrc_playback_stat_t to a string
         const char* to_str(esp_avrc_playback_stat_t state);
+#endif
 
         /// defines the task priority (the default value is configMAX_PRIORITIES - 10)
         void set_task_priority(UBaseType_t priority){

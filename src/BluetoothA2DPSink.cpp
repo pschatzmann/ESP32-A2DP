@@ -877,19 +877,23 @@ void BluetoothA2DPSink::av_new_track()
 {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
     //Register notifications and request metadata
+#ifdef ESP_IDF_4
     esp_avrc_ct_send_metadata_cmd(APP_RC_CT_TL_GET_META_DATA, avrc_metadata_flags);
     if (esp_avrc_rn_evt_bit_mask_operation(ESP_AVRC_BIT_MASK_OP_TEST, &s_avrc_peer_rn_cap, ESP_AVRC_RN_TRACK_CHANGE)) {
         esp_avrc_ct_send_register_notification_cmd(APP_RC_CT_TL_RN_TRACK_CHANGE, ESP_AVRC_RN_TRACK_CHANGE, 0);
     }
+#endif
 }
 
 
 void BluetoothA2DPSink::av_playback_changed()
 {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
+#ifdef ESP_IDF_4
     if (esp_avrc_rn_evt_bit_mask_operation(ESP_AVRC_BIT_MASK_OP_TEST, &s_avrc_peer_rn_cap, ESP_AVRC_RN_PLAY_STATUS_CHANGE)) {
         esp_avrc_ct_send_register_notification_cmd(APP_RC_CT_TL_RN_PLAYBACK_CHANGE, ESP_AVRC_RN_PLAY_STATUS_CHANGE, 0);
     }
+#endif
 }
 
 
@@ -908,10 +912,12 @@ void BluetoothA2DPSink::av_notify_evt_handler(uint8_t event_id, uint32_t event_p
     case ESP_AVRC_RN_PLAY_STATUS_CHANGE:
         ESP_LOGD(BT_AV_TAG, "%s ESP_AVRC_RN_PLAY_STATUS_CHANGE %d, to %d", __func__, event_id, event_parameter->playback);
         av_playback_changed();
+#ifdef ESP_IDF_4
         // call avrc play status notification callback if available
         if (avrc_rn_playstatus_callback != nullptr){
             avrc_rn_playstatus_callback(event_parameter->playback);
         }
+#endif
         break;
     default:
         ESP_LOGE(BT_AV_TAG, "%s unhandled evt %d", __func__, event_id);
@@ -962,7 +968,11 @@ void BluetoothA2DPSink::av_hdl_avrc_evt(uint16_t event, void *p_param)
     }
     case ESP_AVRC_CT_CHANGE_NOTIFY_EVT: {
         //ESP_LOGI(BT_AV_TAG, "AVRC event notification: %d, param: %d", (int)rc->change_ntf.event_id, (int)rc->change_ntf.event_parameter);
+#ifdef ESP_IDF_4
         av_notify_evt_handler(rc->change_ntf.event_id, &rc->change_ntf.event_parameter);
+#else
+        av_notify_evt_handler(rc->change_ntf.event_id, rc->change_ntf.event_parameter);
+#endif
         break;
     }
     case ESP_AVRC_CT_REMOTE_FEATURES_EVT: {

@@ -263,6 +263,8 @@ const char* BluetoothA2DPCommon::to_str(esp_bd_addr_t bda){
     return (const char*)bda_str;
 }
 
+#ifdef ESP_IDF_4
+
 /// converts a esp_a2d_audio_state_t to a string
 const char* BluetoothA2DPCommon::to_str(esp_avrc_playback_stat_t state){
     if (state == esp_avrc_playback_stat_t::ESP_AVRC_PLAYBACK_ERROR)
@@ -272,7 +274,6 @@ const char* BluetoothA2DPCommon::to_str(esp_avrc_playback_stat_t state){
     }
 }
 
-#ifdef ESP_IDF_4
 
 /// Defines if the bluetooth is discoverable
 void BluetoothA2DPCommon::set_discoverability(esp_bt_discovery_mode_t d) {

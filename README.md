@@ -327,6 +327,8 @@ Open issues only for bugs and if it is not a bug, use a discussion: Provide enou
 - what exactly you are trying to do
 - your hardware
 - your software versions
+  - ESP32 version from the Board Manager
+  - version of the ESP32-A2DP library
 
 to enable others to understand and reproduce your issue.
 

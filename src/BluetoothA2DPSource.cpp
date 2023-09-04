@@ -664,6 +664,8 @@ void BluetoothA2DPSource::process_user_state_callbacks(uint16_t event,
 
 void BluetoothA2DPSource::bt_app_av_sm_hdlr(uint16_t event, void *param) {
   ESP_LOGI(BT_AV_TAG, "%s state %s, evt 0x%x", __func__, to_state_str(s_a2d_state), event);
+  process_user_state_callbacks(event, param);
+
   /* select handler according to different states */
   switch (s_a2d_state) {
   case APP_AV_STATE_DISCOVERING:

@@ -32,6 +32,7 @@ void audio_state_changed(esp_a2d_audio_state_t state, void *ptr){
 
 
 void setup() {
+  Serial.begin(115200);
   a2dp_sink.set_on_connection_state_changed(connection_state_changed);
   a2dp_sink.set_on_audio_state_changed(audio_state_changed);
   a2dp_sink.start("MyMusic");  

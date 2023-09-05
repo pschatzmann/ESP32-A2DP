@@ -38,6 +38,16 @@ extern "C" int32_t ccall_bt_app_a2d_data_cb(uint8_t *data, int32_t len);
 extern "C" int32_t ccall_get_channel_data_wrapper(uint8_t *data, int32_t len) ;
 extern "C" int32_t ccall_get_data_default(uint8_t *data, int32_t len) ;
 
+/* A2DP global state */
+enum APP_AV_STATE {
+  APP_AV_STATE_IDLE,
+  APP_AV_STATE_DISCOVERING,
+  APP_AV_STATE_DISCOVERED,
+  APP_AV_STATE_UNCONNECTED,
+  APP_AV_STATE_CONNECTING,
+  APP_AV_STATE_CONNECTED,
+  APP_AV_STATE_DISCONNECTING,
+};
 
 static const char* APP_AV_STATE_STR[]={
   "APP_AV_STATE_IDLE",
@@ -185,7 +195,7 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
     uint32_t pin_code_len;
 
     uint8_t s_peer_bdname[ESP_BT_GAP_MAX_BDNAME_LEN + 1];
-    int s_a2d_state=0; // Next Target Connection State
+    APP_AV_STATE s_a2d_state = APP_AV_STATE_IDLE; // Next Target Connection State
     int s_media_state=0;
     int s_intv_cnt=0;
     int s_connecting_heatbeat_count;

@@ -183,8 +183,10 @@ void BluetoothA2DPSource::start_raw(std::vector<const char *> names,
     get_last_connection();
   }
 
+  // commented out because this is not working: the only way to get reliable reconnects
+  // is to close the session properly before restarting!
   // reset last connection if we do not reconnect
-  reset_last_connection();
+  //reset_last_connection();
 
   if (nvs_init) {
     // Initialize NVS (Non-volatile storage library).

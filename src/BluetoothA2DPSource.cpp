@@ -535,7 +535,7 @@ void BluetoothA2DPSource::bt_app_gap_callback(esp_bt_gap_cb_event_t event,
     esp_bt_gap_ssp_confirm_reply(param->cfm_req.bda, true);
     break;
 
-#ifdef ESP_IDF_4
+#if ESP_IDF_VERSION > ESP_IDF_VERSION_VAL(4, 4, 4)
   case ESP_BT_GAP_ACL_CONN_CMPL_STAT_EVT:
     ESP_LOGI( BT_AV_TAG,"ESP_BT_GAP_ACL_CONN_CMPL_STAT_EVT");
     break;
@@ -545,6 +545,7 @@ void BluetoothA2DPSource::bt_app_gap_callback(esp_bt_gap_cb_event_t event,
              param->mode_chg.mode);
     break;
 #endif
+
   default: {
     ESP_LOGI(BT_AV_TAG, "event: %d", event);
     break;

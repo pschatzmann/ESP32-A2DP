@@ -248,7 +248,7 @@ class BluetoothA2DPCommon {
     protected:
         const char* bt_name = {0};
         esp_bd_addr_t peer_bd_addr;
-        ReconnectStatus reconnect_status = AutoReconnect;
+        ReconnectStatus reconnect_status = NoReconnect;
         unsigned long reconnect_timout=0;
         unsigned int default_reconnect_timout=10000;
         bool is_autoreconnect_allowed = false; 

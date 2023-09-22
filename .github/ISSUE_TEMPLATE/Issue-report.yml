@@ -4,9 +4,9 @@ body:
   - type: markdown
     attributes:
       value: |
-        * Before reporting a new bug please check and search the [list of existing issues](https://https://github.com/pschatzmann/ESP32-A2DP/issues?q=) 
-        * Please check [the Readme](https://https://github.com/pschatzmann/ESP32-A2DP) and [Wiki](https://https://github.com/pschatzmann/ESP32-A2DP/wiki)
-        * Don't forget to check [the discusions](https://https://github.com/pschatzmann/ESP32-A2DP/discussions)
+        * Before reporting a new bug please check and search the [list of existing issues](https://github.com/pschatzmann/ESP32-A2DP/issues?q=) 
+        * Please check [the Readme](https://github.com/pschatzmann/ESP32-A2DP) and [Wiki](https://github.com/pschatzmann/ESP32-A2DP/wiki)
+        * Don't forget to check [the discusions](https://github.com/pschatzmann/ESP32-A2DP/discussions)
         * If still experiencing the issue, please provide as many details as possible below about your hardware, computer setup and code.
   - type: textarea
     id: Description

@@ -42,7 +42,7 @@ bool BluetoothA2DPCommon::reconnect() {
 }
 
 bool BluetoothA2DPCommon::connect_to(esp_bd_addr_t peer){
-    ESP_LOGW(BT_AV_TAG, "connect_to to %s", to_str(last_connection));
+    ESP_LOGW(BT_AV_TAG, "connect_to to %s", to_str(peer));
     set_scan_mode_connectable_default();
     esp_err_t err = esp_a2d_connect(peer);
     if (err!=ESP_OK){

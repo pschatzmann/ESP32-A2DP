@@ -1269,11 +1269,16 @@ void BluetoothA2DPSink::confirm_pin_code(int code)
  * public Callbacks 
  * 
  */
+
+
+#if A2DP_I2S_SUPPORT
 void ccall_i2s_task_handler(void *arg) {
   ESP_LOGD(BT_AV_TAG, "%s", __func__);
   if (actual_bluetooth_a2dp_sink)
     actual_bluetooth_a2dp_sink->i2s_task_handler(arg);
 }
+
+#endif
 
 void ccall_app_task_handler(void *arg) {
   ESP_LOGD(BT_AV_TAG, "%s", __func__);

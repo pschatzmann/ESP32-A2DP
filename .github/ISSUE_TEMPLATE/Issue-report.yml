@@ -46,6 +46,8 @@ body:
       label: Provide your Version of the EP32 Arduino Core (or the IDF Version)
       description: This information can be found in the Boards Manager
       placeholder: e.g. 2.0.13
+    validations:
+     required: true
 
   - type: checkboxes
     id: confirmation

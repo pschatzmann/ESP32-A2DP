@@ -82,9 +82,9 @@ void BluetoothA2DPCommon::end(bool release_memory) {
     clean_last_connection();
     log_free_heap();
 
-    // Disconnect
+    // Disconnect and wait
     disconnect();
-    while(is_connected()){
+    while(get_connection_state() != ESP_A2D_CONNECTION_STATE_DISCONNECTED){
         delay(100);
     }
 

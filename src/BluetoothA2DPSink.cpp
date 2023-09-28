@@ -299,9 +299,7 @@ esp_a2d_mct_t BluetoothA2DPSink::get_audio_type() {
 const char* BluetoothA2DPSink::get_connected_source_name() {
     if (is_connected()){
         return(remote_name);
-    }
-    else
-    {
+    } else {
         return("unknown");
     }
 }

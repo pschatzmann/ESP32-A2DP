@@ -20,11 +20,19 @@
  * @copyright GPLv3
  */
 
-
-
 #pragma once
-
 #include "config.h"
+// If you use #include "I2S.h" the i2s functionality is hidden in a namespace
+// this hack prevents any error messages
+#ifdef _I2S_H_INCLUDED
+using namespace esp_i2s;
+#endif
+// Compile only for ESP32
+#if defined(CONFIG_IDF_TARGET_ESP32C3) || defined(CONFIG_IDF_TARGET_ESP32S2) || defined(CONFIG_IDF_TARGET_ESP32S3)
+#  error "ESP32C3, ESP32S2, ESP32S3 do not support A2DP"
+#endif
+
+#include "esp_idf_version.h"
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -74,7 +82,6 @@ extern "C" unsigned long millis();
 # define I2S_COMM_FORMAT_STAND_MSB (I2S_COMM_FORMAT_I2S | I2S_COMM_FORMAT_I2S_LSB)
 # define I2S_COMM_FORMAT_STAND_PCM_LONG (I2S_COMM_FORMAT_PCM | I2S_COMM_FORMAT_PCM_LONG)
 # define I2S_COMM_FORMAT_STAND_PCM_SHORT (I2S_COMM_FORMAT_PCM | I2S_COMM_FORMAT_PCM_SHORT)
-
 #endif
 
 // IDF 5 support
@@ -83,7 +90,7 @@ extern "C" unsigned long millis();
 #  define xQueueHandle QueueHandle_t
 #endif
 
-
+#define A2DP_DEPRECATED __attribute__((deprecated))
 
 /**
  * @brief     handler for the dispatched work

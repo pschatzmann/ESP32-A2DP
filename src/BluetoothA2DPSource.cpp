@@ -569,7 +569,7 @@ void BluetoothA2DPSource::bt_av_hdl_stack_evt(uint16_t event, void *p_param) {
     esp_avrc_ct_init();
     esp_avrc_ct_register_callback(ccall_bt_app_rc_ct_cb);
 
-#ifdef ESP_IDF_4
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
     esp_avrc_rn_evt_cap_mask_t evt_set = {0};
     esp_avrc_rn_evt_bit_mask_operation(ESP_AVRC_BIT_MASK_OP_SET, &evt_set,
                                        ESP_AVRC_RN_VOLUME_CHANGE);
@@ -685,7 +685,7 @@ void BluetoothA2DPSource::bt_app_av_sm_hdlr(uint16_t event, void *param) {
 void BluetoothA2DPSource::bt_app_av_state_unconnected_hdlr(uint16_t event,
                                                            void *param) {
   ESP_LOGD(BT_AV_TAG, "%s evt %d", __func__, event);
-  esp_a2d_cb_param_t *a2d = NULL;
+  //esp_a2d_cb_param_t *a2d = NULL;
   /* handle the events of intrest in unconnected state */
   switch (event) {
   case ESP_A2D_CONNECTION_STATE_EVT:
@@ -897,7 +897,7 @@ void BluetoothA2DPSource::bt_app_rc_ct_cb(esp_avrc_ct_cb_event_t event,
   case ESP_AVRC_CT_METADATA_RSP_EVT:
   case ESP_AVRC_CT_CHANGE_NOTIFY_EVT:
   case ESP_AVRC_CT_REMOTE_FEATURES_EVT:
-#ifdef ESP_IDF_4
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
   case ESP_AVRC_CT_GET_RN_CAPABILITIES_RSP_EVT:
   case ESP_AVRC_CT_SET_ABSOLUTE_VOLUME_RSP_EVT: 
 #endif
@@ -913,7 +913,7 @@ void BluetoothA2DPSource::bt_app_rc_ct_cb(esp_avrc_ct_cb_event_t event,
   }
 }
 
-#ifdef ESP_IDF_4
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
 
 void BluetoothA2DPSource::bt_av_volume_changed(void) {
   if (esp_avrc_rn_evt_bit_mask_operation(ESP_AVRC_BIT_MASK_OP_TEST,
@@ -948,13 +948,13 @@ void BluetoothA2DPSource::bt_av_hdl_avrc_ct_evt(uint16_t event, void *p_param) {
   switch (event) {
   /* when connection state changed, this event comes */
   case ESP_AVRC_CT_CONNECTION_STATE_EVT: {
-    uint8_t *bda = rc->conn_stat.remote_bda;
+    [[maybe_unused]] uint8_t *bda = rc->conn_stat.remote_bda;
     ESP_LOGI(BT_RC_CT_TAG,
              "AVRC conn_state event: state %d, [%02x:%02x:%02x:%02x:%02x:%02x]",
              rc->conn_stat.connected, bda[0], bda[1], bda[2], bda[3], bda[4],
              bda[5]);
 
-#ifdef ESP_IDF_4
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
     if (rc->conn_stat.connected) {
       esp_avrc_ct_send_get_rn_capabilities_cmd(APP_RC_CT_TL_GET_CAPS);
     } else {
@@ -982,7 +982,7 @@ void BluetoothA2DPSource::bt_av_hdl_avrc_ct_evt(uint16_t event, void *p_param) {
   case ESP_AVRC_CT_CHANGE_NOTIFY_EVT: {
     ESP_LOGI(BT_RC_CT_TAG, "AVRC event notification: %d",
              rc->change_ntf.event_id);
-#ifdef ESP_IDF_4
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
     bt_av_notify_evt_handler(rc->change_ntf.event_id,
                              &rc->change_ntf.event_parameter);
 #endif
@@ -995,7 +995,7 @@ void BluetoothA2DPSource::bt_av_hdl_avrc_ct_evt(uint16_t event, void *p_param) {
     break;
   }
 
-#ifdef ESP_IDF_4
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
   /* when get supported notification events capability of peer device, this
    * event comes */
   case ESP_AVRC_CT_GET_RN_CAPABILITIES_RSP_EVT: {

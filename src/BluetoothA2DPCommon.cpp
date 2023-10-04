@@ -263,7 +263,7 @@ const char* BluetoothA2DPCommon::to_str(esp_bd_addr_t bda){
     return (const char*)bda_str;
 }
 
-#ifdef ESP_IDF_4
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
 
 /// converts a esp_a2d_audio_state_t to a string
 const char* BluetoothA2DPCommon::to_str(esp_avrc_playback_stat_t state){

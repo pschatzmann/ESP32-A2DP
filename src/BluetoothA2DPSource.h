@@ -215,7 +215,7 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
 
     bool(*ssid_callback)(const char*ssid, esp_bd_addr_t address, int rrsi) = nullptr;
 
-#ifdef ESP_IDF_4
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
     esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap;
 #endif
 
@@ -277,7 +277,7 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
         set_scan_mode_connectable(false);
     }
 
-#ifdef ESP_IDF_4
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
     void bt_av_notify_evt_handler(uint8_t event, esp_avrc_rn_param_t *param);
     void bt_av_volume_changed(void);
 #endif

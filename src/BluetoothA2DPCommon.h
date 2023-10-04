@@ -68,7 +68,7 @@ extern "C" unsigned long millis();
 #endif
 
 // Support for old and new IDF version
-#if !defined(ESP_IDF_4) && !defined(I2S_COMM_FORMAT_STAND_I2S)
+#if ESP_IDF_VERSION < ESP_IDF_VERSION_VAL(4, 0 , 0) && !defined(I2S_COMM_FORMAT_STAND_I2S)
 // support for old idf releases
 # define I2S_COMM_FORMAT_STAND_I2S (I2S_COMM_FORMAT_I2S | I2S_COMM_FORMAT_I2S_MSB)
 # define I2S_COMM_FORMAT_STAND_MSB (I2S_COMM_FORMAT_I2S | I2S_COMM_FORMAT_I2S_LSB)
@@ -78,7 +78,7 @@ extern "C" unsigned long millis();
 #endif
 
 // IDF 5 support
-#if ESP_IDF_VERSION_MAJOR >= 5
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0 , 0)
 #  define xTaskHandle TaskHandle_t
 #  define xQueueHandle QueueHandle_t
 #endif
@@ -196,7 +196,7 @@ class BluetoothA2DPCommon {
         /// converts a esp_bd_addr_t to a string - the string is 18 characters long! 
         const char* to_str(esp_bd_addr_t bda);
 
-#ifdef ESP_IDF_4
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
         /// converts esp_avrc_playback_stat_t to a string
         const char* to_str(esp_avrc_playback_stat_t state);
 #endif
@@ -227,7 +227,7 @@ class BluetoothA2DPCommon {
             return &last_connection;
         }
 
-#ifdef ESP_IDF_4
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
     /// Bluetooth discoverability
     virtual void set_discoverability(esp_bt_discovery_mode_t d);
 #endif
@@ -278,7 +278,7 @@ class BluetoothA2DPCommon {
         int event_stack_size = 3072;
 
 
-#ifdef ESP_IDF_4
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
         esp_bt_discovery_mode_t discoverability = ESP_BT_GENERAL_DISCOVERABLE;
 #endif
 

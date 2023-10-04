@@ -43,7 +43,7 @@ extern "C" void ccall_av_hdl_stack_evt(uint16_t event, void *p_param);
 extern "C" void ccall_av_hdl_a2d_evt(uint16_t event, void *p_param);
 extern "C" void ccall_av_hdl_avrc_evt(uint16_t event, void *p_param);
 
-#ifdef ESP_IDF_4
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
 extern "C" void ccall_app_rc_tg_callback(esp_avrc_tg_cb_event_t event, esp_avrc_tg_cb_param_t *param);
 extern "C" void ccall_av_hdl_avrc_tg_evt(uint16_t event, void *p_param);
 #endif    
@@ -81,7 +81,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     /// avrc event handler 
     friend void ccall_av_hdl_avrc_evt(uint16_t event, void *p_param);
 
-#ifdef ESP_IDF_4
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
 
     /// handle esp_avrc_tg_cb_event_t
     friend void ccall_app_rc_tg_callback(esp_avrc_tg_cb_event_t event, esp_avrc_tg_cb_param_t *param);
@@ -145,7 +145,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
       this->avrc_metadata_callback = callback;
     }
 
-#ifdef ESP_IDF_4
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
     /// Define a callback method which provides the avrc notifications
     virtual void set_avrc_rn_playstatus_callback(void (*callback)(esp_avrc_playback_stat_t playback)) {
       this->avrc_rn_playstatus_callback = callback;
@@ -273,7 +273,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
         spp_active = flag;
     }
 
- #ifdef ESP_IDF_4
+ #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
     /// Get the name of the connected source device (obsolete)
     virtual const char* get_connected_source_name();
     /// Provides the result of the last result for the esp_avrc_tg_get_rn_evt_cap() callback (Available from ESP_IDF_4)
@@ -330,7 +330,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     void (*raw_stream_reader)(const uint8_t*, uint32_t) = nullptr;
     void (*avrc_connection_state_callback)(bool connected) = nullptr;
     void (*avrc_metadata_callback)(uint8_t, const uint8_t*) = nullptr;
-#ifdef ESP_IDF_4
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
     void (*avrc_rn_playstatus_callback)(esp_avrc_playback_stat_t) = nullptr;
 #endif
     void (*avrc_rn_volchg_complete_callback)(int) = nullptr;
@@ -345,7 +345,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     void (*rssi_callbak)(esp_bt_gap_cb_param_t::read_rssi_delta_param &rssi) = nullptr;
     int reconnect_delay = 1000;
 
-#ifdef ESP_IDF_4
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
     esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap;
     char remote_name[ESP_BT_GAP_MAX_BDNAME_LEN + 1];
 #endif
@@ -401,7 +401,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     virtual void handle_avrc_connection_state(bool connected);
 
 
-#ifdef ESP_IDF_4
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
     virtual void volume_set_by_local_host(uint8_t volume);
     virtual void volume_set_by_controller(uint8_t volume);
     virtual void av_notify_evt_handler(uint8_t event_id, esp_avrc_rn_param_t* event_parameter);

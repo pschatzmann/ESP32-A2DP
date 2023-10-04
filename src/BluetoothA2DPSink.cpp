@@ -262,7 +262,10 @@ void BluetoothA2DPSink::init_i2s() {
     }
 }
 
+#if ESP_IDF_VERSION < ESP_IDF_VERSION_VAL(5, 1, 1)
+
 esp_err_t BluetoothA2DPSink::i2s_mclk_pin_select(const uint8_t pin) {
+
     if(pin != 0 && pin != 1 && pin != 3) {
         ESP_LOGE(BT_APP_TAG, "Only support GPIO0/GPIO1/GPIO3, gpio_num:%d", pin);
         return ESP_ERR_INVALID_ARG;
@@ -285,6 +288,8 @@ esp_err_t BluetoothA2DPSink::i2s_mclk_pin_select(const uint8_t pin) {
     }
     return ESP_OK;
 }
+#endif
+
 #endif
 
 bool BluetoothA2DPSink::is_connected() {

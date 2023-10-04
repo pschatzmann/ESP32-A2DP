@@ -114,7 +114,9 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     /// Defines the bits per sample for output (if > 16 output will be expanded)
     virtual void set_bits_per_sample(int bps) { i2s_config.bits_per_sample = (i2s_bits_per_sample_t) bps; }
 
+#if ESP_IDF_VERSION < ESP_IDF_VERSION_VAL(5, 1, 1)
     virtual esp_err_t i2s_mclk_pin_select(const uint8_t pin);
+#endif
 
 #endif
 

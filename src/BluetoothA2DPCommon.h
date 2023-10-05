@@ -76,7 +76,7 @@ extern "C" unsigned long millis();
 #endif
 
 #if !defined(ESP_IDF_VERSION)
-#ERROR Unsupported ESP32 Version: Upgrade the ESP32 version in the Board Manager
+#  error Unsupported ESP32 Version: Upgrade the ESP32 version in the Board Manager
 #endif
 
 // Support for old and new IDF version

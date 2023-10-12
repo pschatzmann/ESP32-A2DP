@@ -20,15 +20,8 @@
 
 BluetoothA2DPSink a2dp_sink;
 
-int seconds = 2;
-uint32_t end = 0;
-
 // Then somewhere in your sketch:
 void read_data_stream(const uint8_t *data, uint32_t length) {
-  if (end==0){
-    end = millis()+seconds*1000;
-  }
-  if (millis()<end){
     // process all data
     int16_t *values = (int16_t*) data;
     for (int j=0; j<length/2; j+=2){
@@ -37,7 +30,6 @@ void read_data_stream(const uint8_t *data, uint32_t length) {
       Serial.print(",");
       Serial.println(values[j+1]);
     }
-  }
 }
 
 

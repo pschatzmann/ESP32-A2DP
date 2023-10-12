@@ -59,7 +59,7 @@ extern "C" void ccall_bt_app_rc_ct_cb(esp_avrc_ct_cb_event_t event,
     self_BluetoothA2DPSource->bt_app_rc_ct_cb(event, param);
 }
 
-extern "C" void ccall_a2d_app_heart_beat(void *arg) {
+extern "C" void ccall_a2d_app_heart_beat(TIMER_ARG_TYPE arg) {
   if (self_BluetoothA2DPSource)
     self_BluetoothA2DPSource->a2d_app_heart_beat(arg);
 }

@@ -21,6 +21,12 @@
 #include <vector> 
 #include "BluetoothA2DPCommon.h"
 
+#if (ESP_IDF_VERSION < ESP_IDF_VERSION_VAL(5, 0, 0))
+# define TIMER_ARG_TYPE void*
+#else
+# define TIMER_ARG_TYPE tmrTimerControl*
+#endif
+
 typedef void (* bt_app_cb_t) (uint16_t event, void *param);
 typedef  int32_t (* music_data_cb_t) (uint8_t *data, int32_t len);
 typedef  int32_t (* music_data_channels_cb_t) (Frame *data, int32_t len);
@@ -30,7 +36,7 @@ extern "C" void ccall_bt_av_hdl_stack_evt(uint16_t event, void *p_param);
 extern "C" void ccall_bt_app_task_handler(void *arg);
 extern "C" void ccall_bt_app_gap_callback(esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *param);
 extern "C" void ccall_bt_app_rc_ct_cb(esp_avrc_ct_cb_event_t event, esp_avrc_ct_cb_param_t *param);
-extern "C" void ccall_a2d_app_heart_beat(void *arg) ;
+extern "C" void ccall_a2d_app_heart_beat(TIMER_ARG_TYPE arg) ;
 extern "C" void ccall_bt_app_a2d_cb(esp_a2d_cb_event_t event, esp_a2d_cb_param_t *param);
 extern "C" void ccall_bt_app_av_sm_hdlr(uint16_t event, void *param);
 extern "C" void ccall_bt_av_hdl_avrc_ct_evt(uint16_t event, void *param) ;
@@ -72,7 +78,7 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
   friend void ccall_bt_app_task_handler(void *arg);
   friend void ccall_bt_app_gap_callback(esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *param);
   friend void ccall_bt_app_rc_ct_cb(esp_avrc_ct_cb_event_t event, esp_avrc_ct_cb_param_t *param);
-  friend void ccall_a2d_app_heart_beat(void *arg) ;
+  friend void ccall_a2d_app_heart_beat(TIMER_ARG_TYPE arg) ;
   friend void ccall_bt_app_a2d_cb(esp_a2d_cb_event_t event, esp_a2d_cb_param_t *param);
   friend void ccall_bt_app_av_sm_hdlr(uint16_t event, void *param);
   friend void ccall_bt_av_hdl_avrc_ct_evt(uint16_t event, void *param) ;

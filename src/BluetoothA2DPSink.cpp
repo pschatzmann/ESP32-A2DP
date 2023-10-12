@@ -345,12 +345,14 @@ int BluetoothA2DPSink::init_bluetooth()
         return false;
     }
 
+#if A2DP_SPP_SUPPORT
     if (spp_active){
         if ((esp_spp_init(esp_spp_mode)) != ESP_OK) {
             ESP_LOGE(BT_AV_TAG,"esp_spp_init failed");
             return false;
         }
     }
+#endif
 
     return true;
 }

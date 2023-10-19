@@ -1374,6 +1374,10 @@ size_t BluetoothA2DPSink::i2s_write_data(const uint8_t* data, size_t item_size){
             ESP_LOGE(BT_AV_TAG, "invalid bits_per_sample: %d", i2s_config.bits_per_sample);    
         }
     }
+
+    // give envent processing some chance ?
+    delay(1);
+    
     return item_size;
 }
 #endif
@@ -1496,9 +1500,5 @@ void BluetoothA2DPSink::av_hdl_avrc_tg_evt(uint16_t event, void *p_param)
         break;
     }
 }
-
-
-
-
 
 #endif

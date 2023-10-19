@@ -440,7 +440,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
 };
 
 
-
 #ifdef __cplusplus
 }
 #endif

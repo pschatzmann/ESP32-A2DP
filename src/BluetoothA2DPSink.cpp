@@ -229,7 +229,9 @@ void BluetoothA2DPSink::start(const char* name)
 
     }
 
+    ESP_LOGI(BT_AV_TAG,"IDF Version %d.%d",ESP_IDF_VERSION_MAJOR,ESP_IDF_VERSION_MINOR);
     log_free_heap();
+
 }
 
 #if A2DP_I2S_SUPPORT
@@ -1119,21 +1121,7 @@ void BluetoothA2DPSink::app_a2d_callback(esp_a2d_cb_event_t event, esp_a2d_cb_pa
 
 void BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) {
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
-
-    // make data available via callback, before volume control
-    if (raw_stream_reader!=nullptr){
-        ESP_LOGD(BT_AV_TAG, "raw_stream_reader");
-        (*raw_stream_reader)(data, len);
-    }
-
-    // adjust the volume
-    volume_control()->update_audio_data((Frame*)data, len/4);
-
-    // make data available via callback
-    if (stream_reader!=nullptr){
-        ESP_LOGD(BT_AV_TAG, "stream_reader");
-        (*stream_reader)(data, len);
-    }
+    bool is_callback_used = false; 
 
     // swap left and right channels
     if (swap_left_right){
@@ -1145,11 +1133,31 @@ void BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) {
         }
     }
 
+    // make data available via callback, before volume control
+    if (raw_stream_reader!=nullptr){
+        ESP_LOGD(BT_AV_TAG, "raw_stream_reader");
+        (*raw_stream_reader)(data, len);
+        is_callback_used = true;
+    }
+
+    // adjust the volume
+    volume_control()->update_audio_data((Frame*)data, len/4);
+
+    // make data available via callback
+    if (stream_reader!=nullptr){
+        ESP_LOGD(BT_AV_TAG, "stream_reader");
+        (*stream_reader)(data, len);
+        is_callback_used = true;
+    }
+
+
 #if A2DP_I2S_SUPPORT
     if (is_i2s_output) {
         // put data into ringbuffer
         write_audio(data, len);
     }
+#else
+    ESP_LOGW(BT_AV_TAG, "i2s not supported!");
 #endif
 
     // data_received callback
@@ -1374,6 +1382,10 @@ size_t BluetoothA2DPSink::i2s_write_data(const uint8_t* data, size_t item_size){
             ESP_LOGE(BT_AV_TAG, "invalid bits_per_sample: %d", i2s_config.bits_per_sample);    
         }
     }
+
+    // give envent processing some chance ?
+    delay(1);
+    
     return item_size;
 }
 #endif
@@ -1496,9 +1508,5 @@ void BluetoothA2DPSink::av_hdl_avrc_tg_evt(uint16_t event, void *p_param)
         break;
     }
 }
-
-
-
-
 
 #endif

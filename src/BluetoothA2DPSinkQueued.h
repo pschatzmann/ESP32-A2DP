@@ -34,16 +34,16 @@ class BluetoothA2DPSinkQueued : public BluetoothA2DPSink {
             i2s_ringbuffer_size = size;
         }
 
-        /// Defines the priority of the I2S task
-        void set_i2s_task_priority(UBaseType_t prio){
-            i2s_task_priority = prio;
-        }
-
         /// Audio starts to play when limit exeeded
-        void set_ringbuffer_prefetch_percent(int percent){
+        void set_i2s_ringbuffer_prefetch_percent(int percent){
             if (percent<0) return;
             if (percent>100) return;
             ringbuffer_prefetch_percent = percent; 
+        }
+
+        /// Defines the priority of the I2S task
+        void set_i2s_task_priority(UBaseType_t prio){
+            i2s_task_priority = prio;
         }
 
         void set_i2s_write_size_upto(size_t size){

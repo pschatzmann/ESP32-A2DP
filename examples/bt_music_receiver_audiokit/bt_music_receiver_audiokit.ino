@@ -30,7 +30,7 @@ void setup() {
   auto cfg = kit.defaultConfig(AudioOutput);
   cfg.i2s_active = false;
   kit.begin(cfg);
-  kit.setVolume(1.0);
+  kit.setVolume(100);
 
   Serial.println("Starting A2DP...");
   // define custom pins pins

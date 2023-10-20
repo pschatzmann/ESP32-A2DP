@@ -303,7 +303,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     i2s_pin_config_t pin_config;    
     i2s_channel_t i2s_channels = I2S_CHANNEL_STEREO;
     i2s_port_t i2s_port = I2S_NUM_0; 
-    bool is_i2s_active = false;
+    volatile bool is_i2s_active = false;
 #endif
     uint16_t m_sample_rate = 0; 
     uint32_t m_pkt_cnt = 0;
@@ -437,6 +437,8 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     void set_scan_mode_connectable_default() override {
         set_scan_mode_connectable(true);
     }
+
+    virtual void set_i2s_active(bool active);
 
 };
 

@@ -420,7 +420,7 @@ void BluetoothA2DPSink::app_task_handler(void *arg)
             ESP_LOGD(BT_APP_TAG, "%s, sig 0x%x, 0x%x", __func__, msg.sig, msg.event);
             switch (msg.sig) {
             case APP_SIG_WORK_DISPATCH:
-                ESP_LOGI(BT_APP_TAG, "%s, APP_SIG_WORK_DISPATCH sig: %d", __func__, msg.sig);
+                ESP_LOGD(BT_APP_TAG, "%s, APP_SIG_WORK_DISPATCH sig: %d", __func__, msg.sig);
                 app_work_dispatched(&msg);
                 break;
             default:
@@ -719,9 +719,21 @@ void BluetoothA2DPSink::handle_audio_state(uint16_t event, void *p_param){
         audio_state_callback(a2d->audio_stat.state, audio_state_obj);
     }
 
+    if (ESP_A2D_AUDIO_STATE_STARTED == a2d->audio_stat.state) { 
+        set_i2s_active(true);
+    } else if ( ESP_A2D_AUDIO_STATE_REMOTE_SUSPEND == a2d->audio_stat.state || ESP_A2D_AUDIO_STATE_STOPPED == a2d->audio_stat.state ) { 
+        set_i2s_active(false);
+    }
+
+    if (audio_state_callback_post!=nullptr){
+        audio_state_callback_post(a2d->audio_stat.state, audio_state_obj_post);
+    }    
+}
+
+void BluetoothA2DPSink::set_i2s_active(bool active){
 #if A2DP_I2S_SUPPORT
     if (is_i2s_output){
-        if (ESP_A2D_AUDIO_STATE_STARTED == a2d->audio_stat.state) { 
+        if (active) { 
             m_pkt_cnt = 0; 
             ESP_LOGI(BT_AV_TAG,"i2s_start");
             if (i2s_start(i2s_port)==ESP_OK){
@@ -730,7 +742,7 @@ void BluetoothA2DPSink::handle_audio_state(uint16_t event, void *p_param){
                 ESP_LOGE(BT_AV_TAG, "i2s_start");
             }
 
-        } else if ( ESP_A2D_AUDIO_STATE_REMOTE_SUSPEND == a2d->audio_stat.state || ESP_A2D_AUDIO_STATE_STOPPED == a2d->audio_stat.state ) { 
+        } else { 
             ESP_LOGW(BT_AV_TAG,"i2s_stop");
             i2s_stop(i2s_port);
             is_i2s_active = false;
@@ -738,11 +750,9 @@ void BluetoothA2DPSink::handle_audio_state(uint16_t event, void *p_param){
         }
 
     }
+#else
+    ESP_LOGW(BT_AV_TAG,"i2s not supported");
 #endif
-
-    if (audio_state_callback_post!=nullptr){
-        audio_state_callback_post(a2d->audio_stat.state, audio_state_obj_post);
-    }    
 }
 
 

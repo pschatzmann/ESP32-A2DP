@@ -3,12 +3,10 @@
 
 #if A2DP_I2S_SUPPORT
 
-// task handler for i2s output task
 void ccall_i2s_task_handler(void *arg) {
   ESP_LOGD(BT_AV_TAG, "%s", __func__);
   if (actual_bluetooth_a2dp_sink)
-    actual_bluetooth_a2dp_sink->i2s_task_handler(arg);
-  yield();
+    static_cast<BluetoothA2DPSinkQueued*>(actual_bluetooth_a2dp_sink)->i2s_task_handler(arg);
 }
 
 
@@ -98,7 +96,7 @@ void BluetoothA2DPSinkQueued::i2s_task_handler(void *arg) {
 
 size_t BluetoothA2DPSinkQueued::write_audio(const uint8_t *data, size_t size)
 {
-    ESP_LOGD(BT_AV_TAG, "(%s - %d) write_audio: %d", pcTaskGetName(xTaskGetCurrentTaskHandle(), uxTaskPriorityGet(NULL), len); 
+    ESP_LOGD(BT_AV_TAG, "write_audio: %d", size); 
     size_t item_size = 0;
     BaseType_t done = pdFALSE;
 
@@ -119,7 +117,7 @@ size_t BluetoothA2DPSinkQueued::write_audio(const uint8_t *data, size_t size)
         return 0;
     }
 
-    done = xRingbufferSend(s_ringbuf_i2s, (void *)data, size, (TickType_t)0);
+    done = xRingbufferSend(s_ringbuf_i2s, (void *)data, size, (TickType_t)pdMS_TO_TICKS(i2s_ticks));
 
     if (!done) {
         ESP_LOGW(BT_APP_TAG, "ringbuffer overflowed, ready to decrease data! mode changed: RINGBUFFER_MODE_DROPPING");
@@ -136,7 +134,7 @@ size_t BluetoothA2DPSinkQueued::write_audio(const uint8_t *data, size_t size)
             }
         }
     }
-    yield();
+    //yield();
 
     return done ? size : 0;
 }

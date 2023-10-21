@@ -59,6 +59,7 @@ class BluetoothA2DPSinkQueued : public BluetoothA2DPSink {
             i2s_ticks = ticks;
         }
 
+        virtual void i2s_task_handler(void *arg) override ;
 
     protected:
         xTaskHandle s_bt_i2s_task_handle = nullptr;  /* handle of I2S task */
@@ -77,7 +78,6 @@ class BluetoothA2DPSinkQueued : public BluetoothA2DPSink {
 
         void bt_i2s_task_start_up(void) override;
         void bt_i2s_task_shut_down(void) override;
-        void i2s_task_handler(void *arg) override;
         size_t write_audio(const uint8_t *data, size_t size) override;
 
         void set_i2s_active(bool active) override {
@@ -94,5 +94,7 @@ class BluetoothA2DPSinkQueued : public BluetoothA2DPSink {
         }
 
 };
+
+
 
 #endif

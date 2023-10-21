@@ -47,6 +47,10 @@ extern "C" void ccall_app_rc_tg_callback(esp_avrc_tg_cb_event_t event, esp_avrc_
 extern "C" void ccall_av_hdl_avrc_tg_evt(uint16_t event, void *p_param);
 #endif    
 
+// to support static callback functions
+class BluetoothA2DPSink;
+extern BluetoothA2DPSink* actual_bluetooth_a2dp_sink;
+
 // defines the mechanism to confirm a pin request
 enum PinCodeRequest {Undefined, Confirm, Reply};
 

@@ -16,7 +16,7 @@
 #include "BluetoothA2DPSink.h"
 
 // to support static callback functions
-BluetoothA2DPSink* actual_bluetooth_a2dp_sink;
+BluetoothA2DPSink* actual_bluetooth_a2dp_sink = nullptr;
 
 /**
  * Constructor
@@ -74,8 +74,6 @@ BluetoothA2DPSink::~BluetoothA2DPSink() {
         end();
     }
 }
-
-
 
 void BluetoothA2DPSink::end(bool release_memory) {
     // reconnect should not work after end
@@ -1297,7 +1295,6 @@ void BluetoothA2DPSink::confirm_pin_code(int code)
  */
 
 
-
 void ccall_app_task_handler(void *arg) {
   ESP_LOGD(BT_AV_TAG, "%s", __func__);
   if (actual_bluetooth_a2dp_sink)
@@ -1306,7 +1303,7 @@ void ccall_app_task_handler(void *arg) {
 }
 
 void ccall_audio_data_callback(const uint8_t *data, uint32_t len) {
-    ESP_LOGD(BT_AV_TAG, "(%s - %d) ccall_audio_data_callback: %d", pcTaskGetName(xTaskGetCurrentTaskHandle(), uxTaskPriorityGet(NULL), len); 
+    ESP_LOGD(BT_AV_TAG, "ccall_audio_data_callback: %d", len); 
     if (actual_bluetooth_a2dp_sink && len > 0)
         actual_bluetooth_a2dp_sink->audio_data_callback(data,len);
     yield();
@@ -1360,7 +1357,7 @@ void ccall_av_hdl_a2d_evt(uint16_t event, void *param){
 #if A2DP_I2S_SUPPORT
 
 size_t BluetoothA2DPSink::i2s_write_data(const uint8_t* data, size_t item_size){
-    ESP_LOGD(BT_AV_TAG, "(%s - %d) i2s_write_data: %d", pcTaskGetName(xTaskGetCurrentTaskHandle(), uxTaskPriorityGet(NULL), len); 
+    ESP_LOGD(BT_AV_TAG, "i2s_write_data: %d", item_size); 
     size_t i2s_bytes_written = 0;
     if (!is_i2s_active){
         ESP_LOGE(BT_AV_TAG, "%s failed - inactive", __func__);

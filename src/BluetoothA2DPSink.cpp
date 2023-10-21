@@ -1393,9 +1393,25 @@ void ccall_av_hdl_a2d_evt(uint16_t event, void *param){
 
 #if A2DP_I2S_SUPPORT
 
+/// output audio data e.g. to i2s or to queue
+size_t BluetoothA2DPSink::write_audio(const uint8_t *data, size_t size){
+#if A2DP_DEBUG_AUDIO
+    ESP_LOGD(BT_TAG, "write_audio: %d", item_size); 
+#endif
+    int result = 0;
+    int open = size;
+    while(open>0){
+        int to_write = min(open, 1024)
+        int written = i2s_write_data(data, to_write);
+        result += writte;
+        open -= written;
+    }
+    return result;
+}
+
 size_t BluetoothA2DPSink::i2s_write_data(const uint8_t* data, size_t item_size){
 #if A2DP_DEBUG_AUDIO
-    ESP_LOGD(BT_TAG, "i2s_write_data: %d", item_size); 
+    ESP_LOGD(BTe_TAG, "i2s_write_data: %d", item_size); 
 #endif
     size_t i2s_bytes_written = 0;
     if (!is_i2s_active){

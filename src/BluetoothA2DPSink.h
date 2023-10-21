@@ -411,13 +411,10 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     virtual void init_i2s();
 
     /// output audio data e.g. to i2s or to queue
-    virtual size_t write_audio(const uint8_t *data, size_t size){
-        return i2s_write_data(data, size);
-    }
+    virtual size_t write_audio(const uint8_t *data, size_t size);
 
     /// writes the data to i2s
     size_t i2s_write_data(const uint8_t* data, size_t item_size);
-
 
     /// dummy functions needed for BluetoothA2DPSinkQueued
     virtual void i2s_task_handler(void *arg) {}

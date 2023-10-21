@@ -87,7 +87,9 @@ void BluetoothA2DPSinkQueued::i2s_task_handler(void *arg) {
         // if i2s is not active we just consume the buffer w/o output
         if (is_i2s_active){
             size_t written = i2s_write_data(data, item_size);
+#if A2DP_DEBUG_AUDIO
             ESP_LOGD(BT_TAG, "i2s_task_handler: %d->%d", item_size, written);
+#endif
             if (written==0){
                 ESP_LOGE(BT_TAG, "i2s_write_data failed %d->%d", item_size, written);
                 continue;
@@ -101,7 +103,9 @@ void BluetoothA2DPSinkQueued::i2s_task_handler(void *arg) {
 
 size_t BluetoothA2DPSinkQueued::write_audio(const uint8_t *data, size_t size)
 {
+#if A2DP_DEBUG_AUDIO
     ESP_LOGD(BT_TAG, "write_audio: %d", size); 
+#endif
     size_t item_size = 0;
     BaseType_t done = pdFALSE;
 

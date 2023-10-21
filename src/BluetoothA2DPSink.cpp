@@ -1155,7 +1155,9 @@ void BluetoothA2DPSink::app_a2d_callback(esp_a2d_cb_event_t event, esp_a2d_cb_pa
 }
 
 void BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) {
+#if A2DP_DEBUG_AUDIO
     ESP_LOGD(BT_TAG, "audio_data_callback: %d", len);
+#endif
     bool is_callback_used = false; 
 
     // swap left and right channels
@@ -1329,14 +1331,14 @@ void ccall_app_task_handler(void *arg) {
 }
 
 void ccall_audio_data_callback(const uint8_t *data, uint32_t len) {
+#if A2DP_DEBUG_AUDIO
     ESP_LOGD(BT_TAG, "ccall_audio_data_callback: %d", len); 
-
+#endif
     static bool first = true;
     if (first){
         ESP_LOGI(BT_TAG, "ESP32 A2DP task name: %s has priority: %d", pcTaskGetName(xTaskGetCurrentTaskHandle()), uxTaskPriorityGet(nullptr));
         first = false; 
     }
-
 
     if (actual_bluetooth_a2dp_sink && len > 0)
         actual_bluetooth_a2dp_sink->audio_data_callback(data,len);
@@ -1392,7 +1394,9 @@ void ccall_av_hdl_a2d_evt(uint16_t event, void *param){
 #if A2DP_I2S_SUPPORT
 
 size_t BluetoothA2DPSink::i2s_write_data(const uint8_t* data, size_t item_size){
+#if A2DP_DEBUG_AUDIO
     ESP_LOGD(BT_TAG, "i2s_write_data: %d", item_size); 
+#endif
     size_t i2s_bytes_written = 0;
     if (!is_i2s_active){
         ESP_LOGE(BT_TAG, "%s failed - inactive", __func__);

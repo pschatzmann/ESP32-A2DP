@@ -12,3 +12,8 @@
 #ifndef A2DP_SPP_SUPPORT
 #  define A2DP_SPP_SUPPORT (ESP_IDF_VERSION < ESP_IDF_VERSION_VAL(5, 0, 0))
 #endif
+
+// log all writes of audio data: 
+#ifndef A2DP_DEBUG_AUDIO
+#  define A2DP_DEBUG_AUDIO true
+#endif

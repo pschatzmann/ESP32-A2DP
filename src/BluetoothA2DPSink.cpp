@@ -1165,7 +1165,6 @@ void BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) {
     if (is_i2s_output) {
         // put data into ringbuffer
         write_audio(data, len);
-        yield();
     }
 #else
     ESP_LOGW(BT_AV_TAG, "i2s not supported!");
@@ -1176,6 +1175,9 @@ void BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) {
         ESP_LOGD(BT_AV_TAG, "data_received");
            (*data_received)();
     }
+    
+    yield();
+
 }
 
 void BluetoothA2DPSink::init_nvs(){
@@ -1358,6 +1360,7 @@ void ccall_av_hdl_a2d_evt(uint16_t event, void *param){
 #if A2DP_I2S_SUPPORT
 
 size_t BluetoothA2DPSink::i2s_write_data(const uint8_t* data, size_t item_size){
+    ESP_LOGD(BT_AV_TAG, "(%s - %d) i2s_write_data: %d", pcTaskGetName(xTaskGetCurrentTaskHandle(), uxTaskPriorityGet(NULL), len); 
     size_t i2s_bytes_written = 0;
     if (!is_i2s_active){
         ESP_LOGE(BT_AV_TAG, "%s failed - inactive", __func__);

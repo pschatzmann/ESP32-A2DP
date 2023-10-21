@@ -98,6 +98,7 @@ void BluetoothA2DPSinkQueued::i2s_task_handler(void *arg) {
 
 size_t BluetoothA2DPSinkQueued::write_audio(const uint8_t *data, size_t size)
 {
+    ESP_LOGD(BT_AV_TAG, "(%s - %d) write_audio: %d", pcTaskGetName(xTaskGetCurrentTaskHandle(), uxTaskPriorityGet(NULL), len); 
     size_t item_size = 0;
     BaseType_t done = pdFALSE;
 

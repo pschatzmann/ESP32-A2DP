@@ -346,7 +346,8 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     int reconnect_delay = 1000;
 
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
-    esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap;
+    esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap = {0};
+    esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap_set = {0};
     char remote_name[ESP_BT_GAP_MAX_BDNAME_LEN + 1];
 #endif
 
@@ -360,6 +361,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     virtual void app_alloc_meta_buffer(esp_avrc_ct_cb_param_t *param);
     virtual void av_new_track();
     virtual void av_playback_changed();
+    virtual void av_play_pos_changed();
     virtual void init_nvs();
     // execute AVRC command
     virtual void execute_avrc_command(int cmd);

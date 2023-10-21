@@ -876,7 +876,6 @@ void BluetoothA2DPSink::handle_connection_state(uint16_t event, void *p_param){
                 if (rssi_active){
                     esp_bt_gap_read_rssi_delta(a2d->conn_stat.remote_bda);
                 }
-
             }
             break;
 
@@ -913,6 +912,16 @@ void BluetoothA2DPSink::av_playback_changed()
 #endif
 }
 
+void BluetoothA2DPSink::av_play_pos_changed(void) {
+    ESP_LOGD(BT_AV_TAG, "%s", __func__);
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
+    if (esp_avrc_rn_evt_bit_mask_operation(ESP_AVRC_BIT_MASK_OP_TEST, &s_avrc_peer_rn_cap,
+                                           ESP_AVRC_RN_PLAY_POS_CHANGED)) {
+        esp_avrc_ct_send_register_notification_cmd(APP_RC_CT_TL_RN_PLAY_POS_CHANGE, ESP_AVRC_RN_PLAY_POS_CHANGED, 10);
+    }
+#endif
+}
+
 
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
 void BluetoothA2DPSink::av_notify_evt_handler(uint8_t event_id, esp_avrc_rn_param_t* event_parameter)
@@ -936,6 +945,13 @@ void BluetoothA2DPSink::av_notify_evt_handler(uint8_t event_id, uint32_t event_p
         }
 #endif
         break;
+
+    case ESP_AVRC_RN_PLAY_POS_CHANGED: 
+        ESP_LOGI(BT_AV_TAG, "Play position changed: %d-ms", event_parameter->play_pos);
+        av_play_pos_changed();
+        break;
+   
+
     default:
         ESP_LOGE(BT_AV_TAG, "%s unhandled evt %d", __func__, event_id);
         break;
@@ -1005,7 +1021,7 @@ void BluetoothA2DPSink::av_hdl_avrc_evt(uint16_t event, void *p_param)
         s_avrc_peer_rn_cap.bits = rc->get_rn_caps_rsp.evt_set.bits;
         av_new_track();
         av_playback_changed();
-        //av_play_pos_changed();
+        av_play_pos_changed();
 
         // now we ready to callback
         handle_avrc_connection_state(avrc_connection_state);
@@ -1051,9 +1067,9 @@ void BluetoothA2DPSink::av_hdl_stack_evt(uint16_t event, void *p_param)
             /* initialize AVRCP target */
             if (esp_avrc_tg_init() == ESP_OK){
                 esp_avrc_tg_register_callback(ccall_app_rc_tg_callback);
-                esp_avrc_rn_evt_cap_mask_t evt_set = {0};
-                esp_avrc_rn_evt_bit_mask_operation(ESP_AVRC_BIT_MASK_OP_SET, &evt_set, ESP_AVRC_RN_VOLUME_CHANGE);
-                if(esp_avrc_tg_set_rn_evt_cap(&evt_set) != ESP_OK){
+                // add request to ESP_AVRC_RN_VOLUME_CHANGE
+                esp_avrc_rn_evt_bit_mask_operation(ESP_AVRC_BIT_MASK_OP_SET, &s_avrc_peer_rn_cap_set, ESP_AVRC_RN_VOLUME_CHANGE);
+                if(esp_avrc_tg_set_rn_evt_cap(&s_avrc_peer_rn_cap_set) != ESP_OK){
                     ESP_LOGE(BT_AV_TAG,"esp_avrc_tg_set_rn_evt_cap failed");
                 }
             } else {
@@ -1124,7 +1140,7 @@ void BluetoothA2DPSink::app_a2d_callback(esp_a2d_cb_event_t event, esp_a2d_cb_pa
 #endif    
     
     default:
-        ESP_LOGE(BT_AV_TAG, "Invalid A2DP event: %d", event);
+        ESP_LOGW(BT_AV_TAG, "Unhandled A2DP event: %d", event);
         break;
     }
 }
@@ -1167,7 +1183,11 @@ void BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) {
         write_audio(data, len);
     }
 #else
-    ESP_LOGW(BT_AV_TAG, "i2s not supported!");
+    static bool error_first = true;
+    if (error_first){
+        ESP_LOGW(BT_AV_TAG, "I2S API not supported!");
+        error_first = false;
+    }
 #endif
 
     // data_received callback

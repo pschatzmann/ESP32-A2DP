@@ -279,7 +279,7 @@ class BluetoothA2DPCommon {
         const char *m_avrc_playback_state_str[5] = {"stopped", "playing", "paused", "forward seek", "reverse seek"};
         esp_a2d_audio_state_t audio_state = ESP_A2D_AUDIO_STATE_STOPPED;
         esp_a2d_connection_state_t connection_state = ESP_A2D_CONNECTION_STATE_DISCONNECTED;
-        UBaseType_t task_priority = uxTaskPriorityGet(NULL);
+        UBaseType_t task_priority = 0;  // 0 = trigger automatic determination from BTC_TASK
         // volume 
         uint8_t volume_value = 0;
         bool is_volume_used = false;

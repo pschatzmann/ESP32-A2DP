@@ -228,6 +228,7 @@ void BluetoothA2DPSink::start(const char* name)
     }
 
     ESP_LOGI(BT_AV_TAG,"IDF Version %d.%d",ESP_IDF_VERSION_MAJOR,ESP_IDF_VERSION_MINOR);
+    ESP_LOGI(BT_AV_TAG,"Task Priority %d",task_priority);
     log_free_heap();
 
 }
@@ -343,6 +344,16 @@ int BluetoothA2DPSink::init_bluetooth()
     if (esp_bt_gap_register_callback(ccall_app_gap_callback) != ESP_OK) {
         ESP_LOGE(BT_AV_TAG,"gap register failed");
         return false;
+    }
+
+    if (task_priority == 0){
+        TaskHandle_t a2dp_task = xTaskGetHandle("BTC_TASK");
+        if (a2dp_task != nullptr){
+            task_priority = uxTaskPriorityGet(a2dp_task);
+            ESP_LOGI(BT_AV_TAG,"Setting default task priority from BTC_TASK: %d",task_priority);
+        } else {
+            task_priority = 19;
+        }
     }
 
 #if A2DP_SPP_SUPPORT
@@ -556,14 +567,18 @@ void BluetoothA2DPSink::app_gap_callback(esp_bt_gap_cb_event_t event, esp_bt_gap
             break;
 
         case ESP_BT_GAP_MODE_CHG_EVT: {
-                ESP_LOGI(BT_AV_TAG, "ESP_BT_GAP_MODE_CHG_EVT");
-                log_free_heap();
+                ESP_LOGD(BT_AV_TAG, "ESP_BT_GAP_MODE_CHG_EVT");
+           }
+           break;    
+
+        case ESP_BT_GAP_CONFIG_EIR_DATA_EVT: {
+                ESP_LOGD(BT_AV_TAG, "ESP_BT_GAP_CONFIG_EIR_DATA_EVT");
            }
            break;    
 #endif
 
         default: {
-            ESP_LOGI(BT_AV_TAG, "event: %d", event);
+            ESP_LOGW(BT_AV_TAG, "Unhandled event: %d", event);
             break;
         }
     }
@@ -640,9 +655,9 @@ void  BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param)
         case ESP_A2D_PROF_STATE_EVT: {
             a2d = (esp_a2d_cb_param_t *)(p_param);
             if (ESP_A2D_INIT_SUCCESS == a2d->a2d_prof_stat.init_state) {
-                ESP_LOGI(BT_AV_TAG,"A2DP PROF STATE: Init Compl\n");
+                ESP_LOGI(BT_AV_TAG,"A2DP PROF STATE: Init Completed");
             } else {
-                ESP_LOGI(BT_AV_TAG,"A2DP PROF STATE: Deinit Compl\n");
+                ESP_LOGI(BT_AV_TAG,"A2DP PROF STATE: Deinit Completed");
             }
         } break;
 
@@ -1299,11 +1314,18 @@ void ccall_app_task_handler(void *arg) {
   ESP_LOGD(BT_AV_TAG, "%s", __func__);
   if (actual_bluetooth_a2dp_sink)
     actual_bluetooth_a2dp_sink->app_task_handler(arg);
-  yield();
 }
 
 void ccall_audio_data_callback(const uint8_t *data, uint32_t len) {
     ESP_LOGD(BT_AV_TAG, "ccall_audio_data_callback: %d", len); 
+
+    static bool first = true;
+    if (first){
+        ESP_LOGI(BT_AV_TAG, "ESP32 A2DP task name: %s has priority: %d", pcTaskGetName(xTaskGetCurrentTaskHandle()), uxTaskPriorityGet(nullptr));
+        first = false; 
+    }
+
+
     if (actual_bluetooth_a2dp_sink && len > 0)
         actual_bluetooth_a2dp_sink->audio_data_callback(data,len);
     yield();
@@ -1348,6 +1370,7 @@ void ccall_av_hdl_avrc_evt(uint16_t event, void *param){
 
 void ccall_av_hdl_a2d_evt(uint16_t event, void *param){
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
+    
     if (actual_bluetooth_a2dp_sink) {
         actual_bluetooth_a2dp_sink->av_hdl_a2d_evt(event, param);
     }

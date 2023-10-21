@@ -21,6 +21,11 @@ void BluetoothA2DPSinkQueued::bt_i2s_task_start_up(void) {
         ESP_LOGE(BT_APP_TAG, "%s, ringbuffer create failed", __func__);
         return;
     }
+    // if no specific priority has been defined
+    if (i2s_task_priority==0){
+        i2s_task_priority = task_priority;
+    }
+    ESP_LOGI(BT_AV_TAG, "BtI2STask priority: %d", i2s_task_priority);
     //xTaskCreate(bt_i2s_task_handler, "BtI2STask", 2048, NULL, configMAX_PRIORITIES - 3, &s_bt_i2s_task_handle);
     BaseType_t result = xTaskCreatePinnedToCore(ccall_i2s_task_handler, "BtI2STask", i2s_stack_size, NULL, i2s_task_priority, &s_bt_i2s_task_handle, task_core);
     if (result!=pdPASS){

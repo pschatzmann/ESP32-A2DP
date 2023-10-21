@@ -356,6 +356,15 @@ void delay(long millis) {
     vTaskDelay(xDelay);
 }
 
+/**
+ * @brief call taskYIELD
+ * 
+ */
+void yield(void) {
+    taskYIELD();
+}
+
+
 unsigned long millis() {
     return (unsigned long) (esp_timer_get_time() / 1000ULL);
 }

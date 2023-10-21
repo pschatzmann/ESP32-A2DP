@@ -39,7 +39,7 @@ BluetoothA2DPSink::BluetoothA2DPSink() {
             .communication_format = (i2s_comm_format_t) I2S_COMM_FORMAT_STAND_I2S,
             .intr_alloc_flags = 0, // default interrupt priority
             .dma_buf_count = 8,
-            .dma_buf_len = 64,
+            .dma_buf_len = 896,
             .use_apll = false,
             #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
 			.tx_desc_auto_clear = true, // avoiding noise in case of data unavailability

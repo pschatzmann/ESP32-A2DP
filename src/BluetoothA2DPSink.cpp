@@ -464,8 +464,11 @@ void BluetoothA2DPSink::app_task_handler(void *arg)
 void BluetoothA2DPSink::app_task_start_up(void)
 {
     ESP_LOGD(BT_TAG, "%s", __func__);
-    if (app_task_queue==NULL) 
+    if (app_task_queue==NULL) {
+        ESP_LOGI(BT_TAG, "event_queue_size: %d", event_queue_size);
         app_task_queue = xQueueCreate(event_queue_size, sizeof(bt_app_msg_t));
+
+    }
 
     if (app_task_handle==NULL) {
         if (xTaskCreatePinnedToCore(ccall_app_task_handler, "BtAppT", event_stack_size, NULL, task_priority, &app_task_handle, task_core) != pdPASS){

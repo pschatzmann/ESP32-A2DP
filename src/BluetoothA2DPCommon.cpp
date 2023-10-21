@@ -42,11 +42,11 @@ bool BluetoothA2DPCommon::reconnect() {
 }
 
 bool BluetoothA2DPCommon::connect_to(esp_bd_addr_t peer){
-    ESP_LOGW(BT_AV_TAG, "connect_to to %s", to_str(peer));
+    ESP_LOGW(BT_TAG, "connect_to to %s", to_str(peer));
     set_scan_mode_connectable_default();
     esp_err_t err = esp_a2d_connect(peer);
     if (err!=ESP_OK){
-        ESP_LOGE(BT_AV_TAG, "esp_a2d_source_connect:%d", err);
+        ESP_LOGE(BT_TAG, "esp_a2d_source_connect:%d", err);
     }
     return err==ESP_OK;
 }
@@ -64,14 +64,14 @@ void BluetoothA2DPCommon::set_connected(bool active){
 /// Closes the connection
 void BluetoothA2DPCommon::disconnect()
 {
-    ESP_LOGI(BT_AV_TAG, "disconect a2d: %s", to_str(last_connection));
+    ESP_LOGI(BT_TAG, "disconect a2d: %s", to_str(last_connection));
 
     // Prevent automatic reconnect
     is_autoreconnect_allowed = false;
 
     esp_err_t status = esp_a2d_sink_disconnect(last_connection);
     if (status == ESP_FAIL) {
-        ESP_LOGE(BT_AV_TAG, "Failed disconnecting to device!");
+        ESP_LOGE(BT_TAG, "Failed disconnecting to device!");
     }
 }
 
@@ -89,31 +89,31 @@ void BluetoothA2DPCommon::end(bool release_memory) {
     }
 
     // deinit AVRC
-    ESP_LOGI(BT_AV_TAG,"deinit avrc");
+    ESP_LOGI(BT_TAG,"deinit avrc");
     if (esp_avrc_ct_deinit() != ESP_OK){
-         ESP_LOGE(BT_AV_TAG,"Failed to deinit avrc");
+         ESP_LOGE(BT_TAG,"Failed to deinit avrc");
     }
     log_free_heap();
 
     if (release_memory) {
 
-        ESP_LOGI(BT_AV_TAG,"disable bluetooth");
+        ESP_LOGI(BT_TAG,"disable bluetooth");
         if (esp_bluedroid_disable() != ESP_OK){
-            ESP_LOGE(BT_AV_TAG,"Failed to disable bluetooth");
+            ESP_LOGE(BT_TAG,"Failed to disable bluetooth");
         }
         log_free_heap();
 
     
-        ESP_LOGI(BT_AV_TAG,"deinit bluetooth");
+        ESP_LOGI(BT_TAG,"deinit bluetooth");
         if (esp_bluedroid_deinit() != ESP_OK){
-            ESP_LOGE(BT_AV_TAG,"Failed to deinit bluetooth");
+            ESP_LOGE(BT_TAG,"Failed to deinit bluetooth");
         }
         log_free_heap();
 
 
-        ESP_LOGI(BT_AV_TAG,"esp_bt_controller_disable");
+        ESP_LOGI(BT_TAG,"esp_bt_controller_disable");
         if (esp_bt_controller_disable()!=ESP_OK){
-            ESP_LOGE(BT_AV_TAG,"esp_bt_controller_disable failed");
+            ESP_LOGE(BT_TAG,"esp_bt_controller_disable failed");
         }
         log_free_heap();
 
@@ -122,17 +122,17 @@ void BluetoothA2DPCommon::end(bool release_memory) {
             delay(50);
 
         if(esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_INITED){
-            ESP_LOGI(BT_AV_TAG,"esp_bt_controller_deinit");
+            ESP_LOGI(BT_TAG,"esp_bt_controller_deinit");
             if (esp_bt_controller_deinit()!= ESP_OK){
-                ESP_LOGE(BT_AV_TAG,"esp_bt_controller_deinit failed");
+                ESP_LOGE(BT_TAG,"esp_bt_controller_deinit failed");
             }
             log_free_heap();
         }
     
         // after a release memory - a restart will not be possible
-        ESP_LOGI(BT_AV_TAG,"esp_bt_controller_mem_release");
+        ESP_LOGI(BT_TAG,"esp_bt_controller_mem_release");
         if (esp_bt_controller_mem_release(ESP_BT_MODE_CLASSIC_BT)!= ESP_OK){
-            ESP_LOGE(BT_AV_TAG,"esp_bt_controller_mem_release failed");
+            ESP_LOGE(BT_TAG,"esp_bt_controller_mem_release failed");
         }
         log_free_heap();
         is_start_disabled = true;
@@ -149,13 +149,13 @@ bool BluetoothA2DPCommon::has_last_connection() {
 }
 
 void BluetoothA2DPCommon::get_last_connection(){
-    ESP_LOGD(BT_AV_TAG, "%s", __func__);
+    ESP_LOGD(BT_TAG, "%s", __func__);
     nvs_handle my_handle;
     esp_err_t err;
     
     err = nvs_open("connected_bda", NVS_READWRITE, &my_handle);
     if (err != ESP_OK) {
-         ESP_LOGE(BT_AV_TAG,"NVS OPEN ERROR");
+         ESP_LOGE(BT_TAG,"NVS OPEN ERROR");
     }
 
     esp_bd_addr_t bda;
@@ -163,25 +163,25 @@ void BluetoothA2DPCommon::get_last_connection(){
     err = nvs_get_blob(my_handle, last_bda_nvs_name(), bda, &size);
     if ( err != ESP_OK) { 
         if ( err == ESP_ERR_NVS_NOT_FOUND ) {
-            ESP_LOGI(BT_AV_TAG, "nvs_blob does not exist");
+            ESP_LOGI(BT_TAG, "nvs_blob does not exist");
         } else {
-            ESP_LOGE(BT_AV_TAG, "nvs_get_blob failed");
+            ESP_LOGE(BT_TAG, "nvs_get_blob failed");
         }
     }
     nvs_close(my_handle);
     if (err == ESP_OK) {
         memcpy(last_connection,bda,size);
     } 
-    ESP_LOGD(BT_AV_TAG, "=> %s", to_str(last_connection));
+    ESP_LOGD(BT_TAG, "=> %s", to_str(last_connection));
 
 }
 
 void BluetoothA2DPCommon::set_last_connection(esp_bd_addr_t bda){
-    ESP_LOGD(BT_AV_TAG, "set_last_connection: %s", to_str(bda));
+    ESP_LOGD(BT_TAG, "set_last_connection: %s", to_str(bda));
 
     //same value, nothing to store
     if ( memcmp(bda, last_connection, ESP_BD_ADDR_LEN) == 0 ) {
-        ESP_LOGD(BT_AV_TAG, "no change!");
+        ESP_LOGD(BT_TAG, "no change!");
         return; 
     }
     nvs_handle my_handle;
@@ -189,23 +189,23 @@ void BluetoothA2DPCommon::set_last_connection(esp_bd_addr_t bda){
     
     err = nvs_open("connected_bda", NVS_READWRITE, &my_handle);
     if (err != ESP_OK){
-         ESP_LOGE(BT_AV_TAG, "NVS OPEN ERROR");
+         ESP_LOGE(BT_TAG, "NVS OPEN ERROR");
     }
     err = nvs_set_blob(my_handle, last_bda_nvs_name(), bda, ESP_BD_ADDR_LEN);
     if (err == ESP_OK) {
         err = nvs_commit(my_handle);
     } else {
-        ESP_LOGE(BT_AV_TAG, "NVS WRITE ERROR");
+        ESP_LOGE(BT_TAG, "NVS WRITE ERROR");
     }
     if (err != ESP_OK) {
-        ESP_LOGE(BT_AV_TAG, "NVS COMMIT ERROR");
+        ESP_LOGE(BT_TAG, "NVS COMMIT ERROR");
     }
     nvs_close(my_handle);
     memcpy(last_connection, bda, ESP_BD_ADDR_LEN);
 }
 
 void BluetoothA2DPCommon::clean_last_connection() {
-    ESP_LOGD(BT_AV_TAG, "%s", __func__);
+    ESP_LOGD(BT_TAG, "%s", __func__);
     esp_bd_addr_t cleanBda = { 0 };
     set_last_connection(cleanBda);
 }
@@ -243,7 +243,7 @@ void BluetoothA2DPCommon::debounce(void(*cb)(void),int ms){
 
 /// Logs the free heap
 void BluetoothA2DPCommon::log_free_heap() {
-    ESP_LOGI(BT_AV_TAG, "Available Heap: %zu", esp_get_free_heap_size());
+    ESP_LOGI(BT_TAG, "Available Heap: %zu", esp_get_free_heap_size());
 }
 
 /// converts esp_a2d_connection_state_t to a string
@@ -286,28 +286,28 @@ void BluetoothA2DPCommon::set_discoverability(esp_bt_discovery_mode_t d) {
 
 /// Defines if the bluetooth is connectable
 void BluetoothA2DPCommon::set_scan_mode_connectable(bool connectable) {
-    ESP_LOGI(BT_AV_TAG,"set_scan_mode_connectable %s", connectable ? "true":"false" );            
+    ESP_LOGI(BT_TAG,"set_scan_mode_connectable %s", connectable ? "true":"false" );            
     if (connectable){
         if (esp_bt_gap_set_scan_mode(ESP_BT_CONNECTABLE, discoverability)!=ESP_OK) {
-            ESP_LOGE(BT_AV_TAG,"esp_bt_gap_set_scan_mode");            
+            ESP_LOGE(BT_TAG,"esp_bt_gap_set_scan_mode");            
         } 
     } else {
         if (esp_bt_gap_set_scan_mode(ESP_BT_NON_CONNECTABLE, ESP_BT_NON_DISCOVERABLE)) {
-            ESP_LOGE(BT_AV_TAG,"esp_bt_gap_set_scan_mode");            
+            ESP_LOGE(BT_TAG,"esp_bt_gap_set_scan_mode");            
         }    
     }
 }
 #else 
 
 void BluetoothA2DPCommon::set_scan_mode_connectable(bool connectable) {
-    ESP_LOGI(BT_AV_TAG,"set_scan_mode_connectable %s", connectable ? "true":"false" );            
+    ESP_LOGI(BT_TAG,"set_scan_mode_connectable %s", connectable ? "true":"false" );            
     if (connectable){
         if (esp_bt_gap_set_scan_mode(ESP_BT_SCAN_MODE_CONNECTABLE_DISCOVERABLE)!=ESP_OK){
-            ESP_LOGE(BT_AV_TAG,"esp_bt_gap_set_scan_mode");            
+            ESP_LOGE(BT_TAG,"esp_bt_gap_set_scan_mode");            
         } 
     } else {
         if (esp_bt_gap_set_scan_mode(ESP_BT_SCAN_MODE_NONE)!=ESP_OK){
-            ESP_LOGE(BT_AV_TAG,"esp_bt_gap_set_scan_mode");            
+            ESP_LOGE(BT_TAG,"esp_bt_gap_set_scan_mode");            
         }    
     }
 }
@@ -336,14 +336,14 @@ bool btStart(){
     }
     if(esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_INITED){
         if (esp_bt_controller_enable(ESP_BT_MODE_CLASSIC_BT)) {
-            ESP_LOGE(BT_APP_TAG, "BT Enable failed");
+            ESP_LOGE(BT_TAG, "BT Enable failed");
             return false;
         }
     }
     if(esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_ENABLED){
         return true;
     }
-    ESP_LOGE(BT_APP_TAG, "BT Start failed");
+    ESP_LOGE(BT_TAG, "BT Start failed");
     return false;
 }
 

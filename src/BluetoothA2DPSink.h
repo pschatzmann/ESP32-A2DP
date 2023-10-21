@@ -24,10 +24,6 @@ extern "C" {
 
 #define APP_SIG_WORK_DISPATCH (0x01)
 
-#ifndef BT_AV_TAG
-#define BT_AV_TAG               "BT_AV"
-#endif
-
 /* @brief event for handler "bt_av_hdl_stack_up */
 enum {
     BT_APP_EVT_STACK_UP = 0,
@@ -370,7 +366,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
 
     virtual bool is_reconnect(esp_a2d_disc_rsn_t type) {
         bool result = is_autoreconnect_allowed && (reconnect_status==AutoReconnect || reconnect_status==IsReconnecting) && has_last_connection();
-        ESP_LOGI(BT_AV_TAG,"is_reconnect: %s", result ? "true":"false");
+        ESP_LOGI(BT_TAG,"is_reconnect: %s", result ? "true":"false");
         return result;
     }
 

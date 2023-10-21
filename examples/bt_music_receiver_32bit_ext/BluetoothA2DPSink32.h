@@ -13,7 +13,7 @@
 class BluetoothA2DPSink32 : public BluetoothA2DPSink {
     protected:
         void audio_data_callback(const uint8_t *data, uint32_t len) {
-            ESP_LOGD(BT_AV_TAG, "%s", __PRETTY_FUNCTION__);
+            ESP_LOGD(BT_TAG, "%s", __PRETTY_FUNCTION__);
             Frame* frame = (Frame*) data;  // convert to array of frames
             static constexpr int blk_size = 128;
             static uint32_t data32[blk_size/2];
@@ -37,11 +37,11 @@ class BluetoothA2DPSink32 : public BluetoothA2DPSink {
                 
                 size_t i2s_bytes_written;
                 if (i2s_write(i2s_port,(void*) data32, blk_len*2, &i2s_bytes_written, portMAX_DELAY)!=ESP_OK){
-                    ESP_LOGE(BT_AV_TAG, "i2s_write has failed");
+                    ESP_LOGE(BT_TAG, "i2s_write has failed");
                 }
 
                 if (i2s_bytes_written<blk_len*2){
-                    ESP_LOGE(BT_AV_TAG, "Timeout: not all bytes were written to I2S");
+                    ESP_LOGE(BT_TAG, "Timeout: not all bytes were written to I2S");
                 }
                 rest_len -= blk_len;
             }

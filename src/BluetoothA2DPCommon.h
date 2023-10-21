@@ -110,9 +110,7 @@ typedef struct {
 } bt_app_msg_t;
 
 
-#define BT_AV_TAG        "BT_AV"
-#define BT_RC_CT_TAG     "RCCT"
-#define BT_APP_TAG       "BT_API"
+#define BT_TAG        "BT"
 
 /* AVRCP used transaction labels */
 #define APP_RC_CT_TL_GET_CAPS            (0)
@@ -158,7 +156,7 @@ class BluetoothA2DPCommon {
 
         /// Sets the volume (range 0 - 255)
         virtual void set_volume(uint8_t volume){
-            ESP_LOGI(BT_AV_TAG, "set_volume: %d", volume);
+            ESP_LOGI(BT_TAG, "set_volume: %d", volume);
             volume_value = volume;
             volume_control()->set_volume(volume);
             volume_control()->set_enabled(true);

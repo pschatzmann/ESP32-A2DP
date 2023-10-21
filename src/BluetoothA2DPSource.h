@@ -270,7 +270,7 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
     virtual void reset_last_connection();
 
     virtual esp_err_t esp_a2d_connect(esp_bd_addr_t peer) {
-        ESP_LOGI(BT_AV_TAG, "a2dp connecting to: %s", to_str(peer));
+        ESP_LOGI(BT_TAG, "a2dp connecting to: %s", to_str(peer));
         return esp_a2d_source_connect(peer);
     }
 

@@ -5,7 +5,7 @@
 #if A2DP_I2S_SUPPORT
 
 #define RINGBUF_HIGHEST_WATER_LEVEL    (32 * 1024)
-#define RINGBUF_PREFETCH_PERCENT        65
+#define RINGBUF_PREFETCH_PERCENT        70
 
 enum A2DPRingBufferMode : char {
     RINGBUFFER_MODE_PROCESSING,    /* ringbuffer is buffering incoming audio data, I2S is working */

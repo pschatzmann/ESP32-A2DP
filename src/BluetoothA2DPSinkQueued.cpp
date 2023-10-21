@@ -1,7 +1,9 @@
 
 #include "BluetoothA2DPSinkQueued.h"
+
 #if A2DP_I2S_SUPPORT
 
+// task handler for i2s output task
 void ccall_i2s_task_handler(void *arg) {
   ESP_LOGD(BT_AV_TAG, "%s", __func__);
   if (actual_bluetooth_a2dp_sink)
@@ -103,7 +105,7 @@ size_t BluetoothA2DPSinkQueued::write_audio(const uint8_t *data, size_t size)
     if (!is_i2s_active){
         ESP_LOGW(BT_APP_TAG, "i2s is not active: we try to activate it");
         is_i2s_active = i2s_start(i2s_port)==ESP_OK;
-        delay(200);
+        yield();
     }
 
     if (ringbuffer_mode == RINGBUFFER_MODE_DROPPING) {
@@ -137,4 +139,5 @@ size_t BluetoothA2DPSinkQueued::write_audio(const uint8_t *data, size_t size)
 
     return done ? size : 0;
 }
+
 #endif

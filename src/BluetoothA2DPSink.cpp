@@ -578,6 +578,15 @@ void BluetoothA2DPSink::app_gap_callback(esp_bt_gap_cb_event_t event, esp_bt_gap
                 ESP_LOGD(BT_TAG, "ESP_BT_GAP_CONFIG_EIR_DATA_EVT");
            }
            break;    
+        case ESP_BT_GAP_ACL_CONN_CMPL_STAT_EVT: {
+                ESP_LOGD(BT_TAG, "ESP_BT_GAP_ACL_CONN_CMPL_STAT_EVT");
+           }
+           break;    
+        case ESP_BT_GAP_ACL_DISCONN_CMPL_STAT_EVT: {
+                ESP_LOGD(BT_TAG, "ESP_BT_GAP_ACL_DISCONN_CMPL_STAT_EVT");
+           }
+           break;    
+
 #endif
 
         default: {
@@ -695,7 +704,7 @@ void BluetoothA2DPSink::handle_audio_cfg(uint16_t event, void *p_param) {
 
     // for now only SBC stream is supported
     if (player_init == false && is_i2s_output && a2d->audio_cfg.mcc.type == ESP_A2D_MCT_SBC) {
-        ESP_LOGI(BT_TAG, "configure audio player %x-%x-%x-%x\n",
+        ESP_LOGI(BT_TAG, "configure audio player %x-%x-%x-%x",
                 a2d->audio_cfg.mcc.cie.sbc[0],
                 a2d->audio_cfg.mcc.cie.sbc[1],
                 a2d->audio_cfg.mcc.cie.sbc[2],

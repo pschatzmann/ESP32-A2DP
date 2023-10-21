@@ -2,6 +2,14 @@
 #include "BluetoothA2DPSinkQueued.h"
 #if A2DP_I2S_SUPPORT
 
+void ccall_i2s_task_handler(void *arg) {
+  ESP_LOGD(BT_AV_TAG, "%s", __func__);
+  if (actual_bluetooth_a2dp_sink)
+    actual_bluetooth_a2dp_sink->i2s_task_handler(arg);
+  yield();
+}
+
+
 void BluetoothA2DPSinkQueued::bt_i2s_task_start_up(void) {
     ESP_LOGI(BT_APP_TAG, "ringbuffer data empty! mode changed: RINGBUFFER_MODE_PREFETCHING");
     ringbuffer_mode = RINGBUFFER_MODE_PREFETCHING;
@@ -81,8 +89,8 @@ void BluetoothA2DPSinkQueued::i2s_task_handler(void *arg) {
             }
         }
 
+        yield();
         vRingbufferReturnItem(s_ringbuf_i2s, (void *)data);
-        delay(5);
     }
 }
 
@@ -125,6 +133,7 @@ size_t BluetoothA2DPSinkQueued::write_audio(const uint8_t *data, size_t size)
             }
         }
     }
+    yield();
 
     return done ? size : 0;
 }

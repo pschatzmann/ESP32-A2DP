@@ -13,6 +13,8 @@ enum A2DPRingBufferMode : char {
     RINGBUFFER_MODE_DROPPING       /* ringbuffer is not buffering (dropping) incoming audio data, I2S is working */
 };
 
+extern "C" void ccall_i2s_task_handler(void *arg);
+
 /**
  * @brief The BluetoothA2DPSinkQueued is using a separate Task with an additinal Queue to write the I2S data.
  * application. 
@@ -21,6 +23,9 @@ enum A2DPRingBufferMode : char {
  * @copyright Apache License Version 2
  */
 class BluetoothA2DPSinkQueued : public BluetoothA2DPSink {
+    /// task hander for i2s 
+    friend void ccall_i2s_task_handler(void *arg);
+
     public:
         BluetoothA2DPSinkQueued() = default;
 
@@ -55,7 +60,6 @@ class BluetoothA2DPSinkQueued : public BluetoothA2DPSink {
         }
 
 
-
     protected:
         xTaskHandle s_bt_i2s_task_handle = nullptr;  /* handle of I2S task */
         RingbufHandle_t s_ringbuf_i2s = nullptr;     /* handle of ringbuffer for I2S */
@@ -63,7 +67,7 @@ class BluetoothA2DPSinkQueued : public BluetoothA2DPSink {
         // I2S task
         int i2s_stack_size = 2048;
         int i2s_ringbuffer_size = RINGBUF_HIGHEST_WATER_LEVEL;
-        UBaseType_t i2s_task_priority = configMAX_PRIORITIES - 3;
+        UBaseType_t i2s_task_priority = task_priority;
         volatile A2DPRingBufferMode ringbuffer_mode = RINGBUFFER_MODE_PROCESSING;
         volatile bool is_starting = true;
         size_t i2s_write_size_upto = 240 * 6;

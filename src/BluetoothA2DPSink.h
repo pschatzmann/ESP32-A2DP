@@ -37,7 +37,6 @@ extern "C" void ccall_app_a2d_callback(esp_a2d_cb_event_t event, esp_a2d_cb_para
 extern "C" void ccall_app_rc_ct_callback(esp_avrc_ct_cb_event_t event, esp_avrc_ct_cb_param_t *param);
 extern "C" void ccall_app_gap_callback(esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *param);
 extern "C" void ccall_app_task_handler(void *arg);
-extern "C" void ccall_i2s_task_handler(void *arg);
 extern "C" void ccall_audio_data_callback(const uint8_t *data, uint32_t len);
 extern "C" void ccall_av_hdl_stack_evt(uint16_t event, void *p_param);
 extern "C" void ccall_av_hdl_a2d_evt(uint16_t event, void *p_param);
@@ -70,8 +69,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     friend void ccall_app_gap_callback(esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *param);
     /// task handler
     friend void ccall_app_task_handler(void *arg);
-    /// task hander for i2s 
-    friend void ccall_i2s_task_handler(void *arg);
     /// Callback for music stream 
     friend void ccall_audio_data_callback(const uint8_t *data, uint32_t len);
     /// av event handler
@@ -246,7 +243,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     virtual esp_bd_addr_t* get_current_peer_address() {
         return &peer_bd_addr;
     }
-
 
     /// Activates the rssi reporting
     void set_rssi_active(bool active){

@@ -445,7 +445,7 @@ void BluetoothA2DPSink::app_task_handler(void *arg)
             }
 #else
             ESP_LOGI(BT_APP_TAG, "%s, xQueueReceive -> no data", __func__);
-            delay(10);
+//          delay(10);
 #endif
 
         }
@@ -1165,6 +1165,7 @@ void BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) {
     if (is_i2s_output) {
         // put data into ringbuffer
         write_audio(data, len);
+        yield();
     }
 #else
     ESP_LOGW(BT_AV_TAG, "i2s not supported!");
@@ -1294,43 +1295,40 @@ void BluetoothA2DPSink::confirm_pin_code(int code)
  */
 
 
-#if A2DP_I2S_SUPPORT
-void ccall_i2s_task_handler(void *arg) {
-  ESP_LOGD(BT_AV_TAG, "%s", __func__);
-  if (actual_bluetooth_a2dp_sink)
-    actual_bluetooth_a2dp_sink->i2s_task_handler(arg);
-}
-
-#endif
 
 void ccall_app_task_handler(void *arg) {
   ESP_LOGD(BT_AV_TAG, "%s", __func__);
   if (actual_bluetooth_a2dp_sink)
     actual_bluetooth_a2dp_sink->app_task_handler(arg);
+  yield();
 }
 
 void ccall_audio_data_callback(const uint8_t *data, uint32_t len) {
-  //ESP_LOGD(BT_AV_TAG, "%s", __func__);
-  if (actual_bluetooth_a2dp_sink)
-    actual_bluetooth_a2dp_sink->audio_data_callback(data,len);
+    ESP_LOGD(BT_AV_TAG, "(%s - %d) ccall_audio_data_callback: %d", pcTaskGetName(xTaskGetCurrentTaskHandle(), uxTaskPriorityGet(NULL), len); 
+    if (actual_bluetooth_a2dp_sink && len > 0)
+        actual_bluetooth_a2dp_sink->audio_data_callback(data,len);
+    yield();
 }
 
 void ccall_app_a2d_callback(esp_a2d_cb_event_t event, esp_a2d_cb_param_t *param){
   ESP_LOGD(BT_AV_TAG, "%s", __func__);
   if (actual_bluetooth_a2dp_sink)
     actual_bluetooth_a2dp_sink->app_a2d_callback(event, param);
+  yield();
 }
 
 void ccall_app_rc_ct_callback(esp_avrc_ct_cb_event_t event, esp_avrc_ct_cb_param_t *param){
   ESP_LOGD(BT_AV_TAG, "%s", __func__);
   if (actual_bluetooth_a2dp_sink)
     actual_bluetooth_a2dp_sink->app_rc_ct_callback(event, param);
+  yield();
 }
 
 void ccall_app_gap_callback(esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *param){
   ESP_LOGD(BT_AV_TAG, "%s", __func__);
   if (actual_bluetooth_a2dp_sink)
     actual_bluetooth_a2dp_sink->app_gap_callback(event, param);
+  yield();
 }
 
 void ccall_av_hdl_stack_evt(uint16_t event, void *param){
@@ -1338,6 +1336,7 @@ void ccall_av_hdl_stack_evt(uint16_t event, void *param){
     if (actual_bluetooth_a2dp_sink) {
         actual_bluetooth_a2dp_sink->av_hdl_stack_evt(event, param);
     }
+  yield();
 }
 
 void ccall_av_hdl_avrc_evt(uint16_t event, void *param){
@@ -1345,6 +1344,7 @@ void ccall_av_hdl_avrc_evt(uint16_t event, void *param){
     if (actual_bluetooth_a2dp_sink) {
         actual_bluetooth_a2dp_sink->av_hdl_avrc_evt(event, param);
     }
+  yield();
 }
 
 void ccall_av_hdl_a2d_evt(uint16_t event, void *param){
@@ -1352,6 +1352,7 @@ void ccall_av_hdl_a2d_evt(uint16_t event, void *param){
     if (actual_bluetooth_a2dp_sink) {
         actual_bluetooth_a2dp_sink->av_hdl_a2d_evt(event, param);
     }
+  yield();
 }
 
 #if A2DP_I2S_SUPPORT
@@ -1394,7 +1395,7 @@ size_t BluetoothA2DPSink::i2s_write_data(const uint8_t* data, size_t item_size){
     }
 
     // give envent processing some chance ?
-    delay(1);
+    yield();
     
     return item_size;
 }

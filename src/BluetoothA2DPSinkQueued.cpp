@@ -49,7 +49,6 @@ void BluetoothA2DPSinkQueued::i2s_task_handler(void *arg) {
      * `dma_frame_num * dma_desc_num * i2s_channel_num * i2s_data_bit_width / 8`.
      * Transmit `dma_frame_num * dma_desc_num` bytes to DMA is trade-off.
      */
-    size_t bytes_written = 0;
     is_starting = true;
 
     while (true) {

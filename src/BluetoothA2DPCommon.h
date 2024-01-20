@@ -287,7 +287,7 @@ class BluetoothA2DPCommon {
 
         int event_queue_size = 20;
         int event_stack_size = 3072;
-
+        esp_bt_mode_t bt_mode  = ESP_BT_MODE_CLASSIC_BT;
 
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
         esp_bt_discovery_mode_t discoverability = ESP_BT_GENERAL_DISCOVERABLE;
@@ -305,6 +305,10 @@ class BluetoothA2DPCommon {
         /// provides access to the VolumeControl object
         virtual A2DPVolumeControl* volume_control() {
             return volume_control_ptr !=nullptr ? volume_control_ptr : &default_volume_control;
+        }
+
+        virtual void set_default_bt_mode(esp_bt_mode_t mode){
+            bt_mode = mode;
         }
 };
 

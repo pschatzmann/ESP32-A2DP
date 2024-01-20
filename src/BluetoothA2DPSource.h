@@ -216,7 +216,7 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
 
     // initialization
     bool nvs_init = true;
-    bool reset_ble = true;
+    bool reset_ble = false;
     music_data_cb_t data_stream_callback;
 
     bool(*ssid_callback)(const char*ssid, esp_bd_addr_t address, int rrsi) = nullptr;

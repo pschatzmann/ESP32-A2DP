@@ -201,21 +201,21 @@ void BluetoothA2DPSource::start_raw(std::vector<const char *> names,
 
   if (reset_ble) {
     ESP_ERROR_CHECK(esp_bt_controller_mem_release(ESP_BT_MODE_BLE));
+  }
 
-    if (!btStart()) {
-      ESP_LOGE(BT_AV_TAG, "Failed to initialize controller");
-      return;
-    }
+  if (!btStart()) {
+    ESP_LOGE(BT_AV_TAG, "Failed to initialize controller");
+    return;
+  }
 
-    if (esp_bluedroid_init() != ESP_OK) {
-      ESP_LOGE(BT_AV_TAG, "%s initialize bluedroid failed\n", __func__);
-      return;
-    }
+  if (esp_bluedroid_init() != ESP_OK) {
+    ESP_LOGE(BT_AV_TAG, "%s initialize bluedroid failed\n", __func__);
+    return;
+  }
 
-    if (esp_bluedroid_enable() != ESP_OK) {
-      ESP_LOGE(BT_AV_TAG, "%s enable bluedroid failed\n", __func__);
-      return;
-    }
+  if (esp_bluedroid_enable() != ESP_OK) {
+    ESP_LOGE(BT_AV_TAG, "%s enable bluedroid failed\n", __func__);
+    return;
   }
 
   if (ssp_enabled) {

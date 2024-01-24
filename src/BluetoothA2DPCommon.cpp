@@ -328,6 +328,7 @@ void BluetoothA2DPCommon::set_scan_mode_connectable(bool connectable) {
 bool btStart(){
     esp_bt_controller_config_t cfg = BT_CONTROLLER_INIT_CONFIG_DEFAULT();
     if(esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_ENABLED){
+        ESP_LOGI(BT_APP_TAG, "BT was already enabled");
         return true;
     }
     if(esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_IDLE){
@@ -335,12 +336,13 @@ bool btStart(){
         while(esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_IDLE){}
     }
     if(esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_INITED){
-        if (esp_bt_controller_enable(ESP_BT_MODE_CLASSIC_BT)) {
+        if (esp_bt_controller_enable(bt_mode)) {
             ESP_LOGE(BT_APP_TAG, "BT Enable failed");
             return false;
         }
     }
     if(esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_ENABLED){
+        ESP_LOGI(BT_APP_TAG, "BT enabled");
         return true;
     }
     ESP_LOGE(BT_APP_TAG, "BT Start failed");

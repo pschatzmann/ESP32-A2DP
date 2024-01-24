@@ -256,6 +256,11 @@ class BluetoothA2DPCommon {
     /// clean last connection (delete)
     virtual void clean_last_connection();
 
+    /// Defines the default bt mode. The default is ESP_BT_MODE_CLASSIC_BT: use this e.g. to set to ESP_BT_MODE_BTDM
+    virtual void set_default_bt_mode(esp_bt_mode_t mode){
+        bt_mode = mode;
+    }
+
     protected:
         const char* bt_name = {0};
         esp_bd_addr_t peer_bd_addr;
@@ -307,8 +312,5 @@ class BluetoothA2DPCommon {
             return volume_control_ptr !=nullptr ? volume_control_ptr : &default_volume_control;
         }
 
-        virtual void set_default_bt_mode(esp_bt_mode_t mode){
-            bt_mode = mode;
-        }
 };
 

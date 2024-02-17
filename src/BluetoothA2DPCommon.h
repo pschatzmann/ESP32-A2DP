@@ -154,7 +154,7 @@ class BluetoothA2DPCommon {
         virtual void end(bool releaseMemory=false);
 
         /// Checks if A2DP is connected
-        virtual  bool is_connected() = 0;
+        virtual  bool is_connected() { return connection_state == ESP_A2D_CONNECTION_STATE_CONNECTED;}
 
         /// Sets the volume (range 0 - 255)
         virtual void set_volume(uint8_t volume){

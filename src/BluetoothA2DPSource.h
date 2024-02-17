@@ -162,9 +162,6 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
      */
     virtual bool write_data(SoundData *data);
 
-    /// Returns true if the bluetooth device is connected
-    virtual  bool is_connected();
-
     /**
      *   @brief Returns true if write_dataRaw has been called with any valid data
      */
@@ -202,6 +199,7 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
 
     uint8_t s_peer_bdname[ESP_BT_GAP_MAX_BDNAME_LEN + 1];
     APP_AV_STATE s_a2d_state = APP_AV_STATE_IDLE; // Next Target Connection State
+    APP_AV_STATE s_a2d_last_state = APP_AV_STATE_IDLE; // Next Target Connection State
     int s_media_state=0;
     int s_intv_cnt=0;
     int s_connecting_heatbeat_count;

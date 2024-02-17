@@ -134,10 +134,6 @@ BluetoothA2DPSource::BluetoothA2DPSource() {
 
 BluetoothA2DPSource::~BluetoothA2DPSource() { end(); }
 
-bool BluetoothA2DPSource::is_connected() {
-  return s_a2d_state == APP_AV_STATE_CONNECTED;
-}
-
 void BluetoothA2DPSource::set_pin_code(const char *pin_code,
                                        esp_bt_pin_type_t pin_type) {
   ESP_LOGD(BT_APP_TAG, "%s, ", __func__);

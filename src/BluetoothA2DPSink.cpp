@@ -294,9 +294,6 @@ esp_err_t BluetoothA2DPSink::i2s_mclk_pin_select(const uint8_t pin) {
 
 #endif
 
-bool BluetoothA2DPSink::is_connected() {
-    return connection_state == ESP_A2D_CONNECTION_STATE_CONNECTED;
-}
 
 esp_a2d_mct_t BluetoothA2DPSink::get_audio_type() {
     return audio_type;

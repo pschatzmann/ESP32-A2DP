@@ -129,9 +129,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     /// ends the I2S bluetooth sink with the indicated name - if you release the memory a future start is not possible
     virtual void end(bool release_memory=false);
     
-    /// Returns true if the state is connected
-    virtual bool is_connected();
-
     /// Determine the actual audio type
     virtual esp_a2d_mct_t get_audio_type();
 

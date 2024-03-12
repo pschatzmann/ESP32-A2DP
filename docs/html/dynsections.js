@@ -47,8 +47,6 @@ function updateStripes()
 {
   $('table.directory tr').
        removeClass('even').filter(':visible:even').addClass('even');
-  $('table.directory tr').
-       removeClass('odd').filter(':visible:odd').addClass('odd');
 }
 
 function toggleLevel(level)

@@ -963,8 +963,8 @@ void BluetoothA2DPSource::bt_av_hdl_avrc_ct_evt(uint16_t event, void *p_param) {
   case ESP_AVRC_CT_PASSTHROUGH_RSP_EVT: {
     ESP_LOGI(
         BT_RC_CT_TAG,
-        "AVRC passthrough response: key_code 0x%x, key_state %d, rsp_code %d",
-        rc->psth_rsp.key_code, rc->psth_rsp.key_state, rc->psth_rsp.rsp_code);
+        "AVRC passthrough response: key_code 0x%x, key_state %d, transaction label %d",
+        rc->psth_rsp.key_code, rc->psth_rsp.key_state, rc->psth_rsp.tl);
     break;
   }
   /* when metadata responsed, this event comes */

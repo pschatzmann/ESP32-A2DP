@@ -243,7 +243,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     }
     
     /// Provides the actually set data rate (in samples per second)
-    virtual uint16_t A2DP_DEBUG_AUDIO { return m_sample_rate != 0 ? m_sample_rate : 44100;}
+    virtual uint16_t get_sample_rate() { return m_sample_rate != 0 ? m_sample_rate : 44100;}
         
     /// We need to confirm a new seesion by calling confirm_pin_code()
     virtual void activate_pin_code(bool active);

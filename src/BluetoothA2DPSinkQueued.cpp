@@ -70,7 +70,7 @@ void BluetoothA2DPSinkQueued::i2s_task_handler(void *arg) {
         } 
 
         // if i2s is not active we just consume the buffer w/o output
-        if (is_i2s_active){
+        if (is_i2s_active && is_i2s_output){
             size_t written = i2s_write_data(data, item_size);
             ESP_LOGD(BT_AV_TAG, "i2s_task_handler: %d->%d", item_size, written);
             if (written==0){

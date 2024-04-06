@@ -14,7 +14,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-// ==> Example A2DP Receiver which uses I2S to an external DAC
+// ==> Example A2DP which uses the RSSI callback
+
 #include "AudioTools.h"
 #include "BluetoothA2DPSink.h"
 

@@ -83,23 +83,26 @@ void BluetoothA2DPSink::end(bool release_memory) {
   BluetoothA2DPCommon::end(release_memory);
   app_task_shut_down();
 
+  if (is_i2s_output) {
+
   // stop I2S
 #if A2DP_LEGACY_I2S_SUPPORT
-  if (is_i2s_output) {
-    ESP_LOGI(BT_AV_TAG, "uninstall i2s");
-    if (i2s_driver_uninstall(i2s_port) != ESP_OK) {
-      ESP_LOGE(BT_AV_TAG, "Failed to uninstall i2s");
-    } else {
-      player_init = false;
+    if (is_i2s_output && p_print==nullptr) {
+      ESP_LOGI(BT_AV_TAG, "uninstall i2s");
+      if (i2s_driver_uninstall(i2s_port) != ESP_OK) {
+        ESP_LOGE(BT_AV_TAG, "Failed to uninstall i2s");
+      } else {
+        player_init = false;
+      }
     }
-  }
 #endif
 
 #if A2DP_I2S_AUDIOTOOLS
-  if (is_i2s_output && p_audio_print != nullptr) {
-    p_audio_print->end();
-  }
+    if (p_audio_print != nullptr) {
+      p_audio_print->end();
+    }
 #endif
+  }
 
   log_free_heap();
 }
@@ -242,26 +245,28 @@ void BluetoothA2DPSink::init_i2s() {
   ESP_LOGI(BT_AV_TAG, "init_i2s");
   if (is_i2s_output) {
 #if A2DP_LEGACY_I2S_SUPPORT
-    ESP_LOGI(BT_AV_TAG, "init_i2s is_i2s_output");
-    // setup i2s
-    if (i2s_driver_install(i2s_port, &i2s_config, 0, NULL) != ESP_OK) {
-      ESP_LOGE(BT_AV_TAG, "i2s_driver_install failed");
-    } else {
-      player_init = false;  // reset player
-    }
+    if (p_print == nullptr) {
+      ESP_LOGI(BT_AV_TAG, "init_i2s is_i2s_output");
+      // setup i2s
+      if (i2s_driver_install(i2s_port, &i2s_config, 0, NULL) != ESP_OK) {
+        ESP_LOGE(BT_AV_TAG, "i2s_driver_install failed");
+      } else {
+        player_init = false;  // reset player
+      }
 
-    // pins are only relevant when music is not sent to internal DAC
-    if (i2s_config.mode & I2S_MODE_DAC_BUILT_IN) {
-      if (i2s_set_pin(i2s_port, nullptr) != ESP_OK) {
-        ESP_LOGE(BT_AV_TAG, "i2s_set_pin failed");
-      }
-      if (i2s_set_dac_mode(I2S_DAC_CHANNEL_BOTH_EN) != ESP_OK) {
-        ESP_LOGE(BT_AV_TAG, "i2s_set_dac_mode failed");
-      }
-      ESP_LOGI(BT_AV_TAG, "Output will go to DAC pins");
-    } else {
-      if (i2s_set_pin(i2s_port, &pin_config) != ESP_OK) {
-        ESP_LOGE(BT_AV_TAG, "i2s_set_pin failed");
+      // pins are only relevant when music is not sent to internal DAC
+      if (i2s_config.mode & I2S_MODE_DAC_BUILT_IN) {
+        if (i2s_set_pin(i2s_port, nullptr) != ESP_OK) {
+          ESP_LOGE(BT_AV_TAG, "i2s_set_pin failed");
+        }
+        if (i2s_set_dac_mode(I2S_DAC_CHANNEL_BOTH_EN) != ESP_OK) {
+          ESP_LOGE(BT_AV_TAG, "i2s_set_dac_mode failed");
+        }
+        ESP_LOGI(BT_AV_TAG, "Output will go to DAC pins");
+      } else {
+        if (i2s_set_pin(i2s_port, &pin_config) != ESP_OK) {
+          ESP_LOGE(BT_AV_TAG, "i2s_set_pin failed");
+        }
       }
     }
 #endif
@@ -687,16 +692,18 @@ void BluetoothA2DPSink::handle_audio_cfg(uint16_t event, void *p_param) {
              a2d->audio_cfg.mcc.cie.sbc[2], a2d->audio_cfg.mcc.cie.sbc[3]);
 
 #if A2DP_LEGACY_I2S_SUPPORT
-    i2s_config.sample_rate = m_sample_rate;
-    // setup sample rate and channels
-    if (i2s_set_clk(i2s_port, i2s_config.sample_rate,
-                    i2s_config.bits_per_sample, i2s_channels) != ESP_OK) {
-      ESP_LOGE(BT_AV_TAG, "i2s_set_clk failed with samplerate=%d",
-               i2s_config.sample_rate);
-    } else {
-      ESP_LOGI(BT_AV_TAG, "audio player configured, samplerate=%d",
-               i2s_config.sample_rate);
-      player_init = true;  // init finished
+    if (p_audio_print == nullptr){
+      i2s_config.sample_rate = m_sample_rate;
+      // setup sample rate and channels
+      if (i2s_set_clk(i2s_port, i2s_config.sample_rate,
+                      i2s_config.bits_per_sample, i2s_channels) != ESP_OK) {
+        ESP_LOGE(BT_AV_TAG, "i2s_set_clk failed with samplerate=%d",
+                i2s_config.sample_rate);
+      } else {
+        ESP_LOGI(BT_AV_TAG, "audio player configured, samplerate=%d",
+                i2s_config.sample_rate);
+        player_init = true;  // init finished
+      }
     }
 #endif
 
@@ -751,36 +758,39 @@ void BluetoothA2DPSink::handle_audio_state(uint16_t event, void *p_param) {
 void BluetoothA2DPSink::set_i2s_active(bool active) {
   if (is_i2s_output) {
 #if A2DP_I2S_AUDIOTOOLS
-    if (active) {
-      m_pkt_cnt = 0;
-      ESP_LOGI(BT_AV_TAG, "i2s_start");
-      if (p_audio_print->begin()) {
-        is_i2s_active = true;
-      } else {
-        ESP_LOGE(BT_AV_TAG, "i2s_start");
-      }
+    if (p_audio_print!=nullptr){
+      if (active) {
+        m_pkt_cnt = 0;
+        ESP_LOGI(BT_AV_TAG, "i2s_start");
+        if (p_audio_print->begin()) {
+          is_i2s_active = true;
+        } else {
+          ESP_LOGE(BT_AV_TAG, "i2s_start");
+        }
 
-    } else {
-      ESP_LOGW(BT_AV_TAG, "i2s_stop");
-      p_audio_print->end();
-      is_i2s_active = false;
+      } else {
+        ESP_LOGW(BT_AV_TAG, "i2s_stop");
+        p_audio_print->end();
+        is_i2s_active = false;
+      }
     }
 
 #elif A2DP_LEGACY_I2S_SUPPORT
-    if (active) {
-      m_pkt_cnt = 0;
-      ESP_LOGI(BT_AV_TAG, "i2s_start");
-      if (i2s_start(i2s_port) == ESP_OK) {
-        is_i2s_active = true;
+    if (p_audio_print==nullptr){
+      if (active) {
+        m_pkt_cnt = 0;
+        ESP_LOGI(BT_AV_TAG, "i2s_start");
+        if (i2s_start(i2s_port) == ESP_OK) {
+          is_i2s_active = true;
+        } else {
+          ESP_LOGE(BT_AV_TAG, "i2s_start");
+        }
       } else {
-        ESP_LOGE(BT_AV_TAG, "i2s_start");
+        ESP_LOGW(BT_AV_TAG, "i2s_stop");
+        i2s_stop(i2s_port);
+        is_i2s_active = false;
+        i2s_zero_dma_buffer(i2s_port);
       }
-
-    } else {
-      ESP_LOGW(BT_AV_TAG, "i2s_stop");
-      i2s_stop(i2s_port);
-      is_i2s_active = false;
-      i2s_zero_dma_buffer(i2s_port);
     }
 #endif
   }

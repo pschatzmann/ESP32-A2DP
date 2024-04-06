@@ -317,9 +317,11 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
  #endif
 
   protected:
+
 #ifdef ARDUINO
     Print* p_print = nullptr;
 #endif
+
 #if A2DP_I2S_AUDIOTOOLS
     AudioOutput* p_audio_print = nullptr;
 #endif

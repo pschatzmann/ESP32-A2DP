@@ -92,11 +92,13 @@ size_t BluetoothA2DPSinkQueued::write_audio(const uint8_t *data, size_t size)
     // This should not really happen!
     if (!is_i2s_active){
         ESP_LOGW(BT_APP_TAG, "i2s is not active: we try to activate it");
-#ifdef A2DP_I2S_ACTIVE
-        is_i2s_active = i2s_start(i2s_port)==ESP_OK;
+#ifdef A2DP_LEGACY_I2S_SUPPORT
+        if(p_print == nullptr)
+            is_i2s_active = i2s_start(i2s_port)==ESP_OK;
 #endif
 #if A2DP_I2S_AUDIOTOOLS
-        is_i2s_active = p_audio_print->begin();
+        if(p_audio_print != nullptr)
+            is_i2s_active = p_audio_print->begin();
 #endif
         delay(200);
     }

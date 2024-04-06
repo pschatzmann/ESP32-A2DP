@@ -104,10 +104,12 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
 
 #if A2DP_I2S_AUDIOTOOLS
     BluetoothA2DPSink(AudioOutput &output){
+        actual_bluetooth_a2dp_sink = this;
         p_print = &output;
         p_audio_print = &output;
     }
     BluetoothA2DPSink(AudioStream &output){
+        actual_bluetooth_a2dp_sink = this;
         static AdapterAudioStreamToAudioOutput adapter(output);
         p_print = &output;
         p_audio_print = &adapter;
@@ -116,6 +118,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
 
 #ifdef ARDUINO
     BluetoothA2DPSink(Print &output){
+        actual_bluetooth_a2dp_sink = this;
         p_print = &output;
     }
 #endif

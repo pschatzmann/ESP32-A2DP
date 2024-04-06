@@ -340,8 +340,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     xQueueHandle app_task_queue = nullptr;
     xTaskHandle app_task_handle = nullptr;
 
-    bool is_i2s_output = A2DP_LEGACY_I2S_SUPPORT;
-
 #if A2DP_LEGACY_I2S_SUPPORT
     i2s_config_t i2s_config;
     i2s_pin_config_t pin_config;    

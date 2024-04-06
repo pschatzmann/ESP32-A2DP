@@ -1,6 +1,5 @@
 
 #include "BluetoothA2DPSinkQueued.h"
-#if A2DP_I2S_SUPPORT
 
 void BluetoothA2DPSinkQueued::bt_i2s_task_start_up(void) {
     ESP_LOGI(BT_APP_TAG, "ringbuffer data empty! mode changed: RINGBUFFER_MODE_PREFETCHING");
@@ -93,7 +92,12 @@ size_t BluetoothA2DPSinkQueued::write_audio(const uint8_t *data, size_t size)
     // This should not really happen!
     if (!is_i2s_active){
         ESP_LOGW(BT_APP_TAG, "i2s is not active: we try to activate it");
+#ifdef A2DP_I2S_ACTIVE
         is_i2s_active = i2s_start(i2s_port)==ESP_OK;
+#endif
+#if A2DP_I2S_AUDIOTOOLS
+        is_i2s_active = p_audio_print->begin();
+#endif
         delay(200);
     }
 
@@ -136,4 +140,3 @@ size_t BluetoothA2DPSinkQueued::write_audio(const uint8_t *data, size_t size)
 
     return done ? size : 0;
 }
-#endif

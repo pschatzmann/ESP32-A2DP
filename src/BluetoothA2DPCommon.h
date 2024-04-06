@@ -59,7 +59,7 @@ using namespace esp_i2s;
 #include "A2DPVolumeControl.h"
 #include "esp_task_wdt.h"
 
-#if A2DP_I2S_SUPPORT
+#if A2DP_LEGACY_I2S_SUPPORT
 #  include "driver/i2s.h"
 #endif
 

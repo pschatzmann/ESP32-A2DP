@@ -18,6 +18,14 @@
 #include "BluetoothA2DPCommon.h"
 #include "freertos/ringbuf.h"
 
+#ifdef ARDUINO
+#  include "Print.h"
+#endif
+
+#if A2DP_I2S_AUDIOTOOLS
+#  include "AudioTools.h"
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -93,10 +101,29 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   public: 
     /// Constructor
     BluetoothA2DPSink();
+
+#ifdef ARDUINO
+    BluetoothA2DPSink(Print &output){
+        p_print = &output;
+    }
+#endif
+
+#if A2DP_I2S_AUDIOTOOLS
+    BluetoothA2DPSink(AudioPrint &output){
+        p_print = &output;
+        p_audio_print = output;
+    }
+    BluetoothA2DPSink(AudioStream &output){
+        static AdapterAudioStreamToAudioOutput adapter(output);
+        p_print = &output;
+        p_audio_print = adapter;
+    }   
+#endif
+
     /// Destructor - stops the playback and releases all resources
     virtual ~BluetoothA2DPSink();
 
-#if A2DP_I2S_SUPPORT
+#if A2DP_LEGACY_I2S_SUPPORT
     /// Define the pins
     virtual void set_pin_config(i2s_pin_config_t pin_config);
    
@@ -290,18 +317,26 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
  #endif
 
   protected:
+#ifdef ARDUINO
+    Print* p_print = nullptr;
+#endif
+#if A2DP_I2S_AUDIOTOOLS
+    AudioOutput* p_audio_print = nullptr;
+#endif
+
     // protected data
     xQueueHandle app_task_queue = nullptr;
     xTaskHandle app_task_handle = nullptr;
 
-    bool is_i2s_output = A2DP_I2S_SUPPORT;
-#if A2DP_I2S_SUPPORT
+    bool is_i2s_output = A2DP_LEGACY_I2S_SUPPORT;
+
+#if A2DP_LEGACY_I2S_SUPPORT
     i2s_config_t i2s_config;
     i2s_pin_config_t pin_config;    
     i2s_channel_t i2s_channels = I2S_CHANNEL_STEREO;
     i2s_port_t i2s_port = I2S_NUM_0; 
-    volatile bool is_i2s_active = false;
 #endif
+    volatile bool is_i2s_active = false;
     uint16_t m_sample_rate = 0; 
     uint32_t m_pkt_cnt = 0;
     //esp_a2d_audio_state_t m_audio_state = ESP_A2D_AUDIO_STATE_STOPPED;
@@ -410,7 +445,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     virtual void av_notify_evt_handler(uint8_t event_id, uint32_t event_parameter);
 #endif    
 
-#if A2DP_I2S_SUPPORT
     virtual void init_i2s();
 
     /// output audio data e.g. to i2s or to queue
@@ -426,8 +460,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     virtual void i2s_task_handler(void *arg) {}
     virtual void bt_i2s_task_start_up(void) {}
     virtual void bt_i2s_task_shut_down(void) {}
-
-#endif
 
     virtual esp_err_t esp_a2d_connect(esp_bd_addr_t peer) {
         return esp_a2d_sink_connect(peer);

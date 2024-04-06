@@ -59,6 +59,10 @@ extern "C" void ccall_av_hdl_avrc_tg_evt(uint16_t event, void *p_param);
 // defines the mechanism to confirm a pin request
 enum PinCodeRequest {Undefined, Confirm, Reply};
 
+// provide global ref for callbacks
+class BluetoothA2DPSink;
+extern BluetoothA2DPSink *actual_bluetooth_a2dp_sink;
+
 /**
  * @brief A2DP Bluethooth Sink - We initialize and start the Bluetooth A2DP Sink. 
  * The example https://github.com/espressif/esp-idf/tree/master/examples/bluetooth/bluedroid/classic_bt/a2dp_sink
@@ -99,15 +103,17 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
 #endif    
 
   public: 
-    /// Constructor
+    /// Default Constructor:  output via callback or Legacy I2S
     BluetoothA2DPSink();
 
 #if A2DP_I2S_AUDIOTOOLS
+    /// Output AudioOutput using AudioTools library
     BluetoothA2DPSink(AudioOutput &output){
         actual_bluetooth_a2dp_sink = this;
         p_print = &output;
         p_audio_print = &output;
     }
+    /// Output AudioStream using AudioTools library
     BluetoothA2DPSink(AudioStream &output){
         actual_bluetooth_a2dp_sink = this;
         static AdapterAudioStreamToAudioOutput adapter(output);
@@ -117,6 +123,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
 #endif
 
 #ifdef ARDUINO
+    /// Output to Arduino Print
     BluetoothA2DPSink(Print &output){
         actual_bluetooth_a2dp_sink = this;
         p_print = &output;
@@ -127,21 +134,21 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     virtual ~BluetoothA2DPSink();
 
 #if A2DP_LEGACY_I2S_SUPPORT
-    /// Define the pins
+    /// Define the pins (Legacy I2S: OBSOLETE!)
     virtual void set_pin_config(i2s_pin_config_t pin_config);
    
-    /// Define an alternative i2s port other then 0 
+    /// Define an alternative i2s port other then 0 (Legacy I2S: OBSOLETE!)
     virtual void set_i2s_port(i2s_port_t i2s_num);
    
-    /// Define the i2s configuration
+    /// Define the i2s configuration (Legacy I2S: OBSOLETE!)
     virtual void set_i2s_config(i2s_config_t i2s_config);
 
-    /// set output to I2S_CHANNEL_STEREO (default) or I2S_CHANNEL_MONO
+    /// set output to I2S_CHANNEL_STEREO (default) or I2S_CHANNEL_MONO (Legacy I2S: OBSOLETE!)
     virtual void set_channels(i2s_channel_t channels) {
         set_mono_downmix(channels==I2S_CHANNEL_MONO);
     }
 
-    /// Defines the bits per sample for output (if > 16 output will be expanded)
+    /// Defines the bits per sample for output (if > 16 output will be expanded) (Legacy I2S: OBSOLETE!)
     virtual void set_bits_per_sample(int bps) { i2s_config.bits_per_sample = (i2s_bits_per_sample_t) bps; }
 
 #if ESP_IDF_VERSION < ESP_IDF_VERSION_VAL(5, 1, 1)

@@ -27,8 +27,8 @@ void setup() {
   //LOGLEVEL_AUDIOKIT = AudioKitInfo;
   Serial.begin(115200);
 
-  // define volume
-  kit.setVolume(0.8);
+  // use max volume
+  kit.setVolume(1.0);
 
   // start a2dp
   a2dp_sink.start("AudioKit");  

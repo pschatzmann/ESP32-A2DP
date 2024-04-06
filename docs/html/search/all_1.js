@@ -3,7 +3,7 @@ var searchData=
   ['bluetootha2dp_2eh_9',['BluetoothA2DP.h',['../_bluetooth_a2_d_p_8h.html',1,'']]],
   ['bluetootha2dpcommon_10',['BluetoothA2DPCommon',['../class_bluetooth_a2_d_p_common.html',1,'']]],
   ['bluetootha2dpcommon_2eh_11',['BluetoothA2DPCommon.h',['../_bluetooth_a2_d_p_common_8h.html',1,'']]],
-  ['bluetootha2dpsink_12',['BluetoothA2DPSink',['../class_bluetooth_a2_d_p_sink.html',1,'BluetoothA2DPSink'],['../class_bluetooth_a2_d_p_sink.html#a2a383635d7b050833f56ee79867716bd',1,'BluetoothA2DPSink::BluetoothA2DPSink()']]],
+  ['bluetootha2dpsink_12',['BluetoothA2DPSink',['../class_bluetooth_a2_d_p_sink.html',1,'BluetoothA2DPSink'],['../class_bluetooth_a2_d_p_sink.html#a7acf882642fea0df0c36847be134ec6f',1,'BluetoothA2DPSink::BluetoothA2DPSink(Print &amp;output)'],['../class_bluetooth_a2_d_p_sink.html#a89b2e9c19a32740c1062ddfb26f09d21',1,'BluetoothA2DPSink::BluetoothA2DPSink(AudioStream &amp;output)'],['../class_bluetooth_a2_d_p_sink.html#afe09654d8c4f250aca4282b49553d30f',1,'BluetoothA2DPSink::BluetoothA2DPSink(AudioOutput &amp;output)'],['../class_bluetooth_a2_d_p_sink.html#a2a383635d7b050833f56ee79867716bd',1,'BluetoothA2DPSink::BluetoothA2DPSink()']]],
   ['bluetootha2dpsinkqueued_13',['BluetoothA2DPSinkQueued',['../class_bluetooth_a2_d_p_sink_queued.html',1,'']]],
   ['bluetootha2dpsource_14',['BluetoothA2DPSource',['../class_bluetooth_a2_d_p_source.html',1,'BluetoothA2DPSource'],['../class_bluetooth_a2_d_p_source.html#a545a8b10ab474d787744f85fe784d49a',1,'BluetoothA2DPSource::BluetoothA2DPSource()']]],
   ['bt_5fapp_5fa2d_5fcb_15',['bt_app_a2d_cb',['../class_bluetooth_a2_d_p_source.html#aae7a0b4f0f75242ceadf6e76a5863b6f',1,'BluetoothA2DPSource']]],

@@ -18,6 +18,14 @@
 #include "BluetoothA2DPCommon.h"
 #include "freertos/ringbuf.h"
 
+#ifdef ARDUINO
+#  include "Print.h"
+#endif
+
+#if A2DP_I2S_AUDIOTOOLS
+#  include "AudioTools.h"
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -50,6 +58,10 @@ extern "C" void ccall_av_hdl_avrc_tg_evt(uint16_t event, void *p_param);
 
 // defines the mechanism to confirm a pin request
 enum PinCodeRequest {Undefined, Confirm, Reply};
+
+// provide global ref for callbacks
+class BluetoothA2DPSink;
+extern BluetoothA2DPSink *actual_bluetooth_a2dp_sink;
 
 /**
  * @brief A2DP Bluethooth Sink - We initialize and start the Bluetooth A2DP Sink. 
@@ -91,27 +103,52 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
 #endif    
 
   public: 
-    /// Constructor
+    /// Default Constructor:  output via callback or Legacy I2S
     BluetoothA2DPSink();
+
+#if A2DP_I2S_AUDIOTOOLS
+    /// Output AudioOutput using AudioTools library
+    BluetoothA2DPSink(AudioOutput &output){
+        actual_bluetooth_a2dp_sink = this;
+        p_print = &output;
+        p_audio_print = &output;
+    }
+    /// Output AudioStream using AudioTools library
+    BluetoothA2DPSink(AudioStream &output){
+        actual_bluetooth_a2dp_sink = this;
+        static AdapterAudioStreamToAudioOutput adapter(output);
+        p_print = &output;
+        p_audio_print = &adapter;
+    }   
+#endif
+
+#ifdef ARDUINO
+    /// Output to Arduino Print
+    BluetoothA2DPSink(Print &output){
+        actual_bluetooth_a2dp_sink = this;
+        p_print = &output;
+    }
+#endif
+
     /// Destructor - stops the playback and releases all resources
     virtual ~BluetoothA2DPSink();
 
-#if A2DP_I2S_SUPPORT
-    /// Define the pins
+#if A2DP_LEGACY_I2S_SUPPORT
+    /// Define the pins (Legacy I2S: OBSOLETE!)
     virtual void set_pin_config(i2s_pin_config_t pin_config);
    
-    /// Define an alternative i2s port other then 0 
+    /// Define an alternative i2s port other then 0 (Legacy I2S: OBSOLETE!)
     virtual void set_i2s_port(i2s_port_t i2s_num);
    
-    /// Define the i2s configuration
+    /// Define the i2s configuration (Legacy I2S: OBSOLETE!)
     virtual void set_i2s_config(i2s_config_t i2s_config);
 
-    /// set output to I2S_CHANNEL_STEREO (default) or I2S_CHANNEL_MONO
+    /// set output to I2S_CHANNEL_STEREO (default) or I2S_CHANNEL_MONO (Legacy I2S: OBSOLETE!)
     virtual void set_channels(i2s_channel_t channels) {
         set_mono_downmix(channels==I2S_CHANNEL_MONO);
     }
 
-    /// Defines the bits per sample for output (if > 16 output will be expanded)
+    /// Defines the bits per sample for output (if > 16 output will be expanded) (Legacy I2S: OBSOLETE!)
     virtual void set_bits_per_sample(int bps) { i2s_config.bits_per_sample = (i2s_bits_per_sample_t) bps; }
 
 #if ESP_IDF_VERSION < ESP_IDF_VERSION_VAL(5, 1, 1)
@@ -290,18 +327,26 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
  #endif
 
   protected:
+
+#ifdef ARDUINO
+    Print* p_print = nullptr;
+#endif
+
+#if A2DP_I2S_AUDIOTOOLS
+    AudioOutput* p_audio_print = nullptr;
+#endif
+
     // protected data
     xQueueHandle app_task_queue = nullptr;
     xTaskHandle app_task_handle = nullptr;
 
-    bool is_i2s_output = A2DP_I2S_SUPPORT;
-#if A2DP_I2S_SUPPORT
+#if A2DP_LEGACY_I2S_SUPPORT
     i2s_config_t i2s_config;
     i2s_pin_config_t pin_config;    
     i2s_channel_t i2s_channels = I2S_CHANNEL_STEREO;
     i2s_port_t i2s_port = I2S_NUM_0; 
-    volatile bool is_i2s_active = false;
 #endif
+    volatile bool is_i2s_active = false;
     uint16_t m_sample_rate = 0; 
     uint32_t m_pkt_cnt = 0;
     //esp_a2d_audio_state_t m_audio_state = ESP_A2D_AUDIO_STATE_STOPPED;
@@ -410,7 +455,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     virtual void av_notify_evt_handler(uint8_t event_id, uint32_t event_parameter);
 #endif    
 
-#if A2DP_I2S_SUPPORT
     virtual void init_i2s();
 
     /// output audio data e.g. to i2s or to queue
@@ -426,8 +470,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     virtual void i2s_task_handler(void *arg) {}
     virtual void bt_i2s_task_start_up(void) {}
     virtual void bt_i2s_task_shut_down(void) {}
-
-#endif
 
     virtual esp_err_t esp_a2d_connect(esp_bd_addr_t peer) {
         return esp_a2d_sink_connect(peer);

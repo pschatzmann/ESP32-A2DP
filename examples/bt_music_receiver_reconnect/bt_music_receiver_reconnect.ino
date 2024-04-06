@@ -1,6 +1,6 @@
 /*
   Streaming Music from Bluetooth
-  
+
   Copyright (C) 2020 Phil Schatzmann
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -16,19 +16,20 @@
 
 // ==> Example which shows how to disconnect and reconnect
 
+#include "AudioTools.h"
 #include "BluetoothA2DPSink.h"
 
-BluetoothA2DPSink a2dp_sink;
+I2SStream i2s;
+BluetoothA2DPSink a2dp_sink(i2s);
+
 bool connected = true;
 
 void setup() {
   Serial.begin(115200);
   a2dp_sink.set_auto_reconnect(true);
-  a2dp_sink.start("MyMusic");  
-
+  a2dp_sink.start("MyMusic");
 }
 
-
 void loop() {
-  delay(60000); // do nothing
+  delay(60000);  // do nothing
 }

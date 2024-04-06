@@ -1,6 +1,6 @@
 /*
   Streaming Music from Bluetooth
-  
+
   Copyright (C) 2020 Phil Schatzmann
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -14,27 +14,28 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-// ==> Example A2DP Receiver which requires a confirmation - we use a Sensitive Touch pin
+// ==> Example A2DP Receiver which requires a confirmation - we use a Sensitive
+// Touch pin
 
+#include "AudioTools.h"
 #include "BluetoothA2DPSink.h"
 
-const int BUTTON = 13; // Sensitive Touch 
-const int BUTTON_PRESSED = 40; // touch limit
+const int BUTTON = 13;          // Sensitive Touch
+const int BUTTON_PRESSED = 40;  // touch limit
 
-BluetoothA2DPSink a2dp_sink;
+I2SStream out;
+BluetoothA2DPSink a2dp_sink(out);
 
 void setup() {
- Serial.begin(115200);
- a2dp_sink.activate_pin_code(true);
- a2dp_sink.start("ReceiverWithPin", false);  
+  Serial.begin(115200);
+  a2dp_sink.activate_pin_code(true);
+  a2dp_sink.start("ReceiverWithPin", false);
 }
 
-void confirm() {
- a2dp_sink.confirm_pin_code();
-}
+void confirm() { a2dp_sink.confirm_pin_code(); }
 
 void loop() {
- if (a2dp_sink.pin_code() != 0 && touchRead(BUTTON) < BUTTON_PRESSED) {
-   a2dp_sink.debounce(confirm, 5000);
- }
+  if (a2dp_sink.pin_code() != 0 && touchRead(BUTTON) < BUTTON_PRESSED) {
+    a2dp_sink.debounce(confirm, 5000);
+  }
 }

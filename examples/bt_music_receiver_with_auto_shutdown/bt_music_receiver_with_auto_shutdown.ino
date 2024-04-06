@@ -1,6 +1,6 @@
 /*
   Streaming Music from Bluetooth
-  
+
   Copyright (C) 2020 Phil Schatzmann
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -14,26 +14,25 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-//  Example A2DP Receiver which uses I2S to an external DAC 
-//  - Automatic shut down if no music afer 5 minutes 
+//  Example A2DP Receiver which uses I2S to an external DAC
+//  - Automatic shut down if no music afer 5 minutes
 //  - The LED indicates if the ESP32 is on or off
 
+#include "AudioTools.h"
 #include "BluetoothA2DPSink.h"
 
 #ifndef LED_BUILTIN
-#define LED_BUILTIN 13 // pin number is specific to your esp32 board
+#define LED_BUILTIN 13  // pin number is specific to your esp32 board
 #endif
 
-
-BluetoothA2DPSink a2dp_sink;
+I2SStream out;
+BluetoothA2DPSink a2dp_sink(i2s);
 esp_a2d_connection_state_t last_state;
 uint16_t minutes = 5;
 unsigned long shutdown_ms = millis() + 1000 * 60 * minutes;
 
 // move shutdown time to future
-void on_data() {
-  shutdown_ms = millis() + 1000 * 60 * minutes; 
-}
+void on_data() { shutdown_ms = millis() + 1000 * 60 * minutes; }
 
 void setup() {
   Serial.begin(115200);
@@ -43,25 +42,23 @@ void setup() {
 
   // startup sink
   a2dp_sink.set_on_data_received(on_data);
-  a2dp_sink.start("MyMusic");  
+  a2dp_sink.start("MyMusic");
 }
-
 
 void loop() {
   // check timeout
-  if (millis()>shutdown_ms){
+  if (millis() > shutdown_ms) {
     // stop the processor
     Serial.println("Shutting down");
     esp_deep_sleep_start();
   }
   // check state
   esp_a2d_connection_state_t state = a2dp_sink.get_connection_state();
-  if (last_state != state){
+  if (last_state != state) {
     bool is_connected = state == ESP_A2D_CONNECTION_STATE_CONNECTED;
-    Serial.println(is_connected ? "Connected" : "Not connected");    
+    Serial.println(is_connected ? "Connected" : "Not connected");
     digitalWrite(LED_BUILTIN, is_connected);
     last_state = state;
   }
   delay(1000);
-
 }

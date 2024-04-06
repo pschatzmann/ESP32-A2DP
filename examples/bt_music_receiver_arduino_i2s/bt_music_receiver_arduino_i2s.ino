@@ -1,5 +1,5 @@
 /*
-  Streaming data from Bluetooth to internal DAC of ESP32
+  Streaming Music from Bluetooth
   
   Copyright (C) 2020 Phil Schatzmann
   This program is free software: you can redistribute it and/or modify
@@ -14,18 +14,24 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-// ==> Example to use external 32 bit DAC - We demonstrate how to create a subclass and override the audio_data_callback method
+// ==> Example which shows how to use the built in ESP32 I2S 
 
-#include "BluetoothA2DPSink32.h"
+#include "I2S.h"
+#include "BluetoothA2DPSink.h"
 
-BluetoothA2DPSink32 a2dp_sink; // Subclass of BluetoothA2DPSink
+BluetoothA2DPSink a2dp_sink(I2S);
 
 void setup() {
-  a2dp_sink.set_bits_per_sample(32);  
-  a2dp_sink.start("Hifi32bit");  
+    I2S.setSckPin(14);
+    I2S.setFsPin(15);
+    I2S.setDataPin(22); 
+    if (!I2S.begin(I2S_PHILIPS_MODE, 44100, 16)) {
+      Serial.println("Failed to initialize I2S!");
+      while (1); // do nothing
+    }
+
+    a2dp_sink.start("MyMusic");
 }
 
-
 void loop() {
-  delay(1000); // do nothing
 }

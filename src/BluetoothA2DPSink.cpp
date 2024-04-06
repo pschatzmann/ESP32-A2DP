@@ -133,14 +133,6 @@ void BluetoothA2DPSink::set_on_data_received(void (*callBack)()) {
   this->data_received = callBack;
 }
 
-// void BluetoothA2DPSink::set_on_connected2BT(void (*callBack)()){
-//   this->bt_connected = callBack;
-// }
-
-// void BluetoothA2DPSink::set_on_dis_connected2BT(void (*callBack)()){
-//   this->bt_dis_connected = callBack;
-// }
-
 // kept for backwards compatibility
 void BluetoothA2DPSink::set_on_volumechange(void (*callBack)(int)) {
   this->bt_volumechange = callBack;
@@ -1460,6 +1452,7 @@ size_t BluetoothA2DPSink::i2s_write_data(const uint8_t *data,
 #if A2DP_I2S_AUDIOTOOLS
   if (p_audio_print != nullptr) {
     i2s_bytes_written = p_audio_print->write(data, item_size);
+    delay(1);
   }
 #endif
 

@@ -762,7 +762,8 @@ void BluetoothA2DPSink::set_i2s_active(bool active) {
 
     } else {
       ESP_LOGW(BT_AV_TAG, "i2s_stop");
-      p_audio_print->end() is_i2s_active = false;
+      p_audio_print->end();
+      is_i2s_active = false;
     }
 
 #elif A2DP_LEGACY_I2S_SUPPORT

@@ -16,9 +16,11 @@
 
 // ==> Example A2DP Receiver which uses connection_state an audio_state callback
 
+#include "AudioTools.h"
 #include "BluetoothA2DPSink.h"
 
-BluetoothA2DPSink a2dp_sink;
+I2SStream out;
+BluetoothA2DPSink a2dp_sink(out);
 
 // for esp_a2d_connection_state_t see https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/bluetooth/esp_a2dp.html#_CPPv426esp_a2d_connection_state_t
 void connection_state_changed(esp_a2d_connection_state_t state, void *ptr){

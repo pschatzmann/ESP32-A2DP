@@ -16,13 +16,14 @@
 
 // ==> Example A2DP Receiver which uses I2S to an external DAC
 
+#include "AudioTools.h"
 #include "BluetoothA2DPSink.h"
 
-BluetoothA2DPSink a2dp_sink;
+I2SStream out;
+BluetoothA2DPSink a2dp_sink(out);
 
 void setup() {
   a2dp_sink.start("MyMusic");  
-
 }
 
 

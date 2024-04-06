@@ -102,22 +102,22 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     /// Constructor
     BluetoothA2DPSink();
 
-#ifdef ARDUINO
-    BluetoothA2DPSink(Print &output){
-        p_print = &output;
-    }
-#endif
-
 #if A2DP_I2S_AUDIOTOOLS
-    BluetoothA2DPSink(AudioPrint &output){
+    BluetoothA2DPSink(AudioOutput &output){
         p_print = &output;
-        p_audio_print = output;
+        p_audio_print = &output;
     }
     BluetoothA2DPSink(AudioStream &output){
         static AdapterAudioStreamToAudioOutput adapter(output);
         p_print = &output;
-        p_audio_print = adapter;
+        p_audio_print = &adapter;
     }   
+#endif
+
+#ifdef ARDUINO
+    BluetoothA2DPSink(Print &output){
+        p_print = &output;
+    }
 #endif
 
     /// Destructor - stops the playback and releases all resources

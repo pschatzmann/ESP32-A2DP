@@ -27,11 +27,8 @@ void setup() {
   //LOGLEVEL_AUDIOKIT = AudioKitInfo;
   Serial.begin(115200);
 
-  // setup codec chip
-  auto cfg = kit.defaultConfig(TX_MODE);
-  cfg.i2s_active = false;
-  kit.begin(cfg);
-  kit.setVolume(100);
+  // define volume
+  kit.setVolume(0.8);
 
   // start a2dp
   a2dp_sink.start("AudioKit");  

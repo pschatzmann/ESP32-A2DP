@@ -16,13 +16,14 @@
 
 // ==> Example A2DP Receiver which uses I2S to an external DAC. The I2S output is managed via a separate Queue which might resolve popping sounds using the volume control on some IOS devices
 
+#include "AudioTools.h"
 #include "BluetoothA2DPSinkQueued.h"
 
-BluetoothA2DPSinkQueued a2dp_sink;
+I2SStream out;
+BluetoothA2DPSinkQueued a2dp_sink(out);
 
 void setup() {
   a2dp_sink.start("MyMusicQueued");  
-
 }
 
 

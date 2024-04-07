@@ -24,7 +24,7 @@ Espressif is retiring the legacy I2S API: So with Arduino 3.0.0 [my old I2S inte
 
 In order to support a unique output API which is version independent, it is recommended to install and use the [AudioTools](https://github.com/pschatzmann/arduino-audio-tools) library. So the documentation and all the examples have been updated to use this new approach.
 
-However you can also output to any other class which inherits from Arduino Print: e.g. the [Arduino ESP32 I2SClass](https://github.com/pschatzmann/ESP32-A2DP/blob/main/examples/bt_music_receiver_arduino_i2s/bt_music_receiver_arduino_i2s.ino). 
+However you can also output to any other class which inherits from Arduino Print: e.g. the [Arduino ESP32 I2SClass](https://github.com/pschatzmann/ESP32-A2DP?tab=readme-ov-file#output-using-the-esp32-i2s-api). 
 
 
 ## A2DP Sink (Music Receiver)

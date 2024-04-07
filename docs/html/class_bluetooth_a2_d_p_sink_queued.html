@@ -277,10 +277,10 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 esp_bt_gap_cb_param_t::read_rssi_delta_param&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a5a770be98d977a8df916d8cc044b310c">get_last_rssi</a> ()</td></tr>
 <tr class="memdesc:a5a770be98d977a8df916d8cc044b310c"><td class="mdescLeft">&#160;</td><td class="mdescRight">provides the last rssi parameters <br /></td></tr>
 <tr class="separator:a5a770be98d977a8df916d8cc044b310c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a97c80237061c6e80d7c6e1e5e45773c8"><td class="memItemLeft" align="right" valign="top"><a id="a97c80237061c6e80d7c6e1e5e45773c8"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a97c80237061c6e80d7c6e1e5e45773c8">set_rssi_callback</a> (void(*callback)(esp_bt_gap_cb_param_t::read_rssi_delta_param &amp;rssi))</td></tr>
-<tr class="memdesc:a97c80237061c6e80d7c6e1e5e45773c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the callback that is called when we get an new rssi value. <br /></td></tr>
-<tr class="separator:a97c80237061c6e80d7c6e1e5e45773c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3156aa18d658d02608030c3fd1717e80"><td class="memItemLeft" align="right" valign="top"><a id="a3156aa18d658d02608030c3fd1717e80"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a3156aa18d658d02608030c3fd1717e80">set_rssi_calldoxback</a> (void(*callback)(esp_bt_gap_cb_param_t::read_rssi_delta_param &amp;rssi))</td></tr>
+<tr class="memdesc:a3156aa18d658d02608030c3fd1717e80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the callback that is called when we get an new rssi value. <br /></td></tr>
+<tr class="separator:a3156aa18d658d02608030c3fd1717e80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a96b4fabd27e7952fc3ea5edca3b95cbb"><td class="memItemLeft" align="right" valign="top"><a id="a96b4fabd27e7952fc3ea5edca3b95cbb"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a96b4fabd27e7952fc3ea5edca3b95cbb">set_reconnect_delay</a> (int <a class="el" href="_bluetooth_a2_d_p_common_8h.html#a1ea0f006ec5db0c83e80adb8dca80e34">delay</a>)</td></tr>
 <tr class="memdesc:a96b4fabd27e7952fc3ea5edca3b95cbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the delay that is added to delay the startup when we automatically reconnect. <br /></td></tr>
@@ -602,12 +602,9 @@ xTaskHandle&#160;</td><td class="memItemRight" valign="bottom"><b>app_task_handl
 <tr class="memitem:a2a73abd7cf332f32dfb1d8ff1cc5d59e"><td class="memItemLeft" align="right" valign="top"><a id="a2a73abd7cf332f32dfb1d8ff1cc5d59e"></a>
 volatile bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_i2s_active</b> = false</td></tr>
 <tr class="separator:a2a73abd7cf332f32dfb1d8ff1cc5d59e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3046175ecb053f03df6596775ccfa560"><td class="memItemLeft" align="right" valign="top"><a id="a3046175ecb053f03df6596775ccfa560"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_i2s_output</b> = true</td></tr>
-<tr class="separator:a3046175ecb053f03df6596775ccfa560"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af4d9a208a3f1a9eeb469dd3cbf9015d3"><td class="memItemLeft" align="right" valign="top"><a id="af4d9a208a3f1a9eeb469dd3cbf9015d3"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_sample_rate</b> = 0</td></tr>
-<tr class="separator:af4d9a208a3f1a9eeb469dd3cbf9015d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a235bfba4194a4d056d2033dd0305ac63"><td class="memItemLeft" align="right" valign="top"><a id="a235bfba4194a4d056d2033dd0305ac63"></a>
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD bool is_i2s_output=true;=======&gt;&gt;&gt;&gt;&gt;&gt; uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_sample_rate</b> = 0</td></tr>
+<tr class="separator:a235bfba4194a4d056d2033dd0305ac63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad558d5c64a96982632b63103197d6927"><td class="memItemLeft" align="right" valign="top"><a id="ad558d5c64a96982632b63103197d6927"></a>
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_pkt_cnt</b> = 0</td></tr>
 <tr class="separator:ad558d5c64a96982632b63103197d6927"><td class="memSeparator" colspan="2">&#160;</td></tr>

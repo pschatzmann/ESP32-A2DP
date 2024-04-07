@@ -32,7 +32,7 @@ var searchData=
   ['set_5freconnect_5fdelay_231',['set_reconnect_delay',['../class_bluetooth_a2_d_p_sink.html#a96b4fabd27e7952fc3ea5edca3b95cbb',1,'BluetoothA2DPSink']]],
   ['set_5freset_5fble_232',['set_reset_ble',['../class_bluetooth_a2_d_p_source.html#a5efcc4c32c6ec8ce7eac2c1acb59f27c',1,'BluetoothA2DPSource']]],
   ['set_5frssi_5factive_233',['set_rssi_active',['../class_bluetooth_a2_d_p_sink.html#a452b509a46930ab1ed58188a4181c67b',1,'BluetoothA2DPSink']]],
-  ['set_5frssi_5fcallback_234',['set_rssi_callback',['../class_bluetooth_a2_d_p_sink.html#a97c80237061c6e80d7c6e1e5e45773c8',1,'BluetoothA2DPSink']]],
+  ['set_5frssi_5fcalldoxback_234',['set_rssi_calldoxback',['../class_bluetooth_a2_d_p_sink.html#a3156aa18d658d02608030c3fd1717e80',1,'BluetoothA2DPSink']]],
   ['set_5fsample_5frate_5fcallback_235',['set_sample_rate_callback',['../class_bluetooth_a2_d_p_sink.html#a89d2694f880a2db22344b97b466c9a9d',1,'BluetoothA2DPSink']]],
   ['set_5fscan_5fmode_5fconnectable_236',['set_scan_mode_connectable',['../class_bluetooth_a2_d_p_common.html#af1e2f14ddbe9266b61f5e721095c3685',1,'BluetoothA2DPCommon']]],
   ['set_5fspp_5factive_237',['set_spp_active',['../class_bluetooth_a2_d_p_sink.html#abe6004e2b95d120d64c10cf947fefb55',1,'BluetoothA2DPSink']]],

@@ -20,11 +20,11 @@ The Hands-Free Profile (HFP), Headset Profile (HSP) and stand alone AVRCP withou
 
 ## I2S API / Dependencies
 
-Espressif is retiring the legacy I2S API: So with Arduino 3.0.0 [my old I2S integration](https://github.com/pschatzmann/ESP32-A2DP/wiki/Legacy-I2S-API) will not be available any more. 
+Espressif is retiring the legacy I2S API: So with Arduino 3.0.0 [my old I2S integration](https://github.com/pschatzmann/ESP32-A2DP/wiki/Legacy-I2S-API) will not be available any more. The legacy syntax is still working as long as you don't upgrade.  
 
 In order to support a unique output API which is version independent, it is recommended to install and use the [AudioTools](https://github.com/pschatzmann/arduino-audio-tools) library.
 
-However you can output to any other class which inherits from Arduino Print: e.g. the Arduino ESP32 I2SClass. 
+However you can also output to any other class which inherits from Arduino Print: e.g. the Arduino ESP32 I2SClass. 
 
 
 ## A2DP Sink (Music Receiver)
@@ -344,6 +344,7 @@ git clone https://github.com/pschatzmann/ESP32-A2DP.git
 git clone https://github.com/pschatzmann/arduino-audio-tools.git
 ```
 For the provided examples, you will need to install the [audio-tools library](https://github.com/pschatzmann/arduino-audio-tools) as well. 
+
 For other frameworks [see the Wiki](https://github.com/pschatzmann/ESP32-A2DP/wiki)
 
 ## Change History

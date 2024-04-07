@@ -269,6 +269,10 @@ virtual esp_bd_addr_t *&#160;</td><td class="memItemRight" valign="bottom"><a cl
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a452b509a46930ab1ed58188a4181c67b">set_rssi_active</a> (bool active)</td></tr>
 <tr class="memdesc:a452b509a46930ab1ed58188a4181c67b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Activates the rssi reporting. <br /></td></tr>
 <tr class="separator:a452b509a46930ab1ed58188a4181c67b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b43ee67031c300d07638f9c969fa4ef"><td class="memItemLeft" align="right" valign="top"><a id="a3b43ee67031c300d07638f9c969fa4ef"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a3b43ee67031c300d07638f9c969fa4ef">update_rssi</a> ()</td></tr>
+<tr class="memdesc:a3b43ee67031c300d07638f9c969fa4ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Requests an update of the rssi delta value. <br /></td></tr>
+<tr class="separator:a3b43ee67031c300d07638f9c969fa4ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a770be98d977a8df916d8cc044b310c"><td class="memItemLeft" align="right" valign="top"><a id="a5a770be98d977a8df916d8cc044b310c"></a>
 esp_bt_gap_cb_param_t::read_rssi_delta_param&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a5a770be98d977a8df916d8cc044b310c">get_last_rssi</a> ()</td></tr>
 <tr class="memdesc:a5a770be98d977a8df916d8cc044b310c"><td class="mdescLeft">&#160;</td><td class="mdescRight">provides the last rssi parameters <br /></td></tr>
@@ -598,6 +602,9 @@ xTaskHandle&#160;</td><td class="memItemRight" valign="bottom"><b>app_task_handl
 <tr class="memitem:a2a73abd7cf332f32dfb1d8ff1cc5d59e"><td class="memItemLeft" align="right" valign="top"><a id="a2a73abd7cf332f32dfb1d8ff1cc5d59e"></a>
 volatile bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_i2s_active</b> = false</td></tr>
 <tr class="separator:a2a73abd7cf332f32dfb1d8ff1cc5d59e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3046175ecb053f03df6596775ccfa560"><td class="memItemLeft" align="right" valign="top"><a id="a3046175ecb053f03df6596775ccfa560"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_i2s_output</b> = true</td></tr>
+<tr class="separator:a3046175ecb053f03df6596775ccfa560"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af4d9a208a3f1a9eeb469dd3cbf9015d3"><td class="memItemLeft" align="right" valign="top"><a id="af4d9a208a3f1a9eeb469dd3cbf9015d3"></a>
 uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_sample_rate</b> = 0</td></tr>
 <tr class="separator:af4d9a208a3f1a9eeb469dd3cbf9015d3"><td class="memSeparator" colspan="2">&#160;</td></tr>

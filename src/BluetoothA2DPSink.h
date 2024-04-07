@@ -298,7 +298,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     }
 
     /// Defines the callback that is called when we get an new rssi value
-    void set_rssi_callback(void (*callback)(esp_bt_gap_cb_param_t::read_rssi_delta_param &rssi)){
+    void set_rssi_calldoxback(void (*callback)(esp_bt_gap_cb_param_t::read_rssi_delta_param &rssi)){
         rssi_callbak = callback;
     }
 

@@ -29,15 +29,12 @@ class BluetoothA2DPSinkQueued : public BluetoothA2DPSink {
   /// Output AudioOutput using AudioTools library
   BluetoothA2DPSinkQueued(AudioOutput &output) {
     actual_bluetooth_a2dp_sink = this;
-    p_print = &output;
-    p_audio_print = &output;
+    out->set_output(output);
   }
   /// Output AudioStream using AudioTools library
   BluetoothA2DPSinkQueued(AudioStream &output) {
     actual_bluetooth_a2dp_sink = this;
-    static AdapterAudioStreamToAudioOutput adapter(output);
-    p_print = &output;
-    p_audio_print = &adapter;
+    out->set_output(output);
   }
 #endif
 
@@ -45,7 +42,7 @@ class BluetoothA2DPSinkQueued : public BluetoothA2DPSink {
   /// Output to Arduino Print
   BluetoothA2DPSinkQueued(Print &output) {
     actual_bluetooth_a2dp_sink = this;
-    p_print = &output;
+    out->set_output(output);
   }
 #endif
 

@@ -122,242 +122,239 @@ $(function() {
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#include &quot;A2DPVolumeControl.h&quot;</span></div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#include &quot;esp_task_wdt.h&quot;</span></div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#if A2DP_LEGACY_I2S_SUPPORT</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">#  include &quot;driver/i2s.h&quot;</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">#ifdef ARDUINO_ARCH_ESP32</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#include &quot;esp32-hal-log.h&quot;</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">#include &quot;esp32-hal-bt.h&quot;</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">#include &quot;esp_log.h&quot;</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">bool</span> <a class="code" href="_bluetooth_a2_d_p_common_8h.html#a920f1d5645eff5bb9dedd84d5c20f794">btStart</a>();</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">void</span> <a class="code" href="_bluetooth_a2_d_p_common_8h.html#a1ea0f006ec5db0c83e80adb8dca80e34">delay</a>(<span class="keywordtype">long</span> millis);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> millis();</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor">#if !defined(ESP_IDF_VERSION)</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="preprocessor">#  error Unsupported ESP32 Version: Upgrade the ESP32 version in the Board Manager</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="comment">// Support for old and new IDF version</span></div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="preprocessor">#if ESP_IDF_VERSION &lt; ESP_IDF_VERSION_VAL(4, 0 , 0) &amp;&amp; !defined(I2S_COMM_FORMAT_STAND_I2S)</span></div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="comment">// support for old idf releases</span></div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="preprocessor"># define I2S_COMM_FORMAT_STAND_I2S (I2S_COMM_FORMAT_I2S | I2S_COMM_FORMAT_I2S_MSB)</span></div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="preprocessor"># define I2S_COMM_FORMAT_STAND_MSB (I2S_COMM_FORMAT_I2S | I2S_COMM_FORMAT_I2S_LSB)</span></div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="preprocessor"># define I2S_COMM_FORMAT_STAND_PCM_LONG (I2S_COMM_FORMAT_PCM | I2S_COMM_FORMAT_PCM_LONG)</span></div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="preprocessor"># define I2S_COMM_FORMAT_STAND_PCM_SHORT (I2S_COMM_FORMAT_PCM | I2S_COMM_FORMAT_PCM_SHORT)</span></div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="comment">// IDF 5 support</span></div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="preprocessor">#if ESP_IDF_VERSION &gt;= ESP_IDF_VERSION_VAL(5, 0 , 0)</span></div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="preprocessor">#  define xTaskHandle TaskHandle_t</span></div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="preprocessor">#  define xQueueHandle QueueHandle_t</span></div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="preprocessor">#define A2DP_DEPRECATED __attribute__((deprecated))</span></div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
-<div class="line"><a name="l00102"></a><span class="lineno"><a class="line" href="_bluetooth_a2_d_p_common_8h.html#a9bee258e477be3c0e70d6029ed86a019">  102</a></span>&#160;<span class="keyword">typedef</span> void (* <a class="code" href="_bluetooth_a2_d_p_common_8h.html#a9bee258e477be3c0e70d6029ed86a019">app_callback_t</a>) (uint16_t event, <span class="keywordtype">void</span> *param);</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
-<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="structbt__app__msg__t.html">  105</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
-<div class="line"><a name="l00106"></a><span class="lineno"><a class="line" href="structbt__app__msg__t.html#a3d8f18211a5ce29fecbebc5546e7a17e">  106</a></span>&#160;    uint16_t             <a class="code" href="structbt__app__msg__t.html#a3d8f18211a5ce29fecbebc5546e7a17e">sig</a>;      </div>
-<div class="line"><a name="l00107"></a><span class="lineno"><a class="line" href="structbt__app__msg__t.html#a74f4561abb15d9ae98c3eefdd68de7c4">  107</a></span>&#160;    uint16_t             <a class="code" href="structbt__app__msg__t.html#a74f4561abb15d9ae98c3eefdd68de7c4">event</a>;    </div>
-<div class="line"><a name="l00108"></a><span class="lineno"><a class="line" href="structbt__app__msg__t.html#a64ce3190ec86ce6a75f6b421319ed8f7">  108</a></span>&#160;    <a class="code" href="_bluetooth_a2_d_p_common_8h.html#a9bee258e477be3c0e70d6029ed86a019">app_callback_t</a>       <a class="code" href="structbt__app__msg__t.html#a64ce3190ec86ce6a75f6b421319ed8f7">cb</a>;       </div>
-<div class="line"><a name="l00109"></a><span class="lineno"><a class="line" href="structbt__app__msg__t.html#aae06d9a8a215b9ae4b5a3827f5e5e7a7">  109</a></span>&#160;    <span class="keywordtype">void</span>                 *<a class="code" href="structbt__app__msg__t.html#aae06d9a8a215b9ae4b5a3827f5e5e7a7">param</a>;   </div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;} <a class="code" href="structbt__app__msg__t.html">bt_app_msg_t</a>;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="preprocessor">#define BT_AV_TAG        &quot;BT_AV&quot;</span></div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="preprocessor">#define BT_RC_CT_TAG     &quot;RCCT&quot;</span></div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="preprocessor">#define BT_APP_TAG       &quot;BT_API&quot;</span></div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="comment">/* AVRCP used transaction labels */</span></div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="preprocessor">#define APP_RC_CT_TL_GET_CAPS            (0)</span></div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="preprocessor">#define APP_RC_CT_TL_GET_META_DATA       (1)</span></div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="preprocessor">#define APP_RC_CT_TL_RN_TRACK_CHANGE     (2)</span></div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="preprocessor">#define APP_RC_CT_TL_RN_PLAYBACK_CHANGE  (3)</span></div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="preprocessor">#define APP_RC_CT_TL_RN_PLAY_POS_CHANGE  (4)</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">#ifdef ARDUINO_ARCH_ESP32</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">#include &quot;esp32-hal-log.h&quot;</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">#include &quot;esp32-hal-bt.h&quot;</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#include &quot;esp_log.h&quot;</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">bool</span> <a class="code" href="_bluetooth_a2_d_p_common_8h.html#a920f1d5645eff5bb9dedd84d5c20f794">btStart</a>();</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">void</span> <a class="code" href="_bluetooth_a2_d_p_common_8h.html#a1ea0f006ec5db0c83e80adb8dca80e34">delay</a>(<span class="keywordtype">long</span> millis);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> millis();</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor">#if !defined(ESP_IDF_VERSION)</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor">#  error Unsupported ESP32 Version: Upgrade the ESP32 version in the Board Manager</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="comment">// Support for old and new IDF version</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">#if ESP_IDF_VERSION &lt; ESP_IDF_VERSION_VAL(4, 0 , 0) &amp;&amp; !defined(I2S_COMM_FORMAT_STAND_I2S)</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="comment">// support for old idf releases</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="preprocessor"># define I2S_COMM_FORMAT_STAND_I2S (I2S_COMM_FORMAT_I2S | I2S_COMM_FORMAT_I2S_MSB)</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="preprocessor"># define I2S_COMM_FORMAT_STAND_MSB (I2S_COMM_FORMAT_I2S | I2S_COMM_FORMAT_I2S_LSB)</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="preprocessor"># define I2S_COMM_FORMAT_STAND_PCM_LONG (I2S_COMM_FORMAT_PCM | I2S_COMM_FORMAT_PCM_LONG)</span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="preprocessor"># define I2S_COMM_FORMAT_STAND_PCM_SHORT (I2S_COMM_FORMAT_PCM | I2S_COMM_FORMAT_PCM_SHORT)</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="comment">// IDF 5 support</span></div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="preprocessor">#if ESP_IDF_VERSION &gt;= ESP_IDF_VERSION_VAL(5, 0 , 0)</span></div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="preprocessor">#  define xTaskHandle TaskHandle_t</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor">#  define xQueueHandle QueueHandle_t</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="preprocessor">#define A2DP_DEPRECATED __attribute__((deprecated))</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
+<div class="line"><a name="l00099"></a><span class="lineno"><a class="line" href="_bluetooth_a2_d_p_common_8h.html#a9bee258e477be3c0e70d6029ed86a019">   99</a></span>&#160;<span class="keyword">typedef</span> void (* <a class="code" href="_bluetooth_a2_d_p_common_8h.html#a9bee258e477be3c0e70d6029ed86a019">app_callback_t</a>) (uint16_t event, <span class="keywordtype">void</span> *param);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
+<div class="line"><a name="l00102"></a><span class="lineno"><a class="line" href="structbt__app__msg__t.html">  102</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
+<div class="line"><a name="l00103"></a><span class="lineno"><a class="line" href="structbt__app__msg__t.html#a3d8f18211a5ce29fecbebc5546e7a17e">  103</a></span>&#160;    uint16_t             <a class="code" href="structbt__app__msg__t.html#a3d8f18211a5ce29fecbebc5546e7a17e">sig</a>;      </div>
+<div class="line"><a name="l00104"></a><span class="lineno"><a class="line" href="structbt__app__msg__t.html#a74f4561abb15d9ae98c3eefdd68de7c4">  104</a></span>&#160;    uint16_t             <a class="code" href="structbt__app__msg__t.html#a74f4561abb15d9ae98c3eefdd68de7c4">event</a>;    </div>
+<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="structbt__app__msg__t.html#a64ce3190ec86ce6a75f6b421319ed8f7">  105</a></span>&#160;    <a class="code" href="_bluetooth_a2_d_p_common_8h.html#a9bee258e477be3c0e70d6029ed86a019">app_callback_t</a>       <a class="code" href="structbt__app__msg__t.html#a64ce3190ec86ce6a75f6b421319ed8f7">cb</a>;       </div>
+<div class="line"><a name="l00106"></a><span class="lineno"><a class="line" href="structbt__app__msg__t.html#aae06d9a8a215b9ae4b5a3827f5e5e7a7">  106</a></span>&#160;    <span class="keywordtype">void</span>                 *<a class="code" href="structbt__app__msg__t.html#aae06d9a8a215b9ae4b5a3827f5e5e7a7">param</a>;   </div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;} <a class="code" href="structbt__app__msg__t.html">bt_app_msg_t</a>;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="preprocessor">#define BT_AV_TAG        &quot;BT_AV&quot;</span></div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="preprocessor">#define BT_RC_CT_TAG     &quot;RCCT&quot;</span></div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="preprocessor">#define BT_APP_TAG       &quot;BT_API&quot;</span></div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160; </div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="comment">/* AVRCP used transaction labels */</span></div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="preprocessor">#define APP_RC_CT_TL_GET_CAPS            (0)</span></div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="preprocessor">#define APP_RC_CT_TL_GET_META_DATA       (1)</span></div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="preprocessor">#define APP_RC_CT_TL_RN_TRACK_CHANGE     (2)</span></div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="preprocessor">#define APP_RC_CT_TL_RN_PLAYBACK_CHANGE  (3)</span></div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="preprocessor">#define APP_RC_CT_TL_RN_PLAY_POS_CHANGE  (4)</span></div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160; </div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="keyword">enum</span> ReconnectStatus { NoReconnect, AutoReconnect, IsReconnecting};</div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; </div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="keyword">enum</span> ReconnectStatus { NoReconnect, AutoReconnect, IsReconnecting};</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160; </div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160; </div>
-<div class="line"><a name="l00133"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html">  133</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_bluetooth_a2_d_p_common.html">BluetoothA2DPCommon</a> {</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00136"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#a4bbbd1a2c9c85004afaa7c6dbad45322">  136</a></span>&#160;        <span class="keyword">virtual</span> <a class="code" href="class_bluetooth_a2_d_p_common.html#a4bbbd1a2c9c85004afaa7c6dbad45322">~BluetoothA2DPCommon</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    </div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;        <span class="keywordtype">void</span> set_auto_reconnect(<span class="keywordtype">bool</span> active);</div>
+<div class="line"><a name="l00130"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html">  130</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_bluetooth_a2_d_p_common.html">BluetoothA2DPCommon</a> {</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00133"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#a4bbbd1a2c9c85004afaa7c6dbad45322">  133</a></span>&#160;        <span class="keyword">virtual</span> <a class="code" href="class_bluetooth_a2_d_p_common.html#a4bbbd1a2c9c85004afaa7c6dbad45322">~BluetoothA2DPCommon</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    </div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;        <span class="keywordtype">void</span> set_auto_reconnect(<span class="keywordtype">bool</span> active);</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160; </div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> disconnect();</div>
 <div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160; </div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> disconnect();</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">bool</span> reconnect();</div>
 <div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160; </div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">bool</span> reconnect();</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">bool</span> connect_to(esp_bd_addr_t peer);</div>
 <div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160; </div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">bool</span> connect_to(esp_bd_addr_t peer);</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> set_connected(<span class="keywordtype">bool</span> active);</div>
 <div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160; </div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> set_connected(<span class="keywordtype">bool</span> active);</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> end(<span class="keywordtype">bool</span> releaseMemory=<span class="keyword">false</span>);</div>
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160; </div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> end(<span class="keywordtype">bool</span> releaseMemory=<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00154"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#a5e76412770515732e3f54275decf02f0">  154</a></span>&#160;        <span class="keyword">virtual</span>  <span class="keywordtype">bool</span> <a class="code" href="class_bluetooth_a2_d_p_common.html#a5e76412770515732e3f54275decf02f0">is_connected</a>() { <span class="keywordflow">return</span> connection_state == ESP_A2D_CONNECTION_STATE_CONNECTED;}</div>
 <div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160; </div>
-<div class="line"><a name="l00157"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#a5e76412770515732e3f54275decf02f0">  157</a></span>&#160;        <span class="keyword">virtual</span>  <span class="keywordtype">bool</span> <a class="code" href="class_bluetooth_a2_d_p_common.html#a5e76412770515732e3f54275decf02f0">is_connected</a>() { <span class="keywordflow">return</span> connection_state == ESP_A2D_CONNECTION_STATE_CONNECTED;}</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160; </div>
-<div class="line"><a name="l00160"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#a0bab92d9317837ecaeacbfe26814e28c">  160</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_common.html#a0bab92d9317837ecaeacbfe26814e28c">set_volume</a>(uint8_t volume){</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;            ESP_LOGI(BT_AV_TAG, <span class="stringliteral">&quot;set_volume: %d&quot;</span>, volume);</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;            volume_value = volume;</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;            volume_control()-&gt;set_volume(volume);</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;            volume_control()-&gt;set_enabled(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;            is_volume_used = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;        }</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;            </div>
-<div class="line"><a name="l00169"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#a0e570c2c2f9db40873286e0571f0d93a">  169</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="class_bluetooth_a2_d_p_common.html#a0e570c2c2f9db40873286e0571f0d93a">get_volume</a>(){</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;            <span class="keywordflow">return</span> is_volume_used ? volume_value : 0;</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;        }</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160; </div>
-<div class="line"><a name="l00174"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#a7757ddbf424aeb909dc952d7c40fc241">  174</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_common.html#a7757ddbf424aeb909dc952d7c40fc241">set_volume_control</a>(<a class="code" href="class_a2_d_p_volume_control.html">A2DPVolumeControl</a> *ptr){</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;            volume_control_ptr = ptr;</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;        }</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160; </div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;        <span class="keyword">virtual</span> esp_a2d_audio_state_t get_audio_state();</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    </div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;        <span class="keyword">virtual</span> esp_a2d_connection_state_t get_connection_state();</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160; </div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> set_on_connection_state_changed(<span class="keywordtype">void</span> (*callBack)(esp_a2d_connection_state_t state, <span class="keywordtype">void</span> *), <span class="keywordtype">void</span> *obj=<span class="keyword">nullptr</span>);</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160; </div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> set_on_audio_state_changed_post(<span class="keywordtype">void</span> (*callBack)(esp_a2d_audio_state_t state, <span class="keywordtype">void</span>*), <span class="keywordtype">void</span>* obj=<span class="keyword">nullptr</span>);</div>
+<div class="line"><a name="l00157"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#a0bab92d9317837ecaeacbfe26814e28c">  157</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_common.html#a0bab92d9317837ecaeacbfe26814e28c">set_volume</a>(uint8_t volume){</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;            ESP_LOGI(BT_AV_TAG, <span class="stringliteral">&quot;set_volume: %d&quot;</span>, volume);</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;            volume_value = volume;</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;            volume_control()-&gt;set_volume(volume);</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;            volume_control()-&gt;set_enabled(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;            is_volume_used = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;        }</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;            </div>
+<div class="line"><a name="l00166"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#a0e570c2c2f9db40873286e0571f0d93a">  166</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="class_bluetooth_a2_d_p_common.html#a0e570c2c2f9db40873286e0571f0d93a">get_volume</a>(){</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;            <span class="keywordflow">return</span> is_volume_used ? volume_value : 0;</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;        }</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160; </div>
+<div class="line"><a name="l00171"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#a7757ddbf424aeb909dc952d7c40fc241">  171</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_common.html#a7757ddbf424aeb909dc952d7c40fc241">set_volume_control</a>(<a class="code" href="class_a2_d_p_volume_control.html">A2DPVolumeControl</a> *ptr){</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;            volume_control_ptr = ptr;</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;        }</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160; </div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;        <span class="keyword">virtual</span> esp_a2d_audio_state_t get_audio_state();</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    </div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;        <span class="keyword">virtual</span> esp_a2d_connection_state_t get_connection_state();</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160; </div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> set_on_connection_state_changed(<span class="keywordtype">void</span> (*callBack)(esp_a2d_connection_state_t state, <span class="keywordtype">void</span> *), <span class="keywordtype">void</span> *obj=<span class="keyword">nullptr</span>);</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160; </div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> set_on_audio_state_changed_post(<span class="keywordtype">void</span> (*callBack)(esp_a2d_audio_state_t state, <span class="keywordtype">void</span>*), <span class="keywordtype">void</span>* obj=<span class="keyword">nullptr</span>);</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160; </div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> set_on_audio_state_changed(<span class="keywordtype">void</span> (*callBack)(esp_a2d_audio_state_t state, <span class="keywordtype">void</span>*), <span class="keywordtype">void</span>* obj=<span class="keyword">nullptr</span>);</div>
 <div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160; </div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> set_on_audio_state_changed(<span class="keywordtype">void</span> (*callBack)(esp_a2d_audio_state_t state, <span class="keywordtype">void</span>*), <span class="keywordtype">void</span>* obj=<span class="keyword">nullptr</span>);</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> debounce(<span class="keywordtype">void</span>(*cb)(<span class="keywordtype">void</span>),<span class="keywordtype">int</span> ms);</div>
 <div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160; </div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> debounce(<span class="keywordtype">void</span>(*cb)(<span class="keywordtype">void</span>),<span class="keywordtype">int</span> ms);</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;        <span class="keywordtype">void</span> log_free_heap();</div>
 <div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160; </div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;        <span class="keywordtype">void</span> log_free_heap();</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">char</span>* to_str(esp_a2d_connection_state_t state);</div>
 <div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160; </div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">char</span>* to_str(esp_a2d_connection_state_t state);</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">char</span>* to_str(esp_a2d_audio_state_t state);</div>
 <div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160; </div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">char</span>* to_str(esp_a2d_audio_state_t state);</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">char</span>* to_str(esp_bd_addr_t bda);</div>
 <div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160; </div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">char</span>* to_str(esp_bd_addr_t bda);</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160; </div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;<span class="preprocessor">#if ESP_IDF_VERSION &gt;= ESP_IDF_VERSION_VAL(4, 0, 0)</span></div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">char</span>* to_str(esp_avrc_playback_stat_t state);</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160; </div>
-<div class="line"><a name="l00216"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#a68f9e168839f0faeb72705ccabbb6b7a">  216</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_common.html#a68f9e168839f0faeb72705ccabbb6b7a">set_task_priority</a>(UBaseType_t priority){</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;            task_priority = priority;</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;        }</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160; </div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160; </div>
-<div class="line"><a name="l00222"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#a694940fad2a2d498875cfbdf52eea58b">  222</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_common.html#a694940fad2a2d498875cfbdf52eea58b">set_task_core</a>(BaseType_t core){</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;            task_core = core;</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;        }</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160; </div>
-<div class="line"><a name="l00227"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#ae5e96c34428c50873a0ca7423a6b5402">  227</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_common.html#ae5e96c34428c50873a0ca7423a6b5402">set_event_queue_size</a>(<span class="keywordtype">int</span> size){</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;            event_queue_size = size;</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;        }</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160; </div>
-<div class="line"><a name="l00232"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#a04bc52a4279a503203084492fe20c32e">  232</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_common.html#a04bc52a4279a503203084492fe20c32e">set_event_stack_size</a>(<span class="keywordtype">int</span> size){</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;            event_stack_size = size;</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;        }</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160; </div>
-<div class="line"><a name="l00237"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#ac21e1dbd2f5f475da871a7e778ba1a40">  237</a></span>&#160;        <span class="keyword">virtual</span> esp_bd_addr_t* <a class="code" href="class_bluetooth_a2_d_p_common.html#ac21e1dbd2f5f475da871a7e778ba1a40">get_last_peer_address</a>() {</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;            <span class="keywordflow">return</span> &amp;last_connection;</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;        }</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160; </div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;<span class="preprocessor">#if ESP_IDF_VERSION &gt;= ESP_IDF_VERSION_VAL(4, 0, 0)</span></div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> set_discoverability(esp_bt_discovery_mode_t d);</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160; </div>
-<div class="line"><a name="l00247"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#a8b37f48a6b0bca33fb21b2a9ae9dab7c">  247</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_common.html#a8b37f48a6b0bca33fb21b2a9ae9dab7c">set_connectable</a>(<span class="keywordtype">bool</span> connectable) {</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;        set_scan_mode_connectable(connectable);</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;    }</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160; </div>
-<div class="line"><a name="l00252"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#a726f45e4d405f5c5f5b259f11aaf8246">  252</a></span>&#160;    <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="class_bluetooth_a2_d_p_common.html#a726f45e4d405f5c5f5b259f11aaf8246">get_name</a>() {</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;        <span class="keywordflow">return</span> bt_name;</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;    }</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;<span class="preprocessor">#if ESP_IDF_VERSION &gt;= ESP_IDF_VERSION_VAL(4, 0, 0)</span></div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">char</span>* to_str(esp_avrc_playback_stat_t state);</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160; </div>
+<div class="line"><a name="l00213"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#a68f9e168839f0faeb72705ccabbb6b7a">  213</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_common.html#a68f9e168839f0faeb72705ccabbb6b7a">set_task_priority</a>(UBaseType_t priority){</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;            task_priority = priority;</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;        }</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160; </div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160; </div>
+<div class="line"><a name="l00219"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#a694940fad2a2d498875cfbdf52eea58b">  219</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_common.html#a694940fad2a2d498875cfbdf52eea58b">set_task_core</a>(BaseType_t core){</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;            task_core = core;</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;        }</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160; </div>
+<div class="line"><a name="l00224"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#ae5e96c34428c50873a0ca7423a6b5402">  224</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_common.html#ae5e96c34428c50873a0ca7423a6b5402">set_event_queue_size</a>(<span class="keywordtype">int</span> size){</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;            event_queue_size = size;</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;        }</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160; </div>
+<div class="line"><a name="l00229"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#a04bc52a4279a503203084492fe20c32e">  229</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_common.html#a04bc52a4279a503203084492fe20c32e">set_event_stack_size</a>(<span class="keywordtype">int</span> size){</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;            event_stack_size = size;</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;        }</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160; </div>
+<div class="line"><a name="l00234"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#ac21e1dbd2f5f475da871a7e778ba1a40">  234</a></span>&#160;        <span class="keyword">virtual</span> esp_bd_addr_t* <a class="code" href="class_bluetooth_a2_d_p_common.html#ac21e1dbd2f5f475da871a7e778ba1a40">get_last_peer_address</a>() {</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;            <span class="keywordflow">return</span> &amp;last_connection;</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;        }</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160; </div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;<span class="preprocessor">#if ESP_IDF_VERSION &gt;= ESP_IDF_VERSION_VAL(4, 0, 0)</span></div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> set_discoverability(esp_bt_discovery_mode_t d);</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160; </div>
+<div class="line"><a name="l00244"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#a8b37f48a6b0bca33fb21b2a9ae9dab7c">  244</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_common.html#a8b37f48a6b0bca33fb21b2a9ae9dab7c">set_connectable</a>(<span class="keywordtype">bool</span> connectable) {</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;        set_scan_mode_connectable(connectable);</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;    }</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160; </div>
+<div class="line"><a name="l00249"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#a726f45e4d405f5c5f5b259f11aaf8246">  249</a></span>&#160;    <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="class_bluetooth_a2_d_p_common.html#a726f45e4d405f5c5f5b259f11aaf8246">get_name</a>() {</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;        <span class="keywordflow">return</span> bt_name;</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;    }</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160; </div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> clean_last_connection();</div>
 <div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160; </div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> clean_last_connection();</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160; </div>
-<div class="line"><a name="l00260"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#a41ab8453d4f7f88d68d6cdb1a866532b">  260</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_common.html#a41ab8453d4f7f88d68d6cdb1a866532b">set_default_bt_mode</a>(esp_bt_mode_t mode){</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;        bt_mode = mode;</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    }</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160; </div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">char</span>* bt_name = {0};</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;        esp_bd_addr_t peer_bd_addr;</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;        ReconnectStatus reconnect_status = NoReconnect;</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> reconnect_timout=0;</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> default_reconnect_timout=10000;</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;        <span class="keywordtype">bool</span> is_autoreconnect_allowed = <span class="keyword">false</span>; </div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;        uint32_t debounce_ms = 0;</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;        <a class="code" href="class_a2_d_p_default_volume_control.html">A2DPDefaultVolumeControl</a> default_volume_control;</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;        <a class="code" href="class_a2_d_p_volume_control.html">A2DPVolumeControl</a> *volume_control_ptr = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;        esp_bd_addr_t last_connection = {0,0,0,0,0,0};</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;        <span class="keywordtype">bool</span> is_start_disabled = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;        void (*connection_state_callback)(esp_a2d_connection_state_t state, <span class="keywordtype">void</span>* obj) = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;        void (*audio_state_callback)(esp_a2d_audio_state_t state, <span class="keywordtype">void</span>* obj) = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;        void (*audio_state_callback_post)(esp_a2d_audio_state_t state, <span class="keywordtype">void</span>* obj) = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;        <span class="keywordtype">void</span> *connection_state_obj = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;        <span class="keywordtype">void</span> *audio_state_obj = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;        <span class="keywordtype">void</span> *audio_state_obj_post = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">char</span> *m_a2d_conn_state_str[4] = {<span class="stringliteral">&quot;Disconnected&quot;</span>, <span class="stringliteral">&quot;Connecting&quot;</span>, <span class="stringliteral">&quot;Connected&quot;</span>, <span class="stringliteral">&quot;Disconnecting&quot;</span>};</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">char</span> *m_a2d_audio_state_str[3] = {<span class="stringliteral">&quot;Suspended&quot;</span>, <span class="stringliteral">&quot;Stopped&quot;</span>, <span class="stringliteral">&quot;Started&quot;</span>};</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">char</span> *m_avrc_playback_state_str[5] = {<span class="stringliteral">&quot;stopped&quot;</span>, <span class="stringliteral">&quot;playing&quot;</span>, <span class="stringliteral">&quot;paused&quot;</span>, <span class="stringliteral">&quot;forward seek&quot;</span>, <span class="stringliteral">&quot;reverse seek&quot;</span>};</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;        esp_a2d_audio_state_t audio_state = ESP_A2D_AUDIO_STATE_STOPPED;</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;        esp_a2d_connection_state_t connection_state = ESP_A2D_CONNECTION_STATE_DISCONNECTED;</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;        UBaseType_t task_priority = configMAX_PRIORITIES - 10;</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;        <span class="comment">// volume </span></div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;        uint8_t volume_value = 0;</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;        <span class="keywordtype">bool</span> is_volume_used = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;        BaseType_t task_core = 1;</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160; </div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;        <span class="keywordtype">int</span> event_queue_size = 20;</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;        <span class="keywordtype">int</span> event_stack_size = 3072;</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;        esp_bt_mode_t bt_mode  = ESP_BT_MODE_CLASSIC_BT;</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160; </div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;<span class="preprocessor">#if ESP_IDF_VERSION &gt;= ESP_IDF_VERSION_VAL(4, 0, 0)</span></div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;        esp_bt_discovery_mode_t discoverability = ESP_BT_GENERAL_DISCOVERABLE;</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160; </div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;        <span class="keyword">virtual</span> esp_err_t esp_a2d_connect(esp_bd_addr_t peer) = 0;</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* last_bda_nvs_name() = 0;</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> get_last_connection();</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> set_last_connection(esp_bd_addr_t bda);</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">bool</span> has_last_connection();</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;        <span class="comment">// change the scan mode</span></div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> set_scan_mode_connectable(<span class="keywordtype">bool</span> connectable);</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> set_scan_mode_connectable_default() = 0;</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160; </div>
-<div class="line"><a name="l00311"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#a6fec0cfd3d0d9017b7ffcf82630ab89a">  311</a></span>&#160;        <span class="keyword">virtual</span> <a class="code" href="class_a2_d_p_volume_control.html">A2DPVolumeControl</a>* <a class="code" href="class_bluetooth_a2_d_p_common.html#a6fec0cfd3d0d9017b7ffcf82630ab89a">volume_control</a>() {</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;            <span class="keywordflow">return</span> volume_control_ptr !=<span class="keyword">nullptr</span> ? volume_control_ptr : &amp;default_volume_control;</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;        }</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160; </div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;};</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160; </div>
+<div class="line"><a name="l00257"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#a41ab8453d4f7f88d68d6cdb1a866532b">  257</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_common.html#a41ab8453d4f7f88d68d6cdb1a866532b">set_default_bt_mode</a>(esp_bt_mode_t mode){</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;        bt_mode = mode;</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;    }</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160; </div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">char</span>* bt_name = {0};</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;        esp_bd_addr_t peer_bd_addr;</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;        ReconnectStatus reconnect_status = NoReconnect;</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> reconnect_timout=0;</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> default_reconnect_timout=10000;</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;        <span class="keywordtype">bool</span> is_autoreconnect_allowed = <span class="keyword">false</span>; </div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;        uint32_t debounce_ms = 0;</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;        <a class="code" href="class_a2_d_p_default_volume_control.html">A2DPDefaultVolumeControl</a> default_volume_control;</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;        <a class="code" href="class_a2_d_p_volume_control.html">A2DPVolumeControl</a> *volume_control_ptr = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;        esp_bd_addr_t last_connection = {0,0,0,0,0,0};</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;        <span class="keywordtype">bool</span> is_start_disabled = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;        void (*connection_state_callback)(esp_a2d_connection_state_t state, <span class="keywordtype">void</span>* obj) = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;        void (*audio_state_callback)(esp_a2d_audio_state_t state, <span class="keywordtype">void</span>* obj) = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;        void (*audio_state_callback_post)(esp_a2d_audio_state_t state, <span class="keywordtype">void</span>* obj) = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;        <span class="keywordtype">void</span> *connection_state_obj = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;        <span class="keywordtype">void</span> *audio_state_obj = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;        <span class="keywordtype">void</span> *audio_state_obj_post = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">char</span> *m_a2d_conn_state_str[4] = {<span class="stringliteral">&quot;Disconnected&quot;</span>, <span class="stringliteral">&quot;Connecting&quot;</span>, <span class="stringliteral">&quot;Connected&quot;</span>, <span class="stringliteral">&quot;Disconnecting&quot;</span>};</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">char</span> *m_a2d_audio_state_str[3] = {<span class="stringliteral">&quot;Suspended&quot;</span>, <span class="stringliteral">&quot;Stopped&quot;</span>, <span class="stringliteral">&quot;Started&quot;</span>};</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">char</span> *m_avrc_playback_state_str[5] = {<span class="stringliteral">&quot;stopped&quot;</span>, <span class="stringliteral">&quot;playing&quot;</span>, <span class="stringliteral">&quot;paused&quot;</span>, <span class="stringliteral">&quot;forward seek&quot;</span>, <span class="stringliteral">&quot;reverse seek&quot;</span>};</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;        esp_a2d_audio_state_t audio_state = ESP_A2D_AUDIO_STATE_STOPPED;</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;        esp_a2d_connection_state_t connection_state = ESP_A2D_CONNECTION_STATE_DISCONNECTED;</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;        UBaseType_t task_priority = configMAX_PRIORITIES - 10;</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;        <span class="comment">// volume </span></div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;        uint8_t volume_value = 0;</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;        <span class="keywordtype">bool</span> is_volume_used = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;        BaseType_t task_core = 1;</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160; </div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;        <span class="keywordtype">int</span> event_queue_size = 20;</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;        <span class="keywordtype">int</span> event_stack_size = 3072;</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;        esp_bt_mode_t bt_mode  = ESP_BT_MODE_CLASSIC_BT;</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160; </div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;<span class="preprocessor">#if ESP_IDF_VERSION &gt;= ESP_IDF_VERSION_VAL(4, 0, 0)</span></div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;        esp_bt_discovery_mode_t discoverability = ESP_BT_GENERAL_DISCOVERABLE;</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160; </div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;        <span class="keyword">virtual</span> esp_err_t esp_a2d_connect(esp_bd_addr_t peer) = 0;</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* last_bda_nvs_name() = 0;</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> get_last_connection();</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> set_last_connection(esp_bd_addr_t bda);</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">bool</span> has_last_connection();</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;        <span class="comment">// change the scan mode</span></div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> set_scan_mode_connectable(<span class="keywordtype">bool</span> connectable);</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> set_scan_mode_connectable_default() = 0;</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160; </div>
+<div class="line"><a name="l00308"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#a6fec0cfd3d0d9017b7ffcf82630ab89a">  308</a></span>&#160;        <span class="keyword">virtual</span> <a class="code" href="class_a2_d_p_volume_control.html">A2DPVolumeControl</a>* <a class="code" href="class_bluetooth_a2_d_p_common.html#a6fec0cfd3d0d9017b7ffcf82630ab89a">volume_control</a>() {</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;            <span class="keywordflow">return</span> volume_control_ptr !=<span class="keyword">nullptr</span> ? volume_control_ptr : &amp;default_volume_control;</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;        }</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160; </div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;};</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160; </div>
 <div class="ttc" id="a_bluetooth_a2_d_p_common_8h_html_a1ea0f006ec5db0c83e80adb8dca80e34"><div class="ttname"><a href="_bluetooth_a2_d_p_common_8h.html#a1ea0f006ec5db0c83e80adb8dca80e34">delay</a></div><div class="ttdeci">void delay(long millis)</div><div class="ttdoc">call vTaskDelay to deley for the indicated number of milliseconds</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.cpp:356</div></div>
 <div class="ttc" id="a_bluetooth_a2_d_p_common_8h_html_a920f1d5645eff5bb9dedd84d5c20f794"><div class="ttname"><a href="_bluetooth_a2_d_p_common_8h.html#a920f1d5645eff5bb9dedd84d5c20f794">btStart</a></div><div class="ttdeci">bool btStart()</div><div class="ttdoc">Startup logic as implemented by Arduino - This is not available if we use this library outside of Ard...</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.cpp:328</div></div>
-<div class="ttc" id="a_bluetooth_a2_d_p_common_8h_html_a9bee258e477be3c0e70d6029ed86a019"><div class="ttname"><a href="_bluetooth_a2_d_p_common_8h.html#a9bee258e477be3c0e70d6029ed86a019">app_callback_t</a></div><div class="ttdeci">void(* app_callback_t)(uint16_t event, void *param)</div><div class="ttdoc">handler for the dispatched work</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:102</div></div>
+<div class="ttc" id="a_bluetooth_a2_d_p_common_8h_html_a9bee258e477be3c0e70d6029ed86a019"><div class="ttname"><a href="_bluetooth_a2_d_p_common_8h.html#a9bee258e477be3c0e70d6029ed86a019">app_callback_t</a></div><div class="ttdeci">void(* app_callback_t)(uint16_t event, void *param)</div><div class="ttdoc">handler for the dispatched work</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:99</div></div>
 <div class="ttc" id="aclass_a2_d_p_default_volume_control_html"><div class="ttname"><a href="class_a2_d_p_default_volume_control.html">A2DPDefaultVolumeControl</a></div><div class="ttdoc">Default implementation for handling of the volume of the audio data.</div><div class="ttdef"><b>Definition:</b> A2DPVolumeControl.h:88</div></div>
 <div class="ttc" id="aclass_a2_d_p_volume_control_html"><div class="ttname"><a href="class_a2_d_p_volume_control.html">A2DPVolumeControl</a></div><div class="ttdoc">Abstract class for handling of the volume of the audio data.</div><div class="ttdef"><b>Definition:</b> A2DPVolumeControl.h:28</div></div>
-<div class="ttc" id="aclass_bluetooth_a2_d_p_common_html"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html">BluetoothA2DPCommon</a></div><div class="ttdoc">Common Bluetooth A2DP functions.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:133</div></div>
-<div class="ttc" id="aclass_bluetooth_a2_d_p_common_html_a04bc52a4279a503203084492fe20c32e"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html#a04bc52a4279a503203084492fe20c32e">BluetoothA2DPCommon::set_event_stack_size</a></div><div class="ttdeci">void set_event_stack_size(int size)</div><div class="ttdoc">Defines the stack size of the event task (in bytes)</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:232</div></div>
-<div class="ttc" id="aclass_bluetooth_a2_d_p_common_html_a0bab92d9317837ecaeacbfe26814e28c"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html#a0bab92d9317837ecaeacbfe26814e28c">BluetoothA2DPCommon::set_volume</a></div><div class="ttdeci">virtual void set_volume(uint8_t volume)</div><div class="ttdoc">Sets the volume (range 0 - 255)</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:160</div></div>
-<div class="ttc" id="aclass_bluetooth_a2_d_p_common_html_a0e570c2c2f9db40873286e0571f0d93a"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html#a0e570c2c2f9db40873286e0571f0d93a">BluetoothA2DPCommon::get_volume</a></div><div class="ttdeci">virtual int get_volume()</div><div class="ttdoc">Determines the actual volume.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:169</div></div>
-<div class="ttc" id="aclass_bluetooth_a2_d_p_common_html_a41ab8453d4f7f88d68d6cdb1a866532b"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html#a41ab8453d4f7f88d68d6cdb1a866532b">BluetoothA2DPCommon::set_default_bt_mode</a></div><div class="ttdeci">virtual void set_default_bt_mode(esp_bt_mode_t mode)</div><div class="ttdoc">Defines the default bt mode. The default is ESP_BT_MODE_CLASSIC_BT: use this e.g. to set to ESP_BT_MO...</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:260</div></div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_common_html"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html">BluetoothA2DPCommon</a></div><div class="ttdoc">Common Bluetooth A2DP functions.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:130</div></div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_common_html_a04bc52a4279a503203084492fe20c32e"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html#a04bc52a4279a503203084492fe20c32e">BluetoothA2DPCommon::set_event_stack_size</a></div><div class="ttdeci">void set_event_stack_size(int size)</div><div class="ttdoc">Defines the stack size of the event task (in bytes)</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:229</div></div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_common_html_a0bab92d9317837ecaeacbfe26814e28c"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html#a0bab92d9317837ecaeacbfe26814e28c">BluetoothA2DPCommon::set_volume</a></div><div class="ttdeci">virtual void set_volume(uint8_t volume)</div><div class="ttdoc">Sets the volume (range 0 - 255)</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:157</div></div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_common_html_a0e570c2c2f9db40873286e0571f0d93a"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html#a0e570c2c2f9db40873286e0571f0d93a">BluetoothA2DPCommon::get_volume</a></div><div class="ttdeci">virtual int get_volume()</div><div class="ttdoc">Determines the actual volume.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:166</div></div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_common_html_a41ab8453d4f7f88d68d6cdb1a866532b"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html#a41ab8453d4f7f88d68d6cdb1a866532b">BluetoothA2DPCommon::set_default_bt_mode</a></div><div class="ttdeci">virtual void set_default_bt_mode(esp_bt_mode_t mode)</div><div class="ttdoc">Defines the default bt mode. The default is ESP_BT_MODE_CLASSIC_BT: use this e.g. to set to ESP_BT_MO...</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:257</div></div>
 <div class="ttc" id="aclass_bluetooth_a2_d_p_common_html_a4bbbd1a2c9c85004afaa7c6dbad45322"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html#a4bbbd1a2c9c85004afaa7c6dbad45322">BluetoothA2DPCommon::~BluetoothA2DPCommon</a></div><div class="ttdeci">virtual ~BluetoothA2DPCommon()=default</div><div class="ttdoc">Destructor.</div></div>
-<div class="ttc" id="aclass_bluetooth_a2_d_p_common_html_a5e76412770515732e3f54275decf02f0"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html#a5e76412770515732e3f54275decf02f0">BluetoothA2DPCommon::is_connected</a></div><div class="ttdeci">virtual bool is_connected()</div><div class="ttdoc">Checks if A2DP is connected.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:157</div></div>
-<div class="ttc" id="aclass_bluetooth_a2_d_p_common_html_a68f9e168839f0faeb72705ccabbb6b7a"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html#a68f9e168839f0faeb72705ccabbb6b7a">BluetoothA2DPCommon::set_task_priority</a></div><div class="ttdeci">void set_task_priority(UBaseType_t priority)</div><div class="ttdoc">defines the task priority (the default value is configMAX_PRIORITIES - 10)</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:216</div></div>
-<div class="ttc" id="aclass_bluetooth_a2_d_p_common_html_a694940fad2a2d498875cfbdf52eea58b"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html#a694940fad2a2d498875cfbdf52eea58b">BluetoothA2DPCommon::set_task_core</a></div><div class="ttdeci">void set_task_core(BaseType_t core)</div><div class="ttdoc">Defines the core which is used to start the tasks (to process the events and audio queue)</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:222</div></div>
-<div class="ttc" id="aclass_bluetooth_a2_d_p_common_html_a6fec0cfd3d0d9017b7ffcf82630ab89a"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html#a6fec0cfd3d0d9017b7ffcf82630ab89a">BluetoothA2DPCommon::volume_control</a></div><div class="ttdeci">virtual A2DPVolumeControl * volume_control()</div><div class="ttdoc">provides access to the VolumeControl object</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:311</div></div>
-<div class="ttc" id="aclass_bluetooth_a2_d_p_common_html_a726f45e4d405f5c5f5b259f11aaf8246"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html#a726f45e4d405f5c5f5b259f11aaf8246">BluetoothA2DPCommon::get_name</a></div><div class="ttdeci">virtual const char * get_name()</div><div class="ttdoc">Provides the actual SSID name.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:252</div></div>
-<div class="ttc" id="aclass_bluetooth_a2_d_p_common_html_a7757ddbf424aeb909dc952d7c40fc241"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html#a7757ddbf424aeb909dc952d7c40fc241">BluetoothA2DPCommon::set_volume_control</a></div><div class="ttdeci">virtual void set_volume_control(A2DPVolumeControl *ptr)</div><div class="ttdoc">you can define a custom VolumeControl implementation</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:174</div></div>
-<div class="ttc" id="aclass_bluetooth_a2_d_p_common_html_a8b37f48a6b0bca33fb21b2a9ae9dab7c"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html#a8b37f48a6b0bca33fb21b2a9ae9dab7c">BluetoothA2DPCommon::set_connectable</a></div><div class="ttdeci">virtual void set_connectable(bool connectable)</div><div class="ttdoc">Bluetooth connectable.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:247</div></div>
-<div class="ttc" id="aclass_bluetooth_a2_d_p_common_html_ac21e1dbd2f5f475da871a7e778ba1a40"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html#ac21e1dbd2f5f475da871a7e778ba1a40">BluetoothA2DPCommon::get_last_peer_address</a></div><div class="ttdeci">virtual esp_bd_addr_t * get_last_peer_address()</div><div class="ttdoc">Provides the address of the last device.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:237</div></div>
-<div class="ttc" id="aclass_bluetooth_a2_d_p_common_html_ae5e96c34428c50873a0ca7423a6b5402"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html#ae5e96c34428c50873a0ca7423a6b5402">BluetoothA2DPCommon::set_event_queue_size</a></div><div class="ttdeci">void set_event_queue_size(int size)</div><div class="ttdoc">Defines the queue size of the event task.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:227</div></div>
-<div class="ttc" id="astructbt__app__msg__t_html"><div class="ttname"><a href="structbt__app__msg__t.html">bt_app_msg_t</a></div><div class="ttdoc">Internal message to be sent for BluetoothA2DPSink and BluetoothA2DPSource.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:105</div></div>
-<div class="ttc" id="astructbt__app__msg__t_html_a3d8f18211a5ce29fecbebc5546e7a17e"><div class="ttname"><a href="structbt__app__msg__t.html#a3d8f18211a5ce29fecbebc5546e7a17e">bt_app_msg_t::sig</a></div><div class="ttdeci">uint16_t sig</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:106</div></div>
-<div class="ttc" id="astructbt__app__msg__t_html_a64ce3190ec86ce6a75f6b421319ed8f7"><div class="ttname"><a href="structbt__app__msg__t.html#a64ce3190ec86ce6a75f6b421319ed8f7">bt_app_msg_t::cb</a></div><div class="ttdeci">app_callback_t cb</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:108</div></div>
-<div class="ttc" id="astructbt__app__msg__t_html_a74f4561abb15d9ae98c3eefdd68de7c4"><div class="ttname"><a href="structbt__app__msg__t.html#a74f4561abb15d9ae98c3eefdd68de7c4">bt_app_msg_t::event</a></div><div class="ttdeci">uint16_t event</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:107</div></div>
-<div class="ttc" id="astructbt__app__msg__t_html_aae06d9a8a215b9ae4b5a3827f5e5e7a7"><div class="ttname"><a href="structbt__app__msg__t.html#aae06d9a8a215b9ae4b5a3827f5e5e7a7">bt_app_msg_t::param</a></div><div class="ttdeci">void * param</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:109</div></div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_common_html_a5e76412770515732e3f54275decf02f0"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html#a5e76412770515732e3f54275decf02f0">BluetoothA2DPCommon::is_connected</a></div><div class="ttdeci">virtual bool is_connected()</div><div class="ttdoc">Checks if A2DP is connected.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:154</div></div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_common_html_a68f9e168839f0faeb72705ccabbb6b7a"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html#a68f9e168839f0faeb72705ccabbb6b7a">BluetoothA2DPCommon::set_task_priority</a></div><div class="ttdeci">void set_task_priority(UBaseType_t priority)</div><div class="ttdoc">defines the task priority (the default value is configMAX_PRIORITIES - 10)</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:213</div></div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_common_html_a694940fad2a2d498875cfbdf52eea58b"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html#a694940fad2a2d498875cfbdf52eea58b">BluetoothA2DPCommon::set_task_core</a></div><div class="ttdeci">void set_task_core(BaseType_t core)</div><div class="ttdoc">Defines the core which is used to start the tasks (to process the events and audio queue)</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:219</div></div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_common_html_a6fec0cfd3d0d9017b7ffcf82630ab89a"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html#a6fec0cfd3d0d9017b7ffcf82630ab89a">BluetoothA2DPCommon::volume_control</a></div><div class="ttdeci">virtual A2DPVolumeControl * volume_control()</div><div class="ttdoc">provides access to the VolumeControl object</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:308</div></div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_common_html_a726f45e4d405f5c5f5b259f11aaf8246"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html#a726f45e4d405f5c5f5b259f11aaf8246">BluetoothA2DPCommon::get_name</a></div><div class="ttdeci">virtual const char * get_name()</div><div class="ttdoc">Provides the actual SSID name.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:249</div></div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_common_html_a7757ddbf424aeb909dc952d7c40fc241"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html#a7757ddbf424aeb909dc952d7c40fc241">BluetoothA2DPCommon::set_volume_control</a></div><div class="ttdeci">virtual void set_volume_control(A2DPVolumeControl *ptr)</div><div class="ttdoc">you can define a custom VolumeControl implementation</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:171</div></div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_common_html_a8b37f48a6b0bca33fb21b2a9ae9dab7c"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html#a8b37f48a6b0bca33fb21b2a9ae9dab7c">BluetoothA2DPCommon::set_connectable</a></div><div class="ttdeci">virtual void set_connectable(bool connectable)</div><div class="ttdoc">Bluetooth connectable.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:244</div></div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_common_html_ac21e1dbd2f5f475da871a7e778ba1a40"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html#ac21e1dbd2f5f475da871a7e778ba1a40">BluetoothA2DPCommon::get_last_peer_address</a></div><div class="ttdeci">virtual esp_bd_addr_t * get_last_peer_address()</div><div class="ttdoc">Provides the address of the last device.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:234</div></div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_common_html_ae5e96c34428c50873a0ca7423a6b5402"><div class="ttname"><a href="class_bluetooth_a2_d_p_common.html#ae5e96c34428c50873a0ca7423a6b5402">BluetoothA2DPCommon::set_event_queue_size</a></div><div class="ttdeci">void set_event_queue_size(int size)</div><div class="ttdoc">Defines the queue size of the event task.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:224</div></div>
+<div class="ttc" id="astructbt__app__msg__t_html"><div class="ttname"><a href="structbt__app__msg__t.html">bt_app_msg_t</a></div><div class="ttdoc">Internal message to be sent for BluetoothA2DPSink and BluetoothA2DPSource.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:102</div></div>
+<div class="ttc" id="astructbt__app__msg__t_html_a3d8f18211a5ce29fecbebc5546e7a17e"><div class="ttname"><a href="structbt__app__msg__t.html#a3d8f18211a5ce29fecbebc5546e7a17e">bt_app_msg_t::sig</a></div><div class="ttdeci">uint16_t sig</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:103</div></div>
+<div class="ttc" id="astructbt__app__msg__t_html_a64ce3190ec86ce6a75f6b421319ed8f7"><div class="ttname"><a href="structbt__app__msg__t.html#a64ce3190ec86ce6a75f6b421319ed8f7">bt_app_msg_t::cb</a></div><div class="ttdeci">app_callback_t cb</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:105</div></div>
+<div class="ttc" id="astructbt__app__msg__t_html_a74f4561abb15d9ae98c3eefdd68de7c4"><div class="ttname"><a href="structbt__app__msg__t.html#a74f4561abb15d9ae98c3eefdd68de7c4">bt_app_msg_t::event</a></div><div class="ttdeci">uint16_t event</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:104</div></div>
+<div class="ttc" id="astructbt__app__msg__t_html_aae06d9a8a215b9ae4b5a3827f5e5e7a7"><div class="ttname"><a href="structbt__app__msg__t.html#aae06d9a8a215b9ae4b5a3827f5e5e7a7">bt_app_msg_t::param</a></div><div class="ttdeci">void * param</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:106</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

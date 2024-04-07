@@ -77,9 +77,10 @@ Supported Bluetooth Protocols</h1>
 <p>The Hands-Free Profile (HFP), Headset Profile (HSP) and stand alone AVRCP without A2DP are <b>not</b> supported!</p>
 <h1><a class="anchor" id="autotoc_md2"></a>
 I2S API / Dependencies</h1>
-<p>Espressif is retiring the legacy I2S API: So with Arduino 3.0.0 <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki/Legacy-I2S-API">my old I2S integration</a> will not be available any more.</p>
-<p>In order to support a unique output API which is version independent, it is recommended to install and use the <a href="https://github.com/pschatzmann/arduino-audio-tools">AudioTools</a> library.</p>
-<p>However you can output to any other class which inherits from Arduino Print: e.g. the Arduino ESP32 I2SClass.</p>
+<p>Espressif is retiring the legacy I2S API: So with Arduino 3.0.0 <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki/Legacy-I2S-API">my old I2S integration</a> will not be available any more. The legacy syntax is still working as long as you don't upgrade. <br  />
+</p>
+<p>In order to support a unique output API which is version independent, it is recommended to install and use the <a href="https://github.com/pschatzmann/arduino-audio-tools">AudioTools</a> library. So the documentation and all the examples have been updated to use this new approach.</p>
+<p>However you can also output to any other class which inherits from Arduino Print: e.g. the <a href="https://github.com/pschatzmann/ESP32-A2DP?tab=readme-ov-file#output-using-the-esp32-i2s-api">Arduino ESP32 I2SClass</a>.</p>
 <h1><a class="anchor" id="autotoc_md3"></a>
 A2DP Sink (Music Receiver)</h1>
 <p>This can be used e.g. to build your own Bluetooth Speaker.</p>
@@ -150,7 +151,7 @@ Output Using the ESP32 I2S API</h2>
 <div class="line">}</div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md7"></a>
 Output to the Internal DAC</h2>
-<p>You can also send the output directly to the internal DAC of the ESP32 by using the AnalogAudioStream fro the AudioTools:</p>
+<p>You can also send the output directly to the internal DAC of the ESP32 by using the AnalogAudioStream from the AudioTools:</p>
 <div class="fragment"><div class="line">#include &quot;AudioTools.h</div>
 <div class="line">#include &quot;BluetoothA2DPSink.h&quot;</div>
 <div class="line"> </div>
@@ -322,7 +323,9 @@ Show and Tell</h1>
 Installation</h1>
 <p>For Arduino you can download the library as zip and call include Library -&gt; zip library. Or you can git clone this project into the Arduino libraries folder e.g. with </p><div class="fragment"><div class="line">cd  ~/Documents/Arduino/libraries</div>
 <div class="line">git clone https://github.com/pschatzmann/ESP32-A2DP.git</div>
-</div><!-- fragment --><p>For other frameworks <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki">see the Wiki</a></p>
+<div class="line">git clone https://github.com/pschatzmann/arduino-audio-tools.git</div>
+</div><!-- fragment --><p> For the provided examples, you will need to install the <a href="https://github.com/pschatzmann/arduino-audio-tools">audio-tools library</a> as well.</p>
+<p>For other frameworks <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki">see the Wiki</a></p>
 <h1><a class="anchor" id="autotoc_md21"></a>
 Change History</h1>
 <p>The <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki/Change-History">Change History can be found in the Wiki</a></p>

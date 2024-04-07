@@ -19,3 +19,8 @@
 #ifndef A2DP_SPP_SUPPORT
 #  define A2DP_SPP_SUPPORT (ESP_IDF_VERSION < ESP_IDF_VERSION_VAL(5, 0, 0))
 #endif
+
+// Maximum write size
+#ifndef A2DP_I2S_MAX_WRITE_SIZE 
+#  define A2DP_I2S_MAX_WRITE_SIZE 512
+#endif

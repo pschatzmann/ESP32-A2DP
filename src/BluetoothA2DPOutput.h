@@ -29,14 +29,14 @@ class BluetoothA2DPOutput {
 
 #if A2DP_I2S_AUDIOTOOLS
   /// Not implemented
-  void set_output(AudioOutput &output) {}
+  virtual void set_output(AudioOutput &output) {}
   /// Not implemented
-  void set_output(AudioStream &output) {}
+  virtual void set_output(AudioStream &output) {}
 #endif
 
 #ifdef ARDUINO
   /// Not implemented
-  void set_output(Print &output) {}
+  virtual void set_output(Print &output) {}
 #endif
 
 #if A2DP_LEGACY_I2S_SUPPORT
@@ -163,13 +163,14 @@ class BluetoothA2DPOutputDefault : public BluetoothA2DPOutput {
  public:
   BluetoothA2DPOutputDefault() = default;
   bool begin() {
-    bool rc = true;
+    bool rc = false;
     if (out_tools)
       rc = out_tools.begin();
     else
       rc = out_legacy.begin();
     return rc;
   }
+  
   size_t write(const uint8_t *data, size_t len) {
     size_t result = 0;
     if (out_tools)
@@ -178,18 +179,21 @@ class BluetoothA2DPOutputDefault : public BluetoothA2DPOutput {
       result = out_legacy.write(data, len);
     return result;
   }
+  
   void end() override {
     if (out_tools)
       out_tools.end();
     else
       out_legacy.end();
   }
+  
   void set_sample_rate(int rate) override {
     if (out_tools)
       out_tools.set_sample_rate(rate);
     else
       out_legacy.set_sample_rate(rate);
   }
+
   void set_output_active(bool active) override {
     if (out_tools)
       out_tools.set_output_active(active);
@@ -199,39 +203,39 @@ class BluetoothA2DPOutputDefault : public BluetoothA2DPOutput {
 
 #if A2DP_I2S_AUDIOTOOLS
   /// Output AudioStream using AudioTools library
-  void set_output(AudioOutput &output) { out_tools.set_output(output); }
+  void set_output(AudioOutput &output) override  { out_tools.set_output(output); }
   /// Output AudioStream using AudioTools library
-  void set_output(AudioStream &output) { out_tools.set_output(output); }
+  void set_output(AudioStream &output) override { out_tools.set_output(output); }
 #endif
 
 #ifdef ARDUINO
   /// Output to Arduino Print
-  void set_output(Print &output) { out_tools.set_output(output); }
+  void set_output(Print &output) override { out_tools.set_output(output); }
 #endif
 
 #if A2DP_LEGACY_I2S_SUPPORT
   /// Define the pins (Legacy I2S: OBSOLETE!)
-  virtual void set_pin_config(i2s_pin_config_t pin_config) {
+  virtual void set_pin_config(i2s_pin_config_t pin_config) override {
     out_legacy.set_pin_config(pin_config);
   }
   /// Define an alternative i2s port other then 0 (Legacy I2S: OBSOLETE!)
-  virtual void set_i2s_port(i2s_port_t i2s_num) {
+  virtual void set_i2s_port(i2s_port_t i2s_num) override {
     out_legacy.set_i2s_port(i2s_num);
   }
 
   /// Define the i2s configuration (Legacy I2S: OBSOLETE!)
-  virtual void set_i2s_config(i2s_config_t i2s_config) {
+  virtual void set_i2s_config(i2s_config_t i2s_config) override {
     out_legacy.set_i2s_config(i2s_config);
   }
 
   /// Defines the bits per sample for output (if > 16 output will be expanded)
   /// (Legacy I2S: OBSOLETE!)
-  virtual void set_bits_per_sample(int bps) {
+  virtual void set_bits_per_sample(int bps) override {
     out_legacy.set_bits_per_sample(bps);
   }
 
 #if ESP_IDF_VERSION < ESP_IDF_VERSION_VAL(5, 1, 1)
-  virtual esp_err_t i2s_mclk_pin_select(const uint8_t pin) {
+  virtual esp_err_t i2s_mclk_pin_select(const uint8_t pin) override {
     return out_legacy.i2s_mclk_pin_select(pin);
   }
 #endif

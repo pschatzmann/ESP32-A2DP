@@ -2,7 +2,6 @@
 
 BluetoothA2DPOutputLegacy::BluetoothA2DPOutputLegacy() {
 #if A2DP_LEGACY_I2S_SUPPORT
-
   // default i2s port is 0
   i2s_port = (i2s_port_t)0;
 
@@ -73,7 +72,7 @@ esp_err_t BluetoothA2DPOutputLegacy::i2s_mclk_pin_select(const uint8_t pin) {
 bool BluetoothA2DPOutputLegacy::begin() {
   bool rc = true;
 #if A2DP_LEGACY_I2S_SUPPORT
-  ESP_LOGI(BT_AV_TAG, "init_i2s legacy");
+  ESP_LOGI(BT_AV_TAG, "%s", __func__);
   // setup i2s
   if (i2s_driver_install(i2s_port, &i2s_config, 0, NULL) != ESP_OK) {
     ESP_LOGE(BT_AV_TAG, "i2s_driver_install failed");
@@ -98,16 +97,6 @@ bool BluetoothA2DPOutputLegacy::begin() {
     }
   }
 
-#endif
-  return rc;
-}
-
-bool BluetoothA2DPOutputAudioTools::begin() {
-  bool rc = true;
-#if A2DP_I2S_AUDIOTOOLS
-  if (p_audio_print != nullptr) {
-    rc = p_audio_print->begin();
-  }
 #endif
   return rc;
 }
@@ -154,29 +143,14 @@ size_t BluetoothA2DPOutputLegacy::write(const uint8_t *data, size_t item_size) {
     }
   }
 
-  // give envent processing some chance ?
-  delay(1);
-
   i2s_bytes_written = item_size;
-#endif
-  return i2s_bytes_written;
-}
-
-size_t BluetoothA2DPOutputAudioTools::write(const uint8_t *data, size_t item_size) {
-  size_t i2s_bytes_written = 0;
-
-#if A2DP_I2S_AUDIOTOOLS
-  if (p_audio_print != nullptr) {
-    i2s_bytes_written = p_audio_print->write(data, item_size);
-    delay(1);
-  }
 #endif
   return i2s_bytes_written;
 }
 
 void BluetoothA2DPOutputLegacy::end() {
 #if A2DP_LEGACY_I2S_SUPPORT
-  ESP_LOGI(BT_AV_TAG, "uninstall i2s");
+  ESP_LOGI(BT_AV_TAG, "%s", __func__);
   if (i2s_driver_uninstall(i2s_port) != ESP_OK) {
     ESP_LOGE(BT_AV_TAG, "Failed to uninstall i2s");
   } else {
@@ -185,17 +159,9 @@ void BluetoothA2DPOutputLegacy::end() {
 #endif
 }
 
-void BluetoothA2DPOutputAudioTools::end() {
-#if A2DP_I2S_AUDIOTOOLS
-  if (p_audio_print != nullptr) {
-    p_audio_print->end();
-    // player_init = false;
-  }
-#endif
-}
-
 void BluetoothA2DPOutputLegacy::set_sample_rate(int m_sample_rate) {
 #if A2DP_LEGACY_I2S_SUPPORT
+  ESP_LOGI(BT_AV_TAG, "%s %d", __func__, m_sample_rate);
   i2s_config.sample_rate = m_sample_rate;
   // setup sample rate and channels
   if (i2s_set_clk(i2s_port, i2s_config.sample_rate, i2s_config.bits_per_sample,
@@ -210,8 +176,61 @@ void BluetoothA2DPOutputLegacy::set_sample_rate(int m_sample_rate) {
 #endif
 }
 
+void BluetoothA2DPOutputLegacy::set_output_active(bool active) {
+#if A2DP_LEGACY_I2S_SUPPORT
+  if (active) {
+    ESP_LOGI(BT_AV_TAG, "i2s_start");
+    if (i2s_start(i2s_port) != ESP_OK) {
+      ESP_LOGE(BT_AV_TAG, "i2s_start");
+    }
+  } else {
+    ESP_LOGW(BT_AV_TAG, "i2s_stop");
+    i2s_stop(i2s_port);
+    i2s_zero_dma_buffer(i2s_port);
+  }
+#endif
+}
+
+// --------------------------------------------------------------------------
+
+bool BluetoothA2DPOutputAudioTools::begin() {
+  bool rc = true;
+#if A2DP_I2S_AUDIOTOOLS
+  ESP_LOGI(BT_AV_TAG, "%s", __func__);
+  if (p_audio_print != nullptr) {
+    rc = p_audio_print->begin();
+  }
+#endif
+  return rc;
+}
+
+
+size_t BluetoothA2DPOutputAudioTools::write(const uint8_t *data, size_t item_size) {
+  size_t i2s_bytes_written = 0;
+
+#if A2DP_I2S_AUDIOTOOLS
+  if (p_audio_print != nullptr) {
+    i2s_bytes_written = p_audio_print->write(data, item_size);
+  }
+#endif
+  return i2s_bytes_written;
+}
+
+
+void BluetoothA2DPOutputAudioTools::end() {
+#if A2DP_I2S_AUDIOTOOLS
+  ESP_LOGI(BT_AV_TAG, "%s", __func__);
+  if (p_audio_print != nullptr) {
+    p_audio_print->end();
+    // player_init = false;
+  }
+#endif
+}
+
+
 void BluetoothA2DPOutputAudioTools::set_sample_rate(int m_sample_rate) {
 #if A2DP_I2S_AUDIOTOOLS
+  ESP_LOGI(BT_AV_TAG, "%s %d", __func__, m_sample_rate);
   if (p_audio_print != nullptr) {
     AudioInfo info = p_audio_print->audioInfo();
     if (info.sample_rate != m_sample_rate || info.channels != 2 ||
@@ -241,17 +260,3 @@ void BluetoothA2DPOutputAudioTools::set_output_active(bool active) {
 #endif
 }
 
-void BluetoothA2DPOutputLegacy::set_output_active(bool active) {
-#if A2DP_LEGACY_I2S_SUPPORT
-  if (active) {
-    ESP_LOGI(BT_AV_TAG, "i2s_start");
-    if (i2s_start(i2s_port) != ESP_OK) {
-      ESP_LOGE(BT_AV_TAG, "i2s_start");
-    }
-  } else {
-    ESP_LOGW(BT_AV_TAG, "i2s_stop");
-    i2s_stop(i2s_port);
-    i2s_zero_dma_buffer(i2s_port);
-  }
-#endif
-}

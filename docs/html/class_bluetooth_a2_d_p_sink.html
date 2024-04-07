@@ -108,10 +108,10 @@ Public Member Functions</h2></td></tr>
 virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a0f83dea1a97baeb360e4e1221c0aeaa9">~BluetoothA2DPSink</a> ()</td></tr>
 <tr class="memdesc:a0f83dea1a97baeb360e4e1221c0aeaa9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor - stops the playback and releases all resources. <br /></td></tr>
 <tr class="separator:a0f83dea1a97baeb360e4e1221c0aeaa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a875b0aebc23263ddf6cb8d4c4d3ecc1d"><td class="memItemLeft" align="right" valign="top"><a id="a875b0aebc23263ddf6cb8d4c4d3ecc1d"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a875b0aebc23263ddf6cb8d4c4d3ecc1d">set_output</a> (<a class="el" href="class_bluetooth_output.html">BluetoothOutput</a> &amp;output)</td></tr>
-<tr class="memdesc:a875b0aebc23263ddf6cb8d4c4d3ecc1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the output class: by default we use <a class="el" href="class_bluetooth_output_default.html" title="Default Output Class providing both the Legacy I2S and the AudioTools I2S functionality.">BluetoothOutputDefault</a>. <br /></td></tr>
-<tr class="separator:a875b0aebc23263ddf6cb8d4c4d3ecc1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2076eebe22254b2238ba097e8749d24d"><td class="memItemLeft" align="right" valign="top"><a id="a2076eebe22254b2238ba097e8749d24d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a2076eebe22254b2238ba097e8749d24d">set_output</a> (<a class="el" href="class_bluetooth_a2_d_p_output.html">BluetoothA2DPOutput</a> &amp;output)</td></tr>
+<tr class="memdesc:a2076eebe22254b2238ba097e8749d24d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the output class: by default we use <a class="el" href="class_bluetooth_a2_d_p_output_default.html" title="Default Output Class providing both the Legacy I2S and the AudioTools I2S functionality.">BluetoothA2DPOutputDefault</a>. <br /></td></tr>
+<tr class="separator:a2076eebe22254b2238ba097e8749d24d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af87666dc2c00c5917db709e2edaf1dab"><td class="memItemLeft" align="right" valign="top"><a id="af87666dc2c00c5917db709e2edaf1dab"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#af87666dc2c00c5917db709e2edaf1dab">set_output</a> (Print &amp;output)</td></tr>
 <tr class="memdesc:af87666dc2c00c5917db709e2edaf1dab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output to Arduino Print. <br /></td></tr>
@@ -536,12 +536,12 @@ virtual <a class="el" href="class_a2_d_p_volume_control.html">A2DPVolumeControl<
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a0beb29aef8863b4ebe9f1a8c8ebde7d1"><td class="memItemLeft" align="right" valign="top"><a id="a0beb29aef8863b4ebe9f1a8c8ebde7d1"></a>
-<a class="el" href="class_bluetooth_output_default.html">BluetoothOutputDefault</a>&#160;</td><td class="memItemRight" valign="bottom"><b>out_default</b></td></tr>
-<tr class="separator:a0beb29aef8863b4ebe9f1a8c8ebde7d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22322f5a447f4ace15dc50529cf5ec28"><td class="memItemLeft" align="right" valign="top"><a id="a22322f5a447f4ace15dc50529cf5ec28"></a>
-<a class="el" href="class_bluetooth_output.html">BluetoothOutput</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>out</b> = &amp;out_default</td></tr>
-<tr class="separator:a22322f5a447f4ace15dc50529cf5ec28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05d74dd2a83f4378a5f713cb26125e5e"><td class="memItemLeft" align="right" valign="top"><a id="a05d74dd2a83f4378a5f713cb26125e5e"></a>
+<a class="el" href="class_bluetooth_a2_d_p_output_default.html">BluetoothA2DPOutputDefault</a>&#160;</td><td class="memItemRight" valign="bottom"><b>out_default</b></td></tr>
+<tr class="separator:a05d74dd2a83f4378a5f713cb26125e5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4d906fb4e80c8b3ce2fbdf075062644"><td class="memItemLeft" align="right" valign="top"><a id="ad4d906fb4e80c8b3ce2fbdf075062644"></a>
+<a class="el" href="class_bluetooth_a2_d_p_output.html">BluetoothA2DPOutput</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>out</b> = &amp;out_default</td></tr>
+<tr class="separator:ad4d906fb4e80c8b3ce2fbdf075062644"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab659a79f8359e559bd8aefb79b0f7199"><td class="memItemLeft" align="right" valign="top"><a id="ab659a79f8359e559bd8aefb79b0f7199"></a>
 xQueueHandle&#160;</td><td class="memItemRight" valign="bottom"><b>app_task_queue</b> = nullptr</td></tr>
 <tr class="separator:ab659a79f8359e559bd8aefb79b0f7199"><td class="memSeparator" colspan="2">&#160;</td></tr>

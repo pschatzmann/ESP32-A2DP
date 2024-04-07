@@ -281,10 +281,15 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
         return &peer_bd_addr;
     }
 
-
     /// Activates the rssi reporting
     void set_rssi_active(bool active){
         rssi_active = active;
+    }
+
+    /// Requests an update of the rssi delta value
+    bool update_rssi() {
+        if (!rssi_active) return false;
+        return esp_bt_gap_read_rssi_delta(*get_current_peer_address()) == ESP_OK;
     }
 
     /// provides the last rssi parameters

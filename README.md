@@ -341,8 +341,9 @@ For Arduino you can download the library as zip and call include Library -> zip 
 ```
 cd  ~/Documents/Arduino/libraries
 git clone https://github.com/pschatzmann/ESP32-A2DP.git
+git clone https://github.com/pschatzmann/arduino-audio-tools.git
 ```
-
+For the provided examples, you will need to install the [audio-tools library](https://github.com/pschatzmann/arduino-audio-tools) as well. 
 For other frameworks [see the Wiki](https://github.com/pschatzmann/ESP32-A2DP/wiki)
 
 ## Change History

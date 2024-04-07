@@ -24,46 +24,6 @@ BluetoothA2DPSink *actual_bluetooth_a2dp_sink;
 BluetoothA2DPSink::BluetoothA2DPSink() {
   actual_bluetooth_a2dp_sink = this;
 
-#if A2DP_LEGACY_I2S_SUPPORT
-
-    // default i2s port is 0
-    i2s_port = (i2s_port_t)0;
-
-    // setup default i2s config
-    i2s_config = {
-        .mode = (i2s_mode_t)(I2S_MODE_MASTER | I2S_MODE_TX),
-        .sample_rate = 44100,
-        .bits_per_sample = (i2s_bits_per_sample_t)16,
-        .channel_format = I2S_CHANNEL_FMT_RIGHT_LEFT,
-        .communication_format = (i2s_comm_format_t)I2S_COMM_FORMAT_STAND_I2S,
-        .intr_alloc_flags = 0,  // default interrupt priority
-        .dma_buf_count = 8,
-        .dma_buf_len = 64,
-        .use_apll = false,
-#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
-        .tx_desc_auto_clear =
-            true,  // avoiding noise in case of data unavailability
-        .fixed_mclk = 0,
-        .mclk_multiple = I2S_MCLK_MULTIPLE_DEFAULT,
-        .bits_per_chan = I2S_BITS_PER_CHAN_DEFAULT
-#else
-        .tx_desc_auto_clear =
-            true  // avoiding noise in case of data unavailability
-#endif
-    };
-
-    // setup default pins
-    pin_config = {
-#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
-        .mck_io_num = 0,
-#endif
-        .bck_io_num = 26,
-        .ws_io_num = 25,
-        .data_out_num = 22,
-        .data_in_num = I2S_PIN_NO_CHANGE};
-  
-#endif
-
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
   s_avrc_peer_rn_cap.bits = 0;
   _lock_init(&s_volume_lock);
@@ -82,42 +42,12 @@ void BluetoothA2DPSink::end(bool release_memory) {
   BluetoothA2DPCommon::end(release_memory);
   app_task_shut_down();
 
-  if (is_i2s_output){
-  // stop I2S
-#if A2DP_LEGACY_I2S_SUPPORT
-    if (p_print==nullptr) {
-      ESP_LOGI(BT_AV_TAG, "uninstall i2s");
-      if (i2s_driver_uninstall(i2s_port) != ESP_OK) {
-        ESP_LOGE(BT_AV_TAG, "Failed to uninstall i2s");
-      } else {
-        player_init = false;
-      }
-    }
-#endif
-
-#if A2DP_I2S_AUDIOTOOLS
-    if (p_audio_print != nullptr) {
-      p_audio_print->end();
-      player_init = false;
-    }
-#endif
+  if (is_i2s_output) {
+    out->end();
+    player_init = false;
   }
   log_free_heap();
 }
-
-#if A2DP_LEGACY_I2S_SUPPORT
-
-void BluetoothA2DPSink::set_pin_config(i2s_pin_config_t pin_config) {
-  this->pin_config = pin_config;
-}
-
-void BluetoothA2DPSink::set_i2s_port(i2s_port_t i2s_num) { i2s_port = i2s_num; }
-
-void BluetoothA2DPSink::set_i2s_config(i2s_config_t i2s_config) {
-  this->i2s_config = i2s_config;
-}
-
-#endif
 
 void BluetoothA2DPSink::set_stream_reader(void (*callBack)(const uint8_t *,
                                                            uint32_t),
@@ -233,70 +163,11 @@ void BluetoothA2DPSink::start(const char *name) {
 void BluetoothA2DPSink::init_i2s() {
   ESP_LOGI(BT_AV_TAG, "init_i2s");
   if (is_i2s_output) {
-#if A2DP_LEGACY_I2S_SUPPORT
-    if (p_print == nullptr) {
-      ESP_LOGI(BT_AV_TAG, "init_i2s legacy");
-      // setup i2s
-      if (i2s_driver_install(i2s_port, &i2s_config, 0, NULL) != ESP_OK) {
-        ESP_LOGE(BT_AV_TAG, "i2s_driver_install failed");
-      } else {
-        player_init = false;  // reset player
-      }
-
-      // pins are only relevant when music is not sent to internal DAC
-      if (i2s_config.mode & I2S_MODE_DAC_BUILT_IN) {
-        if (i2s_set_pin(i2s_port, nullptr) != ESP_OK) {
-          ESP_LOGE(BT_AV_TAG, "i2s_set_pin failed");
-        }
-        if (i2s_set_dac_mode(I2S_DAC_CHANNEL_BOTH_EN) != ESP_OK) {
-          ESP_LOGE(BT_AV_TAG, "i2s_set_dac_mode failed");
-        }
-        ESP_LOGI(BT_AV_TAG, "Output will go to DAC pins");
-      } else {
-        if (i2s_set_pin(i2s_port, &pin_config) != ESP_OK) {
-          ESP_LOGE(BT_AV_TAG, "i2s_set_pin failed");
-        }
-      }
-    }
-#endif
-
-#if A2DP_I2S_AUDIOTOOLS
-    if (p_audio_print != nullptr) {
-       p_audio_print->begin();
-       player_init = false;
-       is_i2s_active = true;
-    }
-#endif
+    out->begin();
+    player_init = false;
+    is_i2s_active = true;
   }
 }
-
-#if ESP_IDF_VERSION < ESP_IDF_VERSION_VAL(5, 1, 1)
-
-esp_err_t BluetoothA2DPSink::i2s_mclk_pin_select(const uint8_t pin) {
-  if (pin != 0 && pin != 1 && pin != 3) {
-    ESP_LOGE(BT_APP_TAG, "Only support GPIO0/GPIO1/GPIO3, gpio_num:%d", pin);
-    return ESP_ERR_INVALID_ARG;
-  }
-  switch (pin) {
-    case 0:
-      PIN_FUNC_SELECT(PERIPHS_IO_MUX_GPIO0_U, FUNC_GPIO0_CLK_OUT1);
-      WRITE_PERI_REG(PIN_CTRL, 0xFFF0);
-      break;
-    case 1:
-      PIN_FUNC_SELECT(PERIPHS_IO_MUX_U0TXD_U, FUNC_U0TXD_CLK_OUT3);
-      WRITE_PERI_REG(PIN_CTRL, 0xF0F0);
-      break;
-    case 3:
-      PIN_FUNC_SELECT(PERIPHS_IO_MUX_U0RXD_U, FUNC_U0RXD_CLK_OUT2);
-      WRITE_PERI_REG(PIN_CTRL, 0xFF00);
-      break;
-    default:
-      break;
-  }
-  return ESP_OK;
-}
-
-#endif
 
 esp_a2d_mct_t BluetoothA2DPSink::get_audio_type() { return audio_type; }
 
@@ -678,41 +549,12 @@ void BluetoothA2DPSink::handle_audio_cfg(uint16_t event, void *p_param) {
   }
 
   // for now only SBC stream is supported
-  if (player_init == false &&
-      a2d->audio_cfg.mcc.type == ESP_A2D_MCT_SBC) {
+  if (player_init == false && a2d->audio_cfg.mcc.type == ESP_A2D_MCT_SBC) {
     ESP_LOGI(BT_AV_TAG, "configure audio player %x-%x-%x-%x\n",
              a2d->audio_cfg.mcc.cie.sbc[0], a2d->audio_cfg.mcc.cie.sbc[1],
              a2d->audio_cfg.mcc.cie.sbc[2], a2d->audio_cfg.mcc.cie.sbc[3]);
 
-#if A2DP_LEGACY_I2S_SUPPORT
-    if (p_audio_print == nullptr){
-      i2s_config.sample_rate = m_sample_rate;
-      // setup sample rate and channels
-      if (i2s_set_clk(i2s_port, i2s_config.sample_rate,
-                      i2s_config.bits_per_sample, i2s_channels) != ESP_OK) {
-        ESP_LOGE(BT_AV_TAG, "i2s_set_clk failed with samplerate=%d",
-                i2s_config.sample_rate);
-      } else {
-        ESP_LOGI(BT_AV_TAG, "audio player configured, samplerate=%d",
-                i2s_config.sample_rate);
-        player_init = true;  // init finished
-      }
-    }
-#endif
-
-#if A2DP_I2S_AUDIOTOOLS
-    if (p_audio_print != nullptr) {
-      AudioInfo info = p_audio_print->audioInfo();
-      if (info.sample_rate != m_sample_rate || info.channels != 2 ||
-          info.bits_per_sample != 16) {
-        info.sample_rate = m_sample_rate;
-        info.channels = 2;
-        info.bits_per_sample = 16;
-        p_audio_print->setAudioInfo(info);
-      }
-    }
-#endif
-
+    out->set_sample_rate(m_sample_rate);
     player_init = true;  // init finished
   }
 }
@@ -749,43 +591,12 @@ void BluetoothA2DPSink::handle_audio_state(uint16_t event, void *p_param) {
 }
 
 void BluetoothA2DPSink::set_i2s_active(bool active) {
-    ESP_LOGI(BT_AV_TAG, "%s %d", __func__, active);
-#if A2DP_I2S_AUDIOTOOLS
-    if (p_audio_print!=nullptr){
-      if (active) {
-        if (!is_i2s_active){
-          m_pkt_cnt = 0;
-          ESP_LOGI(BT_AV_TAG, "i2s_start");
-          p_audio_print->begin();
-          is_i2s_active = true;
-        }
-      } else {
-        if (is_i2s_active) {
-          ESP_LOGW(BT_AV_TAG, "i2s_stop");
-          p_audio_print->end();
-          is_i2s_active = false;
-        }
-      }
-    }
-#endif
-#if A2DP_LEGACY_I2S_SUPPORT
-    if (p_audio_print==nullptr){
-      if (active) {
-        m_pkt_cnt = 0;
-        ESP_LOGI(BT_AV_TAG, "i2s_start");
-        if (i2s_start(i2s_port) == ESP_OK) {
-          is_i2s_active = true;
-        } else {
-          ESP_LOGE(BT_AV_TAG, "i2s_start");
-        }
-      } else {
-        ESP_LOGW(BT_AV_TAG, "i2s_stop");
-        i2s_stop(i2s_port);
-        is_i2s_active = false;
-        i2s_zero_dma_buffer(i2s_port);
-      }
-    }
-#endif
+  ESP_LOGI(BT_AV_TAG, "%s %d", __func__, active);
+  if (active) m_pkt_cnt = 0;
+  if (is_i2s_active != active) {
+    out->set_output_active(active);
+    is_i2s_active = active;
+  }
 }
 
 void BluetoothA2DPSink::handle_connection_state(uint16_t event, void *p_param) {
@@ -886,7 +697,7 @@ void BluetoothA2DPSink::handle_connection_state(uint16_t event, void *p_param) {
         connection_rety_count = 0;
 
         bt_i2s_task_start_up();
-        
+
         // record current connection
         if (reconnect_status == AutoReconnect && is_valid) {
           set_last_connection(a2d->conn_stat.remote_bda);
@@ -1216,7 +1027,7 @@ void BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) {
   }
 
   // put data into ringbuffer
-  if (is_i2s_output){
+  if (is_i2s_output) {
     write_audio(data, len);
   }
 
@@ -1400,68 +1211,11 @@ void ccall_av_hdl_a2d_evt(uint16_t event, void *param) {
 
 size_t BluetoothA2DPSink::i2s_write_data(const uint8_t *data,
                                          size_t item_size) {
-  size_t i2s_bytes_written = 0;
-
   if (!is_i2s_active) {
     ESP_LOGW(BT_AV_TAG, "%s failed - inactive", __func__);
     return 0;
   }
-
-#if A2DP_LEGACY_I2S_SUPPORT
-  if (p_print == nullptr) {
-    if (this->i2s_config.mode & I2S_MODE_DAC_BUILT_IN) {
-      // special case for internal DAC output, the incomming PCM buffer needs
-      // to be converted from signed 16bit to unsigned
-      int16_t *data16 = (int16_t *)data;
-
-      // HACK: this is here to remove the const restriction to replace the data in
-      // place as per
-      // https://github.com/espressif/esp-idf/blob/178b122/components/bt/host/bluedroid/api/include/api/esp_a2dp_api.h
-      // the buffer is anyway static block of memory possibly overwritten by next
-      // incomming data.
-
-      for (int i = 0; i < item_size / 2; i++) {
-        int16_t sample = data[i * 2] | data[i * 2 + 1] << 8;
-        data16[i] = sample + 0x8000;
-      }
-    }
-
-    if (i2s_config.bits_per_sample == I2S_BITS_PER_SAMPLE_16BIT) {
-      // standard logic with 16 bits
-      if (i2s_write(i2s_port, (void *)data, item_size, &i2s_bytes_written,
-                    portMAX_DELAY) != ESP_OK) {
-        ESP_LOGE(BT_AV_TAG, "i2s_write has failed");
-      }
-    } else {
-      if (i2s_config.bits_per_sample > 16) {
-        // expand e.g to 32 bit for dacs which do not support 16 bits
-        if (i2s_write_expand(i2s_port, (void *)data, item_size,
-                            I2S_BITS_PER_SAMPLE_16BIT,
-                            i2s_config.bits_per_sample, &i2s_bytes_written,
-                            portMAX_DELAY) != ESP_OK) {
-          ESP_LOGE(BT_AV_TAG, "i2s_write has failed");
-        }
-      } else {
-        ESP_LOGE(BT_AV_TAG, "invalid bits_per_sample: %d",
-                i2s_config.bits_per_sample);
-      }
-    }
-
-    // give envent processing some chance ?
-    delay(1);
-
-    i2s_bytes_written = item_size;
-  }
-#endif
-
-#if A2DP_I2S_AUDIOTOOLS
-  if (p_audio_print != nullptr) {
-    i2s_bytes_written = p_audio_print->write(data, item_size);
-    delay(1);
-  }
-#endif
-
-  return i2s_bytes_written;
+  return out->write(data, item_size);
 }
 
 //------------------------------------------------------------

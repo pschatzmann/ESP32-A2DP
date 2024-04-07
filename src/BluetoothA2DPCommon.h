@@ -59,9 +59,6 @@ using namespace esp_i2s;
 #include "A2DPVolumeControl.h"
 #include "esp_task_wdt.h"
 
-#if A2DP_LEGACY_I2S_SUPPORT
-#  include "driver/i2s.h"
-#endif
 
 #ifdef ARDUINO_ARCH_ESP32
 #include "esp32-hal-log.h"

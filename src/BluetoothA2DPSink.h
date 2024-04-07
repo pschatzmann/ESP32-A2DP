@@ -281,10 +281,15 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
         return &peer_bd_addr;
     }
 
-
     /// Activates the rssi reporting
     void set_rssi_active(bool active){
         rssi_active = active;
+    }
+
+    /// Requests an update of the rssi delta value
+    bool update_rssi() {
+        if (!rssi_active) return false;
+        return esp_bt_gap_read_rssi_delta(*get_current_peer_address()) == ESP_OK;
     }
 
     /// provides the last rssi parameters
@@ -293,7 +298,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     }
 
     /// Defines the callback that is called when we get an new rssi value
-    void set_rssi_callback(void (*callback)(esp_bt_gap_cb_param_t::read_rssi_delta_param &rssi)){
+    void set_rssi_calldoxback(void (*callback)(esp_bt_gap_cb_param_t::read_rssi_delta_param &rssi)){
         rssi_callbak = callback;
     }
 
@@ -347,6 +352,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     i2s_port_t i2s_port = I2S_NUM_0; 
 #endif
     volatile bool is_i2s_active = false;
+    bool is_i2s_output = true;
     uint16_t m_sample_rate = 0; 
     uint32_t m_pkt_cnt = 0;
     //esp_a2d_audio_state_t m_audio_state = ESP_A2D_AUDIO_STATE_STOPPED;

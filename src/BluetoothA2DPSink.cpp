@@ -82,6 +82,7 @@ void BluetoothA2DPSink::end(bool release_memory) {
   BluetoothA2DPCommon::end(release_memory);
   app_task_shut_down();
 
+  if (is_i2s_output){
   // stop I2S
 #if A2DP_LEGACY_I2S_SUPPORT
     if (p_print==nullptr) {
@@ -100,7 +101,7 @@ void BluetoothA2DPSink::end(bool release_memory) {
       player_init = false;
     }
 #endif
-
+  }
   log_free_heap();
 }
 
@@ -231,6 +232,7 @@ void BluetoothA2DPSink::start(const char *name) {
 
 void BluetoothA2DPSink::init_i2s() {
   ESP_LOGI(BT_AV_TAG, "init_i2s");
+  if (is_i2s_output) {
 #if A2DP_LEGACY_I2S_SUPPORT
     if (p_print == nullptr) {
       ESP_LOGI(BT_AV_TAG, "init_i2s legacy");
@@ -265,6 +267,7 @@ void BluetoothA2DPSink::init_i2s() {
        is_i2s_active = true;
     }
 #endif
+  }
 }
 
 #if ESP_IDF_VERSION < ESP_IDF_VERSION_VAL(5, 1, 1)
@@ -1213,7 +1216,9 @@ void BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) {
   }
 
   // put data into ringbuffer
-  write_audio(data, len);
+  if (is_i2s_output){
+    write_audio(data, len);
+  }
 
   // data_received callback
   if (data_received != nullptr) {

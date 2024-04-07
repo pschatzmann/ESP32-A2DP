@@ -29,7 +29,7 @@ void rssi(esp_bt_gap_cb_param_t::read_rssi_delta_param &rssiParam) {
 }
 
 void setup() {
-  Serial.begin(119200);
+  Serial.begin(115200);
   a2dp_sink.set_rssi_active(true);
   a2dp_sink.set_rssi_callback(rssi);
   a2dp_sink.start("MyMusic");

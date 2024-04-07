@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['volume_5fcontrol_128',['volume_control',['../class_bluetooth_a2_d_p_common.html#a6fec0cfd3d0d9017b7ffcf82630ab89a',1,'BluetoothA2DPCommon']]]
+  ['update_5frssi_128',['update_rssi',['../class_bluetooth_a2_d_p_sink.html#a3b43ee67031c300d07638f9c969fa4ef',1,'BluetoothA2DPSink']]]
 ];

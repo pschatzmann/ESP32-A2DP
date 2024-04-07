@@ -92,18 +92,18 @@ $(function() {
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#if A2DP_I2S_AUDIOTOOLS</span></div>
 <div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_sink_queued.html#af90baf148c66f4460efab2ec3201b6cd">   30</a></span>&#160;  <a class="code" href="class_bluetooth_a2_d_p_sink_queued.html#af90baf148c66f4460efab2ec3201b6cd">BluetoothA2DPSinkQueued</a>(AudioOutput &amp;output) {</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    actual_bluetooth_a2dp_sink = <span class="keyword">this</span>;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    out-&gt;set_output(output);</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    out-&gt;<a class="code" href="class_bluetooth_output.html#a60317f7ee78ed580d61b5e15ab7c3267">set_output</a>(output);</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  }</div>
 <div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_sink_queued.html#a5e8ba70a7f1529fb06e15a8a80d6ee0e">   35</a></span>&#160;  <a class="code" href="class_bluetooth_a2_d_p_sink_queued.html#a5e8ba70a7f1529fb06e15a8a80d6ee0e">BluetoothA2DPSinkQueued</a>(AudioStream &amp;output) {</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    actual_bluetooth_a2dp_sink = <span class="keyword">this</span>;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    out-&gt;set_output(output);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    out-&gt;<a class="code" href="class_bluetooth_output.html#a60317f7ee78ed580d61b5e15ab7c3267">set_output</a>(output);</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  }</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#ifdef ARDUINO</span></div>
 <div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_sink_queued.html#a494c5b10321bdeba5b0431cc3c592a2d">   43</a></span>&#160;  <a class="code" href="class_bluetooth_a2_d_p_sink_queued.html#a494c5b10321bdeba5b0431cc3c592a2d">BluetoothA2DPSinkQueued</a>(Print &amp;output) {</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    actual_bluetooth_a2dp_sink = <span class="keyword">this</span>;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    out-&gt;set_output(output);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    out-&gt;<a class="code" href="class_bluetooth_output.html#a60317f7ee78ed580d61b5e15ab7c3267">set_output</a>(output);</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  }</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
@@ -166,6 +166,7 @@ $(function() {
 <div class="ttc" id="aclass_bluetooth_a2_d_p_sink_queued_html_a914815f36b15b259d328da372b6c3d08"><div class="ttname"><a href="class_bluetooth_a2_d_p_sink_queued.html#a914815f36b15b259d328da372b6c3d08">BluetoothA2DPSinkQueued::i2s_task_handler</a></div><div class="ttdeci">void i2s_task_handler(void *arg) override</div><div class="ttdoc">dummy functions needed for BluetoothA2DPSinkQueued</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSinkQueued.cpp:43</div></div>
 <div class="ttc" id="aclass_bluetooth_a2_d_p_sink_queued_html_acc0410c71c7278cd3a858d037fdc1edc"><div class="ttname"><a href="class_bluetooth_a2_d_p_sink_queued.html#acc0410c71c7278cd3a858d037fdc1edc">BluetoothA2DPSinkQueued::set_i2s_ringbuffer_size</a></div><div class="ttdeci">void set_i2s_ringbuffer_size(int size)</div><div class="ttdoc">Defines the ringbuffer size used by the i2s task (in bytes)</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSinkQueued.h:53</div></div>
 <div class="ttc" id="aclass_bluetooth_a2_d_p_sink_queued_html_af90baf148c66f4460efab2ec3201b6cd"><div class="ttname"><a href="class_bluetooth_a2_d_p_sink_queued.html#af90baf148c66f4460efab2ec3201b6cd">BluetoothA2DPSinkQueued::BluetoothA2DPSinkQueued</a></div><div class="ttdeci">BluetoothA2DPSinkQueued(AudioOutput &amp;output)</div><div class="ttdoc">Output AudioOutput using AudioTools library.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSinkQueued.h:30</div></div>
+<div class="ttc" id="aclass_bluetooth_output_html_a60317f7ee78ed580d61b5e15ab7c3267"><div class="ttname"><a href="class_bluetooth_output.html#a60317f7ee78ed580d61b5e15ab7c3267">BluetoothOutput::set_output</a></div><div class="ttdeci">void set_output(AudioOutput &amp;output)</div><div class="ttdoc">Not implemented.</div><div class="ttdef"><b>Definition:</b> BluetoothOutput.h:32</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

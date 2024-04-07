@@ -1,6 +1,6 @@
-#include "BluetoothOutput.h"
+#include "BluetoothA2DPOutput.h"
 
-BluetoothOutputLegacy::BluetoothOutputLegacy() {
+BluetoothA2DPOutputLegacy::BluetoothA2DPOutputLegacy() {
 #if A2DP_LEGACY_I2S_SUPPORT
 
   // default i2s port is 0
@@ -44,7 +44,7 @@ BluetoothOutputLegacy::BluetoothOutputLegacy() {
 
 #if A2DP_LEGACY_I2S_SUPPORT && ESP_IDF_VERSION < ESP_IDF_VERSION_VAL(5, 1, 1)
 
-esp_err_t BluetoothOutputLegacy::i2s_mclk_pin_select(const uint8_t pin) {
+esp_err_t BluetoothA2DPOutputLegacy::i2s_mclk_pin_select(const uint8_t pin) {
   if (pin != 0 && pin != 1 && pin != 3) {
     ESP_LOGE(BT_APP_TAG, "Only support GPIO0/GPIO1/GPIO3, gpio_num:%d", pin);
     return ESP_ERR_INVALID_ARG;
@@ -70,7 +70,7 @@ esp_err_t BluetoothOutputLegacy::i2s_mclk_pin_select(const uint8_t pin) {
 
 #endif
 
-bool BluetoothOutputLegacy::begin() {
+bool BluetoothA2DPOutputLegacy::begin() {
   bool rc = true;
 #if A2DP_LEGACY_I2S_SUPPORT
   ESP_LOGI(BT_AV_TAG, "init_i2s legacy");
@@ -102,7 +102,7 @@ bool BluetoothOutputLegacy::begin() {
   return rc;
 }
 
-bool BluetoothOutputAudioTools::begin() {
+bool BluetoothA2DPOutputAudioTools::begin() {
   bool rc = true;
 #if A2DP_I2S_AUDIOTOOLS
   if (p_audio_print != nullptr) {
@@ -112,7 +112,7 @@ bool BluetoothOutputAudioTools::begin() {
   return rc;
 }
 
-size_t BluetoothOutputLegacy::write(const uint8_t *data, size_t item_size) {
+size_t BluetoothA2DPOutputLegacy::write(const uint8_t *data, size_t item_size) {
   size_t i2s_bytes_written = 0;
 
 #if A2DP_LEGACY_I2S_SUPPORT
@@ -162,7 +162,7 @@ size_t BluetoothOutputLegacy::write(const uint8_t *data, size_t item_size) {
   return i2s_bytes_written;
 }
 
-size_t BluetoothOutputAudioTools::write(const uint8_t *data, size_t item_size) {
+size_t BluetoothA2DPOutputAudioTools::write(const uint8_t *data, size_t item_size) {
   size_t i2s_bytes_written = 0;
 
 #if A2DP_I2S_AUDIOTOOLS
@@ -174,7 +174,7 @@ size_t BluetoothOutputAudioTools::write(const uint8_t *data, size_t item_size) {
   return i2s_bytes_written;
 }
 
-void BluetoothOutputLegacy::end() {
+void BluetoothA2DPOutputLegacy::end() {
 #if A2DP_LEGACY_I2S_SUPPORT
   ESP_LOGI(BT_AV_TAG, "uninstall i2s");
   if (i2s_driver_uninstall(i2s_port) != ESP_OK) {
@@ -185,7 +185,7 @@ void BluetoothOutputLegacy::end() {
 #endif
 }
 
-void BluetoothOutputAudioTools::end() {
+void BluetoothA2DPOutputAudioTools::end() {
 #if A2DP_I2S_AUDIOTOOLS
   if (p_audio_print != nullptr) {
     p_audio_print->end();
@@ -194,7 +194,7 @@ void BluetoothOutputAudioTools::end() {
 #endif
 }
 
-void BluetoothOutputLegacy::set_sample_rate(int m_sample_rate) {
+void BluetoothA2DPOutputLegacy::set_sample_rate(int m_sample_rate) {
 #if A2DP_LEGACY_I2S_SUPPORT
   i2s_config.sample_rate = m_sample_rate;
   // setup sample rate and channels
@@ -210,7 +210,7 @@ void BluetoothOutputLegacy::set_sample_rate(int m_sample_rate) {
 #endif
 }
 
-void BluetoothOutputAudioTools::set_sample_rate(int m_sample_rate) {
+void BluetoothA2DPOutputAudioTools::set_sample_rate(int m_sample_rate) {
 #if A2DP_I2S_AUDIOTOOLS
   if (p_audio_print != nullptr) {
     AudioInfo info = p_audio_print->audioInfo();
@@ -225,7 +225,7 @@ void BluetoothOutputAudioTools::set_sample_rate(int m_sample_rate) {
 #endif
 }
 
-void BluetoothOutputAudioTools::set_output_active(bool active) {
+void BluetoothA2DPOutputAudioTools::set_output_active(bool active) {
   ESP_LOGI(BT_AV_TAG, "%s %d", __func__, active);
 #if A2DP_I2S_AUDIOTOOLS
   if (p_audio_print != nullptr) {
@@ -241,7 +241,7 @@ void BluetoothOutputAudioTools::set_output_active(bool active) {
 #endif
 }
 
-void BluetoothOutputLegacy::set_output_active(bool active) {
+void BluetoothA2DPOutputLegacy::set_output_active(bool active) {
 #if A2DP_LEGACY_I2S_SUPPORT
   if (active) {
     ESP_LOGI(BT_AV_TAG, "i2s_start");

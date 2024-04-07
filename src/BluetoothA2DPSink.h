@@ -16,7 +16,7 @@
 #pragma once
 
 #include "BluetoothA2DPCommon.h"
-#include "BluetoothOutput.h"
+#include "BluetoothA2DPOutput.h"
 #include "freertos/ringbuf.h"
 
 #ifdef __cplusplus
@@ -163,8 +163,8 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
 
 #endif
 
-  /// Defines the output class: by default we use BluetoothOutputDefault
-  void set_output(BluetoothOutput &output){
+  /// Defines the output class: by default we use BluetoothA2DPOutputDefault
+  void set_output(BluetoothA2DPOutput &output){
     out = &output;
   }
 
@@ -364,8 +364,8 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
 #endif
 
  protected:
-  BluetoothOutputDefault out_default;
-  BluetoothOutput *out = &out_default;
+  BluetoothA2DPOutputDefault out_default;
+  BluetoothA2DPOutput *out = &out_default;
 
   // protected data
   xQueueHandle app_task_queue = nullptr;

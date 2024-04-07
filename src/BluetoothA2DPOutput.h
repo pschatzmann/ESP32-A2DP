@@ -12,12 +12,14 @@
 #if A2DP_I2S_AUDIOTOOLS
 #include "AudioTools.h"
 #endif
+
 /**
  * @brief Abstract Output Class
  * @author Phil Schatzmann
+ * @ingroup a2dp
  * @copyright Apache License Version 2
  */
-class BluetoothOutput {
+class BluetoothA2DPOutput {
  public:
   virtual bool begin() = 0;
   virtual size_t write(const uint8_t *data, size_t len) = 0;
@@ -26,13 +28,14 @@ class BluetoothOutput {
   virtual void set_output_active(bool active);
 
 #if A2DP_I2S_AUDIOTOOLS
+  /// Not implemented
   void set_output(AudioOutput &output) {}
-  /// Output AudioStream using AudioTools library
+  /// Not implemented
   void set_output(AudioStream &output) {}
 #endif
 
 #ifdef ARDUINO
-  /// Output to Arduino Print
+  /// Not implemented
   void set_output(Print &output) {}
 #endif
 
@@ -57,14 +60,15 @@ class BluetoothOutput {
 #endif
 };
 
-/***
- * @brief Audio Output using the Arduino Audio Tools library.
+/**
+ * @brief Output Class using AudioTools library:
+ * https://github.com/pschatzmann/arduino-audio-tools
  * @author Phil Schatzmann
  * @copyright Apache License Version 2
  */
-class BluetoothOutputAudioTools : public BluetoothOutput {
+class BluetoothA2DPOutputAudioTools : public BluetoothA2DPOutput {
  public:
-  BluetoothOutputAudioTools() = default;
+  BluetoothA2DPOutputAudioTools() = default;
   bool begin() override;
   size_t write(const uint8_t *data, size_t len) override;
   void end() override;
@@ -104,14 +108,14 @@ class BluetoothOutputAudioTools : public BluetoothOutput {
 #endif
 };
 
-/***
- * @brief We use the legicy I2S API to output audio
+/**
+ * @brief Legacy I2S Output Class
  * @author Phil Schatzmann
  * @copyright Apache License Version 2
  */
-class BluetoothOutputLegacy : public BluetoothOutput {
+class BluetoothA2DPOutputLegacy : public BluetoothA2DPOutput {
  public:
-  BluetoothOutputLegacy();
+  BluetoothA2DPOutputLegacy();
   bool begin() override;
   size_t write(const uint8_t *data, size_t len) override;
   void end() override;
@@ -149,14 +153,15 @@ class BluetoothOutputLegacy : public BluetoothOutput {
 #endif
 };
 
-/***
- * @brief Audio Output: Default implementation.
+/**
+ * @brief Default Output Class providing both the Legacy I2S and the AudioTools
+ * I2S functionality
  * @author Phil Schatzmann
  * @copyright Apache License Version 2
  */
-class BluetoothOutputDefault : public BluetoothOutput {
+class BluetoothA2DPOutputDefault : public BluetoothA2DPOutput {
  public:
-  BluetoothOutputDefault() = default;
+  BluetoothA2DPOutputDefault() = default;
   bool begin() {
     bool rc = true;
     if (out_tools)
@@ -193,7 +198,7 @@ class BluetoothOutputDefault : public BluetoothOutput {
   }
 
 #if A2DP_I2S_AUDIOTOOLS
-
+  /// Output AudioStream using AudioTools library
   void set_output(AudioOutput &output) { out_tools.set_output(output); }
   /// Output AudioStream using AudioTools library
   void set_output(AudioStream &output) { out_tools.set_output(output); }
@@ -232,6 +237,6 @@ class BluetoothOutputDefault : public BluetoothOutput {
 #endif
 #endif  // A2DP_LEGACY_I2S_SUPPORT
  protected:
-  BluetoothOutputAudioTools out_tools;
-  BluetoothOutputLegacy out_legacy;
+  BluetoothA2DPOutputAudioTools out_tools;
+  BluetoothA2DPOutputLegacy out_legacy;
 };

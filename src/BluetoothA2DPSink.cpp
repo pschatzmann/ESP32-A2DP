@@ -123,7 +123,6 @@ void BluetoothA2DPSink::set_stream_reader(void (*callBack)(const uint8_t *,
                                                            uint32_t),
                                           bool is_i2s) {
   this->stream_reader = callBack;
-  this->is_i2s_output = is_i2s;
 }
 
 void BluetoothA2DPSink::set_raw_stream_reader(void (*callBack)(const uint8_t *,

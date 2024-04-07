@@ -110,7 +110,7 @@ void loop() {
 
 ### Output to the Internal DAC
 
-You can also send the output directly to the internal DAC of the ESP32 by using the AnalogAudioStream fro the AudioTools:
+You can also send the output directly to the internal DAC of the ESP32 by using the AnalogAudioStream from the AudioTools:
 
 ```
 #include "AudioTools.h

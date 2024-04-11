@@ -35,7 +35,7 @@ This can be used e.g. to build your own Bluetooth Speaker.
 Here is the simplest example which just uses the proper default settings:
 
 ```
-#include "AudioTools.h
+#include "AudioTools.h"
 #include "BluetoothA2DPSink.h"
 
 I2SStream i2s;
@@ -61,7 +61,7 @@ Please note that these default pins have changed compared to the legacy API!
 You can define your own pins easily before the ```start```.
 
 ```
-#include "AudioTools.h
+#include "AudioTools.h"
 #include "BluetoothA2DPSink.h"
 
 I2SStream i2s;
@@ -113,7 +113,7 @@ void loop() {
 You can also send the output directly to the internal DAC of the ESP32 by using the AnalogAudioStream from the AudioTools:
 
 ```
-#include "AudioTools.h
+#include "AudioTools.h"
 #include "BluetoothA2DPSink.h"
 
 AnalogAudioStream out;

@@ -108,7 +108,7 @@ class A2DPSimpleExponentialVolumeControl : public A2DPVolumeControl {
         virtual void set_volume(uint8_t volume) override {
             double volumeFactorFloat = volume;
             volumeFactorFloat = pow(2.0, volumeFactorFloat * 12.0 / 127.0);
-            int32_t volumeFactor = volumeFactorFloat - 1.0;
+            volumeFactor = volumeFactorFloat - 1.0;
             if (volumeFactor > 0xfff) {
                 volumeFactor = 0xfff;
             }

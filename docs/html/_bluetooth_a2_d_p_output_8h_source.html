@@ -93,12 +93,12 @@ $(function() {
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span> set_output_active(<span class="keywordtype">bool</span> active);</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#if A2DP_I2S_AUDIOTOOLS</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_output.html#a84e8554343c2a871c98e17ea53201929">   32</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_output.html#a84e8554343c2a871c98e17ea53201929">set_output</a>(AudioOutput &amp;output) {}</div>
-<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_output.html#a0909039048b5f7a6e30928b56b93c957">   34</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_output.html#a0909039048b5f7a6e30928b56b93c957">set_output</a>(AudioStream &amp;output) {}</div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_output.html#a9f854ab4d6116e814c450d0301c0365a">   32</a></span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_output.html#a9f854ab4d6116e814c450d0301c0365a">set_output</a>(AudioOutput &amp;output) {}</div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_output.html#ae25cb5e55d01dddf95ac28726e2e738b">   34</a></span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_output.html#ae25cb5e55d01dddf95ac28726e2e738b">set_output</a>(AudioStream &amp;output) {}</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#ifdef ARDUINO</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_output.html#ae29b778739c3684e03e1356a21fb31a9">   39</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_output.html#ae29b778739c3684e03e1356a21fb31a9">set_output</a>(Print &amp;output) {}</div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_output.html#add4a1457f42f2e6ef8b905bcf4be10dc">   39</a></span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_output.html#add4a1457f42f2e6ef8b905bcf4be10dc">set_output</a>(Print &amp;output) {}</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#if A2DP_LEGACY_I2S_SUPPORT</span></div>
@@ -194,88 +194,92 @@ $(function() {
 <div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160; <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;  <a class="code" href="class_bluetooth_a2_d_p_output_default.html">BluetoothA2DPOutputDefault</a>() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;  <span class="keywordtype">bool</span> begin() {</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    <span class="keywordtype">bool</span> rc = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    <span class="keywordtype">bool</span> rc = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    <span class="keywordflow">if</span> (out_tools)</div>
 <div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;      rc = out_tools.begin();</div>
 <div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    <span class="keywordflow">else</span></div>
 <div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;      rc = out_legacy.begin();</div>
 <div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    <span class="keywordflow">return</span> rc;</div>
 <div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;  }</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;  <span class="keywordtype">size_t</span> write(<span class="keyword">const</span> uint8_t *data, <span class="keywordtype">size_t</span> len) {</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    <span class="keywordtype">size_t</span> result = 0;</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    <span class="keywordflow">if</span> (out_tools)</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;      result = out_tools.write(data, len);</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;      result = out_legacy.write(data, len);</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    <span class="keywordflow">return</span> result;</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;  }</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;  <span class="keywordtype">void</span> end()<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    <span class="keywordflow">if</span> (out_tools)</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;      out_tools.end();</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;      out_legacy.end();</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;  }</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;  <span class="keywordtype">void</span> set_sample_rate(<span class="keywordtype">int</span> rate)<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    <span class="keywordflow">if</span> (out_tools)</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;      out_tools.set_sample_rate(rate);</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;      out_legacy.set_sample_rate(rate);</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;  }</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;  <span class="keywordtype">void</span> set_output_active(<span class="keywordtype">bool</span> active)<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    <span class="keywordflow">if</span> (out_tools)</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;      out_tools.set_output_active(active);</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;      out_legacy.set_output_active(active);</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;  }</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160; </div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;<span class="preprocessor">#if A2DP_I2S_AUDIOTOOLS</span></div>
-<div class="line"><a name="l00202"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_output_default.html#abfbe8d7c5727fe39ba19a1c2692b18d1">  202</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_output_default.html#abfbe8d7c5727fe39ba19a1c2692b18d1">set_output</a>(AudioOutput &amp;output) { out_tools.<a class="code" href="class_bluetooth_a2_d_p_output_audio_tools.html#af4eb25d48e41cf44a4e4da68bd909390">set_output</a>(output); }</div>
-<div class="line"><a name="l00204"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_output_default.html#a844478e54b89079de6b700f3f8859278">  204</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_output_default.html#a844478e54b89079de6b700f3f8859278">set_output</a>(AudioStream &amp;output) { out_tools.<a class="code" href="class_bluetooth_a2_d_p_output_audio_tools.html#af4eb25d48e41cf44a4e4da68bd909390">set_output</a>(output); }</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160; </div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;<span class="preprocessor">#ifdef ARDUINO</span></div>
-<div class="line"><a name="l00209"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_output_default.html#a7bd30f89f92885dd29d59f9e21d19e50">  209</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_output_default.html#a7bd30f89f92885dd29d59f9e21d19e50">set_output</a>(Print &amp;output) { out_tools.<a class="code" href="class_bluetooth_a2_d_p_output_audio_tools.html#af4eb25d48e41cf44a4e4da68bd909390">set_output</a>(output); }</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160; </div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;<span class="preprocessor">#if A2DP_LEGACY_I2S_SUPPORT</span></div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span> set_pin_config(i2s_pin_config_t pin_config) {</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;    out_legacy.set_pin_config(pin_config);</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;  }</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span> set_i2s_port(i2s_port_t i2s_num) {</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;    out_legacy.set_i2s_port(i2s_num);</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;  </div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;  <span class="keywordtype">size_t</span> write(<span class="keyword">const</span> uint8_t *data, <span class="keywordtype">size_t</span> len) {</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    <span class="keywordtype">size_t</span> result = 0;</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    <span class="keywordflow">if</span> (out_tools)</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;      result = out_tools.write(data, len);</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;      result = out_legacy.write(data, len);</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    <span class="keywordflow">return</span> result;</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;  }</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;  </div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;  <span class="keywordtype">void</span> end()<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    <span class="keywordflow">if</span> (out_tools)</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;      out_tools.end();</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;      out_legacy.end();</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;  }</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;  </div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  <span class="keywordtype">void</span> set_sample_rate(<span class="keywordtype">int</span> rate)<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    <span class="keywordflow">if</span> (out_tools)</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;      out_tools.set_sample_rate(rate);</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;      out_legacy.set_sample_rate(rate);</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;  }</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160; </div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;  <span class="keywordtype">void</span> set_output_active(<span class="keywordtype">bool</span> active)<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    <span class="keywordflow">if</span> (out_tools)</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;      out_tools.set_output_active(active);</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;      out_legacy.set_output_active(active);</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;  }</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160; </div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;<span class="preprocessor">#if A2DP_I2S_AUDIOTOOLS</span></div>
+<div class="line"><a name="l00206"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_output_default.html#a3b1b07ed1e2002e9832656397eee8ee7">  206</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_output_default.html#a3b1b07ed1e2002e9832656397eee8ee7">set_output</a>(AudioOutput &amp;output)<span class="keyword"> override  </span>{ out_tools.<a class="code" href="class_bluetooth_a2_d_p_output_audio_tools.html#af4eb25d48e41cf44a4e4da68bd909390">set_output</a>(output); }</div>
+<div class="line"><a name="l00208"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_output_default.html#a2286eccafd573d57bb01ac608dc49674">  208</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_output_default.html#a2286eccafd573d57bb01ac608dc49674">set_output</a>(AudioStream &amp;output)<span class="keyword"> override </span>{ out_tools.<a class="code" href="class_bluetooth_a2_d_p_output_audio_tools.html#af4eb25d48e41cf44a4e4da68bd909390">set_output</a>(output); }</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160; </div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;<span class="preprocessor">#ifdef ARDUINO</span></div>
+<div class="line"><a name="l00213"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_output_default.html#ad03aa92e57182e2a24eb3596fe5461ee">  213</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_output_default.html#ad03aa92e57182e2a24eb3596fe5461ee">set_output</a>(Print &amp;output)<span class="keyword"> override </span>{ out_tools.<a class="code" href="class_bluetooth_a2_d_p_output_audio_tools.html#af4eb25d48e41cf44a4e4da68bd909390">set_output</a>(output); }</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160; </div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;<span class="preprocessor">#if A2DP_LEGACY_I2S_SUPPORT</span></div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span> set_pin_config(i2s_pin_config_t pin_config)<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;    out_legacy.set_pin_config(pin_config);</div>
 <div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;  }</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160; </div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span> set_i2s_config(i2s_config_t i2s_config) {</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    out_legacy.set_i2s_config(i2s_config);</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;  }</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160; </div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span> set_bits_per_sample(<span class="keywordtype">int</span> bps) {</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    out_legacy.set_bits_per_sample(bps);</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;  }</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160; </div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;<span class="preprocessor">#if ESP_IDF_VERSION &lt; ESP_IDF_VERSION_VAL(5, 1, 1)</span></div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;  <span class="keyword">virtual</span> esp_err_t i2s_mclk_pin_select(<span class="keyword">const</span> uint8_t pin) {</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    <span class="keywordflow">return</span> out_legacy.i2s_mclk_pin_select(pin);</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;  }</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;<span class="preprocessor">#endif  </span><span class="comment">// A2DP_LEGACY_I2S_SUPPORT</span></div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160; <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;  <a class="code" href="class_bluetooth_a2_d_p_output_audio_tools.html">BluetoothA2DPOutputAudioTools</a> out_tools;</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;  <a class="code" href="class_bluetooth_a2_d_p_output_legacy.html">BluetoothA2DPOutputLegacy</a> out_legacy;</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;};</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span> set_i2s_port(i2s_port_t i2s_num)<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    out_legacy.set_i2s_port(i2s_num);</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;  }</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160; </div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span> set_i2s_config(i2s_config_t i2s_config)<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    out_legacy.set_i2s_config(i2s_config);</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;  }</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160; </div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span> set_bits_per_sample(<span class="keywordtype">int</span> bps)<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    out_legacy.set_bits_per_sample(bps);</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;  }</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160; </div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;<span class="preprocessor">#if ESP_IDF_VERSION &lt; ESP_IDF_VERSION_VAL(5, 1, 1)</span></div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;  <span class="keyword">virtual</span> esp_err_t i2s_mclk_pin_select(<span class="keyword">const</span> uint8_t pin)<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    <span class="keywordflow">return</span> out_legacy.i2s_mclk_pin_select(pin);</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;  }</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;<span class="preprocessor">#endif  </span><span class="comment">// A2DP_LEGACY_I2S_SUPPORT</span></div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160; <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;  <a class="code" href="class_bluetooth_a2_d_p_output_audio_tools.html">BluetoothA2DPOutputAudioTools</a> out_tools;</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;  <a class="code" href="class_bluetooth_a2_d_p_output_legacy.html">BluetoothA2DPOutputLegacy</a> out_legacy;</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;};</div>
 <div class="ttc" id="a_bluetooth_a2_d_p_common_8h_html"><div class="ttname"><a href="_bluetooth_a2_d_p_common_8h.html">BluetoothA2DPCommon.h</a></div></div>
 <div class="ttc" id="aclass_bluetooth_a2_d_p_output_audio_tools_html"><div class="ttname"><a href="class_bluetooth_a2_d_p_output_audio_tools.html">BluetoothA2DPOutputAudioTools</a></div><div class="ttdoc">Output Class using AudioTools library: https://github.com/pschatzmann/arduino-audio-tools.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPOutput.h:69</div></div>
 <div class="ttc" id="aclass_bluetooth_a2_d_p_output_audio_tools_html_a3c360cc7bf000d4e8bc241007e34f7d9"><div class="ttname"><a href="class_bluetooth_a2_d_p_output_audio_tools.html#a3c360cc7bf000d4e8bc241007e34f7d9">BluetoothA2DPOutputAudioTools::set_output</a></div><div class="ttdeci">void set_output(Print &amp;output)</div><div class="ttdoc">Output to Arduino Print.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPOutput.h:98</div></div>
 <div class="ttc" id="aclass_bluetooth_a2_d_p_output_audio_tools_html_a60f29d890400025ab41177d9e8a8b3ce"><div class="ttname"><a href="class_bluetooth_a2_d_p_output_audio_tools.html#a60f29d890400025ab41177d9e8a8b3ce">BluetoothA2DPOutputAudioTools::set_output</a></div><div class="ttdeci">void set_output(AudioStream &amp;output)</div><div class="ttdoc">Output AudioStream using AudioTools library.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPOutput.h:89</div></div>
 <div class="ttc" id="aclass_bluetooth_a2_d_p_output_audio_tools_html_af4eb25d48e41cf44a4e4da68bd909390"><div class="ttname"><a href="class_bluetooth_a2_d_p_output_audio_tools.html#af4eb25d48e41cf44a4e4da68bd909390">BluetoothA2DPOutputAudioTools::set_output</a></div><div class="ttdeci">void set_output(AudioOutput &amp;output)</div><div class="ttdoc">Output AudioStream using AudioTools library.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPOutput.h:83</div></div>
 <div class="ttc" id="aclass_bluetooth_a2_d_p_output_default_html"><div class="ttname"><a href="class_bluetooth_a2_d_p_output_default.html">BluetoothA2DPOutputDefault</a></div><div class="ttdoc">Default Output Class providing both the Legacy I2S and the AudioTools I2S functionality.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPOutput.h:162</div></div>
-<div class="ttc" id="aclass_bluetooth_a2_d_p_output_default_html_a7bd30f89f92885dd29d59f9e21d19e50"><div class="ttname"><a href="class_bluetooth_a2_d_p_output_default.html#a7bd30f89f92885dd29d59f9e21d19e50">BluetoothA2DPOutputDefault::set_output</a></div><div class="ttdeci">void set_output(Print &amp;output)</div><div class="ttdoc">Output to Arduino Print.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPOutput.h:209</div></div>
-<div class="ttc" id="aclass_bluetooth_a2_d_p_output_default_html_a844478e54b89079de6b700f3f8859278"><div class="ttname"><a href="class_bluetooth_a2_d_p_output_default.html#a844478e54b89079de6b700f3f8859278">BluetoothA2DPOutputDefault::set_output</a></div><div class="ttdeci">void set_output(AudioStream &amp;output)</div><div class="ttdoc">Output AudioStream using AudioTools library.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPOutput.h:204</div></div>
-<div class="ttc" id="aclass_bluetooth_a2_d_p_output_default_html_abfbe8d7c5727fe39ba19a1c2692b18d1"><div class="ttname"><a href="class_bluetooth_a2_d_p_output_default.html#abfbe8d7c5727fe39ba19a1c2692b18d1">BluetoothA2DPOutputDefault::set_output</a></div><div class="ttdeci">void set_output(AudioOutput &amp;output)</div><div class="ttdoc">Output AudioStream using AudioTools library.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPOutput.h:202</div></div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_output_default_html_a2286eccafd573d57bb01ac608dc49674"><div class="ttname"><a href="class_bluetooth_a2_d_p_output_default.html#a2286eccafd573d57bb01ac608dc49674">BluetoothA2DPOutputDefault::set_output</a></div><div class="ttdeci">void set_output(AudioStream &amp;output) override</div><div class="ttdoc">Output AudioStream using AudioTools library.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPOutput.h:208</div></div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_output_default_html_a3b1b07ed1e2002e9832656397eee8ee7"><div class="ttname"><a href="class_bluetooth_a2_d_p_output_default.html#a3b1b07ed1e2002e9832656397eee8ee7">BluetoothA2DPOutputDefault::set_output</a></div><div class="ttdeci">void set_output(AudioOutput &amp;output) override</div><div class="ttdoc">Output AudioStream using AudioTools library.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPOutput.h:206</div></div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_output_default_html_ad03aa92e57182e2a24eb3596fe5461ee"><div class="ttname"><a href="class_bluetooth_a2_d_p_output_default.html#ad03aa92e57182e2a24eb3596fe5461ee">BluetoothA2DPOutputDefault::set_output</a></div><div class="ttdeci">void set_output(Print &amp;output) override</div><div class="ttdoc">Output to Arduino Print.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPOutput.h:213</div></div>
 <div class="ttc" id="aclass_bluetooth_a2_d_p_output_html"><div class="ttname"><a href="class_bluetooth_a2_d_p_output.html">BluetoothA2DPOutput</a></div><div class="ttdoc">Abstract Output Class.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPOutput.h:22</div></div>
-<div class="ttc" id="aclass_bluetooth_a2_d_p_output_html_a0909039048b5f7a6e30928b56b93c957"><div class="ttname"><a href="class_bluetooth_a2_d_p_output.html#a0909039048b5f7a6e30928b56b93c957">BluetoothA2DPOutput::set_output</a></div><div class="ttdeci">void set_output(AudioStream &amp;output)</div><div class="ttdoc">Not implemented.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPOutput.h:34</div></div>
-<div class="ttc" id="aclass_bluetooth_a2_d_p_output_html_a84e8554343c2a871c98e17ea53201929"><div class="ttname"><a href="class_bluetooth_a2_d_p_output.html#a84e8554343c2a871c98e17ea53201929">BluetoothA2DPOutput::set_output</a></div><div class="ttdeci">void set_output(AudioOutput &amp;output)</div><div class="ttdoc">Not implemented.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPOutput.h:32</div></div>
-<div class="ttc" id="aclass_bluetooth_a2_d_p_output_html_ae29b778739c3684e03e1356a21fb31a9"><div class="ttname"><a href="class_bluetooth_a2_d_p_output.html#ae29b778739c3684e03e1356a21fb31a9">BluetoothA2DPOutput::set_output</a></div><div class="ttdeci">void set_output(Print &amp;output)</div><div class="ttdoc">Not implemented.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPOutput.h:39</div></div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_output_html_a9f854ab4d6116e814c450d0301c0365a"><div class="ttname"><a href="class_bluetooth_a2_d_p_output.html#a9f854ab4d6116e814c450d0301c0365a">BluetoothA2DPOutput::set_output</a></div><div class="ttdeci">virtual void set_output(AudioOutput &amp;output)</div><div class="ttdoc">Not implemented.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPOutput.h:32</div></div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_output_html_add4a1457f42f2e6ef8b905bcf4be10dc"><div class="ttname"><a href="class_bluetooth_a2_d_p_output.html#add4a1457f42f2e6ef8b905bcf4be10dc">BluetoothA2DPOutput::set_output</a></div><div class="ttdeci">virtual void set_output(Print &amp;output)</div><div class="ttdoc">Not implemented.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPOutput.h:39</div></div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_output_html_ae25cb5e55d01dddf95ac28726e2e738b"><div class="ttname"><a href="class_bluetooth_a2_d_p_output.html#ae25cb5e55d01dddf95ac28726e2e738b">BluetoothA2DPOutput::set_output</a></div><div class="ttdeci">virtual void set_output(AudioStream &amp;output)</div><div class="ttdoc">Not implemented.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPOutput.h:34</div></div>
 <div class="ttc" id="aclass_bluetooth_a2_d_p_output_legacy_html"><div class="ttname"><a href="class_bluetooth_a2_d_p_output_legacy.html">BluetoothA2DPOutputLegacy</a></div><div class="ttdoc">Legacy I2S Output Class.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPOutput.h:116</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

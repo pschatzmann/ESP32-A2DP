@@ -372,7 +372,8 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   xTaskHandle app_task_handle = nullptr;
 
   volatile bool is_i2s_active = false;
-  bool is_i2s_output = true;
+  // activate output via BluetoothA2DPOutput
+  bool is_output = true;
   uint16_t m_sample_rate = 0;
   uint32_t m_pkt_cnt = 0;
   // esp_a2d_audio_state_t m_audio_state = ESP_A2D_AUDIO_STATE_STOPPED;

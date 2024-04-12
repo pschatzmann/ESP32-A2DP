@@ -42,7 +42,7 @@ void BluetoothA2DPSink::end(bool release_memory) {
   BluetoothA2DPCommon::end(release_memory);
   app_task_shut_down();
 
-  if (is_i2s_output) {
+  if (is_output) {
     out->end();
     player_init = false;
   }
@@ -53,7 +53,7 @@ void BluetoothA2DPSink::set_stream_reader(void (*callBack)(const uint8_t *,
                                                            uint32_t),
                                           bool is_i2s) {
   this->stream_reader = callBack;
-  this->is_i2s_output = is_i2s;
+  this->is_output = is_i2s;
 }
 
 void BluetoothA2DPSink::set_raw_stream_reader(void (*callBack)(const uint8_t *,
@@ -163,7 +163,7 @@ void BluetoothA2DPSink::start(const char *name) {
 
 void BluetoothA2DPSink::init_i2s() {
   ESP_LOGI(BT_AV_TAG, "init_i2s");
-  if (is_i2s_output) {
+  if (is_output) {
     out->begin();
     player_init = false;
     is_i2s_active = true;
@@ -594,7 +594,7 @@ void BluetoothA2DPSink::handle_audio_state(uint16_t event, void *p_param) {
 void BluetoothA2DPSink::set_i2s_active(bool active) {
   ESP_LOGI(BT_AV_TAG, "%s %d", __func__, active);
   if (active) m_pkt_cnt = 0;
-  if (is_i2s_output) {
+  if (is_output) {
     if (is_i2s_active != active) {
       out->set_output_active(active);
       is_i2s_active = active;
@@ -1033,7 +1033,7 @@ void BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) {
   }
 
   // put data into ringbuffer
-  if (is_i2s_output) {
+  if (is_output) {
     write_audio(data, len);
   }
 
@@ -1218,7 +1218,7 @@ void ccall_av_hdl_a2d_evt(uint16_t event, void *param) {
 size_t BluetoothA2DPSink::i2s_write_data(const uint8_t *data,
                                          size_t item_size) {
 
-  if (!is_i2s_output) return item_size;
+  if (!is_output) return item_size;
 
   if (!is_i2s_active) {
     ESP_LOGW(BT_AV_TAG, "%s failed - inactive", __func__);

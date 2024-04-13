@@ -121,11 +121,11 @@ class A2DPSimpleExponentialVolumeControl : public A2DPVolumeControl {
  * @copyright Apache License Version 2
  */
 class A2DPLinearVolumeControl : public A2DPVolumeControl {
-
+    public:
         A2DPLinearVolumeControl() {
             volumeFactorMax = 128;
         }
-
+    protected:
         virtual void set_volume(uint8_t volume) override {
             volumeFactor = volume;
         }

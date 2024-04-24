@@ -930,6 +930,7 @@ void BluetoothA2DPSource::bt_av_notify_evt_handler(
              event_parameter->volume + 5);
     esp_avrc_ct_send_set_absolute_volume_cmd(APP_RC_CT_TL_RN_VOLUME_CHANGE,
                                              event_parameter->volume + 5);
+    set_volume(event_parameter->volume + 5);
     bt_av_volume_changed();
     break;
   }
@@ -1006,6 +1007,7 @@ void BluetoothA2DPSource::bt_av_hdl_avrc_ct_evt(uint16_t event, void *p_param) {
   case ESP_AVRC_CT_SET_ABSOLUTE_VOLUME_RSP_EVT: {
     ESP_LOGI(BT_RC_CT_TAG, "Set absolute volume response: volume %d",
              rc->set_volume_rsp.volume);
+    set_volume(rc->set_volume_rsp.volume);
     break;
   }
 #endif

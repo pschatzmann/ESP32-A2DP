@@ -163,7 +163,7 @@ In the ```a2dp_sink.set_stream_reader()``` method you can provide an optional pa
 
 ### Support for Metadata
 
-You can register a method which will be called when the system receives any AVRC metadata. Here is an example
+You can register a method which will be called when the system receives any AVRC metadata (`esp_avrc_md_attr_mask_t`). Here is an example
 ```
 void avrc_metadata_callback(uint8_t data1, const uint8_t *data2) {
   Serial.printf("AVRC metadata rsp: attribute id 0x%x, %s\n", data1, data2);
@@ -175,7 +175,11 @@ By default you should get the most important information, however you can adjust
 ```
 set_avrc_metadata_attribute_mask(ESP_AVRC_MD_ATTR_TITLE | ESP_AVRC_MD_ATTR_PLAYING_TIME);
 ```
-before you start the A2DP sink.
+before you start the A2DP sink. Note that data2 is actually a char* string, so even though `ESP_AVRC_MD_ATTR_PLAYING_TIME` is documented as the milliseconds of media duration you'll need to parse it before doing math on it. See the metadata example for more.
+
+### Support for Notifications
+
+Similarly to the `avrc_metadata_callback`, ESP IDF v4+ supports selected `esp_avrc_rn_param_t` callbacks like `set_avrc_rn_playstatus_callback` and `set_avrc_rn_play_pos_callback` which can be used to obtain `esp_avrc_playback_stat_t playback` playback status and `uint32_t play_pos` playback position respectively. See the playing_status_callbacks example for more.
 
 ### Support for AVRC Commands
 

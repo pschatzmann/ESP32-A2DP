@@ -801,6 +801,12 @@ void BluetoothA2DPSink::av_notify_evt_handler(uint8_t event_id,
       ESP_LOGI(BT_AV_TAG, "Play position changed: %d-ms",
                event_parameter->play_pos);
       av_play_pos_changed();
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
+      // call avrc play status notification callback if available
+      if (avrc_rn_play_pos_callback != nullptr) {
+        avrc_rn_play_pos_callback(event_parameter->play_pos);
+      }
+#endif
       break;
 
     default:

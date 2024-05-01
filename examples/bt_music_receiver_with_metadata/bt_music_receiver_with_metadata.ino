@@ -16,13 +16,13 @@
 #include "AudioTools.h"
 #include "BluetoothA2DPSink.h"
 
-I2SStream out;
+I2SStream i2s;
 BluetoothA2DPSink a2dp_sink(i2s);
 bool is_active = true;
 
 void avrc_metadata_callback(uint8_t id, const uint8_t *text) {
   Serial.printf("==> AVRC metadata rsp: attribute id 0x%x, %s\n", id, text);
-  if (id == 0x40) {
+  if (id == ESP_AVRC_MD_ATTR_PLAYING_TIME) {
     uint32_t playtime = String((char*)text).toInt();
     Serial.printf("==> Playing time is %d ms (%d seconds)\n", playtime, (int)round(playtime/1000.0));
   }

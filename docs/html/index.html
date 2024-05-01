@@ -149,7 +149,8 @@ Output Using the ESP32 I2S API</h2>
 <div class="line"> </div>
 <div class="line">void loop() {</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md7"></a>
+</div><!-- fragment --><p> Please note, that this API also depends on the installed version: The example above is for ESP32 &lt; 3.0.0!</p>
+<h2><a class="anchor" id="autotoc_md7"></a>
 Output to the Internal DAC</h2>
 <p>You can also send the output directly to the internal DAC of the ESP32 by using the AnalogAudioStream from the AudioTools:</p>
 <div class="fragment"><div class="line">#include &quot;AudioTools.h&quot;</div>
@@ -190,14 +191,17 @@ Accessing the Sink Data Stream with Callbacks</h2>
 </div><!-- fragment --><p> In the <code>a2dp_sink.set_stream_reader()</code> method you can provide an optional parameter that defines if you want the output to I2S to be active or deactive - So you can use this method to e.g. to switch off I2S just by calling <code>a2dp_sink.set_stream_reader(read_data_stream, false)</code></p>
 <h2><a class="anchor" id="autotoc_md9"></a>
 Support for Metadata</h2>
-<p>You can register a method which will be called when the system receives any AVRC metadata. Here is an example </p><div class="fragment"><div class="line">void avrc_metadata_callback(uint8_t data1, const uint8_t *data2) {</div>
+<p>You can register a method which will be called when the system receives any AVRC metadata (<code>esp_avrc_md_attr_mask_t</code>). Here is an example </p><div class="fragment"><div class="line">void avrc_metadata_callback(uint8_t data1, const uint8_t *data2) {</div>
 <div class="line">  Serial.printf(&quot;AVRC metadata rsp: attribute id 0x%x, %s\n&quot;, data1, data2);</div>
 <div class="line">}</div>
 <div class="line">a2dp_sink.set_avrc_metadata_callback(avrc_metadata_callback);</div>
 <div class="line">a2dp_sink.start(&quot;BT&quot;);</div>
 </div><!-- fragment --><p> By default you should get the most important information, however you can adjust this by calling the <code>set_avrc_metadata_attribute_mask</code> method e.g if you just need the title and playing time you can call: </p><div class="fragment"><div class="line">set_avrc_metadata_attribute_mask(ESP_AVRC_MD_ATTR_TITLE | ESP_AVRC_MD_ATTR_PLAYING_TIME);</div>
-</div><!-- fragment --><p> before you start the A2DP sink.</p>
+</div><!-- fragment --><p> before you start the A2DP sink. Note that data2 is actually a char* string, so even though <code>ESP_AVRC_MD_ATTR_PLAYING_TIME</code> is documented as the milliseconds of media duration you'll need to parse it before doing math on it. See the metadata example for more.</p>
 <h2><a class="anchor" id="autotoc_md10"></a>
+Support for Notifications</h2>
+<p>Similarly to the <code>avrc_metadata_callback</code>, ESP IDF v4+ supports selected <code>esp_avrc_rn_param_t</code> callbacks like <code>set_avrc_rn_playstatus_callback</code> and <code>set_avrc_rn_play_pos_callback</code> which can be used to obtain <code>esp_avrc_playback_stat_t playback</code> playback status and <code>uint32_t play_pos</code> playback position respectively. See the playing_status_callbacks example for more.</p>
+<h2><a class="anchor" id="autotoc_md11"></a>
 Support for AVRC Commands</h2>
 <p>I have added the following AVRC commmands, that you can use to 'control' your A2DP Source:</p>
 <ul>
@@ -209,10 +213,10 @@ Support for AVRC Commands</h2>
 <li>fast_forward();</li>
 <li>rewind();</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md11"></a>
+<h1><a class="anchor" id="autotoc_md12"></a>
 A2DP Source (Music Sender)</h1>
 <p>This can be used to feed e.g. your Bluetooth Speaker with your audio data.</p>
-<h2><a class="anchor" id="autotoc_md12"></a>
+<h2><a class="anchor" id="autotoc_md13"></a>
 Sending Data from a A2DS Data Source with a Callback</h2>
 <p>We can also generate sound and send it e.g. to a Bluetooth Speaker. <br  />
 </p>
@@ -241,7 +245,7 @@ Sending Data from a A2DS Data Source with a Callback</h2>
 <div class="line">  static std::vector&lt;char*&gt; bt_names = {&quot;MyMusic&quot;,&quot;RadioPlayer&quot;,&quot;MusicPlayer&quot;};</div>
 <div class="line">  a2dp_source.start(bt_names, get_sound_data); </div>
 <div class="line">} </div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md13"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md14"></a>
 Sending Data from a A2DS Data Source with Recorded Data</h2>
 <p>You can also provide the data directly as simple array of uint8_t:</p>
 <div class="fragment"><div class="line">#include &quot;BluetoothA2DPSource.h&quot;</div>
@@ -278,10 +282,10 @@ Sending Data from a A2DS Data Source with Recorded Data</h2>
 <div class="fragment"><div class="line">TwoChannelSoundData(Frame *data, int32_t frameCount, bool loop=false);</div>
 <div class="line">OneChannelSoundData(int16_t *data, int32_t frameCount, bool loop=false, ChannelInfo channelInfo=Both);</div>
 <div class="line">OneChannel8BitSoundData(int8_t *data, int32_t frameCount, bool loop=false, ChannelInfo channelInfo=Both);</div>
-</div><!-- fragment --> <h1><a class="anchor" id="autotoc_md14"></a>
+</div><!-- fragment --> <h1><a class="anchor" id="autotoc_md15"></a>
 Logging</h1>
 <p>This library uses the ESP32 logger that you can activate in Arduino in - Tools - Core Debug Log.</p>
-<h1><a class="anchor" id="autotoc_md15"></a>
+<h1><a class="anchor" id="autotoc_md16"></a>
 Architecture / Dependencies</h1>
 <p>The current code is purely dependent on the ESP-IDF (which is also provided by the Arduino ESP32 core). There are no other dependencies and this includes the Arduino API!</p>
 <p>Therefore we support:</p>
@@ -292,16 +296,16 @@ Architecture / Dependencies</h1>
 </ul>
 <p>This restriction limits however the provided examples.</p>
 <p>Before you clone the project, please read the following information which can be found in the <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki/Design-Overview">Wiki</a>.</p>
-<h1><a class="anchor" id="autotoc_md16"></a>
+<h1><a class="anchor" id="autotoc_md17"></a>
 Digital Sound Processing</h1>
 <p>You can use this library stand alone, but it is part of my <a href="https://github.com/pschatzmann/arduino-audio-tools">audio-tools</a> project. So you can easily enhance this functionality with sound effects, use filters, use alternative audio sinks or audio sources, do FFT etc. Here is a <a href="https://github.com/pschatzmann/arduino-audio-tools/blob/main/examples/examples-basic-api/basic-a2dp-fft/basic-a2dp-fft.ino">simple example</a> how you can analyse the audio data with FFT.</p>
-<h1><a class="anchor" id="autotoc_md17"></a>
+<h1><a class="anchor" id="autotoc_md18"></a>
 Documentation</h1>
 <ul>
 <li>The <a href="https://pschatzmann.github.io/ESP32-A2DP/html/group__a2dp.html">class documentation can be found here</a></li>
 <li>You can also find further information in the <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki">Wiki</a></li>
 </ul>
-<h1><a class="anchor" id="autotoc_md18"></a>
+<h1><a class="anchor" id="autotoc_md19"></a>
 Support</h1>
 <p>I spent a lot of time to provide a comprehensive and complete documentation. So please read the documentation first and check the issues and discussions before posting any new ones on Github.</p>
 <p>Open issues only for bugs and if it is not a bug, use a discussion: Provide enough information about</p><ul>
@@ -316,20 +320,20 @@ Support</h1>
 </ul>
 <p>to enable others to understand and reproduce your issue.</p>
 <p>Finally above all <b>don't</b> send me any e-mails or post questions on my personal website!</p>
-<h1><a class="anchor" id="autotoc_md19"></a>
+<h1><a class="anchor" id="autotoc_md20"></a>
 Show and Tell</h1>
 <p>Get some inspiration <a href="https://github.com/pschatzmann/ESP32-A2DP/discussions/categories/show-and-tell">from projects that were using this library</a> and share your projects with the community.</p>
-<h1><a class="anchor" id="autotoc_md20"></a>
+<h1><a class="anchor" id="autotoc_md21"></a>
 Installation</h1>
 <p>For Arduino you can download the library as zip and call include Library -&gt; zip library. Or you can git clone this project into the Arduino libraries folder e.g. with </p><div class="fragment"><div class="line">cd  ~/Documents/Arduino/libraries</div>
 <div class="line">git clone https://github.com/pschatzmann/ESP32-A2DP.git</div>
 <div class="line">git clone https://github.com/pschatzmann/arduino-audio-tools.git</div>
 </div><!-- fragment --><p> For the provided examples, you will need to install the <a href="https://github.com/pschatzmann/arduino-audio-tools">audio-tools library</a> as well.</p>
 <p>For other frameworks <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki">see the Wiki</a></p>
-<h1><a class="anchor" id="autotoc_md21"></a>
+<h1><a class="anchor" id="autotoc_md22"></a>
 Change History</h1>
 <p>The <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki/Change-History">Change History can be found in the Wiki</a></p>
-<h1><a class="anchor" id="autotoc_md22"></a>
+<h1><a class="anchor" id="autotoc_md23"></a>
 Sponsor Me</h1>
 <p>This software is totally free, but you can make me happy by rewarding me with a treat</p>
 <ul>

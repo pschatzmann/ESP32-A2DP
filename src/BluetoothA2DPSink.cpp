@@ -1106,7 +1106,7 @@ void BluetoothA2DPSink::rewind() {
 
 void BluetoothA2DPSink::set_volume(uint8_t volume) {
   // limit the volume to 127
-  s_volume = volume & 0x7f;
+  s_volume = std::min((int)volume, 0x7f);
   ESP_LOGI(BT_AV_TAG, "set_volume %d -> %d", volume, s_volume);
   volume_control()->set_volume(s_volume);
   volume_control()->set_enabled(true);

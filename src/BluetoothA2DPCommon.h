@@ -155,7 +155,7 @@ class BluetoothA2DPCommon {
 
         /// Sets the volume (range 0 - 127)
         virtual void set_volume(uint8_t volume){
-            volume_value = volume & 0x7F;
+            volume_value = std::min((int)volume, 0x7F);
             ESP_LOGI(BT_AV_TAG, "set_volume: %d", volume_value);
             volume_control()->set_volume(volume_value);
             volume_control()->set_enabled(true);

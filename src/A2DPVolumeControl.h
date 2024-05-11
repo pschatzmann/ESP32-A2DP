@@ -88,11 +88,11 @@ class A2DPVolumeControl {
 class A2DPDefaultVolumeControl : public A2DPVolumeControl {
     protected:
         void set_volume(uint8_t volume) override {
-            constexpr double base = 1.4;
-            constexpr double bits = 12;
-            constexpr double zero_ofs = pow(base, -bits);
-            constexpr double scale = pow(2.0, bits);
-            double volumeFactorFloat = (pow(base, volume * bits / 127.0 - bits) - zero_ofs) * scale / (1.0 - zero_ofs);
+            constexpr float base = 1.4f;
+            constexpr float bits = 12.0f;
+            constexpr float zero_ofs = pow(base, -bits);
+            constexpr float scale = pow(2.0f, bits);
+            float volumeFactorFloat = (pow(base, volume * bits / 127.0f - bits) - zero_ofs) * scale / (1.0f - zero_ofs);
             volumeFactor = volumeFactorFloat;
             if (volumeFactor > 0x1000) {
                 volumeFactor = 0x1000;
@@ -107,7 +107,7 @@ class A2DPDefaultVolumeControl : public A2DPVolumeControl {
 class A2DPSimpleExponentialVolumeControl : public A2DPVolumeControl {
     protected:
         void set_volume(uint8_t volume) override {
-            double volumeFactorFloat = volume;
+            float volumeFactorFloat = volume;
             volumeFactorFloat = pow(2.0, volumeFactorFloat * 12.0 / 127.0);
             volumeFactor = volumeFactorFloat - 1.0;
             if (volumeFactor > 0xfff) {

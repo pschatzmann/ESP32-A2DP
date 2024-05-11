@@ -927,7 +927,7 @@ void BluetoothA2DPSource::bt_av_notify_evt_handler(
   case ESP_AVRC_RN_VOLUME_CHANGE:
     ESP_LOGI(BT_RC_CT_TAG, "Volume changed: %d", event_parameter->volume);
     // limit the value to 127
-    uint8_t new_volume = std::min((event_parameter->volume), 0x7f);
+    uint8_t new_volume = std::min((int)event_parameter->volume, 0x7f);
     ESP_LOGI(BT_RC_CT_TAG, "Set absolute volume: volume %d", new_volume);
     esp_avrc_ct_send_set_absolute_volume_cmd(APP_RC_CT_TL_RN_VOLUME_CHANGE,
                                              new_volume);

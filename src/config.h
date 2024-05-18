@@ -13,6 +13,7 @@
 #if __has_include("AudioTools.h")
 #  define A2DP_I2S_AUDIOTOOLS 1
 #else
+// Comment out next line to deactivate warnings
 #  warning "AudioTools library is not installed"
 #endif
 

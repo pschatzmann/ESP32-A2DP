@@ -14,10 +14,15 @@
 // Copyright 2015-2016 Espressif Systems (Shanghai) PTE LTD
 
 #pragma once
-
 #include "BluetoothA2DPCommon.h"
 #include "BluetoothA2DPOutput.h"
 #include "freertos/ringbuf.h"
+
+// Comment out next line to deactivate warnings
+#ifndef A2DP_I2S_AUDIOTOOLS
+#  warning "AudioTools library is not included first or installed"
+#endif
+
 
 #ifdef __cplusplus
 extern "C" {

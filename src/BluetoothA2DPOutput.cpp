@@ -210,7 +210,7 @@ size_t BluetoothA2DPOutputAudioTools::write(const uint8_t *data, size_t item_siz
 
 #if A2DP_I2S_AUDIOTOOLS
   if (p_audio_print != nullptr) {
-    i2s_bytes_written = p_audio_print->write(data, item_size);
+    i2s_bytes_written = p_print->write(data, item_size);
   }
 #endif
   return i2s_bytes_written;

@@ -111,6 +111,11 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
  public:
   /// Default Constructor:  output via callback or Legacy I2S
   BluetoothA2DPSink();
+  
+  /// Define output scenario class
+  BluetoothA2DPSink(BluetoothA2DPOutput &out){
+    set_output(out);
+  }
 
 #if A2DP_I2S_AUDIOTOOLS
   /// Output AudioOutput using AudioTools library

@@ -237,6 +237,10 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     this->avrc_rn_play_pos_callback = callback;
     this->notif_interval_s = notif_interval;
   }
+  virtual void set_avrc_rn_track_change_callback(
+      void (*callback)(uint8_t id)) {
+    this->avrc_rn_track_change_callback = callback;
+    }
 #endif
 
   /// Defines the method which will be called with the sample rate is updated
@@ -425,6 +429,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   void (*avrc_metadata_callback)(uint8_t, const uint8_t *) = nullptr;
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
   void (*avrc_rn_playstatus_callback)(esp_avrc_playback_stat_t) = nullptr;
+  void (*avrc_rn_track_change_callback)(uint8_t) = nullptr;
   void (*avrc_rn_play_pos_callback)(uint32_t) = nullptr;
   uint32_t notif_interval_s = 10;
 #endif

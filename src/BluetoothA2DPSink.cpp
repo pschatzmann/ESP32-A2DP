@@ -788,7 +788,7 @@ void BluetoothA2DPSink::av_notify_evt_handler(uint8_t event_id,
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
       // call avrc track change notification callback if available
       if (avrc_rn_track_change_callback != nullptr) {
-        avrc_rn_track_change_callback(event_id->id);
+        avrc_rn_track_change_callback(event_parameter->elm_id);
       }
 #endif
     case ESP_AVRC_RN_PLAY_STATUS_CHANGE:

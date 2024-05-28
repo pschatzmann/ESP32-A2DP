@@ -48,13 +48,22 @@ void avrc_rn_playstatus_callback(esp_avrc_playback_stat_t playback) {
   }
 }
 
+void avrc_rn_track_change_callback(uint8_t *id) {
+  Serial.println("Track Change bits:");
+  for (uint8_t i = 0; i < 8; i++)
+  {
+    Serial.printf("\tByte %d : 0x%x \n",i,id[i]);
+  }
+  //An example of how to project the pointer value directly as a uint8_t
+  uint8_t track_change_flag = *id;
+  Serial.printf("\tFlag value: %d\n",track_change_flag);
+}
+
 void setup() {
   Serial.begin(115200);
   a2dp_sink.set_avrc_rn_playstatus_callback(avrc_rn_playstatus_callback);
-  a2dp_sink.set_avrc_rn_play_pos_callback(avrc_rn_play_pos_callback);
-  //Alternatively to set up a specific play position notification interval (from 1 s to infinite), use :
-  //a2dp_sink.set_avrc_rn_play_pos_callback(avrc_rn_play_pos_callback,1);
-  //Setting 0s will prevent regular notification (one-time-only notification)
+  a2dp_sink.set_avrc_rn_play_pos_callback(avrc_rn_play_pos_callback,5); //Update the playing position every 5 seconds when Playing
+  a2dp_sink.set_avrc_rn_track_change_callback(avrc_rn_track_change_callback);
   a2dp_sink.start("MyMusic");
 }
 

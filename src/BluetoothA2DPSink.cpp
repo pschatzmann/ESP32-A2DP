@@ -766,7 +766,7 @@ void BluetoothA2DPSink::av_play_pos_changed(void) {
                                          &s_avrc_peer_rn_cap,
                                          ESP_AVRC_RN_PLAY_POS_CHANGED)) {
     esp_avrc_ct_send_register_notification_cmd(
-        APP_RC_CT_TL_RN_PLAY_POS_CHANGE, ESP_AVRC_RN_PLAY_POS_CHANGED, 10);
+        APP_RC_CT_TL_RN_PLAY_POS_CHANGE, ESP_AVRC_RN_PLAY_POS_CHANGED, notif_interval_s);
   }
 #endif
 }

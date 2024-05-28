@@ -17,7 +17,7 @@
 #include "BluetoothA2DPSink.h"
 
 I2SStream out;
-BluetoothA2DPSink a2dp_sink(i2s);
+BluetoothA2DPSink a2dp_sink(out);
 
 void avrc_rn_play_pos_callback(uint32_t play_pos) {
   Serial.printf("Play position is %d (%d seconds)\n", play_pos, (int)round(play_pos/1000.0));
@@ -52,6 +52,8 @@ void setup() {
   Serial.begin(115200);
   a2dp_sink.set_avrc_rn_playstatus_callback(avrc_rn_playstatus_callback);
   a2dp_sink.set_avrc_rn_play_pos_callback(avrc_rn_play_pos_callback);
+  //Alternatively to set up a specific play position notification interval (from 1s to infinite), use :
+  a2dp_sink.set_avrc_rn_play_pos_callback(avrc_rn_play_pos_callback,1);
   a2dp_sink.start("MyMusic");
 }
 

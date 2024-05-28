@@ -231,6 +231,12 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
       void (*callback)(uint32_t play_pos)) {
     this->avrc_rn_play_pos_callback = callback;
   }
+  /// Define a callback method which provides esp_avrc_rn_param_t play position notifications at a modifiable interval
+  virtual void set_avrc_rn_play_pos_callback(
+      void (*callback)(uint32_t play_pos),uint32_t notif_interval) {
+    this->avrc_rn_play_pos_callback = callback;
+    this->notif_interval_s = notif_interval;
+  }
 #endif
 
   /// Defines the method which will be called with the sample rate is updated
@@ -420,6 +426,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
   void (*avrc_rn_playstatus_callback)(esp_avrc_playback_stat_t) = nullptr;
   void (*avrc_rn_play_pos_callback)(uint32_t) = nullptr;
+  uint32_t notif_interval_s = 10;
 #endif
   void (*avrc_rn_volchg_complete_callback)(int) = nullptr;
   bool (*address_validator)(esp_bd_addr_t remote_bda) = nullptr;

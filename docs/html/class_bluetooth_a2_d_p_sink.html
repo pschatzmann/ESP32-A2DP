@@ -92,6 +92,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2a383635d7b050833f56ee79867716bd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a2a383635d7b050833f56ee79867716bd">BluetoothA2DPSink</a> ()</td></tr>
 <tr class="memdesc:a2a383635d7b050833f56ee79867716bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Constructor: output via callback or Legacy I2S.  <a href="class_bluetooth_a2_d_p_sink.html#a2a383635d7b050833f56ee79867716bd">More...</a><br /></td></tr>
 <tr class="separator:a2a383635d7b050833f56ee79867716bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aadfb815b992649822db74d3e2780d4c8"><td class="memItemLeft" align="right" valign="top"><a id="aadfb815b992649822db74d3e2780d4c8"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#aadfb815b992649822db74d3e2780d4c8">BluetoothA2DPSink</a> (<a class="el" href="class_bluetooth_a2_d_p_output.html">BluetoothA2DPOutput</a> &amp;out)</td></tr>
+<tr class="memdesc:aadfb815b992649822db74d3e2780d4c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define output scenario class. <br /></td></tr>
+<tr class="separator:aadfb815b992649822db74d3e2780d4c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe09654d8c4f250aca4282b49553d30f"><td class="memItemLeft" align="right" valign="top"><a id="afe09654d8c4f250aca4282b49553d30f"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#afe09654d8c4f250aca4282b49553d30f">BluetoothA2DPSink</a> (AudioOutput &amp;output)</td></tr>
 <tr class="memdesc:afe09654d8c4f250aca4282b49553d30f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output AudioOutput using AudioTools library. <br /></td></tr>
@@ -149,10 +153,12 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a5e4806bad4ed634493643c5925ecf67f">set_avrc_rn_playstatus_callback</a> (void(*callback)(esp_avrc_playback_stat_t playback))</td></tr>
 <tr class="memdesc:a5e4806bad4ed634493643c5925ecf67f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define a callback method which provides esp_avrc_playback_stat_t playback status notifications. <br /></td></tr>
 <tr class="separator:a5e4806bad4ed634493643c5925ecf67f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ada70b27d701b01d28c86a368be4d390f"><td class="memItemLeft" align="right" valign="top"><a id="ada70b27d701b01d28c86a368be4d390f"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#ada70b27d701b01d28c86a368be4d390f">set_avrc_rn_play_pos_callback</a> (void(*callback)(uint32_t play_pos))</td></tr>
-<tr class="memdesc:ada70b27d701b01d28c86a368be4d390f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define a callback method which provides esp_avrc_rn_param_t play position notifications. <br /></td></tr>
-<tr class="separator:ada70b27d701b01d28c86a368be4d390f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1fe7bb6be3c4ace1246ea76fe6db953"><td class="memItemLeft" align="right" valign="top"><a id="ae1fe7bb6be3c4ace1246ea76fe6db953"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#ae1fe7bb6be3c4ace1246ea76fe6db953">set_avrc_rn_play_pos_callback</a> (void(*callback)(uint32_t play_pos), uint32_t notif_interval)</td></tr>
+<tr class="memdesc:ae1fe7bb6be3c4ace1246ea76fe6db953"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define a callback method which provides esp_avrc_rn_param_t play position notifications, at a modifiable interval over 1s. <br /></td></tr>
+<tr class="separator:ae1fe7bb6be3c4ace1246ea76fe6db953"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae56f6a99a5c38e0bdd402a79faba6dd5"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#ae56f6a99a5c38e0bdd402a79faba6dd5">set_avrc_rn_track_change_callback</a> (void(*callback)(uint8_t *id))</td></tr>
+<tr class="separator:ae56f6a99a5c38e0bdd402a79faba6dd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a89d2694f880a2db22344b97b466c9a9d"><td class="memItemLeft" align="right" valign="top"><a id="a89d2694f880a2db22344b97b466c9a9d"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a89d2694f880a2db22344b97b466c9a9d">set_sample_rate_callback</a> (void(*callback)(uint16_t rate))</td></tr>
 <tr class="memdesc:a89d2694f880a2db22344b97b466c9a9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the method which will be called with the sample rate is updated. <br /></td></tr>
@@ -559,7 +565,7 @@ volatile bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_i2s_activ
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_output</b> = true</td></tr>
 <tr class="separator:a87fa51e0d2c40d8e5496d7815cc3e981"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af4d9a208a3f1a9eeb469dd3cbf9015d3"><td class="memItemLeft" align="right" valign="top"><a id="af4d9a208a3f1a9eeb469dd3cbf9015d3"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_sample_rate</b> = 0</td></tr>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_sample_rate</b> = 44100</td></tr>
 <tr class="separator:af4d9a208a3f1a9eeb469dd3cbf9015d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad558d5c64a96982632b63103197d6927"><td class="memItemLeft" align="right" valign="top"><a id="ad558d5c64a96982632b63103197d6927"></a>
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_pkt_cnt</b> = 0</td></tr>
@@ -632,9 +638,15 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><b>avrc_metadata_callb
 <tr class="memitem:a39b59108b8dfa1c63d239a098fa87a86"><td class="memItemLeft" align="right" valign="top"><a id="a39b59108b8dfa1c63d239a098fa87a86"></a>
 void(*&#160;</td><td class="memItemRight" valign="bottom"><b>avrc_rn_playstatus_callback</b> )(esp_avrc_playback_stat_t) = nullptr</td></tr>
 <tr class="separator:a39b59108b8dfa1c63d239a098fa87a86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5159afdc0fba569fc2ae7c373a0ad41e"><td class="memItemLeft" align="right" valign="top"><a id="a5159afdc0fba569fc2ae7c373a0ad41e"></a>
+void(*&#160;</td><td class="memItemRight" valign="bottom"><b>avrc_rn_track_change_callback</b> )(uint8_t *) = nullptr</td></tr>
+<tr class="separator:a5159afdc0fba569fc2ae7c373a0ad41e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6f34cb9044bd3381d73775ec32e64351"><td class="memItemLeft" align="right" valign="top"><a id="a6f34cb9044bd3381d73775ec32e64351"></a>
 void(*&#160;</td><td class="memItemRight" valign="bottom"><b>avrc_rn_play_pos_callback</b> )(uint32_t) = nullptr</td></tr>
 <tr class="separator:a6f34cb9044bd3381d73775ec32e64351"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a640bbc2b3b6e98bb8b0dcb8eec3700cd"><td class="memItemLeft" align="right" valign="top"><a id="a640bbc2b3b6e98bb8b0dcb8eec3700cd"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>notif_interval_s</b> = 10</td></tr>
+<tr class="separator:a640bbc2b3b6e98bb8b0dcb8eec3700cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6f59a9d98e48f0181c800125fca62050"><td class="memItemLeft" align="right" valign="top"><a id="a6f59a9d98e48f0181c800125fca62050"></a>
 void(*&#160;</td><td class="memItemRight" valign="bottom"><b>avrc_rn_volchg_complete_callback</b> )(int) = nullptr</td></tr>
 <tr class="separator:a6f59a9d98e48f0181c800125fca62050"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -976,6 +988,33 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>ccall_av_hdl_avrc_tg_
 </table>
 </div><div class="memdoc">
 <p>defines the requested metadata: eg. ESP_AVRC_MD_ATTR_TITLE | ESP_AVRC_MD_ATTR_ARTIST | ESP_AVRC_MD_ATTR_ALBUM | ESP_AVRC_MD_ATTR_TRACK_NUM | ESP_AVRC_MD_ATTR_NUM_TRACKS | ESP_AVRC_MD_ATTR_GENRE | ESP_AVRC_MD_ATTR_PLAYING_TIME </p>
+
+</div>
+</div>
+<a id="ae56f6a99a5c38e0bdd402a79faba6dd5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae56f6a99a5c38e0bdd402a79faba6dd5">&#9670;&nbsp;</a></span>set_avrc_rn_track_change_callback()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void BluetoothA2DPSink::set_avrc_rn_track_change_callback </td>
+          <td>(</td>
+          <td class="paramtype">void(*)(uint8_t *id)&#160;</td>
+          <td class="paramname"><em>callback</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Define a callback method which provides an 8bit array for track change notifications Typically the last bit is 1 when there is a track change (so can be cast to a uint8_t) </p>
 
 </div>
 </div>

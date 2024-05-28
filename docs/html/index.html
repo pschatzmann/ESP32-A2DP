@@ -200,7 +200,7 @@ Support for Metadata</h2>
 </div><!-- fragment --><p> before you start the A2DP sink. Note that data2 is actually a char* string, so even though <code>ESP_AVRC_MD_ATTR_PLAYING_TIME</code> is documented as the milliseconds of media duration you'll need to parse it before doing math on it. See the metadata example for more.</p>
 <h2><a class="anchor" id="autotoc_md10"></a>
 Support for Notifications</h2>
-<p>Similarly to the <code>avrc_metadata_callback</code>, ESP IDF v4+ supports selected <code>esp_avrc_rn_param_t</code> callbacks like <code>set_avrc_rn_playstatus_callback</code> and <code>set_avrc_rn_play_pos_callback</code> which can be used to obtain <code>esp_avrc_playback_stat_t playback</code> playback status and <code>uint32_t play_pos</code> playback position respectively. See the playing_status_callbacks example for more.</p>
+<p>Similarly to the <code>avrc_metadata_callback</code>, ESP IDF v4+ supports selected <code>esp_avrc_rn_param_t</code> callbacks like <code>set_avrc_rn_playstatus_callback</code>, <code>set_avrc_rn_play_pos_callback</code> and <code>set_avrc_rn_track_change_callback</code> which can be used to obtain <code>esp_avrc_playback_stat_t playback</code> playback status,<code>uint32_t play_pos</code> playback position and <code>uint8_t elm_id</code> track change flag respectively. See the playing_status_callbacks example for more details.</p>
 <h2><a class="anchor" id="autotoc_md11"></a>
 Support for AVRC Commands</h2>
 <p>I have added the following AVRC commmands, that you can use to 'control' your A2DP Source:</p>

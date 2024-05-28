@@ -6,7 +6,7 @@ var searchData=
   ['set_5favrc_5fconnection_5fstate_5fcallback_216',['set_avrc_connection_state_callback',['../class_bluetooth_a2_d_p_sink.html#aedd80fe4cf8bd887224efa2716ad9d69',1,'BluetoothA2DPSink']]],
   ['set_5favrc_5fmetadata_5fattribute_5fmask_217',['set_avrc_metadata_attribute_mask',['../class_bluetooth_a2_d_p_sink.html#a8281af353148544a0612f8f7c4d511b1',1,'BluetoothA2DPSink']]],
   ['set_5favrc_5fmetadata_5fcallback_218',['set_avrc_metadata_callback',['../class_bluetooth_a2_d_p_sink.html#aac9074521c80d7574a855f30b8301d13',1,'BluetoothA2DPSink']]],
-  ['set_5favrc_5frn_5fplay_5fpos_5fcallback_219',['set_avrc_rn_play_pos_callback',['../class_bluetooth_a2_d_p_sink.html#ae1fe7bb6be3c4ace1246ea76fe6db953',1,'BluetoothA2DPSink']]],
+  ['set_5favrc_5frn_5fplay_5fpos_5fcallback_219',['set_avrc_rn_play_pos_callback',['../class_bluetooth_a2_d_p_sink.html#a5dd8ed8e61d6bb6d0c1e05d5c17e45e7',1,'BluetoothA2DPSink']]],
   ['set_5favrc_5frn_5fplaystatus_5fcallback_220',['set_avrc_rn_playstatus_callback',['../class_bluetooth_a2_d_p_sink.html#a5e4806bad4ed634493643c5925ecf67f',1,'BluetoothA2DPSink']]],
   ['set_5favrc_5frn_5ftrack_5fchange_5fcallback_221',['set_avrc_rn_track_change_callback',['../class_bluetooth_a2_d_p_sink.html#ae56f6a99a5c38e0bdd402a79faba6dd5',1,'BluetoothA2DPSink']]],
   ['set_5favrc_5frn_5fvolumechange_222',['set_avrc_rn_volumechange',['../class_bluetooth_a2_d_p_sink.html#acb34360759c6a94028f74df35009b033',1,'BluetoothA2DPSink']]],

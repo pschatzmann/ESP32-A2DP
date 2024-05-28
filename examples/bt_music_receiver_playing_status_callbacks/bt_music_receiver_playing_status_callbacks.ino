@@ -52,8 +52,9 @@ void setup() {
   Serial.begin(115200);
   a2dp_sink.set_avrc_rn_playstatus_callback(avrc_rn_playstatus_callback);
   a2dp_sink.set_avrc_rn_play_pos_callback(avrc_rn_play_pos_callback);
-  //Alternatively to set up a specific play position notification interval (from 1s to infinite), use :
-  a2dp_sink.set_avrc_rn_play_pos_callback(avrc_rn_play_pos_callback,1);
+  //Alternatively to set up a specific play position notification interval (from 1 s to infinite), use :
+  //a2dp_sink.set_avrc_rn_play_pos_callback(avrc_rn_play_pos_callback,1);
+  //Setting 0s will prevent regular notification (one-time-only notification)
   a2dp_sink.start("MyMusic");
 }
 

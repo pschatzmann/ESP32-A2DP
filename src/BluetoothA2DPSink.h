@@ -231,12 +231,14 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
       void (*callback)(uint32_t play_pos)) {
     this->avrc_rn_play_pos_callback = callback;
   }
-  /// Define a callback method which provides esp_avrc_rn_param_t play position notifications at a modifiable interval
+  /// Define a callback method which provides esp_avrc_rn_param_t play position notifications, at a modifiable interval
   virtual void set_avrc_rn_play_pos_callback(
       void (*callback)(uint32_t play_pos),uint32_t notif_interval) {
     this->avrc_rn_play_pos_callback = callback;
     this->notif_interval_s = notif_interval;
   }
+  /// Define a callback method which provides an 8bit array for track change notifications 
+  /// Typically the last bit is 1 when there is a track change (so can be cast to a uint8_t)
   virtual void set_avrc_rn_track_change_callback(
       void (*callback)(uint8_t *id)) {
     this->avrc_rn_track_change_callback = callback;

@@ -596,8 +596,8 @@ void BluetoothA2DPSink::set_i2s_active(bool active) {
   if (active) m_pkt_cnt = 0;
   if (is_output) {
     if (is_i2s_active != active) {
-      out->set_output_active(active);
       is_i2s_active = active;
+      out->set_output_active(active);
     }
   } else {
     // just update the actual status

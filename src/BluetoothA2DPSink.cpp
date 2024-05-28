@@ -741,8 +741,8 @@ void BluetoothA2DPSink::av_new_track() {
   if (esp_avrc_rn_evt_bit_mask_operation(ESP_AVRC_BIT_MASK_OP_TEST,
                                          &s_avrc_peer_rn_cap,
                                          ESP_AVRC_RN_TRACK_CHANGE)) {
-    esp_avrc_ct_send_register_notification_cmd(APP_RC_CT_TL_RN_TRACK_CHANGE,
-                                               ESP_AVRC_RN_TRACK_CHANGE, 0);
+    esp_avrc_ct_send_register_notification_cmd(
+      APP_RC_CT_TL_RN_TRACK_CHANGE, ESP_AVRC_RN_TRACK_CHANGE, 0);
   }
 #endif
 }
@@ -766,7 +766,7 @@ void BluetoothA2DPSink::av_play_pos_changed(void) {
                                          &s_avrc_peer_rn_cap,
                                          ESP_AVRC_RN_PLAY_POS_CHANGED)) {
     esp_avrc_ct_send_register_notification_cmd(
-        APP_RC_CT_TL_RN_PLAY_POS_CHANGE, ESP_AVRC_RN_PLAY_POS_CHANGED, 10);
+        APP_RC_CT_TL_RN_PLAY_POS_CHANGE, ESP_AVRC_RN_PLAY_POS_CHANGED, notif_interval_s);
   }
 #endif
 }
@@ -783,7 +783,13 @@ void BluetoothA2DPSink::av_notify_evt_handler(uint8_t event_id,
   switch (event_id) {
     case ESP_AVRC_RN_TRACK_CHANGE:
       ESP_LOGD(BT_AV_TAG, "%s ESP_AVRC_RN_TRACK_CHANGE %d", __func__, event_id);
-      av_new_track();
+      av_new_track();    
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
+      // call avrc track change notification callback if available
+      if (avrc_rn_track_change_callback != nullptr) {
+        avrc_rn_track_change_callback(event_parameter->elm_id);
+      }
+#endif
       break;
     case ESP_AVRC_RN_PLAY_STATUS_CHANGE:
       ESP_LOGD(BT_AV_TAG, "%s ESP_AVRC_RN_PLAY_STATUS_CHANGE %d, to %d",

@@ -179,7 +179,7 @@ before you start the A2DP sink. Note that data2 is actually a char* string, so e
 
 ### Support for Notifications
 
-Similarly to the `avrc_metadata_callback`, ESP IDF v4+ supports selected `esp_avrc_rn_param_t` callbacks like `set_avrc_rn_playstatus_callback` and `set_avrc_rn_play_pos_callback` which can be used to obtain `esp_avrc_playback_stat_t playback` playback status and `uint32_t play_pos` playback position respectively. See the playing_status_callbacks example for more.
+Similarly to the `avrc_metadata_callback`, ESP IDF v4+ supports selected `esp_avrc_rn_param_t` callbacks like `set_avrc_rn_playstatus_callback`, `set_avrc_rn_play_pos_callback` and `set_avrc_rn_track_change_callback` which can be used to obtain `esp_avrc_playback_stat_t playback` playback status,`uint32_t play_pos` playback position and `uint8_t elm_id` track change flag respectively. See the playing_status_callbacks example for more details.
 
 ### Support for AVRC Commands
 

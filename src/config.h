@@ -10,8 +10,10 @@
 #endif
 
 // Use https://pschatzmann.github.io/arduino-audio-tools for output
-#if __has_include("AudioTools.h")
-#  define A2DP_I2S_AUDIOTOOLS 1
+#ifndef A2DP_I2S_AUDIOTOOLS
+#  if __has_include("AudioTools.h")
+#    define A2DP_I2S_AUDIOTOOLS 1
+#  endif
 #endif
 
 #ifndef A2DP_SPP_SUPPORT

@@ -24,10 +24,6 @@
 #endif
 
 
-// #ifdef __cplusplus
-// extern "C" {
-// #endif
-
 #define APP_SIG_WORK_DISPATCH (0x01)
 
 #ifndef BT_AV_TAG
@@ -544,6 +540,3 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   virtual void set_i2s_active(bool active);
 };
 
-// #ifdef __cplusplus
-// }
-// #endif

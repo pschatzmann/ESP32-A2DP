@@ -263,6 +263,46 @@ const char* BluetoothA2DPCommon::to_str(esp_bd_addr_t bda){
     return (const char*)bda_str;
 }
 
+/**
+ * @brief Startup logic as implemented by Arduino - This is not available if we use this library outside of Arduino
+ * 
+ * @return true 
+ * @return false 
+ */
+bool BluetoothA2DPCommon::bt_start(){
+    esp_bt_controller_config_t cfg = BT_CONTROLLER_INIT_CONFIG_DEFAULT();
+    if(esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_ENABLED){
+        ESP_LOGI(BT_APP_TAG, "BT was already enabled");
+        return true;
+    }
+    if(esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_IDLE){
+        esp_bt_controller_init(&cfg);
+        while(esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_IDLE){}
+    }
+    if(esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_INITED){
+        if (esp_bt_controller_enable(bt_mode)) {
+            ESP_LOGE(BT_APP_TAG, "BT Enable failed");
+            return false;
+        }
+    }
+    if(esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_ENABLED){
+        ESP_LOGI(BT_APP_TAG, "BT enabled");
+        return true;
+    }
+    ESP_LOGE(BT_APP_TAG, "BT Start failed");
+    return false;
+}
+
+esp_err_t BluetoothA2DPCommon::bluedroid_init(){
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 2 , 1)
+    return esp_bluedroid_init_with_cfg(&bluedroid_config);
+#else
+    return esp_bluedroid_init();
+#endif
+}
+
+
+
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
 
 /// converts a esp_a2d_audio_state_t to a string
@@ -316,38 +356,6 @@ void BluetoothA2DPCommon::set_scan_mode_connectable(bool connectable) {
 
 
 #ifndef ARDUINO_ARCH_ESP32
-
-#include "BluetoothA2DPCommon.h"
-
-/**
- * @brief Startup logic as implemented by Arduino - This is not available if we use this library outside of Arduino
- * 
- * @return true 
- * @return false 
- */
-bool btStart(){
-    esp_bt_controller_config_t cfg = BT_CONTROLLER_INIT_CONFIG_DEFAULT();
-    if(esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_ENABLED){
-        ESP_LOGI(BT_APP_TAG, "BT was already enabled");
-        return true;
-    }
-    if(esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_IDLE){
-        esp_bt_controller_init(&cfg);
-        while(esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_IDLE){}
-    }
-    if(esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_INITED){
-        if (esp_bt_controller_enable(bt_mode)) {
-            ESP_LOGE(BT_APP_TAG, "BT Enable failed");
-            return false;
-        }
-    }
-    if(esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_ENABLED){
-        ESP_LOGI(BT_APP_TAG, "BT enabled");
-        return true;
-    }
-    ESP_LOGE(BT_APP_TAG, "BT Start failed");
-    return false;
-}
 
 /**
  * @brief call vTaskDelay to deley for the indicated number of milliseconds

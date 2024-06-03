@@ -42,10 +42,14 @@ using namespace esp_i2s;
 #include <math.h>    
 #include "freertos/FreeRTOS.h" // needed for ESP Arduino < 2.0    
 #include "freertos/timers.h"
-#include "freertos/xtensa_api.h"
 #include "freertos/FreeRTOSConfig.h"
 #include "freertos/queue.h"
 #include "freertos/task.h"
+#if ESP_IDF_VERSION < ESP_IDF_VERSION_VAL(5, 0 , 0)
+#  include "freertos/xtensa_api.h"
+#else
+#  include "xtensa_api.h"
+#endif
 #include "esp_bt.h"
 #include "esp_bt_main.h"
 #include "esp_bt_device.h"
@@ -58,7 +62,7 @@ using namespace esp_i2s;
 #include "SoundData.h"
 #include "A2DPVolumeControl.h"
 #include "esp_task_wdt.h"
-
+#include "esp_timer.h"
 
 #ifdef ARDUINO_ARCH_ESP32
 #include "esp32-hal-log.h"
@@ -89,6 +93,11 @@ extern "C" unsigned long millis();
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0 , 0)
 #  define xTaskHandle TaskHandle_t
 #  define xQueueHandle QueueHandle_t
+#endif
+
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 2 , 1)
+#  define portTickType TickType_t
+#  define portTICK_RATE_MS portTICK_PERIOD_MS
 #endif
 
 #define A2DP_DEPRECATED __attribute__((deprecated))
@@ -258,6 +267,11 @@ class BluetoothA2DPCommon {
         bt_mode = mode;
     }
 
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 2 , 1)
+    void set_bluedroid_config_t(esp_bluedroid_config_t cfg){
+        bluedroid_config = cfg;
+    }
+#endif
     protected:
         const char* bt_name = {0};
         esp_bd_addr_t peer_bd_addr;
@@ -290,9 +304,11 @@ class BluetoothA2DPCommon {
         int event_queue_size = 20;
         int event_stack_size = 3072;
         esp_bt_mode_t bt_mode  = ESP_BT_MODE_CLASSIC_BT;
-
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
         esp_bt_discovery_mode_t discoverability = ESP_BT_GENERAL_DISCOVERABLE;
+#endif
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 2, 1)
+        esp_bluedroid_config_t bluedroid_config;
 #endif
 
         virtual esp_err_t esp_a2d_connect(esp_bd_addr_t peer) = 0;
@@ -308,6 +324,9 @@ class BluetoothA2DPCommon {
         virtual A2DPVolumeControl* volume_control() {
             return volume_control_ptr !=nullptr ? volume_control_ptr : &default_volume_control;
         }
+
+        virtual bool bt_start();
+        virtual esp_err_t bluedroid_init();
 
 };
 

@@ -20,7 +20,7 @@ BluetoothA2DPOutputLegacy::BluetoothA2DPOutputLegacy() {
       .tx_desc_auto_clear =
           true,  // avoiding noise in case of data unavailability
       .fixed_mclk = 0,
-      .mclk_multiple = I2S_MCLK_MULTIPLE_DEFAULT,
+      .mclk_multiple = (i2s_mclk_multiple_t) 0, // I2S_MCLK_MULTIPLE_DEFAULT
       .bits_per_chan = I2S_BITS_PER_CHAN_DEFAULT
 #else
       .tx_desc_auto_clear =

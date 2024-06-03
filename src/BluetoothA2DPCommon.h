@@ -70,7 +70,6 @@ using namespace esp_i2s;
 #else
 #include "esp_log.h"
 
-extern "C" bool btStart();
 extern "C" void delay(long millis);
 extern "C" unsigned long millis();
 

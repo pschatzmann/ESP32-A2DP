@@ -24,8 +24,8 @@ class BluetoothA2DPOutput {
   virtual bool begin() = 0;
   virtual size_t write(const uint8_t *data, size_t len) = 0;
   virtual void end() = 0;
-  virtual void set_sample_rate(int rate);
-  virtual void set_output_active(bool active);
+  virtual void set_sample_rate(int rate) = 0;
+  virtual void set_output_active(bool active) = 0;
 
 #if A2DP_I2S_AUDIOTOOLS
   /// Not implemented

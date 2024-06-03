@@ -1,9 +1,9 @@
-# -- CMAKE for Expressive IDF
+# -- CMAKE for Espressif IDF
 # -- author Phil Schatzmann
 # -- copyright GPLv3
 
 idf_component_register(
-    SRCS "src/BluetoothA2DPCommon.cpp" "src/BluetoothA2DPSink.cpp" "src/BluetoothA2DPSource.cpp" "src/BluetoothA2DPSinkQueued.cpp" "src/BluetoothA2DPOutput.cpp" "src/SoundData.cpp"
+    SRC_DIRS "src"
     INCLUDE_DIRS "src"
     REQUIRES bt esp_common freertos hal log nvs_flash driver
 )

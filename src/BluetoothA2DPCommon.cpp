@@ -34,7 +34,7 @@ bool BluetoothA2DPCommon::reconnect() {
     if (has_last_connection()) {
         is_autoreconnect_allowed = true;
         reconnect_status = IsReconnecting;
-        reconnect_timout = millis() + default_reconnect_timout;
+        reconnect_timout = get_millis() + default_reconnect_timout;
         return connect_to(last_connection);
     }
 
@@ -85,7 +85,7 @@ void BluetoothA2DPCommon::end(bool release_memory) {
     // Disconnect and wait
     disconnect();
     while(get_connection_state() != ESP_A2D_CONNECTION_STATE_DISCONNECTED){
-        delay(100);
+        delay_ms(100);
     }
 
     // deinit AVRC
@@ -119,7 +119,7 @@ void BluetoothA2DPCommon::end(bool release_memory) {
 
         // waiting for status change
         while(esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_ENABLED)
-            delay(50);
+            delay_ms(50);
 
         if(esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_INITED){
             ESP_LOGI(BT_AV_TAG,"esp_bt_controller_deinit");
@@ -234,10 +234,10 @@ void BluetoothA2DPCommon::set_on_audio_state_changed_post(void (*callBack)(esp_a
 
 /// Prevents that the same method is executed multiple times within the indicated time limit
 void BluetoothA2DPCommon::debounce(void(*cb)(void),int ms){
-    if (debounce_ms < millis()){
+    if (debounce_ms < get_millis()){
         cb();
         // new time limit
-        debounce_ms = millis()+ms;
+        debounce_ms = get_millis()+ms;
     }
 }
 
@@ -355,22 +355,19 @@ void BluetoothA2DPCommon::set_scan_mode_connectable(bool connectable) {
 #endif
 
 
-#ifndef ARDUINO_ARCH_ESP32
-
 /**
  * @brief call vTaskDelay to deley for the indicated number of milliseconds
  * 
  */
-void delay(long millis) {
+void BluetoothA2DPCommon::delay_ms(uint32_t millis) {
     const TickType_t xDelay = millis / portTICK_PERIOD_MS; 
     vTaskDelay(xDelay);
 }
 
-unsigned long millis() {
+unsigned long BluetoothA2DPCommon::get_millis() {
     return (unsigned long) (esp_timer_get_time() / 1000ULL);
 }
 
-#endif 
 
 
 

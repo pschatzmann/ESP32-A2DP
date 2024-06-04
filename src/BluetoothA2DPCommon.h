@@ -70,9 +70,6 @@ using namespace esp_i2s;
 #else
 #include "esp_log.h"
 
-extern "C" void delay(long millis);
-extern "C" unsigned long millis();
-
 #endif
 
 #if !defined(ESP_IDF_VERSION)
@@ -271,6 +268,10 @@ class BluetoothA2DPCommon {
         bluedroid_config = cfg;
     }
 #endif
+
+    void delay_ms(uint32_t millis);
+    unsigned long get_millis();
+
     protected:
         const char* bt_name = {0};
         esp_bd_addr_t peer_bd_addr;

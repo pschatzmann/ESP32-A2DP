@@ -118,7 +118,7 @@ void BluetoothA2DPSink::start(const char *name) {
     disconnect();
 #else
     // trigger timeout
-    delay(reconnect_delay);
+    delay_ms(reconnect_delay);
 #endif
   }
 
@@ -203,7 +203,7 @@ int BluetoothA2DPSink::init_bluetooth() {
   while (bt_stack_status != ESP_BLUEDROID_STATUS_ENABLED) {
     if (esp_bluedroid_enable() != ESP_OK) {
       ESP_LOGE(BT_AV_TAG, "Failed to enable bluedroid");
-      delay(100);
+      delay_ms(100);
       // return false;
     } else {
       ESP_LOGI(BT_AV_TAG, "bluedroid enabled");
@@ -280,7 +280,7 @@ void BluetoothA2DPSink::app_task_handler(void *arg) {
   while (true) {
     if (!app_task_queue) {
       ESP_LOGE(BT_APP_TAG, "%s, app_task_queue is null", __func__);
-      delay(100);
+      delay_ms(100);
     } else if (pdTRUE == xQueueReceive(app_task_queue, &msg,
                                        (portTickType)portMAX_DELAY)) {
       ESP_LOGD(BT_APP_TAG, "%s, sig 0x%x, 0x%x", __func__, msg.sig, msg.event);
@@ -312,7 +312,7 @@ void BluetoothA2DPSink::app_task_handler(void *arg) {
       }
 #else
       ESP_LOGI(BT_APP_TAG, "%s, xQueueReceive -> no data", __func__);
-      delay(10);
+      delay_ms(10);
 #endif
     }
   }
@@ -1077,7 +1077,7 @@ void BluetoothA2DPSink::execute_avrc_command(int cmd) {
   esp_err_t ok =
       esp_avrc_ct_send_passthrough_cmd(0, cmd, ESP_AVRC_PT_CMD_STATE_PRESSED);
   if (ok == ESP_OK) {
-    delay(100);
+    delay_ms(100);
     ok = esp_avrc_ct_send_passthrough_cmd(0, cmd,
                                           ESP_AVRC_PT_CMD_STATE_RELEASED);
     if (ok == ESP_OK) {
@@ -1244,7 +1244,7 @@ size_t BluetoothA2DPSink::i2s_write_data(const uint8_t *data,
     int written = out->write(data+processed, std::min(open, A2DP_I2S_MAX_WRITE_SIZE));
     open -= written;
     processed += written;
-    delay(1);
+    delay_ms(1);
   }
   return processed;
 }

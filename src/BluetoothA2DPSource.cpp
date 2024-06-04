@@ -242,7 +242,7 @@ void BluetoothA2DPSource::reset_last_connection() {
   if (has_last_connection()) {
     // the device might not have noticed that we are diconnected
     disconnect();
-    delay(2000);
+    delay_ms(2000);
     // remove bonding - so that we can reconnect
     //ESP_LOGD(BT_APP_TAG, "resetting %s, ", bda_str);
     //esp_bt_gap_remove_bond_device(last_connection);

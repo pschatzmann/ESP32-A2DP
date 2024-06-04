@@ -80,7 +80,7 @@ void BluetoothA2DPSinkQueued::i2s_task_handler(void *arg) {
         }
 
         vRingbufferReturnItem(s_ringbuf_i2s, (void *)data);
-        delay(5);
+        delay_ms(5);
     }
 }
 
@@ -93,7 +93,7 @@ size_t BluetoothA2DPSinkQueued::write_audio(const uint8_t *data, size_t size)
     if (!is_i2s_active){
         ESP_LOGW(BT_APP_TAG, "i2s is not active: we try to activate it");
         out->begin();
-        delay(200);
+        delay_ms(200);
     }
 
     if (ringbuffer_mode == RINGBUFFER_MODE_DROPPING) {

@@ -264,12 +264,14 @@ class BluetoothA2DPCommon {
     }
 
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 2 , 1)
+    /// Defines the esp_bluedroid_config_t: Available from IDF 5.2.1
     void set_bluedroid_config_t(esp_bluedroid_config_t cfg){
         bluedroid_config = cfg;
     }
 #endif
-
+    /// calls vTaskDelay to deley for the indicated number of milliseconds
     void delay_ms(uint32_t millis);
+    /// Provides the time in milliseconds since the last system boot
     unsigned long get_millis();
 
     protected:

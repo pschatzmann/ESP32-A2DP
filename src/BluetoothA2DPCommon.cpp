@@ -354,11 +354,6 @@ void BluetoothA2DPCommon::set_scan_mode_connectable(bool connectable) {
 
 #endif
 
-
-/**
- * @brief call vTaskDelay to deley for the indicated number of milliseconds
- * 
- */
 void BluetoothA2DPCommon::delay_ms(uint32_t millis) {
     const TickType_t xDelay = millis / portTICK_PERIOD_MS; 
     vTaskDelay(xDelay);

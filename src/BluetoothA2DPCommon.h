@@ -269,7 +269,7 @@ class BluetoothA2DPCommon {
         bluedroid_config = cfg;
     }
 #endif
-    /// calls vTaskDelay to deley for the indicated number of milliseconds
+    /// calls vTaskDelay to pause for the indicated number of milliseconds
     void delay_ms(uint32_t millis);
     /// Provides the time in milliseconds since the last system boot
     unsigned long get_millis();

@@ -289,7 +289,7 @@ esp_bt_gap_cb_param_t::read_rssi_delta_param&#160;</td><td class="memItemRight" 
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a3156aa18d658d02608030c3fd1717e80">set_rssi_calldoxback</a> (void(*callback)(esp_bt_gap_cb_param_t::read_rssi_delta_param &amp;rssi))</td></tr>
 <tr class="memdesc:a3156aa18d658d02608030c3fd1717e80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the callback that is called when we get an new rssi value. <br /></td></tr>
 <tr class="separator:a3156aa18d658d02608030c3fd1717e80"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a96b4fabd27e7952fc3ea5edca3b95cbb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a96b4fabd27e7952fc3ea5edca3b95cbb">set_reconnect_delay</a> (int <a class="el" href="_bluetooth_a2_d_p_common_8h.html#a1ea0f006ec5db0c83e80adb8dca80e34">delay</a>)</td></tr>
+<tr class="memitem:a96b4fabd27e7952fc3ea5edca3b95cbb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a96b4fabd27e7952fc3ea5edca3b95cbb">set_reconnect_delay</a> (int delay)</td></tr>
 <tr class="separator:a96b4fabd27e7952fc3ea5edca3b95cbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abe6004e2b95d120d64c10cf947fefb55"><td class="memItemLeft" align="right" valign="top"><a id="abe6004e2b95d120d64c10cf947fefb55"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#abe6004e2b95d120d64c10cf947fefb55">set_spp_active</a> (bool flag)</td></tr>
@@ -411,6 +411,16 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a41ab8453d4f7f88d68d6cdb1a866532b">set_default_bt_mode</a> (esp_bt_mode_t mode)</td></tr>
 <tr class="memdesc:a41ab8453d4f7f88d68d6cdb1a866532b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the default bt mode. The default is ESP_BT_MODE_CLASSIC_BT: use this e.g. to set to ESP_BT_MODE_BTDM. <br /></td></tr>
 <tr class="separator:a41ab8453d4f7f88d68d6cdb1a866532b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a145c20271b53d4329e0e2c7fa36692b0"><td class="memItemLeft" align="right" valign="top"><a id="a145c20271b53d4329e0e2c7fa36692b0"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_bluedroid_config_t</b> (esp_bluedroid_config_t cfg)</td></tr>
+<tr class="separator:a145c20271b53d4329e0e2c7fa36692b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2302fff324e703c3906835f759e87307"><td class="memItemLeft" align="right" valign="top"><a id="a2302fff324e703c3906835f759e87307"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a2302fff324e703c3906835f759e87307">delay_ms</a> (uint32_t millis)</td></tr>
+<tr class="memdesc:a2302fff324e703c3906835f759e87307"><td class="mdescLeft">&#160;</td><td class="mdescRight">call vTaskDelay to deley for the indicated number of milliseconds <br /></td></tr>
+<tr class="separator:a2302fff324e703c3906835f759e87307"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a688bfd727bfed94f255b63c16a6b1b3c"><td class="memItemLeft" align="right" valign="top"><a id="a688bfd727bfed94f255b63c16a6b1b3c"></a>
+unsigned long&#160;</td><td class="memItemRight" valign="bottom"><b>get_millis</b> ()</td></tr>
+<tr class="separator:a688bfd727bfed94f255b63c16a6b1b3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -555,6 +565,12 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 virtual <a class="el" href="class_a2_d_p_volume_control.html">A2DPVolumeControl</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a6fec0cfd3d0d9017b7ffcf82630ab89a">volume_control</a> ()</td></tr>
 <tr class="memdesc:a6fec0cfd3d0d9017b7ffcf82630ab89a"><td class="mdescLeft">&#160;</td><td class="mdescRight">provides access to the VolumeControl object <br /></td></tr>
 <tr class="separator:a6fec0cfd3d0d9017b7ffcf82630ab89a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8be3cf8679b236293658c06cd1ed010b"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a8be3cf8679b236293658c06cd1ed010b">bt_start</a> ()</td></tr>
+<tr class="memdesc:a8be3cf8679b236293658c06cd1ed010b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Startup logic as implemented by Arduino - This is not available if we use this library outside of Arduino.  <a href="class_bluetooth_a2_d_p_common.html#a8be3cf8679b236293658c06cd1ed010b">More...</a><br /></td></tr>
+<tr class="separator:a8be3cf8679b236293658c06cd1ed010b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aecacd14836e61b3a08a0f415095d3f98"><td class="memItemLeft" align="right" valign="top"><a id="aecacd14836e61b3a08a0f415095d3f98"></a>
+virtual esp_err_t&#160;</td><td class="memItemRight" valign="bottom"><b>bluedroid_init</b> ()</td></tr>
+<tr class="separator:aecacd14836e61b3a08a0f415095d3f98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -817,6 +833,9 @@ esp_bt_mode_t&#160;</td><td class="memItemRight" valign="bottom"><b>bt_mode</b> 
 <tr class="memitem:a2ca23dacb41661dd91b202c0f7939f69"><td class="memItemLeft" align="right" valign="top"><a id="a2ca23dacb41661dd91b202c0f7939f69"></a>
 esp_bt_discovery_mode_t&#160;</td><td class="memItemRight" valign="bottom"><b>discoverability</b> = ESP_BT_GENERAL_DISCOVERABLE</td></tr>
 <tr class="separator:a2ca23dacb41661dd91b202c0f7939f69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a729840e194330a64ffbccc52d853ac4a"><td class="memItemLeft" align="right" valign="top"><a id="a729840e194330a64ffbccc52d853ac4a"></a>
+esp_bluedroid_config_t&#160;</td><td class="memItemRight" valign="bottom"><b>bluedroid_config</b></td></tr>
+<tr class="separator:a729840e194330a64ffbccc52d853ac4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="class_bluetooth_a2_d_p_sink_queued.html" title="The BluetoothA2DPSinkQueued is using a separate Task with an additinal Queue to write the I2S data....">BluetoothA2DPSinkQueued</a> is using a separate Task with an additinal Queue to write the I2S data. application. </p>
@@ -847,6 +866,36 @@ esp_bt_discovery_mode_t&#160;</td><td class="memItemRight" valign="bottom"><b>di
 </table>
 </div><div class="memdoc">
 <p>Wrappbed methods called from callbacks </p>
+
+</div>
+</div>
+<a id="a8be3cf8679b236293658c06cd1ed010b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8be3cf8679b236293658c06cd1ed010b">&#9670;&nbsp;</a></span>bt_start()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool BluetoothA2DPCommon::bt_start </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Startup logic as implemented by Arduino - This is not available if we use this library outside of Arduino. </p>
+<dl class="section return"><dt>Returns</dt><dd>true </dd>
+<dd>
+false </dd></dl>
 
 </div>
 </div>

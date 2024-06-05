@@ -276,8 +276,14 @@ bool BluetoothA2DPCommon::bt_start(){
         return true;
     }
     if(esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_IDLE){
-        esp_bt_controller_init(&cfg);
-        while(esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_IDLE){}
+        if (esp_bt_controller_init(&cfg) != ESP_OK) {
+            ESP_LOGE(BT_APP_TAG, "esp_bt_controller_init failed");
+            return false;
+        }
+        // wait for status change
+        while(esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_IDLE){
+            delay_ms(100);
+        }
     }
     if(esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_INITED){
         if (esp_bt_controller_enable(bt_mode)) {

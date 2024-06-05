@@ -288,7 +288,7 @@ bool BluetoothA2DPCommon::bt_start(){
   esp_err_t ret;
   if (esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_IDLE) {
     if ((ret = esp_bt_controller_init(&cfg)) != ESP_OK) {
-      ESP_LOGE(BT_APP_TAG, "esp_bt_controller_init failed");
+      ESP_LOGE(BT_APP_TAG, "esp_bt_controller_init failed: %d", ret);
       return false;
     }
     while (esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_IDLE) {
@@ -297,7 +297,7 @@ bool BluetoothA2DPCommon::bt_start(){
   }
   if (esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_INITED) {
     if ((ret = esp_bt_controller_enable(bt_mode)) != ESP_OK) {
-      ESP_LOGE(BT_APP_TAG, "BT Enable failed");
+      ESP_LOGE(BT_APP_TAG, "BT Enable failed: %d", ret);
       return false;
     }
   }

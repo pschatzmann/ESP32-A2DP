@@ -263,15 +263,17 @@ const char* BluetoothA2DPCommon::to_str(esp_bd_addr_t bda){
     return (const char*)bda_str;
 }
 
-#ifndef ARDUINO
 
 /**
- * @brief Startup logic as implemented by Arduino - This is not available if we use this library outside of Arduino
+ * @brief Startup logic as implemented by Arduino 
  * 
  * @return true 
  * @return false 
  */
-bool BluetoothA2DPCommon::btStart(){
+bool BluetoothA2DPCommon::bt_start(){
+#ifdef ARDUINO
+  return btStart();
+#else
   esp_bt_controller_config_t cfg = BT_CONTROLLER_INIT_CONFIG_DEFAULT();
   // esp_bt_controller_enable(MODE) This mode must be equal as the mode in “cfg” of esp_bt_controller_init().
   cfg.mode = bt_mode;
@@ -305,9 +307,9 @@ bool BluetoothA2DPCommon::btStart(){
   }
   ESP_LOGE(BT_APP_TAG, "BT Start failed");
   return false;
+#endif
 }
 
-#endif
 
 esp_err_t BluetoothA2DPCommon::bluedroid_init(){
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 2 , 1)

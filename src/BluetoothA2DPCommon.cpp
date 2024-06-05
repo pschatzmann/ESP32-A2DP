@@ -272,12 +272,11 @@ const char* BluetoothA2DPCommon::to_str(esp_bd_addr_t bda){
  * @return false 
  */
 bool BluetoothA2DPCommon::btStart(){
-  esp_bt_mode_t esp_bt_mode;
   esp_bt_controller_config_t cfg = BT_CONTROLLER_INIT_CONFIG_DEFAULT();
   // esp_bt_controller_enable(MODE) This mode must be equal as the mode in “cfg” of esp_bt_controller_init().
   cfg.mode = bt_mode;
   if (cfg.mode == ESP_BT_MODE_CLASSIC_BT) {
-    ESP_LOGE(BT_APP_TAG, "mode is ESP_BT_MODE_CLASSIC_BT");
+    ESP_LOGI(BT_APP_TAG, "mode is ESP_BT_MODE_CLASSIC_BT");
     esp_bt_controller_mem_release(ESP_BT_MODE_BLE);
   }
 
@@ -291,11 +290,11 @@ bool BluetoothA2DPCommon::btStart(){
       return false;
     }
     while (esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_IDLE) {
-        delay(100);
+        delay_ms(100);
     }
   }
   if (esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_INITED) {
-    if ((ret = esp_bt_controller_enable(esp_bt_mode)) != ESP_OK) {
+    if ((ret = esp_bt_controller_enable(bt_mode)) != ESP_OK) {
       ESP_LOGE(BT_APP_TAG, "BT Enable failed");
       return false;
     }

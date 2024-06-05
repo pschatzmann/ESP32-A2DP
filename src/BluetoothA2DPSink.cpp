@@ -184,7 +184,7 @@ const char *BluetoothA2DPSink::get_connected_source_name() {
 
 int BluetoothA2DPSink::init_bluetooth() {
   ESP_LOGD(BT_AV_TAG, "%s", __func__);
-  if (!bt_start()) {
+  if (!btStart()) {
     ESP_LOGE(BT_AV_TAG, "Failed to initialize controller");
     return false;
   }

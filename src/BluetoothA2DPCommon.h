@@ -327,8 +327,10 @@ class BluetoothA2DPCommon {
             return volume_control_ptr !=nullptr ? volume_control_ptr : &default_volume_control;
         }
 
-        virtual bool bt_start();
         virtual esp_err_t bluedroid_init();
-
+        
+#ifndef ARDUINO
+        virtual bool btStart();
+#endif
 };
 

@@ -199,7 +199,7 @@ void BluetoothA2DPSource::start_raw(std::vector<const char *> names,
     ESP_ERROR_CHECK(esp_bt_controller_mem_release(ESP_BT_MODE_BLE));
   }
 
-  if (!bt_start()) {
+  if (!btStart()) {
     ESP_LOGE(BT_AV_TAG, "Failed to initialize controller");
     return;
   }

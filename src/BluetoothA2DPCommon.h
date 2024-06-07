@@ -310,7 +310,9 @@ class BluetoothA2DPCommon {
         esp_bt_discovery_mode_t discoverability = ESP_BT_GENERAL_DISCOVERABLE;
 #endif
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 2, 1)
-        esp_bluedroid_config_t bluedroid_config;
+        esp_bluedroid_config_t bluedroid_config {
+            .ssp_en = true
+        };
 #endif
 
         virtual esp_err_t esp_a2d_connect(esp_bd_addr_t peer) = 0;

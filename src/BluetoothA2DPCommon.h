@@ -45,7 +45,7 @@ using namespace esp_i2s;
 #include "freertos/FreeRTOSConfig.h"
 #include "freertos/queue.h"
 #include "freertos/task.h"
-#if ESP_IDF_VERSION < ESP_IDF_VERSION_VAL(5, 0 , 0)
+#if ESP_IDF_VERSION < ESP_IDF_VERSION_VAL(5, 2 , 0)
 #  include "freertos/xtensa_api.h"
 #else
 #  include "xtensa_api.h"

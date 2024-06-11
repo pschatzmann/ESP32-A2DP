@@ -62,12 +62,16 @@ void avrc_rn_track_change_callback(uint8_t *id) {
 void setup() {
   Serial.begin(115200);
   a2dp_sink.set_avrc_rn_playstatus_callback(avrc_rn_playstatus_callback);
-  a2dp_sink.set_avrc_rn_play_pos_callback(avrc_rn_play_pos_callback,5); //Update the playing position every 5 seconds when Playing
-  a2dp_sink.set_avrc_rn_track_change_callback(avrc_rn_track_change_callback);
-  a2dp_sink.start("MyMusic");
+  a2dp_sink.set_avrc_rn_play_pos_callback(avrc_rn_play_pos_callback);
+  a2dp_sink.start("AudioKit");
+
+  // print instructions
+  Serial.println("Connect e.g. from your Phone");
+  while(!a2dp_sink.is_connected()) 
+    delay(1000);
+  Serial.println("Play or pause music to test callbacks.");
 }
 
 void loop() {
-  Serial.println("Play or pause music to test callbacks.");
-  delay(10000);
+  delay(1000);
 }

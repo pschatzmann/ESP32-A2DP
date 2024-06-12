@@ -75,10 +75,16 @@ class BluetoothA2DPOutputAudioTools : public BluetoothA2DPOutput {
   void set_sample_rate(int rate) override;
   void set_output_active(bool active) override;
 
+  operator bool() { 
+#if A2DP_I2S_AUDIOTOOLS || defined(ARDUINO)
+    return p_print != nullptr; 
+#else
+    return false;
+#endif
+  }
+
 
 #if A2DP_I2S_AUDIOTOOLS
-  operator bool() { return p_print != nullptr; }
-
   /// Output AudioStream using AudioTools library
   void set_output(AudioOutput &output) {
     p_print = &output;
@@ -92,9 +98,6 @@ class BluetoothA2DPOutputAudioTools : public BluetoothA2DPOutput {
     p_print = &output;
     p_audio_print = &adapter;
   }
-#else
-  operator bool() { return false; }
-
 #endif
 
 #ifdef ARDUINO

@@ -208,8 +208,8 @@ bool BluetoothA2DPOutputAudioTools::begin() {
 size_t BluetoothA2DPOutputAudioTools::write(const uint8_t *data, size_t item_size) {
   size_t i2s_bytes_written = 0;
 
-#if A2DP_I2S_AUDIOTOOLS
-  if (p_audio_print != nullptr) {
+#if A2DP_I2S_AUDIOTOOLS || defined(ARDUINO)
+  if (p_print != nullptr) {
     i2s_bytes_written = p_print->write(data, item_size);
   }
 #endif

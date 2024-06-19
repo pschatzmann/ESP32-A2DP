@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Arduino A2DP: BluetoothA2DPOutput Class Reference</title>
+<title>Arduino A2DP: BluetoothA2DPOutputPrint Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -63,46 +63,51 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="class_bluetooth_a2_d_p_output-members.html">List of all members</a>  </div>
+<a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="class_bluetooth_a2_d_p_output_print-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">BluetoothA2DPOutput Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span><div class="ingroups"><a class="el" href="group__a2dp.html">ESP32 A2DP</a></div></div>  </div>
+<div class="title">BluetoothA2DPOutputPrint Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Abstract Output Class.  
- <a href="class_bluetooth_a2_d_p_output.html#details">More...</a></p>
+<p>Output Class using Print API:  
+ <a href="class_bluetooth_a2_d_p_output_print.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_bluetooth_a2_d_p_output_8h_source.html">BluetoothA2DPOutput.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for BluetoothA2DPOutput:</div>
+Inheritance diagram for BluetoothA2DPOutputPrint:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="class_bluetooth_a2_d_p_output.png" usemap="#BluetoothA2DPOutput_map" alt=""/>
-  <map id="BluetoothA2DPOutput_map" name="BluetoothA2DPOutput_map">
-<area href="class_bluetooth_a2_d_p_output_audio_tools.html" title="Output Class using AudioTools library: https://github.com/pschatzmann/arduino-audio-tools." alt="BluetoothA2DPOutputAudioTools" shape="rect" coords="0,56,197,80"/>
-<area href="class_bluetooth_a2_d_p_output_default.html" title="Default Output Class providing both the Legacy I2S and the AudioTools I2S functionality." alt="BluetoothA2DPOutputDefault" shape="rect" coords="207,56,404,80"/>
-<area href="class_bluetooth_a2_d_p_output_legacy.html" title="Legacy I2S Output Class." alt="BluetoothA2DPOutputLegacy" shape="rect" coords="414,56,611,80"/>
-<area href="class_bluetooth_a2_d_p_output_print.html" title="Output Class using Print API:" alt="BluetoothA2DPOutputPrint" shape="rect" coords="621,56,818,80"/>
+  <img src="class_bluetooth_a2_d_p_output_print.png" usemap="#BluetoothA2DPOutputPrint_map" alt=""/>
+  <map id="BluetoothA2DPOutputPrint_map" name="BluetoothA2DPOutputPrint_map">
+<area href="class_bluetooth_a2_d_p_output.html" title="Abstract Output Class." alt="BluetoothA2DPOutput" shape="rect" coords="0,0,160,24"/>
   </map>
 </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ad5ca1c3884eb96fe9681e75d07363882"><td class="memItemLeft" align="right" valign="top"><a id="ad5ca1c3884eb96fe9681e75d07363882"></a>
-virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>begin</b> ()=0</td></tr>
-<tr class="separator:ad5ca1c3884eb96fe9681e75d07363882"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad01ea858e5b8f36e3a2b9715906af89c"><td class="memItemLeft" align="right" valign="top"><a id="ad01ea858e5b8f36e3a2b9715906af89c"></a>
-virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><b>write</b> (const uint8_t *data, size_t len)=0</td></tr>
-<tr class="separator:ad01ea858e5b8f36e3a2b9715906af89c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a941ce061ea9e1751a8a23c6e8468bf42"><td class="memItemLeft" align="right" valign="top"><a id="a941ce061ea9e1751a8a23c6e8468bf42"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>end</b> ()=0</td></tr>
-<tr class="separator:a941ce061ea9e1751a8a23c6e8468bf42"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad115622c27dd0a3eaac9c7501f608a7d"><td class="memItemLeft" align="right" valign="top"><a id="ad115622c27dd0a3eaac9c7501f608a7d"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>set_sample_rate</b> (int rate)=0</td></tr>
-<tr class="separator:ad115622c27dd0a3eaac9c7501f608a7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf3417875f028bc97b2409e5a5be310b"><td class="memItemLeft" align="right" valign="top"><a id="abf3417875f028bc97b2409e5a5be310b"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>set_output_active</b> (bool active)=0</td></tr>
-<tr class="separator:abf3417875f028bc97b2409e5a5be310b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4715890764f549b7f3fe2f2df955ced9"><td class="memItemLeft" align="right" valign="top"><a id="a4715890764f549b7f3fe2f2df955ced9"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>begin</b> ()</td></tr>
+<tr class="separator:a4715890764f549b7f3fe2f2df955ced9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a935ac1b1d3d01850cd00dc710ba7a0a1"><td class="memItemLeft" align="right" valign="top"><a id="a935ac1b1d3d01850cd00dc710ba7a0a1"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>write</b> (const uint8_t *data, size_t len) override</td></tr>
+<tr class="separator:a935ac1b1d3d01850cd00dc710ba7a0a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3860fb12817a5f35139bfe1f84677f1"><td class="memItemLeft" align="right" valign="top"><a id="ad3860fb12817a5f35139bfe1f84677f1"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>end</b> () override</td></tr>
+<tr class="separator:ad3860fb12817a5f35139bfe1f84677f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd578fb80194143caf2627f44bc8d335"><td class="memItemLeft" align="right" valign="top"><a id="acd578fb80194143caf2627f44bc8d335"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_sample_rate</b> (int rate) override</td></tr>
+<tr class="separator:acd578fb80194143caf2627f44bc8d335"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc3d65fc0d7b1d07cf1e6ef12baf9d6e"><td class="memItemLeft" align="right" valign="top"><a id="acc3d65fc0d7b1d07cf1e6ef12baf9d6e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_output_active</b> (bool active) override</td></tr>
+<tr class="separator:acc3d65fc0d7b1d07cf1e6ef12baf9d6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2737d0eeca1fb594b6ffda018eeaf8dd"><td class="memItemLeft" align="right" valign="top"><a id="a2737d0eeca1fb594b6ffda018eeaf8dd"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>operator bool</b> ()</td></tr>
+<tr class="separator:a2737d0eeca1fb594b6ffda018eeaf8dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9e40b46faaba5afdbbf6dbf403c627e"><td class="memItemLeft" align="right" valign="top"><a id="aa9e40b46faaba5afdbbf6dbf403c627e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_output_print.html#aa9e40b46faaba5afdbbf6dbf403c627e">set_output</a> (Print &amp;output)</td></tr>
+<tr class="memdesc:aa9e40b46faaba5afdbbf6dbf403c627e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output to Arduino Print. <br /></td></tr>
+<tr class="separator:aa9e40b46faaba5afdbbf6dbf403c627e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9f854ab4d6116e814c450d0301c0365a"><td class="memItemLeft" align="right" valign="top"><a id="a9f854ab4d6116e814c450d0301c0365a"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_output.html#a9f854ab4d6116e814c450d0301c0365a">set_output</a> (AudioOutput &amp;output)</td></tr>
 <tr class="memdesc:a9f854ab4d6116e814c450d0301c0365a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Not implemented. <br /></td></tr>
@@ -111,14 +116,16 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_output.html#ae25cb5e55d01dddf95ac28726e2e738b">set_output</a> (AudioStream &amp;output)</td></tr>
 <tr class="memdesc:ae25cb5e55d01dddf95ac28726e2e738b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Not implemented. <br /></td></tr>
 <tr class="separator:ae25cb5e55d01dddf95ac28726e2e738b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:add4a1457f42f2e6ef8b905bcf4be10dc"><td class="memItemLeft" align="right" valign="top"><a id="add4a1457f42f2e6ef8b905bcf4be10dc"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_output.html#add4a1457f42f2e6ef8b905bcf4be10dc">set_output</a> (Print &amp;output)</td></tr>
-<tr class="memdesc:add4a1457f42f2e6ef8b905bcf4be10dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Not implemented. <br /></td></tr>
-<tr class="separator:add4a1457f42f2e6ef8b905bcf4be10dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a796b999887350b0759cedadde0caa019"><td class="memItemLeft" align="right" valign="top"><a id="a796b999887350b0759cedadde0caa019"></a>
+Print *&#160;</td><td class="memItemRight" valign="bottom"><b>p_print</b> = nullptr</td></tr>
+<tr class="separator:a796b999887350b0759cedadde0caa019"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Abstract Output Class. </p>
-<dl class="section author"><dt>Author</dt><dd>Phil Schatzmann</dd></dl>
+<div class="textblock"><p>Output Class using Print API: </p>
+<dl class="section author"><dt>Author</dt><dd>Phil Schatzmann </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Apache License Version 2 </dd></dl>
 </div><hr/>The documentation for this class was generated from the following file:<ul>
 <li>src/<a class="el" href="_bluetooth_a2_d_p_output_8h_source.html">BluetoothA2DPOutput.h</a></li>

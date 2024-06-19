@@ -115,6 +115,40 @@ class BluetoothA2DPOutputAudioTools : public BluetoothA2DPOutput {
 #endif
 };
 
+#ifdef ARDUINO
+
+/**
+ * @brief Output Class using Print API:
+ * @author Phil Schatzmann
+ * @copyright Apache License Version 2
+ */
+
+class BluetoothA2DPOutputPrint : public BluetoothA2DPOutput {
+ public:
+  BluetoothA2DPOutputPrint() = default;
+  bool begin() { return true;};
+  size_t write(const uint8_t *data, size_t len) override { 
+    if (p_print==nullptr) return 0;
+    return p_print->write(data, len);
+  }
+  void end() override {}
+  void set_sample_rate(int rate) override {};
+  void set_output_active(bool active) override {};
+
+  operator bool() { 
+    return p_print != nullptr; 
+  }
+
+  /// Output to Arduino Print
+  void set_output(Print &output) { p_print = &output; }
+
+ protected:
+  Print *p_print = nullptr;
+
+};
+#endif
+
+
 /**
  * @brief Legacy I2S Output Class
  * @author Phil Schatzmann

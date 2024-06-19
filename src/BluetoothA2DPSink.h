@@ -177,6 +177,8 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
 #ifdef ARDUINO
   /// Output to Arduino Print
   void set_output(Print &output) {
+    static BluetoothA2DPOutputPrint s_out;
+    out = &s_out;
     out->set_output(output);
   }
 #endif

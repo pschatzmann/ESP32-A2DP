@@ -371,6 +371,9 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   /// Activates SSP (Serial protocol)
   void set_spp_active(bool flag) { spp_active = flag; }
 
+  /// Activate/Deactivate output e.g. to I2S
+  void set_output_active(bool flag){ is_i2s_active = flag;}
+
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
   /// Get the name of the connected source device (obsolete)
   virtual const char *get_connected_source_name();

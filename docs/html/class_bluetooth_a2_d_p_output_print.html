@@ -89,25 +89,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4715890764f549b7f3fe2f2df955ced9"><td class="memItemLeft" align="right" valign="top"><a id="a4715890764f549b7f3fe2f2df955ced9"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>begin</b> ()</td></tr>
 <tr class="separator:a4715890764f549b7f3fe2f2df955ced9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a935ac1b1d3d01850cd00dc710ba7a0a1"><td class="memItemLeft" align="right" valign="top"><a id="a935ac1b1d3d01850cd00dc710ba7a0a1"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>write</b> (const uint8_t *data, size_t len) override</td></tr>
-<tr class="separator:a935ac1b1d3d01850cd00dc710ba7a0a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad3860fb12817a5f35139bfe1f84677f1"><td class="memItemLeft" align="right" valign="top"><a id="ad3860fb12817a5f35139bfe1f84677f1"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>end</b> () override</td></tr>
 <tr class="separator:ad3860fb12817a5f35139bfe1f84677f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd578fb80194143caf2627f44bc8d335"><td class="memItemLeft" align="right" valign="top"><a id="acd578fb80194143caf2627f44bc8d335"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_sample_rate</b> (int rate) override</td></tr>
-<tr class="separator:acd578fb80194143caf2627f44bc8d335"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acc3d65fc0d7b1d07cf1e6ef12baf9d6e"><td class="memItemLeft" align="right" valign="top"><a id="acc3d65fc0d7b1d07cf1e6ef12baf9d6e"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_output_active</b> (bool active) override</td></tr>
-<tr class="separator:acc3d65fc0d7b1d07cf1e6ef12baf9d6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2737d0eeca1fb594b6ffda018eeaf8dd"><td class="memItemLeft" align="right" valign="top"><a id="a2737d0eeca1fb594b6ffda018eeaf8dd"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>operator bool</b> ()</td></tr>
 <tr class="separator:a2737d0eeca1fb594b6ffda018eeaf8dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa9e40b46faaba5afdbbf6dbf403c627e"><td class="memItemLeft" align="right" valign="top"><a id="aa9e40b46faaba5afdbbf6dbf403c627e"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_output_print.html#aa9e40b46faaba5afdbbf6dbf403c627e">set_output</a> (Print &amp;output)</td></tr>
-<tr class="memdesc:aa9e40b46faaba5afdbbf6dbf403c627e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output to Arduino Print. <br /></td></tr>
-<tr class="separator:aa9e40b46faaba5afdbbf6dbf403c627e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9f854ab4d6116e814c450d0301c0365a"><td class="memItemLeft" align="right" valign="top"><a id="a9f854ab4d6116e814c450d0301c0365a"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_output.html#a9f854ab4d6116e814c450d0301c0365a">set_output</a> (AudioOutput &amp;output)</td></tr>
 <tr class="memdesc:a9f854ab4d6116e814c450d0301c0365a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Not implemented. <br /></td></tr>
@@ -116,6 +103,19 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_output.html#ae25cb5e55d01dddf95ac28726e2e738b">set_output</a> (AudioStream &amp;output)</td></tr>
 <tr class="memdesc:ae25cb5e55d01dddf95ac28726e2e738b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Not implemented. <br /></td></tr>
 <tr class="separator:ae25cb5e55d01dddf95ac28726e2e738b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9e40b46faaba5afdbbf6dbf403c627e"><td class="memItemLeft" align="right" valign="top"><a id="aa9e40b46faaba5afdbbf6dbf403c627e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_output_print.html#aa9e40b46faaba5afdbbf6dbf403c627e">set_output</a> (Print &amp;output)</td></tr>
+<tr class="memdesc:aa9e40b46faaba5afdbbf6dbf403c627e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output to Arduino Print. <br /></td></tr>
+<tr class="separator:aa9e40b46faaba5afdbbf6dbf403c627e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc3d65fc0d7b1d07cf1e6ef12baf9d6e"><td class="memItemLeft" align="right" valign="top"><a id="acc3d65fc0d7b1d07cf1e6ef12baf9d6e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_output_active</b> (bool active) override</td></tr>
+<tr class="separator:acc3d65fc0d7b1d07cf1e6ef12baf9d6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd578fb80194143caf2627f44bc8d335"><td class="memItemLeft" align="right" valign="top"><a id="acd578fb80194143caf2627f44bc8d335"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_sample_rate</b> (int rate) override</td></tr>
+<tr class="separator:acd578fb80194143caf2627f44bc8d335"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a935ac1b1d3d01850cd00dc710ba7a0a1"><td class="memItemLeft" align="right" valign="top"><a id="a935ac1b1d3d01850cd00dc710ba7a0a1"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>write</b> (const uint8_t *data, size_t len) override</td></tr>
+<tr class="separator:a935ac1b1d3d01850cd00dc710ba7a0a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>

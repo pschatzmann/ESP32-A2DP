@@ -91,18 +91,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad5ca1c3884eb96fe9681e75d07363882"><td class="memItemLeft" align="right" valign="top"><a id="ad5ca1c3884eb96fe9681e75d07363882"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>begin</b> ()=0</td></tr>
 <tr class="separator:ad5ca1c3884eb96fe9681e75d07363882"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad01ea858e5b8f36e3a2b9715906af89c"><td class="memItemLeft" align="right" valign="top"><a id="ad01ea858e5b8f36e3a2b9715906af89c"></a>
-virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><b>write</b> (const uint8_t *data, size_t len)=0</td></tr>
-<tr class="separator:ad01ea858e5b8f36e3a2b9715906af89c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a941ce061ea9e1751a8a23c6e8468bf42"><td class="memItemLeft" align="right" valign="top"><a id="a941ce061ea9e1751a8a23c6e8468bf42"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>end</b> ()=0</td></tr>
 <tr class="separator:a941ce061ea9e1751a8a23c6e8468bf42"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad115622c27dd0a3eaac9c7501f608a7d"><td class="memItemLeft" align="right" valign="top"><a id="ad115622c27dd0a3eaac9c7501f608a7d"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>set_sample_rate</b> (int rate)=0</td></tr>
-<tr class="separator:ad115622c27dd0a3eaac9c7501f608a7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf3417875f028bc97b2409e5a5be310b"><td class="memItemLeft" align="right" valign="top"><a id="abf3417875f028bc97b2409e5a5be310b"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>set_output_active</b> (bool active)=0</td></tr>
-<tr class="separator:abf3417875f028bc97b2409e5a5be310b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9f854ab4d6116e814c450d0301c0365a"><td class="memItemLeft" align="right" valign="top"><a id="a9f854ab4d6116e814c450d0301c0365a"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_output.html#a9f854ab4d6116e814c450d0301c0365a">set_output</a> (AudioOutput &amp;output)</td></tr>
 <tr class="memdesc:a9f854ab4d6116e814c450d0301c0365a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Not implemented. <br /></td></tr>
@@ -115,6 +106,15 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_output.html#add4a1457f42f2e6ef8b905bcf4be10dc">set_output</a> (Print &amp;output)</td></tr>
 <tr class="memdesc:add4a1457f42f2e6ef8b905bcf4be10dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Not implemented. <br /></td></tr>
 <tr class="separator:add4a1457f42f2e6ef8b905bcf4be10dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf3417875f028bc97b2409e5a5be310b"><td class="memItemLeft" align="right" valign="top"><a id="abf3417875f028bc97b2409e5a5be310b"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>set_output_active</b> (bool active)=0</td></tr>
+<tr class="separator:abf3417875f028bc97b2409e5a5be310b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad115622c27dd0a3eaac9c7501f608a7d"><td class="memItemLeft" align="right" valign="top"><a id="ad115622c27dd0a3eaac9c7501f608a7d"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>set_sample_rate</b> (int rate)=0</td></tr>
+<tr class="separator:ad115622c27dd0a3eaac9c7501f608a7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad01ea858e5b8f36e3a2b9715906af89c"><td class="memItemLeft" align="right" valign="top"><a id="ad01ea858e5b8f36e3a2b9715906af89c"></a>
+virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><b>write</b> (const uint8_t *data, size_t len)=0</td></tr>
+<tr class="separator:ad01ea858e5b8f36e3a2b9715906af89c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Abstract Output Class. </p>

@@ -22,5 +22,5 @@
 
 // Maximum write size
 #ifndef A2DP_I2S_MAX_WRITE_SIZE 
-#  define A2DP_I2S_MAX_WRITE_SIZE 512
+#  define A2DP_I2S_MAX_WRITE_SIZE 1024 * 5
 #endif

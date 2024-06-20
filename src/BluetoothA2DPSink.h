@@ -174,6 +174,11 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
     out = &output;
   }
 
+  /// Provides access to the output class 
+  BluetoothA2DPOutput* get_output(){
+    return out;
+  }
+
 #ifdef ARDUINO
   /// Output to Arduino Print
   void set_output(Print &output) {

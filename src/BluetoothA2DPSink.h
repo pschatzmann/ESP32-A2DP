@@ -374,6 +374,9 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   /// Activate/Deactivate output e.g. to I2S
   void set_output_active(bool flag){ is_i2s_active = flag;}
 
+  /// Checks if output is active
+  bool is_output_active() { return is_i2s_active; }
+
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
   /// Get the name of the connected source device (obsolete)
   virtual const char *get_connected_source_name();

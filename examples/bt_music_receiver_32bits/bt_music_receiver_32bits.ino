@@ -17,7 +17,6 @@
 // ==> Example A2DP Receiver which uses the A2DP I2S output with 32 bits
 
 #include "AudioTools.h"
-#include "AudioLibs/AudioBoardStream.h" // install https://github.com/pschatzmann/arduino-audio-driver
 #include "BluetoothA2DPSink.h"
 
 AudioInfo info(44100, 2, 32);

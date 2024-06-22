@@ -84,8 +84,13 @@ void BluetoothA2DPCommon::end(bool release_memory) {
 
     // Disconnect and wait
     disconnect();
+    int limit = A2DP_DISCONNECT_LIMIT;
     while(get_connection_state() != ESP_A2D_CONNECTION_STATE_DISCONNECTED){
         delay_ms(100);
+        if (limit-- < 0) {
+            ESP_LOGW(BT_AV_TAG,"Waiting for Disconnect has timed out");
+            break;
+        };
     }
 
     // deinit AVRC
@@ -118,8 +123,14 @@ void BluetoothA2DPCommon::end(bool release_memory) {
         log_free_heap();
 
         // waiting for status change
-        while(esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_ENABLED)
-            delay_ms(50);
+        limit = A2DP_DISCONNECT_LIMIT;
+        while(esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_ENABLED){
+            delay_ms(100);
+            if (limit-- < 0) {
+                ESP_LOGW(BT_AV_TAG,"Waiting for Enabled has timed out");
+                break;
+            };
+        }
 
         if(esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_INITED){
             ESP_LOGI(BT_AV_TAG,"esp_bt_controller_deinit");

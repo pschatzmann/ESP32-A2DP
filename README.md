@@ -86,27 +86,28 @@ void loop() {
 You can also use the Arduino ESP32 I2S API: You do not need to install any additional library for this. 
 
 ```
-#include "I2S.h"
+#include "ESP_I2S.h"
 #include "BluetoothA2DPSink.h"
 
-BluetoothA2DPSink a2dp_sink(I2S);
+const uint8_t I2S_SCK = 5;       /* Audio data bit clock */
+const uint8_t I2S_WS = 25;       /* Audio data left and right clock */
+const uint8_t I2S_SDOUT = 26;    /* ESP32 audio data output (to speakers) */
+I2SClass i2s;
+
+BluetoothA2DPSink a2dp_sink(i2s);
 
 void setup() {
-    I2S.setSckPin(14);
-    I2S.setFsPin(15);
-    I2S.setDataPin(22); 
-    if (!I2S.begin(I2S_PHILIPS_MODE, 44100, 16)) {
+    i2s.setPins(I2S_SCK, I2S_WS, I2S_SDOUT);
+    if (!i2s.begin(I2S_MODE_STD, 44100, I2S_DATA_BIT_WIDTH_16BIT, I2S_SLOT_MODE_STEREO, I2S_STD_SLOT_BOTH)) {
       Serial.println("Failed to initialize I2S!");
       while (1); // do nothing
     }
 
     a2dp_sink.start("MyMusic");
 }
-
-void loop() {
-}
+void loop() {}
 ```
-Please note, that this API also depends on the installed version: The example above is for ESP32 < 3.0.0! 
+Please note, that this API also depends on the installed version: The example above is for ESP32 > 3.0.0! 
 
 ### Output to the Internal DAC
 

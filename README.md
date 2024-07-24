@@ -107,7 +107,7 @@ void setup() {
 }
 void loop() {}
 ```
-Please note, that this API also depends on the installed version: The example above is for ESP32 > 3.0.0! 
+Please note, that this API also depends on the installed version: The example above is for ESP32 >= 3.0.0! 
 
 ### Output to the Internal DAC
 

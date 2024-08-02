@@ -70,9 +70,9 @@ enum ChannelInfo {
 
 class SoundData {
   public:
-     virtual int32_t get2ChannelData(int32_t pos, int32_t len, uint8_t *data);
-     virtual int32_t getData(int32_t pos, Frame &channels);
-     virtual void setDataRaw( uint8_t* data, int32_t len);
+     virtual int32_t get2ChannelData(int32_t pos, int32_t len, uint8_t *data) = 0;
+     virtual int32_t getData(int32_t pos, Frame &channels) = 0;
+     virtual void setDataRaw( uint8_t* data, int32_t len) = 0;
      /**
       * Automatic restart playing on end
       */

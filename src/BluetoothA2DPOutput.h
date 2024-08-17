@@ -29,9 +29,9 @@ class BluetoothA2DPOutput {
 
 #if A2DP_I2S_AUDIOTOOLS
   /// Not implemented
-  virtual void set_output(AudioOutput &output) {}
+  virtual void set_output(audio_tools::AudioOutput &output) {}
   /// Not implemented
-  virtual void set_output(AudioStream &output) {}
+  virtual void set_output(audio_tools::AudioStream &output) {}
 #endif
 
 #ifdef ARDUINO
@@ -86,13 +86,13 @@ class BluetoothA2DPOutputAudioTools : public BluetoothA2DPOutput {
 
 #if A2DP_I2S_AUDIOTOOLS
   /// Output AudioStream using AudioTools library
-  void set_output(AudioOutput &output) {
+  void set_output(audio_tools::AudioOutput &output) {
     p_print = &output;
     p_audio_print = &output;
   }
 
   /// Output AudioStream using AudioTools library
-  void set_output(AudioStream &output) {
+  void set_output(audio_tools::AudioStream &output) {
     static AdapterAudioStreamToAudioOutput adapter(output);
     adapter.setStream(output);
     p_print = &output;
@@ -111,7 +111,7 @@ class BluetoothA2DPOutputAudioTools : public BluetoothA2DPOutput {
 #endif
 
 #if A2DP_I2S_AUDIOTOOLS
-  AudioOutput *p_audio_print = nullptr;
+  audio_tools::AudioOutput *p_audio_print = nullptr;
 #endif
 };
 
@@ -244,9 +244,9 @@ class BluetoothA2DPOutputDefault : public BluetoothA2DPOutput {
 
 #if A2DP_I2S_AUDIOTOOLS
   /// Output AudioStream using AudioTools library
-  void set_output(AudioOutput &output) override  { out_tools.set_output(output); }
+  void set_output(audio_tools::AudioOutput &output) override  { out_tools.set_output(output); }
   /// Output AudioStream using AudioTools library
-  void set_output(AudioStream &output) override { out_tools.set_output(output); }
+  void set_output(audio_tools::AudioStream &output) override { out_tools.set_output(output); }
 #endif
 
 #ifdef ARDUINO

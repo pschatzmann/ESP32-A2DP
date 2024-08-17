@@ -115,12 +115,12 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
 
 #if A2DP_I2S_AUDIOTOOLS
   /// Output AudioOutput using AudioTools library
-  BluetoothA2DPSink(AudioOutput &output) {
+  BluetoothA2DPSink(audio_tools::AudioOutput &output) {
     actual_bluetooth_a2dp_sink = this;
     set_output(output);
   }
   /// Output AudioStream using AudioTools library
-  BluetoothA2DPSink(AudioStream &output) {
+  BluetoothA2DPSink(audio_tools::AudioStream &output) {
     actual_bluetooth_a2dp_sink = this;
     set_output(output);
   }
@@ -190,11 +190,11 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
 
 #if A2DP_I2S_AUDIOTOOLS
   /// Output AudioOutput using AudioTools library
-  void set_output(AudioOutput &output) {
+  void set_output(audio_tools::AudioOutput &output) {
     out->set_output(output);
   }
   /// Output AudioStream using AudioTools library
-  void set_output(AudioStream &output) {
+  void set_output(audio_tools::AudioStream &output) {
     out->set_output(output);
   }
 #endif

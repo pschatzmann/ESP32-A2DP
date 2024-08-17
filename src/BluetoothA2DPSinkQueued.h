@@ -27,12 +27,12 @@ class BluetoothA2DPSinkQueued : public BluetoothA2DPSink {
 
 #if A2DP_I2S_AUDIOTOOLS
   /// Output AudioOutput using AudioTools library
-  BluetoothA2DPSinkQueued(AudioOutput &output) {
+  BluetoothA2DPSinkQueued(audio_tools::AudioOutput &output) {
     actual_bluetooth_a2dp_sink = this;
     out->set_output(output);
   }
   /// Output AudioStream using AudioTools library
-  BluetoothA2DPSinkQueued(AudioStream &output) {
+  BluetoothA2DPSinkQueued(audio_tools::AudioStream &output) {
     actual_bluetooth_a2dp_sink = this;
     out->set_output(output);
   }

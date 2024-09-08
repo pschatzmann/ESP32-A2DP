@@ -34,7 +34,7 @@ This can be used e.g. to build your own Bluetooth Speaker.
 ### A Simple I2S Example (A2DS Sink) using default Pins
 Here is the simplest example which just uses the proper default settings:
 
-```
+```cpp
 #include "AudioTools.h"
 #include "BluetoothA2DPSink.h"
 
@@ -60,7 +60,7 @@ Please note that these default pins have changed compared to the legacy API!
 
 You can define your own pins easily before the ```start```.
 
-```
+```cpp
 #include "AudioTools.h"
 #include "BluetoothA2DPSink.h"
 
@@ -85,7 +85,7 @@ void loop() {
 
 You can also use the Arduino ESP32 I2S API: You do not need to install any additional library for this. 
 
-```
+```cpp
 #include "ESP_I2S.h"
 #include "BluetoothA2DPSink.h"
 
@@ -113,7 +113,7 @@ Please note, that this API also depends on the installed version: The example ab
 
 You can also send the output directly to the internal DAC of the ESP32 by using the AnalogAudioStream from the AudioTools:
 
-```
+```cpp
 #include "AudioTools.h"
 #include "BluetoothA2DPSink.h"
 
@@ -135,7 +135,7 @@ The output goes now to the DAC pins GPIO25 (Channel 1) and GPIO26 (Channel 2).
 You can be notified when a packet is received. The API is using PCM data normally formatted as 44.1kHz sampling rate, two-channel 16-bit sample data. 
 
 
-```
+```cpp
 // In the setup function:
 a2dp_sink.set_on_data_received(data_received_callback);
 
@@ -148,7 +148,7 @@ void data_received_callback() {
 
 Or you can access the packet:
 
-```
+```cpp
 // In the setup function:
 a2dp_sink.set_stream_reader(read_data_stream);
 
@@ -165,7 +165,7 @@ In the ```a2dp_sink.set_stream_reader()``` method you can provide an optional pa
 ### Support for Metadata
 
 You can register a method which will be called when the system receives any AVRC metadata (`esp_avrc_md_attr_mask_t`). Here is an example
-```
+```cpp
 void avrc_metadata_callback(uint8_t data1, const uint8_t *data2) {
   Serial.printf("AVRC metadata rsp: attribute id 0x%x, %s\n", data1, data2);
 }
@@ -173,7 +173,7 @@ a2dp_sink.set_avrc_metadata_callback(avrc_metadata_callback);
 a2dp_sink.start("BT");
 ```
 By default you should get the most important information, however you can adjust this by calling the ```set_avrc_metadata_attribute_mask``` method e.g if you just need the title and playing time you can call:
-```
+```cpp
 set_avrc_metadata_attribute_mask(ESP_AVRC_MD_ATTR_TITLE | ESP_AVRC_MD_ATTR_PLAYING_TIME);
 ```
 before you start the A2DP sink. Note that data2 is actually a char* string, so even though `ESP_AVRC_MD_ATTR_PLAYING_TIME` is documented as the milliseconds of media duration you'll need to parse it before doing math on it. See the metadata example for more.
@@ -209,7 +209,7 @@ The supported audio codec in ESP32 A2DP is SBC: The API is using PCM data normal
 When you start the BluetoothA2DPSource, you need to pass the Bluetooth name that you want to connect to and a 'call back
 function' that generates the sound data:
 
-```
+```cpp
 #include "BluetoothA2DPSource.h"
 
 BluetoothA2DPSource a2dp_source;
@@ -235,7 +235,7 @@ In the examples you can find an implentation that generates sound with the help 
 You can also inticate multiple alternative Bluetooth names. The system just connects to the first one
 which is available:
 
-```
+```cpp
 void setup() {
   static std::vector<char*> bt_names = {"MyMusic","RadioPlayer","MusicPlayer"};
   a2dp_source.start(bt_names, get_sound_data); 
@@ -247,7 +247,7 @@ void setup() {
 
 You can also provide the data directly as simple array of uint8_t:
 
-```
+```cpp
 #include "BluetoothA2DPSource.h"
 
 extern const uint8_t StarWars10_raw[];
@@ -286,7 +286,7 @@ SoundData *data = new TwoChannelSoundData((Frame*)StarWars10_raw,StarWars10_raw_
 
 In the constructor you can pass additional parameters:
 
-```
+```cpp
 TwoChannelSoundData(Frame *data, int32_t frameCount, bool loop=false);
 OneChannelSoundData(int16_t *data, int32_t frameCount, bool loop=false, ChannelInfo channelInfo=Both);
 OneChannel8BitSoundData(int8_t *data, int32_t frameCount, bool loop=false, ChannelInfo channelInfo=Both);
@@ -343,7 +343,7 @@ Get some inspiration [from projects that were using this library](https://github
 ## Installation
 
 For Arduino you can download the library as zip and call include Library -> zip library. Or you can git clone this project into the Arduino libraries folder e.g. with
-```
+```bash
 cd  ~/Documents/Arduino/libraries
 git clone https://github.com/pschatzmann/ESP32-A2DP.git
 git clone https://github.com/pschatzmann/arduino-audio-tools.git

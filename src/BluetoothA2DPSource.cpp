@@ -335,11 +335,11 @@ void BluetoothA2DPSource::bt_app_task_start_up(void) {
 
 void BluetoothA2DPSource::bt_app_task_shut_down(void) {
   ESP_LOGD(BT_AV_TAG, "%s", __func__);
-  if (s_bt_app_task_handle) {
+  if (s_bt_app_task_handle != NULL) {
     vTaskDelete(s_bt_app_task_handle);
     s_bt_app_task_handle = NULL;
   }
-  if (s_bt_app_task_queue) {
+  if (s_bt_app_task_queue != NULL) {
     vQueueDelete(s_bt_app_task_queue);
     s_bt_app_task_queue = NULL;
   }

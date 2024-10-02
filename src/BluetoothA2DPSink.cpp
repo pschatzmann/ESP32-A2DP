@@ -282,7 +282,7 @@ void BluetoothA2DPSink::app_task_handler(void *arg) {
       ESP_LOGE(BT_APP_TAG, "%s, app_task_queue is null", __func__);
       delay_ms(100);
     } else if (pdTRUE == xQueueReceive(app_task_queue, &msg,
-                                       (portTickType)portMAX_DELAY)) {
+                                       (TickType_t)portMAX_DELAY)) {
       ESP_LOGD(BT_APP_TAG, "%s, sig 0x%x, 0x%x", __func__, msg.sig, msg.event);
       switch (msg.sig) {
         case APP_SIG_WORK_DISPATCH:

@@ -91,7 +91,7 @@ using namespace esp_i2s;
 #  define xQueueHandle QueueHandle_t
 #endif
 
-#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 2 , 1)
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 1 , 4)
 #  define portTickType TickType_t
 #  define portTICK_RATE_MS portTICK_PERIOD_MS
 #endif

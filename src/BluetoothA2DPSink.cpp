@@ -267,7 +267,7 @@ bool BluetoothA2DPSink::app_send_msg(bt_app_msg_t *msg) {
     return false;
   }
 
-  if (xQueueSend(app_task_queue, msg, 10 / portTICK_RATE_MS) != pdTRUE) {
+  if (xQueueSend(app_task_queue, msg, 10 / portTICK_PERIOD_MS) != pdTRUE) {
     ESP_LOGE(BT_APP_TAG, "%s xQueue send failed", __func__);
     return false;
   }
@@ -916,7 +916,7 @@ void BluetoothA2DPSink::av_hdl_stack_evt(uint16_t event, void *p_param) {
       ESP_LOGD(BT_AV_TAG, "%s av_hdl_stack_evt %s", __func__,
                "BT_APP_EVT_STACK_UP");
       /* set up device name */
-      esp_bt_dev_set_device_name(bt_name);
+      esp_bt_gap_set_device_name(bt_name);
 
       // initialize AVRCP controller
       result = esp_avrc_ct_init();

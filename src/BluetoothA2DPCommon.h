@@ -85,15 +85,15 @@ using namespace esp_i2s;
 # define I2S_COMM_FORMAT_STAND_PCM_SHORT (I2S_COMM_FORMAT_PCM | I2S_COMM_FORMAT_PCM_SHORT)
 #endif
 
-// IDF 5 support
-#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0 , 0)
-#  define xTaskHandle TaskHandle_t
-#  define xQueueHandle QueueHandle_t
+// Prior IDF 5 support
+#if ESP_IDF_VERSION < ESP_IDF_VERSION_VAL(5, 0 , 0)
+#  define  TaskHandle_t xTaskHandle
+#  define  QueueHandle_t xQueueHandle
+#  define  TickType_t portTickType
 #endif
 
-#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 1 , 4)
-#  define portTickType TickType_t
-#  define portTICK_RATE_MS portTICK_PERIOD_MS
+#if ESP_IDF_VERSION < ESP_IDF_VERSION_VAL(5, 3, 0)
+#  define esp_bt_gap_set_device_name esp_bt_dev_set_device_name
 #endif
 
 #define A2DP_DEPRECATED __attribute__((deprecated))

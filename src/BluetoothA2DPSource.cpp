@@ -284,7 +284,7 @@ bool BluetoothA2DPSource::bt_app_send_msg(bt_app_msg_t *msg) {
     return false;
   }
 
-  if (xQueueSend(s_bt_app_task_queue, msg, 10 / portTICK_RATE_MS) != pdTRUE) {
+  if (xQueueSend(s_bt_app_task_queue, msg, 10 / portTICK_PERIOD_MS) != pdTRUE) {
     ESP_LOGE(BT_APP_TAG, "%s xQueue send failed", __func__);
     return false;
   }
@@ -557,11 +557,7 @@ void BluetoothA2DPSource::bt_av_hdl_stack_evt(uint16_t event, void *p_param) {
   /* when stack up worked, this event comes */
   case BT_APP_EVT_STACK_UP: {
     // set up device name
-#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 3, 0)
     esp_bt_gap_set_device_name(dev_name);
-#else
-    esp_bt_dev_set_device_name(dev_name);
-#endif
 
     // register GAP callback function
     esp_bt_gap_register_callback(ccall_bt_app_gap_callback);

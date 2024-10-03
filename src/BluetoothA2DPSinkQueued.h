@@ -67,7 +67,7 @@ class BluetoothA2DPSinkQueued : public BluetoothA2DPSink {
   void set_i2s_ticks(int ticks) { i2s_ticks = ticks; }
 
  protected:
-  xTaskHandle s_bt_i2s_task_handle = nullptr; /* handle of I2S task */
+  TaskHandle_t s_bt_i2s_task_handle = nullptr; /* handle of I2S task */
   RingbufHandle_t s_ringbuf_i2s = nullptr;    /* handle of ringbuffer for I2S */
   SemaphoreHandle_t s_i2s_write_semaphore = nullptr;
   // I2S task

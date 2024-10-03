@@ -399,8 +399,8 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   BluetoothA2DPOutput *out = &out_default;
 
   // protected data
-  xQueueHandle app_task_queue = nullptr;
-  xTaskHandle app_task_handle = nullptr;
+  QueueHandle_t app_task_queue = nullptr;
+  TaskHandle_t app_task_handle = nullptr;
 
   volatile bool is_i2s_active = false;
   // activate output via BluetoothA2DPOutput

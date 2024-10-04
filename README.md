@@ -20,7 +20,7 @@ The Hands-Free Profile (HFP), Headset Profile (HSP) and stand alone AVRCP withou
 
 ## I2S API / Dependencies
 
-Espressif is retiring the legacy I2S API: So with Arduino 3.0.0 [my old I2S integration](https://github.com/pschatzmann/ESP32-A2DP/wiki/Legacy-I2S-API) will not be available any more. The legacy syntax is still working as long as you don't upgrade.  
+Espressif is retiring the legacy I2S API: So with Arduino v3.0.0 (IDF v5) [my old I2S integration](https://github.com/pschatzmann/ESP32-A2DP/wiki/Legacy-I2S-API) will not be available any more. The legacy syntax is still working as long as you don't upgrade.  
 
 In order to support a unique output API which is version independent, it is recommended to install and use the [AudioTools](https://github.com/pschatzmann/arduino-audio-tools) library. So the documentation and all the examples have been updated to use this new approach.
 

@@ -15,6 +15,11 @@
 */
 
 // ==> Example A2DP Receiver which uses I2S to an external DAC
+// This creates a new Bluetooth device with the name “MyMusic” and the output will be sent to the following default I2S pins which need to be connected to an external DAC:
+//
+// bck = 14
+// ws = 15
+// data_out = 22
 
 #include "AudioTools.h"
 #include "BluetoothA2DPSink.h"

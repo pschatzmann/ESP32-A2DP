@@ -190,7 +190,7 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
       discovery_mode_callback = callback;
     }
 
-    /// Provides the current discovery state
+    /// Provides the current discovery state: returns true when the discovery is in progress
     virtual bool is_discovery_active() {
       return discovery_active;
     }

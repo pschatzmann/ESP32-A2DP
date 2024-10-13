@@ -92,14 +92,14 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2a383635d7b050833f56ee79867716bd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a2a383635d7b050833f56ee79867716bd">BluetoothA2DPSink</a> ()</td></tr>
 <tr class="memdesc:a2a383635d7b050833f56ee79867716bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Constructor: output via callback or Legacy I2S.  <a href="class_bluetooth_a2_d_p_sink.html#a2a383635d7b050833f56ee79867716bd">More...</a><br /></td></tr>
 <tr class="separator:a2a383635d7b050833f56ee79867716bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe09654d8c4f250aca4282b49553d30f"><td class="memItemLeft" align="right" valign="top"><a id="afe09654d8c4f250aca4282b49553d30f"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#afe09654d8c4f250aca4282b49553d30f">BluetoothA2DPSink</a> (AudioOutput &amp;output)</td></tr>
-<tr class="memdesc:afe09654d8c4f250aca4282b49553d30f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output AudioOutput using AudioTools library. <br /></td></tr>
-<tr class="separator:afe09654d8c4f250aca4282b49553d30f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89b2e9c19a32740c1062ddfb26f09d21"><td class="memItemLeft" align="right" valign="top"><a id="a89b2e9c19a32740c1062ddfb26f09d21"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a89b2e9c19a32740c1062ddfb26f09d21">BluetoothA2DPSink</a> (AudioStream &amp;output)</td></tr>
-<tr class="memdesc:a89b2e9c19a32740c1062ddfb26f09d21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output AudioStream using AudioTools library. <br /></td></tr>
-<tr class="separator:a89b2e9c19a32740c1062ddfb26f09d21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c47257f9af0d64008fd46e201fb9063"><td class="memItemLeft" align="right" valign="top"><a id="a9c47257f9af0d64008fd46e201fb9063"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a9c47257f9af0d64008fd46e201fb9063">BluetoothA2DPSink</a> (audio_tools::AudioOutput &amp;output)</td></tr>
+<tr class="memdesc:a9c47257f9af0d64008fd46e201fb9063"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output AudioOutput using AudioTools library. <br /></td></tr>
+<tr class="separator:a9c47257f9af0d64008fd46e201fb9063"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62e0cb5c7a6552581ad43fdd98c4a022"><td class="memItemLeft" align="right" valign="top"><a id="a62e0cb5c7a6552581ad43fdd98c4a022"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a62e0cb5c7a6552581ad43fdd98c4a022">BluetoothA2DPSink</a> (audio_tools::AudioStream &amp;output)</td></tr>
+<tr class="memdesc:a62e0cb5c7a6552581ad43fdd98c4a022"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output AudioStream using AudioTools library. <br /></td></tr>
+<tr class="separator:a62e0cb5c7a6552581ad43fdd98c4a022"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aadfb815b992649822db74d3e2780d4c8"><td class="memItemLeft" align="right" valign="top"><a id="aadfb815b992649822db74d3e2780d4c8"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#aadfb815b992649822db74d3e2780d4c8">BluetoothA2DPSink</a> (<a class="el" href="class_bluetooth_a2_d_p_output.html">BluetoothA2DPOutput</a> &amp;out)</td></tr>
 <tr class="memdesc:aadfb815b992649822db74d3e2780d4c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define output scenario class. <br /></td></tr>
@@ -212,6 +212,10 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a5e76412770515732e3f54275decf02f0">is_connected</a> ()</td></tr>
 <tr class="memdesc:a5e76412770515732e3f54275decf02f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if A2DP is connected. <br /></td></tr>
 <tr class="separator:a5e76412770515732e3f54275decf02f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6eb9f31e643607224fa784ff20654924"><td class="memItemLeft" align="right" valign="top"><a id="a6eb9f31e643607224fa784ff20654924"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a6eb9f31e643607224fa784ff20654924">is_output_active</a> ()</td></tr>
+<tr class="memdesc:a6eb9f31e643607224fa784ff20654924"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if output is active. <br /></td></tr>
+<tr class="separator:a6eb9f31e643607224fa784ff20654924"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a791432e5c800e75fb11b858071cff651"><td class="memItemLeft" align="right" valign="top"><a id="a791432e5c800e75fb11b858071cff651"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a791432e5c800e75fb11b858071cff651">log_free_heap</a> ()</td></tr>
 <tr class="memdesc:a791432e5c800e75fb11b858071cff651"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs the free heap. <br /></td></tr>
@@ -329,14 +333,14 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="separator:af65219e635fadbbc90f4663b33abd3e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac245103d3d5c47b0414c2de21c0d52a7"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#ac245103d3d5c47b0414c2de21c0d52a7">set_on_volumechange</a> (void(*callBack)(int))</td></tr>
 <tr class="separator:ac245103d3d5c47b0414c2de21c0d52a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acde6cf6f2a9f874f1ad02cd817f4bdae"><td class="memItemLeft" align="right" valign="top"><a id="acde6cf6f2a9f874f1ad02cd817f4bdae"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#acde6cf6f2a9f874f1ad02cd817f4bdae">set_output</a> (AudioOutput &amp;output)</td></tr>
-<tr class="memdesc:acde6cf6f2a9f874f1ad02cd817f4bdae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output AudioOutput using AudioTools library. <br /></td></tr>
-<tr class="separator:acde6cf6f2a9f874f1ad02cd817f4bdae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf7c5bddb6738c01e43afd2310b1c38a"><td class="memItemLeft" align="right" valign="top"><a id="abf7c5bddb6738c01e43afd2310b1c38a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#abf7c5bddb6738c01e43afd2310b1c38a">set_output</a> (AudioStream &amp;output)</td></tr>
-<tr class="memdesc:abf7c5bddb6738c01e43afd2310b1c38a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output AudioStream using AudioTools library. <br /></td></tr>
-<tr class="separator:abf7c5bddb6738c01e43afd2310b1c38a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5bdae239eb76ad435a7999362a8019fc"><td class="memItemLeft" align="right" valign="top"><a id="a5bdae239eb76ad435a7999362a8019fc"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a5bdae239eb76ad435a7999362a8019fc">set_output</a> (audio_tools::AudioOutput &amp;output)</td></tr>
+<tr class="memdesc:a5bdae239eb76ad435a7999362a8019fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output AudioOutput using AudioTools library. <br /></td></tr>
+<tr class="separator:a5bdae239eb76ad435a7999362a8019fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a664eafe67a1f66b415159b84c3fe851f"><td class="memItemLeft" align="right" valign="top"><a id="a664eafe67a1f66b415159b84c3fe851f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a664eafe67a1f66b415159b84c3fe851f">set_output</a> (audio_tools::AudioStream &amp;output)</td></tr>
+<tr class="memdesc:a664eafe67a1f66b415159b84c3fe851f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output AudioStream using AudioTools library. <br /></td></tr>
+<tr class="separator:a664eafe67a1f66b415159b84c3fe851f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2076eebe22254b2238ba097e8749d24d"><td class="memItemLeft" align="right" valign="top"><a id="a2076eebe22254b2238ba097e8749d24d"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a2076eebe22254b2238ba097e8749d24d">set_output</a> (<a class="el" href="class_bluetooth_a2_d_p_output.html">BluetoothA2DPOutput</a> &amp;output)</td></tr>
 <tr class="memdesc:a2076eebe22254b2238ba097e8749d24d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the output class: by default we use <a class="el" href="class_bluetooth_a2_d_p_output_default.html" title="Default Output Class providing both the Legacy I2S and the AudioTools I2S functionality.">BluetoothA2DPOutputDefault</a>. <br /></td></tr>
@@ -575,12 +579,12 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:ac331f893e190c7167a1754c40c5a6b77"><td class="memItemLeft" align="right" valign="top"><a id="ac331f893e190c7167a1754c40c5a6b77"></a>
 bool(*&#160;</td><td class="memItemRight" valign="bottom"><b>address_validator</b> )(esp_bd_addr_t remote_bda) = nullptr</td></tr>
 <tr class="separator:ac331f893e190c7167a1754c40c5a6b77"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc8f09d352db2d5cb39d8843728da2db"><td class="memItemLeft" align="right" valign="top"><a id="adc8f09d352db2d5cb39d8843728da2db"></a>
-xTaskHandle&#160;</td><td class="memItemRight" valign="bottom"><b>app_task_handle</b> = nullptr</td></tr>
-<tr class="separator:adc8f09d352db2d5cb39d8843728da2db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab659a79f8359e559bd8aefb79b0f7199"><td class="memItemLeft" align="right" valign="top"><a id="ab659a79f8359e559bd8aefb79b0f7199"></a>
-xQueueHandle&#160;</td><td class="memItemRight" valign="bottom"><b>app_task_queue</b> = nullptr</td></tr>
-<tr class="separator:ab659a79f8359e559bd8aefb79b0f7199"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83b347d6e6a9dd83a333124a1e49de24"><td class="memItemLeft" align="right" valign="top"><a id="a83b347d6e6a9dd83a333124a1e49de24"></a>
+TaskHandle_t&#160;</td><td class="memItemRight" valign="bottom"><b>app_task_handle</b> = nullptr</td></tr>
+<tr class="separator:a83b347d6e6a9dd83a333124a1e49de24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec17d110eb8a488cac06c5cb62de686c"><td class="memItemLeft" align="right" valign="top"><a id="aec17d110eb8a488cac06c5cb62de686c"></a>
+QueueHandle_t&#160;</td><td class="memItemRight" valign="bottom"><b>app_task_queue</b> = nullptr</td></tr>
+<tr class="separator:aec17d110eb8a488cac06c5cb62de686c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d557628ca4cdb883fa005df2f494f32"><td class="memItemLeft" align="right" valign="top"><a id="a1d557628ca4cdb883fa005df2f494f32"></a>
 esp_a2d_audio_state_t&#160;</td><td class="memItemRight" valign="bottom"><b>audio_state</b> = ESP_A2D_AUDIO_STATE_STOPPED</td></tr>
 <tr class="separator:a1d557628ca4cdb883fa005df2f494f32"><td class="memSeparator" colspan="2">&#160;</td></tr>

@@ -115,9 +115,9 @@ $(function() {
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
 <div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="class_sound_data.html">   71</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_sound_data.html">SoundData</a> {</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;     <span class="keyword">virtual</span> int32_t get2ChannelData(int32_t pos, int32_t len, uint8_t *data);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;     <span class="keyword">virtual</span> int32_t getData(int32_t pos, Frame &amp;channels);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;     <span class="keyword">virtual</span> <span class="keywordtype">void</span> setDataRaw( uint8_t* data, int32_t len);</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;     <span class="keyword">virtual</span> int32_t get2ChannelData(int32_t pos, int32_t len, uint8_t *data) = 0;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;     <span class="keyword">virtual</span> int32_t getData(int32_t pos, Frame &amp;channels) = 0;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;     <span class="keyword">virtual</span> <span class="keywordtype">void</span> setDataRaw( uint8_t* data, int32_t len) = 0;</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;     <span class="keywordtype">bool</span> <a class="code" href="class_sound_data.html#ac79933ed3379cf5ef58d5675aa4bf12e">doLoop</a>();</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;     <span class="keywordtype">void</span> setLoop(<span class="keywordtype">bool</span> loop);</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>

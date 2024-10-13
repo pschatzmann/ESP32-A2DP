@@ -156,6 +156,10 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a5e76412770515732e3f54275decf02f0">is_connected</a> ()</td></tr>
 <tr class="memdesc:a5e76412770515732e3f54275decf02f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if A2DP is connected. <br /></td></tr>
 <tr class="separator:a5e76412770515732e3f54275decf02f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af26d35877f65ee15c262ae1910b64174"><td class="memItemLeft" align="right" valign="top"><a id="af26d35877f65ee15c262ae1910b64174"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_source.html#af26d35877f65ee15c262ae1910b64174">is_discovery_active</a> ()</td></tr>
+<tr class="memdesc:af26d35877f65ee15c262ae1910b64174"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides the current discovery state. <br /></td></tr>
+<tr class="separator:af26d35877f65ee15c262ae1910b64174"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a791432e5c800e75fb11b858071cff651"><td class="memItemLeft" align="right" valign="top"><a id="a791432e5c800e75fb11b858071cff651"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a791432e5c800e75fb11b858071cff651">log_free_heap</a> ()</td></tr>
 <tr class="memdesc:a791432e5c800e75fb11b858071cff651"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs the free heap. <br /></td></tr>
@@ -176,6 +180,10 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a145c20271b53d4329e0e2c7fa36692b0">set_bluedroid_config_t</a> (esp_bluedroid_config_t cfg)</td></tr>
 <tr class="memdesc:a145c20271b53d4329e0e2c7fa36692b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the esp_bluedroid_config_t: Available from IDF 5.2.1. <br /></td></tr>
 <tr class="separator:a145c20271b53d4329e0e2c7fa36692b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae401362c33c3b16ce36e37ae355d788"><td class="memItemLeft" align="right" valign="top"><a id="aae401362c33c3b16ce36e37ae355d788"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_source.html#aae401362c33c3b16ce36e37ae355d788">set_bt_discovery_mode_callback</a> (void(*callback)(esp_bt_gap_discovery_state_t discoveryMode))</td></tr>
+<tr class="memdesc:aae401362c33c3b16ce36e37ae355d788"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define callback to be notified about bt discovery mode state changes. <br /></td></tr>
+<tr class="separator:aae401362c33c3b16ce36e37ae355d788"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b37f48a6b0bca33fb21b2a9ae9dab7c"><td class="memItemLeft" align="right" valign="top"><a id="a8b37f48a6b0bca33fb21b2a9ae9dab7c"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a8b37f48a6b0bca33fb21b2a9ae9dab7c">set_connectable</a> (bool connectable)</td></tr>
 <tr class="memdesc:a8b37f48a6b0bca33fb21b2a9ae9dab7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bluetooth connectable. <br /></td></tr>
@@ -461,6 +469,12 @@ const char *&#160;</td><td class="memItemRight" valign="bottom"><b>dev_name</b> 
 <tr class="memitem:a2ca23dacb41661dd91b202c0f7939f69"><td class="memItemLeft" align="right" valign="top"><a id="a2ca23dacb41661dd91b202c0f7939f69"></a>
 esp_bt_discovery_mode_t&#160;</td><td class="memItemRight" valign="bottom"><b>discoverability</b> = ESP_BT_GENERAL_DISCOVERABLE</td></tr>
 <tr class="separator:a2ca23dacb41661dd91b202c0f7939f69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0030e1cfe0ff1e30a290e7deb7c77f1"><td class="memItemLeft" align="right" valign="top"><a id="af0030e1cfe0ff1e30a290e7deb7c77f1"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>discovery_active</b> = false</td></tr>
+<tr class="separator:af0030e1cfe0ff1e30a290e7deb7c77f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b4258cfaa3a05be3e84f358d8358d29"><td class="memItemLeft" align="right" valign="top"><a id="a8b4258cfaa3a05be3e84f358d8358d29"></a>
+void(*&#160;</td><td class="memItemRight" valign="bottom"><b>discovery_mode_callback</b> )(esp_bt_gap_discovery_state_t discoveryMode) = nullptr</td></tr>
+<tr class="separator:a8b4258cfaa3a05be3e84f358d8358d29"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae6737dd3e78e2f979815615b143fcfda"><td class="memItemLeft" align="right" valign="top"><a id="ae6737dd3e78e2f979815615b143fcfda"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>event_queue_size</b> = 20</td></tr>
 <tr class="separator:ae6737dd3e78e2f979815615b143fcfda"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -527,12 +541,12 @@ APP_AV_STATE&#160;</td><td class="memItemRight" valign="bottom"><b>s_a2d_state</
 <tr class="memitem:a879f4819b7e2a26c7245726a453fcc61"><td class="memItemLeft" align="right" valign="top"><a id="a879f4819b7e2a26c7245726a453fcc61"></a>
 esp_avrc_rn_evt_cap_mask_t&#160;</td><td class="memItemRight" valign="bottom"><b>s_avrc_peer_rn_cap</b></td></tr>
 <tr class="separator:a879f4819b7e2a26c7245726a453fcc61"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af65d6167cd879c39a73b5a62e39c1524"><td class="memItemLeft" align="right" valign="top"><a id="af65d6167cd879c39a73b5a62e39c1524"></a>
-xTaskHandle&#160;</td><td class="memItemRight" valign="bottom"><b>s_bt_app_task_handle</b> = nullptr</td></tr>
-<tr class="separator:af65d6167cd879c39a73b5a62e39c1524"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5359902d284fdfc6307d9cd4d2bd3193"><td class="memItemLeft" align="right" valign="top"><a id="a5359902d284fdfc6307d9cd4d2bd3193"></a>
-xQueueHandle&#160;</td><td class="memItemRight" valign="bottom"><b>s_bt_app_task_queue</b> = nullptr</td></tr>
-<tr class="separator:a5359902d284fdfc6307d9cd4d2bd3193"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad80543c0cc7929bc23bb9573632e6f63"><td class="memItemLeft" align="right" valign="top"><a id="ad80543c0cc7929bc23bb9573632e6f63"></a>
+TaskHandle_t&#160;</td><td class="memItemRight" valign="bottom"><b>s_bt_app_task_handle</b> = nullptr</td></tr>
+<tr class="separator:ad80543c0cc7929bc23bb9573632e6f63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af575c098d6dbd1faa51e3875a71aa0f1"><td class="memItemLeft" align="right" valign="top"><a id="af575c098d6dbd1faa51e3875a71aa0f1"></a>
+QueueHandle_t&#160;</td><td class="memItemRight" valign="bottom"><b>s_bt_app_task_queue</b> = nullptr</td></tr>
+<tr class="separator:af575c098d6dbd1faa51e3875a71aa0f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abfe3887361e647d12139780ed2deac86"><td class="memItemLeft" align="right" valign="top"><a id="abfe3887361e647d12139780ed2deac86"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>s_connecting_heatbeat_count</b></td></tr>
 <tr class="separator:abfe3887361e647d12139780ed2deac86"><td class="memSeparator" colspan="2">&#160;</td></tr>

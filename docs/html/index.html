@@ -77,28 +77,29 @@ Supported Bluetooth Protocols</h1>
 <p>The Hands-Free Profile (HFP), Headset Profile (HSP) and stand alone AVRCP without A2DP are <b>not</b> supported!</p>
 <h1><a class="anchor" id="autotoc_md2"></a>
 I2S API / Dependencies</h1>
-<p>Espressif is retiring the legacy I2S API: So with Arduino 3.0.0 <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki/Legacy-I2S-API">my old I2S integration</a> will not be available any more. The legacy syntax is still working as long as you don't upgrade. <br  />
+<p>Espressif is retiring the legacy I2S API: So with Arduino v3.0.0 (IDF v5) <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki/Legacy-I2S-API">my old I2S integration</a> will not be available any more. The legacy syntax is still working as long as you don't upgrade. <br  />
 </p>
 <p>In order to support a unique output API which is version independent, it is recommended to install and use the <a href="https://github.com/pschatzmann/arduino-audio-tools">AudioTools</a> library. So the documentation and all the examples have been updated to use this new approach.</p>
-<p>However you can also output to any other class which inherits from Arduino Print: e.g. the <a href="https://github.com/pschatzmann/ESP32-A2DP?tab=readme-ov-file#output-using-the-esp32-i2s-api">Arduino ESP32 I2SClass</a>.</p>
+<p>However you can also output to any other class which inherits from Arduino Print: e.g. the <a href="https://github.com/pschatzmann/ESP32-A2DP?tab=readme-ov-file#output-using-the-esp32-i2s-api">Arduino ESP32 I2SClass</a> or you can use the <a href="https://github.com/pschatzmann/ESP32-A2DP?tab=readme-ov-file#accessing-the-sink-data-stream-with-callbacks">data callback</a> described below.</p>
 <h1><a class="anchor" id="autotoc_md3"></a>
 A2DP Sink (Music Receiver)</h1>
 <p>This can be used e.g. to build your own Bluetooth Speaker.</p>
 <h2><a class="anchor" id="autotoc_md4"></a>
 A Simple I2S Example (A2DS Sink) using default Pins</h2>
 <p>Here is the simplest example which just uses the proper default settings:</p>
-<div class="fragment"><div class="line">#include &quot;AudioTools.h&quot;</div>
-<div class="line">#include &quot;BluetoothA2DPSink.h&quot;</div>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;AudioTools.h&quot;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;BluetoothA2DPSink.h&quot;</span></div>
 <div class="line"> </div>
 <div class="line">I2SStream i2s;</div>
-<div class="line">BluetoothA2DPSink a2dp_sink(i2s);</div>
+<div class="line"><a class="code" href="class_bluetooth_a2_d_p_sink.html">BluetoothA2DPSink</a> a2dp_sink(i2s);</div>
 <div class="line"> </div>
-<div class="line">void setup() {</div>
-<div class="line">    a2dp_sink.start(&quot;MyMusic&quot;);</div>
+<div class="line"><span class="keywordtype">void</span> setup() {</div>
+<div class="line">    a2dp_sink.start(<span class="stringliteral">&quot;MyMusic&quot;</span>);</div>
 <div class="line">}</div>
 <div class="line"> </div>
-<div class="line">void loop() {</div>
+<div class="line"><span class="keywordtype">void</span> loop() {</div>
 <div class="line">}</div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_sink_html"><div class="ttname"><a href="class_bluetooth_a2_d_p_sink.html">BluetoothA2DPSink</a></div><div class="ttdoc">A2DP Bluethooth Sink - We initialize and start the Bluetooth A2DP Sink. The example https://github....</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSink.h:74</div></div>
 </div><!-- fragment --><p> This creates a new Bluetooth device with the name “MyMusic” and the output will be sent to the following default I2S pins which need to be connected to an external DAC:</p>
 <ul>
 <li>bck_io_num = 14</li>
@@ -109,93 +110,94 @@ A Simple I2S Example (A2DS Sink) using default Pins</h2>
 <h2><a class="anchor" id="autotoc_md5"></a>
 Defining Pins</h2>
 <p>You can define your own pins easily before the <code>start</code>.</p>
-<div class="fragment"><div class="line">#include &quot;AudioTools.h&quot;</div>
-<div class="line">#include &quot;BluetoothA2DPSink.h&quot;</div>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;AudioTools.h&quot;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;BluetoothA2DPSink.h&quot;</span></div>
 <div class="line"> </div>
 <div class="line">I2SStream i2s;</div>
-<div class="line">BluetoothA2DPSink a2dp_sink(i2s);</div>
+<div class="line"><a class="code" href="class_bluetooth_a2_d_p_sink.html">BluetoothA2DPSink</a> a2dp_sink(i2s);</div>
 <div class="line"> </div>
-<div class="line">void setup() {</div>
-<div class="line">    auto cfg = i2s.defaultConfig();</div>
+<div class="line"><span class="keywordtype">void</span> setup() {</div>
+<div class="line">    <span class="keyword">auto</span> cfg = i2s.defaultConfig();</div>
 <div class="line">    cfg.pin_bck = 14;</div>
 <div class="line">    cfg.pin_ws = 15;</div>
 <div class="line">    cfg.pin_data = 22;</div>
 <div class="line">    i2s.begin(cfg);</div>
 <div class="line"> </div>
-<div class="line">    a2dp_sink.start(&quot;MyMusic&quot;);</div>
+<div class="line">    a2dp_sink.start(<span class="stringliteral">&quot;MyMusic&quot;</span>);</div>
 <div class="line">}</div>
 <div class="line"> </div>
-<div class="line">void loop() {</div>
+<div class="line"><span class="keywordtype">void</span> loop() {</div>
 <div class="line">}</div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md6"></a>
 Output Using the ESP32 I2S API</h2>
 <p>You can also use the Arduino ESP32 I2S API: You do not need to install any additional library for this.</p>
-<div class="fragment"><div class="line">#include &quot;I2S.h&quot;</div>
-<div class="line">#include &quot;BluetoothA2DPSink.h&quot;</div>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;ESP_I2S.h&quot;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;BluetoothA2DPSink.h&quot;</span></div>
 <div class="line"> </div>
-<div class="line">BluetoothA2DPSink a2dp_sink(I2S);</div>
+<div class="line"><span class="keyword">const</span> uint8_t I2S_SCK = 5;       <span class="comment">/* Audio data bit clock */</span></div>
+<div class="line"><span class="keyword">const</span> uint8_t I2S_WS = 25;       <span class="comment">/* Audio data left and right clock */</span></div>
+<div class="line"><span class="keyword">const</span> uint8_t I2S_SDOUT = 26;    <span class="comment">/* ESP32 audio data output (to speakers) */</span></div>
+<div class="line">I2SClass i2s;</div>
 <div class="line"> </div>
-<div class="line">void setup() {</div>
-<div class="line">    I2S.setSckPin(14);</div>
-<div class="line">    I2S.setFsPin(15);</div>
-<div class="line">    I2S.setDataPin(22); </div>
-<div class="line">    if (!I2S.begin(I2S_PHILIPS_MODE, 44100, 16)) {</div>
-<div class="line">      Serial.println(&quot;Failed to initialize I2S!&quot;);</div>
-<div class="line">      while (1); // do nothing</div>
+<div class="line"><a class="code" href="class_bluetooth_a2_d_p_sink.html">BluetoothA2DPSink</a> a2dp_sink(i2s);</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> setup() {</div>
+<div class="line">    i2s.setPins(I2S_SCK, I2S_WS, I2S_SDOUT);</div>
+<div class="line">    <span class="keywordflow">if</span> (!i2s.begin(I2S_MODE_STD, 44100, I2S_DATA_BIT_WIDTH_16BIT, I2S_SLOT_MODE_STEREO, I2S_STD_SLOT_BOTH)) {</div>
+<div class="line">      Serial.println(<span class="stringliteral">&quot;Failed to initialize I2S!&quot;</span>);</div>
+<div class="line">      <span class="keywordflow">while</span> (1); <span class="comment">// do nothing</span></div>
 <div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">    a2dp_sink.start(&quot;MyMusic&quot;);</div>
+<div class="line">    a2dp_sink.start(<span class="stringliteral">&quot;MyMusic&quot;</span>);</div>
 <div class="line">}</div>
-<div class="line"> </div>
-<div class="line">void loop() {</div>
-<div class="line">}</div>
-</div><!-- fragment --><p> Please note, that this API also depends on the installed version: The example above is for ESP32 &lt; 3.0.0!</p>
+<div class="line"><span class="keywordtype">void</span> loop() {}</div>
+</div><!-- fragment --><p> Please note, that this API also depends on the installed version: The example above is for ESP32 &gt;= 3.0.0!</p>
 <h2><a class="anchor" id="autotoc_md7"></a>
 Output to the Internal DAC</h2>
 <p>You can also send the output directly to the internal DAC of the ESP32 by using the AnalogAudioStream from the AudioTools:</p>
-<div class="fragment"><div class="line">#include &quot;AudioTools.h&quot;</div>
-<div class="line">#include &quot;BluetoothA2DPSink.h&quot;</div>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;AudioTools.h&quot;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;BluetoothA2DPSink.h&quot;</span></div>
 <div class="line"> </div>
 <div class="line">AnalogAudioStream out;</div>
-<div class="line">BluetoothA2DPSink a2dp_sink(out);</div>
+<div class="line"><a class="code" href="class_bluetooth_a2_d_p_sink.html">BluetoothA2DPSink</a> a2dp_sink(out);</div>
 <div class="line"> </div>
-<div class="line">void setup() {</div>
-<div class="line">    a2dp_sink.start(&quot;MyMusic&quot;);</div>
+<div class="line"><span class="keywordtype">void</span> setup() {</div>
+<div class="line">    a2dp_sink.start(<span class="stringliteral">&quot;MyMusic&quot;</span>);</div>
 <div class="line">}</div>
 <div class="line"> </div>
-<div class="line">void loop() {</div>
+<div class="line"><span class="keywordtype">void</span> loop() {</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>The output goes now to the DAC pins GPIO25 (Channel 1) and GPIO26 (Channel 2).</p>
 <h2><a class="anchor" id="autotoc_md8"></a>
 Accessing the Sink Data Stream with Callbacks</h2>
 <p>You can be notified when a packet is received. The API is using PCM data normally formatted as 44.1kHz sampling rate, two-channel 16-bit sample data.</p>
-<div class="fragment"><div class="line">// In the setup function:</div>
+<div class="fragment"><div class="line"><span class="comment">// In the setup function:</span></div>
 <div class="line">a2dp_sink.set_on_data_received(data_received_callback);</div>
 <div class="line"> </div>
 <div class="line"> </div>
-<div class="line">// Then somewhere in your sketch:</div>
-<div class="line">void data_received_callback() {</div>
-<div class="line">  Serial.println(&quot;Data packet received&quot;);</div>
+<div class="line"><span class="comment">// Then somewhere in your sketch:</span></div>
+<div class="line"><span class="keywordtype">void</span> data_received_callback() {</div>
+<div class="line">  Serial.println(<span class="stringliteral">&quot;Data packet received&quot;</span>);</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>Or you can access the packet:</p>
-<div class="fragment"><div class="line">// In the setup function:</div>
+<div class="fragment"><div class="line"><span class="comment">// In the setup function:</span></div>
 <div class="line">a2dp_sink.set_stream_reader(read_data_stream);</div>
 <div class="line"> </div>
-<div class="line">// Then somewhere in your sketch:</div>
-<div class="line">void read_data_stream(const uint8_t *data, uint32_t length)</div>
+<div class="line"><span class="comment">// Then somewhere in your sketch:</span></div>
+<div class="line"><span class="keywordtype">void</span> read_data_stream(<span class="keyword">const</span> uint8_t *data, uint32_t length)</div>
 <div class="line">{</div>
 <div class="line">  int16_t *samples = (int16_t*) data;</div>
 <div class="line">  uint32_t sample_count = length/2;</div>
-<div class="line">  // Do something with the data packet</div>
+<div class="line">  <span class="comment">// Do something with the data packet</span></div>
 <div class="line">}</div>
 </div><!-- fragment --><p> In the <code>a2dp_sink.set_stream_reader()</code> method you can provide an optional parameter that defines if you want the output to I2S to be active or deactive - So you can use this method to e.g. to switch off I2S just by calling <code>a2dp_sink.set_stream_reader(read_data_stream, false)</code></p>
 <h2><a class="anchor" id="autotoc_md9"></a>
 Support for Metadata</h2>
-<p>You can register a method which will be called when the system receives any AVRC metadata (<code>esp_avrc_md_attr_mask_t</code>). Here is an example </p><div class="fragment"><div class="line">void avrc_metadata_callback(uint8_t data1, const uint8_t *data2) {</div>
-<div class="line">  Serial.printf(&quot;AVRC metadata rsp: attribute id 0x%x, %s\n&quot;, data1, data2);</div>
+<p>You can register a method which will be called when the system receives any AVRC metadata (<code>esp_avrc_md_attr_mask_t</code>). Here is an example </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> avrc_metadata_callback(uint8_t data1, <span class="keyword">const</span> uint8_t *data2) {</div>
+<div class="line">  Serial.printf(<span class="stringliteral">&quot;AVRC metadata rsp: attribute id 0x%x, %s\n&quot;</span>, data1, data2);</div>
 <div class="line">}</div>
 <div class="line">a2dp_sink.set_avrc_metadata_callback(avrc_metadata_callback);</div>
-<div class="line">a2dp_sink.start(&quot;BT&quot;);</div>
+<div class="line">a2dp_sink.start(<span class="stringliteral">&quot;BT&quot;</span>);</div>
 </div><!-- fragment --><p> By default you should get the most important information, however you can adjust this by calling the <code>set_avrc_metadata_attribute_mask</code> method e.g if you just need the title and playing time you can call: </p><div class="fragment"><div class="line">set_avrc_metadata_attribute_mask(ESP_AVRC_MD_ATTR_TITLE | ESP_AVRC_MD_ATTR_PLAYING_TIME);</div>
 </div><!-- fragment --><p> before you start the A2DP sink. Note that data2 is actually a char* string, so even though <code>ESP_AVRC_MD_ATTR_PLAYING_TIME</code> is documented as the milliseconds of media duration you'll need to parse it before doing math on it. See the metadata example for more.</p>
 <h2><a class="anchor" id="autotoc_md10"></a>
@@ -222,47 +224,52 @@ Sending Data from a A2DS Data Source with a Callback</h2>
 </p>
 <p>The supported audio codec in ESP32 A2DP is SBC: The API is using PCM data normally formatted as 44.1kHz sampling rate, two-channel 16-bit sample data.</p>
 <p>When you start the <a class="el" href="class_bluetooth_a2_d_p_source.html" title="A2DP Bluetooth Source.">BluetoothA2DPSource</a>, you need to pass the Bluetooth name that you want to connect to and a 'call back function' that generates the sound data:</p>
-<div class="fragment"><div class="line">#include &quot;BluetoothA2DPSource.h&quot;</div>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;BluetoothA2DPSource.h&quot;</span></div>
 <div class="line"> </div>
-<div class="line">BluetoothA2DPSource a2dp_source;</div>
+<div class="line"><a class="code" href="class_bluetooth_a2_d_p_source.html">BluetoothA2DPSource</a> a2dp_source;</div>
 <div class="line"> </div>
-<div class="line">// callback </div>
+<div class="line"><span class="comment">// callback </span></div>
 <div class="line">int32_t get_sound_data(Frame *data, int32_t frameCount) {</div>
-<div class="line">    // generate your sound data </div>
-<div class="line">    // return the effective length (in frames) of the generated sound  (which usually is identical with the requested len)</div>
-<div class="line">    // 1 frame is 2 channels * 2 bytes = 4 bytes</div>
-<div class="line">    return frameCount;</div>
+<div class="line">    <span class="comment">// generate your sound data </span></div>
+<div class="line">    <span class="comment">// return the effective length (in frames) of the generated sound  (which usually is identical with the requested len)</span></div>
+<div class="line">    <span class="comment">// 1 frame is 2 channels * 2 bytes = 4 bytes</span></div>
+<div class="line">    <span class="keywordflow">return</span> frameCount;</div>
 <div class="line">}</div>
 <div class="line"> </div>
-<div class="line">void setup() {</div>
-<div class="line">  a2dp_source.start(&quot;MyMusic&quot;, get_sound_data);  </div>
+<div class="line"><span class="keywordtype">void</span> setup() {</div>
+<div class="line">  a2dp_source.<a class="code" href="class_bluetooth_a2_d_p_source.html#a403b0e21db02c81b948534258e5ff37b">start</a>(<span class="stringliteral">&quot;MyMusic&quot;</span>, get_sound_data);  </div>
 <div class="line">}</div>
 <div class="line"> </div>
-<div class="line">void loop() {</div>
+<div class="line"><span class="keywordtype">void</span> loop() {</div>
 <div class="line">}</div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_source_html"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html">BluetoothA2DPSource</a></div><div class="ttdoc">A2DP Bluetooth Source.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSource.h:76</div></div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_source_html_a403b0e21db02c81b948534258e5ff37b"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html#a403b0e21db02c81b948534258e5ff37b">BluetoothA2DPSource::start</a></div><div class="ttdeci">virtual void start(const char *name, music_data_channels_cb_t callback=NULL)</div><div class="ttdoc">starts the bluetooth source</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSource.cpp:145</div></div>
 </div><!-- fragment --><p>In the examples you can find an implentation that generates sound with the help of the sin() function. You can also inticate multiple alternative Bluetooth names. The system just connects to the first one which is available:</p>
-<div class="fragment"><div class="line">void setup() {</div>
-<div class="line">  static std::vector&lt;char*&gt; bt_names = {&quot;MyMusic&quot;,&quot;RadioPlayer&quot;,&quot;MusicPlayer&quot;};</div>
-<div class="line">  a2dp_source.start(bt_names, get_sound_data); </div>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> setup() {</div>
+<div class="line">  <span class="keyword">static</span> std::vector&lt;char*&gt; bt_names = {<span class="stringliteral">&quot;MyMusic&quot;</span>,<span class="stringliteral">&quot;RadioPlayer&quot;</span>,<span class="stringliteral">&quot;MusicPlayer&quot;</span>};</div>
+<div class="line">  a2dp_source.<a class="code" href="class_bluetooth_a2_d_p_source.html#a403b0e21db02c81b948534258e5ff37b">start</a>(bt_names, get_sound_data); </div>
 <div class="line">} </div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md14"></a>
 Sending Data from a A2DS Data Source with Recorded Data</h2>
 <p>You can also provide the data directly as simple array of uint8_t:</p>
-<div class="fragment"><div class="line">#include &quot;BluetoothA2DPSource.h&quot;</div>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;BluetoothA2DPSource.h&quot;</span></div>
 <div class="line"> </div>
-<div class="line">extern const uint8_t StarWars10_raw[];</div>
-<div class="line">extern const unsigned int StarWars10_raw_len;</div>
+<div class="line"><span class="keyword">extern</span> <span class="keyword">const</span> uint8_t StarWars10_raw[];</div>
+<div class="line"><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> StarWars10_raw_len;</div>
 <div class="line"> </div>
-<div class="line">BluetoothA2DPSource a2dp_source;</div>
-<div class="line">SoundData *music = new OneChannelSoundData((int16_t*)StarWars30_raw, StarWars30_raw_len/2);</div>
+<div class="line"><a class="code" href="class_bluetooth_a2_d_p_source.html">BluetoothA2DPSource</a> a2dp_source;</div>
+<div class="line"><a class="code" href="class_sound_data.html">SoundData</a> *music = <span class="keyword">new</span> <a class="code" href="class_one_channel_sound_data.html">OneChannelSoundData</a>((int16_t*)StarWars30_raw, StarWars30_raw_len/2);</div>
 <div class="line"> </div>
-<div class="line">void setup() {</div>
-<div class="line">  a2dp_source.start(&quot;RadioPlayer&quot;);  </div>
-<div class="line">  a2dp_source.write_data(music);</div>
+<div class="line"><span class="keywordtype">void</span> setup() {</div>
+<div class="line">  a2dp_source.<a class="code" href="class_bluetooth_a2_d_p_source.html#a403b0e21db02c81b948534258e5ff37b">start</a>(<span class="stringliteral">&quot;RadioPlayer&quot;</span>);  </div>
+<div class="line">  a2dp_source.<a class="code" href="class_bluetooth_a2_d_p_source.html#a0a5976c3d81ae96e5e3be06fd6a662da">write_data</a>(music);</div>
 <div class="line">}</div>
 <div class="line"> </div>
-<div class="line">void loop() {</div>
+<div class="line"><span class="keywordtype">void</span> loop() {</div>
 <div class="line">}</div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_source_html_a0a5976c3d81ae96e5e3be06fd6a662da"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html#a0a5976c3d81ae96e5e3be06fd6a662da">BluetoothA2DPSource::write_data</a></div><div class="ttdeci">virtual bool write_data(SoundData *data)</div><div class="ttdoc">write sound data: In some cases it is very difficult to use the callback function....</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSource.cpp:1037</div></div>
+<div class="ttc" id="aclass_one_channel_sound_data_html"><div class="ttname"><a href="class_one_channel_sound_data.html">OneChannelSoundData</a></div><div class="ttdoc">1 Channel data is provided as int16 values</div><div class="ttdef"><b>Definition:</b> SoundData.h:117</div></div>
+<div class="ttc" id="aclass_sound_data_html"><div class="ttname"><a href="class_sound_data.html">SoundData</a></div><div class="ttdoc">Sound data as byte stream. We support TwoChannelSoundData (uint16_t + uint16_t) and OneChannelSoundDa...</div><div class="ttdef"><b>Definition:</b> SoundData.h:71</div></div>
 </div><!-- fragment --><p>The array can be prepared e.g. in the following way:</p>
 <ul>
 <li>Open any sound file in Audacity.<ul>
@@ -279,9 +286,11 @@ Sending Data from a A2DS Data Source with Recorded Data</h2>
 <p>In the example above we provide the data with one channel. This has the advantage that it uses much less space then a 2 channel recording, which you could use in the following way:</p>
 <div class="fragment"><div class="line">SoundData *data = new TwoChannelSoundData((Frame*)StarWars10_raw,StarWars10_raw_len/4);</div>
 </div><!-- fragment --><p>In the constructor you can pass additional parameters:</p>
-<div class="fragment"><div class="line">TwoChannelSoundData(Frame *data, int32_t frameCount, bool loop=false);</div>
-<div class="line">OneChannelSoundData(int16_t *data, int32_t frameCount, bool loop=false, ChannelInfo channelInfo=Both);</div>
-<div class="line">OneChannel8BitSoundData(int8_t *data, int32_t frameCount, bool loop=false, ChannelInfo channelInfo=Both);</div>
+<div class="fragment"><div class="line"><a class="code" href="class_two_channel_sound_data.html">TwoChannelSoundData</a>(Frame *data, int32_t frameCount, <span class="keywordtype">bool</span> loop=<span class="keyword">false</span>);</div>
+<div class="line"><a class="code" href="class_one_channel_sound_data.html">OneChannelSoundData</a>(int16_t *data, int32_t frameCount, <span class="keywordtype">bool</span> loop=<span class="keyword">false</span>, ChannelInfo channelInfo=Both);</div>
+<div class="line"><a class="code" href="class_one_channel8_bit_sound_data.html">OneChannel8BitSoundData</a>(int8_t *data, int32_t frameCount, <span class="keywordtype">bool</span> loop=<span class="keyword">false</span>, ChannelInfo channelInfo=Both);</div>
+<div class="ttc" id="aclass_one_channel8_bit_sound_data_html"><div class="ttname"><a href="class_one_channel8_bit_sound_data.html">OneChannel8BitSoundData</a></div><div class="ttdoc">1 Channel data is provided as signed int8 values.</div><div class="ttdef"><b>Definition:</b> SoundData.h:138</div></div>
+<div class="ttc" id="aclass_two_channel_sound_data_html"><div class="ttname"><a href="class_two_channel_sound_data.html">TwoChannelSoundData</a></div><div class="ttdoc">Data is provided in two channels of int16 data: so len is in 4 byte entries (int16 + int16)</div><div class="ttdef"><b>Definition:</b> SoundData.h:93</div></div>
 </div><!-- fragment --> <h1><a class="anchor" id="autotoc_md15"></a>
 Logging</h1>
 <p>This library uses the ESP32 logger that you can activate in Arduino in - Tools - Core Debug Log.</p>

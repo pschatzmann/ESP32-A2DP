@@ -266,30 +266,30 @@ $(function() {
 <div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;        }</div>
 <div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160; </div>
 <div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;<span class="preprocessor">#if ESP_IDF_VERSION &gt;= ESP_IDF_VERSION_VAL(4, 0, 0)</span></div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> set_discoverability(esp_bt_discovery_mode_t d);</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> set_discoverability(esp_bt_discovery_mode_t d);</div>
 <div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160; </div>
-<div class="line"><a name="l00249"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#a8b37f48a6b0bca33fb21b2a9ae9dab7c">  249</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_common.html#a8b37f48a6b0bca33fb21b2a9ae9dab7c">set_connectable</a>(<span class="keywordtype">bool</span> connectable) {</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;        set_scan_mode_connectable(connectable);</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;    }</div>
+<div class="line"><a name="l00249"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#a8b37f48a6b0bca33fb21b2a9ae9dab7c">  249</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_common.html#a8b37f48a6b0bca33fb21b2a9ae9dab7c">set_connectable</a>(<span class="keywordtype">bool</span> connectable) {</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;            set_scan_mode_connectable(connectable);</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;        }</div>
 <div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160; </div>
-<div class="line"><a name="l00254"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#a726f45e4d405f5c5f5b259f11aaf8246">  254</a></span>&#160;    <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="class_bluetooth_a2_d_p_common.html#a726f45e4d405f5c5f5b259f11aaf8246">get_name</a>() {</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;        <span class="keywordflow">return</span> bt_name;</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;    }</div>
+<div class="line"><a name="l00254"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#a726f45e4d405f5c5f5b259f11aaf8246">  254</a></span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="class_bluetooth_a2_d_p_common.html#a726f45e4d405f5c5f5b259f11aaf8246">get_name</a>() {</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;            <span class="keywordflow">return</span> bt_name;</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;        }</div>
 <div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160; </div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> clean_last_connection();</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> clean_last_connection();</div>
 <div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160; </div>
-<div class="line"><a name="l00262"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#a41ab8453d4f7f88d68d6cdb1a866532b">  262</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_common.html#a41ab8453d4f7f88d68d6cdb1a866532b">set_default_bt_mode</a>(esp_bt_mode_t mode){</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;        bt_mode = mode;</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    }</div>
+<div class="line"><a name="l00262"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#a41ab8453d4f7f88d68d6cdb1a866532b">  262</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_common.html#a41ab8453d4f7f88d68d6cdb1a866532b">set_default_bt_mode</a>(esp_bt_mode_t mode){</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;            bt_mode = mode;</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;        }</div>
 <div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160; </div>
 <div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;<span class="preprocessor">#if ESP_IDF_VERSION &gt;= ESP_IDF_VERSION_VAL(5, 2 , 1)</span></div>
-<div class="line"><a name="l00268"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#a145c20271b53d4329e0e2c7fa36692b0">  268</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_common.html#a145c20271b53d4329e0e2c7fa36692b0">set_bluedroid_config_t</a>(esp_bluedroid_config_t cfg){</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;        bluedroid_config = cfg;</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    }</div>
+<div class="line"><a name="l00268"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_common.html#a145c20271b53d4329e0e2c7fa36692b0">  268</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_common.html#a145c20271b53d4329e0e2c7fa36692b0">set_bluedroid_config_t</a>(esp_bluedroid_config_t cfg){</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;            bluedroid_config = cfg;</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;        }</div>
 <div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    <span class="keywordtype">void</span> delay_ms(uint32_t millis);</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> get_millis();</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;        <span class="keywordtype">void</span> delay_ms(uint32_t millis);</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> get_millis();</div>
 <div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160; </div>
 <div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;    <span class="keyword">protected</span>:</div>
 <div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">char</span>* bt_name = {0};</div>

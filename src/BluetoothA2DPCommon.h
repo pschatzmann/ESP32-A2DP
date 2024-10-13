@@ -126,7 +126,6 @@ typedef struct {
 
 enum ReconnectStatus { NoReconnect, AutoReconnect, IsReconnecting};
 
-
 /** 
  * @brief Common Bluetooth A2DP functions 
  * @author Phil Schatzmann
@@ -241,38 +240,38 @@ class BluetoothA2DPCommon {
         }
 
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
-    /// Bluetooth discoverability
-    virtual void set_discoverability(esp_bt_discovery_mode_t d);
+        /// Bluetooth discoverability
+        virtual void set_discoverability(esp_bt_discovery_mode_t d);
 #endif
 
-    /// Bluetooth connectable
-    virtual void set_connectable(bool connectable) {
-        set_scan_mode_connectable(connectable);
-    }
+        /// Bluetooth connectable
+        virtual void set_connectable(bool connectable) {
+            set_scan_mode_connectable(connectable);
+        }
 
-    /// Provides the actual SSID name
-    virtual const char* get_name() {
-        return bt_name;
-    }
+        /// Provides the actual SSID name
+        virtual const char* get_name() {
+            return bt_name;
+        }
 
-    /// clean last connection (delete)
-    virtual void clean_last_connection();
+        /// clean last connection (delete)
+        virtual void clean_last_connection();
 
-    /// Defines the default bt mode. The default is ESP_BT_MODE_CLASSIC_BT: use this e.g. to set to ESP_BT_MODE_BTDM
-    virtual void set_default_bt_mode(esp_bt_mode_t mode){
-        bt_mode = mode;
-    }
+        /// Defines the default bt mode. The default is ESP_BT_MODE_CLASSIC_BT: use this e.g. to set to ESP_BT_MODE_BTDM
+        virtual void set_default_bt_mode(esp_bt_mode_t mode){
+            bt_mode = mode;
+        }
 
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 2 , 1)
-    /// Defines the esp_bluedroid_config_t: Available from IDF 5.2.1
-    void set_bluedroid_config_t(esp_bluedroid_config_t cfg){
-        bluedroid_config = cfg;
-    }
+        /// Defines the esp_bluedroid_config_t: Available from IDF 5.2.1
+        void set_bluedroid_config_t(esp_bluedroid_config_t cfg){
+            bluedroid_config = cfg;
+        }
 #endif
-    /// calls vTaskDelay to pause for the indicated number of milliseconds
-    void delay_ms(uint32_t millis);
-    /// Provides the time in milliseconds since the last system boot
-    unsigned long get_millis();
+        /// calls vTaskDelay to pause for the indicated number of milliseconds
+        void delay_ms(uint32_t millis);
+        /// Provides the time in milliseconds since the last system boot
+        unsigned long get_millis();
 
     protected:
         const char* bt_name = {0};

@@ -181,17 +181,17 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
     virtual int32_t get_data_default(uint8_t *data, int32_t len);
 
     /// Define callback to be notified about the found ssids
-    void set_ssid_callback(bool(*callback)(const char*ssid, esp_bd_addr_t address, int rrsi)){
+    virtual void set_ssid_callback(bool(*callback)(const char*ssid, esp_bd_addr_t address, int rrsi)){
       ssid_callback = callback;
     }
 
     /// Define callback to be notified about bt discovery mode state changes
-    void set_bt_discovery_mode_callback(void(*callback)(esp_bt_gap_discovery_state_t discoveryMode)){
+    virtual void set_bt_discovery_mode_callback(void(*callback)(esp_bt_gap_discovery_state_t discoveryMode)){
       discovery_mode_callback = callback;
     }
 
     /// Provides the current discovery state
-    bool is_discovery_active() {
+    virtual bool is_discovery_active() {
       return discovery_active;
     }
 

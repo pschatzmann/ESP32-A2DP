@@ -185,6 +185,11 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
       ssid_callback = callback;
     }
 
+    /// Define callback to be notified about bt discovery mode state changes
+    void set_bt_discovery_mode_callback(void(*callback)(esp_bt_gap_discovery_state_t discoveryMode)){
+      discovery_mode_callback = callback;
+    }
+
   protected:
     music_data_channels_cb_t data_stream_channels_callback;
     const char *dev_name = "ESP32_A2DP_SRC";
@@ -218,6 +223,7 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
     music_data_cb_t data_stream_callback;
 
     bool(*ssid_callback)(const char*ssid, esp_bd_addr_t address, int rrsi) = nullptr;
+    void(*discovery_mode_callback)(esp_bt_gap_discovery_state_t discoveryMode) = nullptr;
 
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
     esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap;

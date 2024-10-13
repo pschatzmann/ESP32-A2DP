@@ -461,6 +461,7 @@ void BluetoothA2DPSource::bt_app_gap_callback(esp_bt_gap_cb_event_t event,
   }
   case ESP_BT_GAP_DISC_STATE_CHANGED_EVT: {
     if (param->disc_st_chg.state == ESP_BT_GAP_DISCOVERY_STOPPED) {
+      discovery_active = false;
       if(discovery_mode_callback)discovery_mode_callback(ESP_BT_GAP_DISCOVERY_STOPPED);
       if (s_a2d_state == APP_AV_STATE_DISCOVERED) {
         s_a2d_state = APP_AV_STATE_CONNECTING;
@@ -473,6 +474,7 @@ void BluetoothA2DPSource::bt_app_gap_callback(esp_bt_gap_cb_event_t event,
         esp_bt_gap_start_discovery(ESP_BT_INQ_MODE_GENERAL_INQUIRY, 10, 0);
       }
     } else if (param->disc_st_chg.state == ESP_BT_GAP_DISCOVERY_STARTED) {
+      discovery_active = true;
       if(discovery_mode_callback)discovery_mode_callback(ESP_BT_GAP_DISCOVERY_STARTED);
       ESP_LOGI(BT_AV_TAG, "Discovery started.");
     }

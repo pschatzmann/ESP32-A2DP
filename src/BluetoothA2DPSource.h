@@ -190,6 +190,11 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
       discovery_mode_callback = callback;
     }
 
+    /// Provides the current discovery state
+    bool is_discovery_active() {
+      return discovery_active;
+    }
+
   protected:
     music_data_channels_cb_t data_stream_channels_callback;
     const char *dev_name = "ESP32_A2DP_SRC";
@@ -221,6 +226,7 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
     bool nvs_init = true;
     bool reset_ble = false;
     music_data_cb_t data_stream_callback;
+    bool discovery_active = false;
 
     bool(*ssid_callback)(const char*ssid, esp_bd_addr_t address, int rrsi) = nullptr;
     void(*discovery_mode_callback)(esp_bt_gap_discovery_state_t discoveryMode) = nullptr;

@@ -186,7 +186,7 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
     }
 
     /// Define callback to be notified about bt discovery mode state changes
-    virtual void set_bt_discovery_mode_callback(void(*callback)(esp_bt_gap_discovery_state_t discoveryMode)){
+    virtual void set_discovery_mode_callback(void(*callback)(esp_bt_gap_discovery_state_t discoveryMode)){
       discovery_mode_callback = callback;
     }
 

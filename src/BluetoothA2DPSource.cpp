@@ -379,6 +379,13 @@ bool BluetoothA2DPSource::get_name_from_eir(uint8_t *eir, uint8_t *bdname,
   return false;
 }
 
+bool BluetoothA2DPSource::isValidAudioService(uint32_t cod){
+  uint32_t srvc = esp_bt_gap_get_cod_srvc(cod);
+  return srvc & ESP_BT_COD_SRVC_RENDERING 
+  || srvc & ESP_BT_COD_SRVC_AUDIO
+  || srvc & ESP_BT_COD_SRVC_TELEPHONY; 
+}
+
 void BluetoothA2DPSource::filter_inquiry_scan_result(
     esp_bt_gap_cb_param_t *param) {
   uint32_t cod = 0;
@@ -408,7 +415,7 @@ void BluetoothA2DPSource::filter_inquiry_scan_result(
   }
   /* search for device with MAJOR service class as "rendering" in COD */
   if (!esp_bt_gap_is_valid_cod(cod) ||
-      !(esp_bt_gap_get_cod_srvc(cod) & ESP_BT_COD_SRVC_RENDERING)) {
+      !isValidAudioService(cod)) {
     ESP_LOGI(BT_AV_TAG, "--Compatiblity: Incompatible");
     return;
   }

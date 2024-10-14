@@ -278,6 +278,8 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
     virtual void bt_av_hdl_avrc_ct_evt(uint16_t event, void *p_param);
     /// resets the last connectioin so that we can reconnect
     virtual void reset_last_connection();
+    /// returns true for ESP_BT_COD_SRVC_RENDERING,ESP_BT_COD_SRVC_AUDIO,ESP_BT_COD_SRVC_TELEPHONY
+    virtual bool isValidAudioService(uint32_t cod);
 
     virtual esp_err_t esp_a2d_connect(esp_bd_addr_t peer) {
         ESP_LOGI(BT_AV_TAG, "a2dp connecting to: %s", to_str(peer));
@@ -292,6 +294,7 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
     void set_scan_mode_connectable_default() override {
         set_scan_mode_connectable(false);
     }
+
 
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
     void bt_av_notify_evt_handler(uint8_t event, esp_avrc_rn_param_t *param);

@@ -195,6 +195,11 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
       return discovery_active;
     }
 
+    /// Defines the valid enumesp_bt_cod_srvc_t values that are used to identify an audio service. e.g (ESP_BT_COD_SRVC_RENDERING | ESP_BT_COD_SRVC_AUDIO | ESP_BT_COD_SRVC_TELEPHONY)
+    virtual void set_valid_cod_service(uint16_t filter){
+      this->valid_cod_services = filter;
+    }
+
   protected:
     music_data_channels_cb_t data_stream_channels_callback;
     const char *dev_name = "ESP32_A2DP_SRC";
@@ -227,6 +232,7 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
     bool reset_ble = false;
     music_data_cb_t data_stream_callback;
     bool discovery_active = false;
+    uint16_t valid_cod_services = ESP_BT_COD_SRVC_RENDERING | ESP_BT_COD_SRVC_AUDIO | ESP_BT_COD_SRVC_TELEPHONY;
 
     bool(*ssid_callback)(const char*ssid, esp_bd_addr_t address, int rrsi) = nullptr;
     void(*discovery_mode_callback)(esp_bt_gap_discovery_state_t discoveryMode) = nullptr;
@@ -279,7 +285,7 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
     /// resets the last connectioin so that we can reconnect
     virtual void reset_last_connection();
     /// returns true for ESP_BT_COD_SRVC_RENDERING,ESP_BT_COD_SRVC_AUDIO,ESP_BT_COD_SRVC_TELEPHONY
-    virtual bool isValidAudioService(uint32_t cod);
+    virtual bool is_valid_cod_service(uint32_t cod);
 
     virtual esp_err_t esp_a2d_connect(esp_bd_addr_t peer) {
         ESP_LOGI(BT_AV_TAG, "a2dp connecting to: %s", to_str(peer));

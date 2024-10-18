@@ -247,6 +247,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a68f9e168839f0faeb72705ccabbb6b7a">set_task_priority</a> (UBaseType_t priority)</td></tr>
 <tr class="memdesc:a68f9e168839f0faeb72705ccabbb6b7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">defines the task priority (the default value is configMAX_PRIORITIES - 10) <br /></td></tr>
 <tr class="separator:a68f9e168839f0faeb72705ccabbb6b7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2923c8e2a689f21fc5acf7895ad2f7a7"><td class="memItemLeft" align="right" valign="top"><a id="a2923c8e2a689f21fc5acf7895ad2f7a7"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_source.html#a2923c8e2a689f21fc5acf7895ad2f7a7">set_valid_cod_service</a> (uint16_t filter)</td></tr>
+<tr class="memdesc:a2923c8e2a689f21fc5acf7895ad2f7a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the valid enumesp_bt_cod_srvc_t values that are used to identify an audio service. e.g (ESP_BT_COD_SRVC_RENDERING | ESP_BT_COD_SRVC_AUDIO | ESP_BT_COD_SRVC_TELEPHONY) <br /></td></tr>
+<tr class="separator:a2923c8e2a689f21fc5acf7895ad2f7a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0bab92d9317837ecaeacbfe26814e28c"><td class="memItemLeft" align="right" valign="top"><a id="a0bab92d9317837ecaeacbfe26814e28c"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a0bab92d9317837ecaeacbfe26814e28c">set_volume</a> (uint8_t volume)</td></tr>
 <tr class="memdesc:a0bab92d9317837ecaeacbfe26814e28c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the volume (range 0 - 127) <br /></td></tr>
@@ -382,6 +386,10 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>get_name_from
 <tr class="memitem:a4f98f07ba4cf5962a7cdda50317b3112"><td class="memItemLeft" align="right" valign="top"><a id="a4f98f07ba4cf5962a7cdda50317b3112"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>has_last_connection</b> ()</td></tr>
 <tr class="separator:a4f98f07ba4cf5962a7cdda50317b3112"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51f93bebf73f8bf9b98fa3c5fc4fcb18"><td class="memItemLeft" align="right" valign="top"><a id="a51f93bebf73f8bf9b98fa3c5fc4fcb18"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_source.html#a51f93bebf73f8bf9b98fa3c5fc4fcb18">is_valid_cod_service</a> (uint32_t cod)</td></tr>
+<tr class="memdesc:a51f93bebf73f8bf9b98fa3c5fc4fcb18"><td class="mdescLeft">&#160;</td><td class="mdescRight">returns true for ESP_BT_COD_SRVC_RENDERING,ESP_BT_COD_SRVC_AUDIO,ESP_BT_COD_SRVC_TELEPHONY <br /></td></tr>
+<tr class="separator:a51f93bebf73f8bf9b98fa3c5fc4fcb18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab13c705e17c70267ba2804a98b44a689"><td class="memItemLeft" align="right" valign="top"><a id="ab13c705e17c70267ba2804a98b44a689"></a>
 virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><b>last_bda_nvs_name</b> ()</td></tr>
 <tr class="separator:ab13c705e17c70267ba2804a98b44a689"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -583,6 +591,9 @@ BaseType_t&#160;</td><td class="memItemRight" valign="bottom"><b>task_core</b> =
 <tr class="memitem:a2e218a2956baea1be621e8c31d2875c8"><td class="memItemLeft" align="right" valign="top"><a id="a2e218a2956baea1be621e8c31d2875c8"></a>
 UBaseType_t&#160;</td><td class="memItemRight" valign="bottom"><b>task_priority</b> = configMAX_PRIORITIES - 10</td></tr>
 <tr class="separator:a2e218a2956baea1be621e8c31d2875c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbd56e6a344b879166f56dbf6b574822"><td class="memItemLeft" align="right" valign="top"><a id="adbd56e6a344b879166f56dbf6b574822"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>valid_cod_services</b> = ESP_BT_COD_SRVC_RENDERING | ESP_BT_COD_SRVC_AUDIO | ESP_BT_COD_SRVC_TELEPHONY</td></tr>
+<tr class="separator:adbd56e6a344b879166f56dbf6b574822"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1cb800c8abaaffe89b343b03f5fc77ef"><td class="memItemLeft" align="right" valign="top"><a id="a1cb800c8abaaffe89b343b03f5fc77ef"></a>
 <a class="el" href="class_a2_d_p_volume_control.html">A2DPVolumeControl</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>volume_control_ptr</b> = nullptr</td></tr>
 <tr class="separator:a1cb800c8abaaffe89b343b03f5fc77ef"><td class="memSeparator" colspan="2">&#160;</td></tr>

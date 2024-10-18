@@ -195,7 +195,7 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
       return discovery_active;
     }
 
-    /// Defines the valid enumesp_bt_cod_srvc_t values that are used to identify an audio service. e.g (ESP_BT_COD_SRVC_RENDERING | ESP_BT_COD_SRVC_AUDIO | ESP_BT_COD_SRVC_TELEPHONY)
+    /// Defines the valid esp_bt_cod_srvc_t values that are used to identify an audio service. e.g (ESP_BT_COD_SRVC_RENDERING | ESP_BT_COD_SRVC_AUDIO | ESP_BT_COD_SRVC_TELEPHONY)
     virtual void set_valid_cod_service(uint16_t filter){
       this->valid_cod_services = filter;
     }

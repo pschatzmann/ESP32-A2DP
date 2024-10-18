@@ -153,9 +153,7 @@ void BluetoothA2DPOutputLegacy::end() {
   ESP_LOGI(BT_AV_TAG, "%s", __func__);
   if (i2s_driver_uninstall(i2s_port) != ESP_OK) {
     ESP_LOGE(BT_AV_TAG, "Failed to uninstall i2s");
-  } else {
-    // player_init = false;
-  }
+  } 
 #endif
 }
 
@@ -171,7 +169,6 @@ void BluetoothA2DPOutputLegacy::set_sample_rate(int m_sample_rate) {
   } else {
     ESP_LOGI(BT_AV_TAG, "audio player configured, samplerate=%d",
              i2s_config.sample_rate);
-    // player_init = true;  // init finished
   }
 #endif
 }
@@ -222,7 +219,6 @@ void BluetoothA2DPOutputAudioTools::end() {
   ESP_LOGI(BT_AV_TAG, "%s", __func__);
   if (p_audio_print != nullptr) {
     p_audio_print->end();
-    // player_init = false;
   }
 #endif
 }

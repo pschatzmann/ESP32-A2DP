@@ -44,7 +44,6 @@ void BluetoothA2DPSink::end(bool release_memory) {
 
   if (is_output) {
     out->end();
-    player_init = false;
   }
   log_free_heap();
 }
@@ -165,7 +164,6 @@ void BluetoothA2DPSink::init_i2s() {
   ESP_LOGI(BT_AV_TAG, "init_i2s");
   if (is_output) {
     out->begin();
-    player_init = false;
     is_i2s_active = true;
   }
 }
@@ -550,13 +548,12 @@ void BluetoothA2DPSink::handle_audio_cfg(uint16_t event, void *p_param) {
   }
 
   // for now only SBC stream is supported
-  if (player_init == false && a2d->audio_cfg.mcc.type == ESP_A2D_MCT_SBC) {
+  if (a2d->audio_cfg.mcc.type == ESP_A2D_MCT_SBC) {
     ESP_LOGI(BT_AV_TAG, "configure audio player %x-%x-%x-%x\n",
              a2d->audio_cfg.mcc.cie.sbc[0], a2d->audio_cfg.mcc.cie.sbc[1],
              a2d->audio_cfg.mcc.cie.sbc[2], a2d->audio_cfg.mcc.cie.sbc[3]);
 
     out->set_sample_rate(m_sample_rate);
-    player_init = true;  // init finished
   }
 }
 

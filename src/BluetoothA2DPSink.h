@@ -410,7 +410,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   // esp_a2d_audio_state_t m_audio_state = ESP_A2D_AUDIO_STATE_STOPPED;
   esp_a2d_mct_t audio_type;
   char pin_code_str[20] = {0};
-  bool player_init = false;
   int connection_rety_count = 0;
   bool spp_active = false;
   esp_spp_mode_t esp_spp_mode = ESP_SPP_MODE_CB;

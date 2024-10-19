@@ -235,6 +235,9 @@ void BluetoothA2DPOutputAudioTools::set_sample_rate(int m_sample_rate) {
       info.channels = 2;
       info.bits_per_sample = 16;
       p_audio_print->setAudioInfo(info);
+      ESP_LOGI(BT_AV_TAG, "%s sample_rate %d -> %d", __func__, info.sample_rate, p_audio_print->audioInfo().sample_rate);
+    } else {
+      ESP_LOGI(BT_AV_TAG, "%s sample_rate not changed %d", __func__, info.sample_rate);
     }
   }
 #endif

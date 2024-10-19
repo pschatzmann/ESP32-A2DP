@@ -17,7 +17,7 @@
 // ==> Example A2DP Receiver which uses the A2DP I2S output to an AudioKit board
 
 #include "AudioTools.h"
-#include "AudioLibs/AudioBoardStream.h" // install https://github.com/pschatzmann/arduino-audio-driver
+#include "AudioTools/AudioLibs/AudioBoardStream.h" // install https://github.com/pschatzmann/arduino-audio-driver
 #include "BluetoothA2DPSink.h"
 
 AudioBoardStream kit(AudioKitEs8388V1); 

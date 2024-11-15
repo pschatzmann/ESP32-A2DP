@@ -93,7 +93,7 @@ class BluetoothA2DPOutputAudioTools : public BluetoothA2DPOutput {
 
   /// Output AudioStream using AudioTools library
   void set_output(audio_tools::AudioStream &output) {
-    static AdapterAudioStreamToAudioOutput adapter(output);
+    static audio_tools::AdapterAudioStreamToAudioOutput adapter(output);
     adapter.setStream(output);
     p_print = &output;
     p_audio_print = &adapter;

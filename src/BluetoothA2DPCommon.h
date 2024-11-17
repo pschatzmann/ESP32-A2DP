@@ -319,6 +319,9 @@ class BluetoothA2DPCommon {
         virtual void get_last_connection();
         virtual void set_last_connection(esp_bd_addr_t bda);
         virtual bool has_last_connection();
+        virtual bool read_address(const char* name, esp_bd_addr_t& bda);
+        virtual bool write_address(const char* name, esp_bd_addr_t bda);
+
         // change the scan mode
         virtual void set_scan_mode_connectable(bool connectable);
         virtual void set_scan_mode_connectable_default() = 0;

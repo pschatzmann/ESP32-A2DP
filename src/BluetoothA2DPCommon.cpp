@@ -161,17 +161,44 @@ bool BluetoothA2DPCommon::has_last_connection() {
 
 void BluetoothA2DPCommon::get_last_connection(){
     ESP_LOGD(BT_AV_TAG, "%s", __func__);
+
+    esp_bd_addr_t bda;
+    if (read_address(last_bda_nvs_name(), bda)) {
+        memcpy(last_connection, bda, ESP_BD_ADDR_LEN);
+    } 
+    ESP_LOGD(BT_AV_TAG, "=> %s", to_str(last_connection));
+}
+
+
+void BluetoothA2DPCommon::set_last_connection(esp_bd_addr_t bda){
+    ESP_LOGD(BT_AV_TAG, "set_last_connection: %s", to_str(bda));
+
+    // same value: nothing to store
+    if ( memcmp(bda, last_connection, ESP_BD_ADDR_LEN) == 0 ) {
+        ESP_LOGD(BT_AV_TAG, "no change!");
+        return; 
+    }
+    write_address(last_bda_nvs_name(), bda);
+    memcpy(last_connection, bda, ESP_BD_ADDR_LEN);
+}
+
+void BluetoothA2DPCommon::clean_last_connection() {
+    ESP_LOGD(BT_AV_TAG, "%s", __func__);
+    esp_bd_addr_t cleanBda = { 0 };
+    set_last_connection(cleanBda);
+}
+
+ bool BluetoothA2DPCommon::read_address(const char*name, esp_bd_addr_t& bda){
     nvs_handle my_handle;
-    esp_err_t err;
+    esp_err_t err = ESP_OK;
     
-    err = nvs_open("connected_bda", NVS_READWRITE, &my_handle);
+    err = nvs_open("connected_bda", NVS_READONLY, &my_handle);
     if (err != ESP_OK) {
          ESP_LOGE(BT_AV_TAG,"NVS OPEN ERROR");
     }
 
-    esp_bd_addr_t bda;
-    size_t size = sizeof(bda);
-    err = nvs_get_blob(my_handle, last_bda_nvs_name(), bda, &size);
+    size_t size = ESP_BD_ADDR_LEN;
+    err = nvs_get_blob(my_handle, name, bda, &size);
     if ( err != ESP_OK) { 
         if ( err == ESP_ERR_NVS_NOT_FOUND ) {
             ESP_LOGI(BT_AV_TAG, "nvs_blob does not exist");
@@ -180,45 +207,28 @@ void BluetoothA2DPCommon::get_last_connection(){
         }
     }
     nvs_close(my_handle);
-    if (err == ESP_OK) {
-        memcpy(last_connection,bda,size);
-    } 
-    ESP_LOGD(BT_AV_TAG, "=> %s", to_str(last_connection));
-
+    return err == ESP_OK;
 }
 
-void BluetoothA2DPCommon::set_last_connection(esp_bd_addr_t bda){
-    ESP_LOGD(BT_AV_TAG, "set_last_connection: %s", to_str(bda));
-
-    //same value, nothing to store
-    if ( memcmp(bda, last_connection, ESP_BD_ADDR_LEN) == 0 ) {
-        ESP_LOGD(BT_AV_TAG, "no change!");
-        return; 
-    }
+bool BluetoothA2DPCommon::write_address(const char* name, esp_bd_addr_t bda){
     nvs_handle my_handle;
     esp_err_t err;
-    
+
     err = nvs_open("connected_bda", NVS_READWRITE, &my_handle);
     if (err != ESP_OK){
-         ESP_LOGE(BT_AV_TAG, "NVS OPEN ERROR");
+        ESP_LOGE(BT_AV_TAG, "NVS OPEN ERROR");
+        return false;
     }
     err = nvs_set_blob(my_handle, last_bda_nvs_name(), bda, ESP_BD_ADDR_LEN);
-    if (err == ESP_OK) {
-        err = nvs_commit(my_handle);
-    } else {
+    if (err != ESP_OK) {
         ESP_LOGE(BT_AV_TAG, "NVS WRITE ERROR");
     }
+    err = nvs_commit(my_handle);
     if (err != ESP_OK) {
         ESP_LOGE(BT_AV_TAG, "NVS COMMIT ERROR");
     }
     nvs_close(my_handle);
-    memcpy(last_connection, bda, ESP_BD_ADDR_LEN);
-}
-
-void BluetoothA2DPCommon::clean_last_connection() {
-    ESP_LOGD(BT_AV_TAG, "%s", __func__);
-    esp_bd_addr_t cleanBda = { 0 };
-    set_last_connection(cleanBda);
+    return err != ESP_OK;
 }
 
 

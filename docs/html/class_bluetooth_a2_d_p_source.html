@@ -249,7 +249,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="separator:a68f9e168839f0faeb72705ccabbb6b7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2923c8e2a689f21fc5acf7895ad2f7a7"><td class="memItemLeft" align="right" valign="top"><a id="a2923c8e2a689f21fc5acf7895ad2f7a7"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_source.html#a2923c8e2a689f21fc5acf7895ad2f7a7">set_valid_cod_service</a> (uint16_t filter)</td></tr>
-<tr class="memdesc:a2923c8e2a689f21fc5acf7895ad2f7a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the valid enumesp_bt_cod_srvc_t values that are used to identify an audio service. e.g (ESP_BT_COD_SRVC_RENDERING | ESP_BT_COD_SRVC_AUDIO | ESP_BT_COD_SRVC_TELEPHONY) <br /></td></tr>
+<tr class="memdesc:a2923c8e2a689f21fc5acf7895ad2f7a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the valid esp_bt_cod_srvc_t values that are used to identify an audio service. e.g (ESP_BT_COD_SRVC_RENDERING | ESP_BT_COD_SRVC_AUDIO | ESP_BT_COD_SRVC_TELEPHONY) <br /></td></tr>
 <tr class="separator:a2923c8e2a689f21fc5acf7895ad2f7a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0bab92d9317837ecaeacbfe26814e28c"><td class="memItemLeft" align="right" valign="top"><a id="a0bab92d9317837ecaeacbfe26814e28c"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a0bab92d9317837ecaeacbfe26814e28c">set_volume</a> (uint8_t volume)</td></tr>
@@ -396,6 +396,9 @@ virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><b>last_
 <tr class="memitem:a3d189b51d912e0f7711d9d68cc9a2b82"><td class="memItemLeft" align="right" valign="top"><a id="a3d189b51d912e0f7711d9d68cc9a2b82"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>process_user_state_callbacks</b> (uint16_t event, void *param)</td></tr>
 <tr class="separator:a3d189b51d912e0f7711d9d68cc9a2b82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace4f3d087602a6db592df68ef8a2ded5"><td class="memItemLeft" align="right" valign="top"><a id="ace4f3d087602a6db592df68ef8a2ded5"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>read_address</b> (const char *name, esp_bd_addr_t &amp;bda)</td></tr>
+<tr class="separator:ace4f3d087602a6db592df68ef8a2ded5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a190c59464f53e2d4c3f121afbb7a3c21"><td class="memItemLeft" align="right" valign="top"><a id="a190c59464f53e2d4c3f121afbb7a3c21"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_source.html#a190c59464f53e2d4c3f121afbb7a3c21">reset_last_connection</a> ()</td></tr>
 <tr class="memdesc:a190c59464f53e2d4c3f121afbb7a3c21"><td class="mdescLeft">&#160;</td><td class="mdescRight">resets the last connectioin so that we can reconnect <br /></td></tr>
@@ -418,6 +421,9 @@ const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 virtual <a class="el" href="class_a2_d_p_volume_control.html">A2DPVolumeControl</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a6fec0cfd3d0d9017b7ffcf82630ab89a">volume_control</a> ()</td></tr>
 <tr class="memdesc:a6fec0cfd3d0d9017b7ffcf82630ab89a"><td class="mdescLeft">&#160;</td><td class="mdescRight">provides access to the VolumeControl object <br /></td></tr>
 <tr class="separator:a6fec0cfd3d0d9017b7ffcf82630ab89a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aadd7d6f698bc8b97b3833c210eb38025"><td class="memItemLeft" align="right" valign="top"><a id="aadd7d6f698bc8b97b3833c210eb38025"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>write_address</b> (const char *name, esp_bd_addr_t bda)</td></tr>
+<tr class="separator:aadd7d6f698bc8b97b3833c210eb38025"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>

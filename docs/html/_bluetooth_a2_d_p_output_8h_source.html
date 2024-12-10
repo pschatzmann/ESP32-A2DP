@@ -141,7 +141,7 @@ $(function() {
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  }</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
 <div class="line"><a name="l00095"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_output_audio_tools.html#adf9ef0cf6b3e6ef45b03109605c66ccd">   95</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_output_audio_tools.html#adf9ef0cf6b3e6ef45b03109605c66ccd">set_output</a>(audio_tools::AudioStream &amp;output) {</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="keyword">static</span> AdapterAudioStreamToAudioOutput adapter(output);</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="keyword">static</span> audio_tools::AdapterAudioStreamToAudioOutput adapter(output);</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    adapter.setStream(output);</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    p_print = &amp;output;</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    p_audio_print = &amp;adapter;</div>

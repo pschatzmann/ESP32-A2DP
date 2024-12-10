@@ -371,10 +371,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a452b509a46930ab1ed58188a4181c67b">set_rssi_active</a> (bool active)</td></tr>
 <tr class="memdesc:a452b509a46930ab1ed58188a4181c67b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Activates the rssi reporting. <br /></td></tr>
 <tr class="separator:a452b509a46930ab1ed58188a4181c67b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3156aa18d658d02608030c3fd1717e80"><td class="memItemLeft" align="right" valign="top"><a id="a3156aa18d658d02608030c3fd1717e80"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a3156aa18d658d02608030c3fd1717e80">set_rssi_calldoxback</a> (void(*callback)(esp_bt_gap_cb_param_t::read_rssi_delta_param &amp;rssi))</td></tr>
-<tr class="memdesc:a3156aa18d658d02608030c3fd1717e80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the callback that is called when we get an new rssi value. <br /></td></tr>
-<tr class="separator:a3156aa18d658d02608030c3fd1717e80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97c80237061c6e80d7c6e1e5e45773c8"><td class="memItemLeft" align="right" valign="top"><a id="a97c80237061c6e80d7c6e1e5e45773c8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a97c80237061c6e80d7c6e1e5e45773c8">set_rssi_callback</a> (void(*callback)(esp_bt_gap_cb_param_t::read_rssi_delta_param &amp;rssi))</td></tr>
+<tr class="memdesc:a97c80237061c6e80d7c6e1e5e45773c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the callback that is called when we get an new rssi value. <br /></td></tr>
+<tr class="separator:a97c80237061c6e80d7c6e1e5e45773c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a89d2694f880a2db22344b97b466c9a9d"><td class="memItemLeft" align="right" valign="top"><a id="a89d2694f880a2db22344b97b466c9a9d"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a89d2694f880a2db22344b97b466c9a9d">set_sample_rate_callback</a> (void(*callback)(uint16_t rate))</td></tr>
 <tr class="memdesc:a89d2694f880a2db22344b97b466c9a9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the method which will be called with the sample rate is updated. <br /></td></tr>
@@ -558,6 +558,9 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_reconnect<
 <tr class="memitem:a6e9b33f70cd118d78b9d5015529c0d53"><td class="memItemLeft" align="right" valign="top"><a id="a6e9b33f70cd118d78b9d5015529c0d53"></a>
 virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><b>last_bda_nvs_name</b> ()</td></tr>
 <tr class="separator:a6e9b33f70cd118d78b9d5015529c0d53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace4f3d087602a6db592df68ef8a2ded5"><td class="memItemLeft" align="right" valign="top"><a id="ace4f3d087602a6db592df68ef8a2ded5"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>read_address</b> (const char *name, esp_bd_addr_t &amp;bda)</td></tr>
+<tr class="separator:ace4f3d087602a6db592df68ef8a2ded5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adcb5ce89b5834ebc6606d375685b51b6"><td class="memItemLeft" align="right" valign="top"><a id="adcb5ce89b5834ebc6606d375685b51b6"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set_i2s_active</b> (bool active) override</td></tr>
 <tr class="separator:adcb5ce89b5834ebc6606d375685b51b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -581,6 +584,9 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>volume_set_by
 <tr class="memitem:abae7601e39f1b343fda2958fbefd83e4"><td class="memItemLeft" align="right" valign="top"><a id="abae7601e39f1b343fda2958fbefd83e4"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>volume_set_by_local_host</b> (uint8_t volume)</td></tr>
 <tr class="separator:abae7601e39f1b343fda2958fbefd83e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aadd7d6f698bc8b97b3833c210eb38025"><td class="memItemLeft" align="right" valign="top"><a id="aadd7d6f698bc8b97b3833c210eb38025"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>write_address</b> (const char *name, esp_bd_addr_t bda)</td></tr>
+<tr class="separator:aadd7d6f698bc8b97b3833c210eb38025"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1846088388d294f04469885b9bb560e4"><td class="memItemLeft" align="right" valign="top"><a id="a1846088388d294f04469885b9bb560e4"></a>
 size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink_queued.html#a1846088388d294f04469885b9bb560e4">write_audio</a> (const uint8_t *data, size_t size) override</td></tr>
 <tr class="memdesc:a1846088388d294f04469885b9bb560e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">output audio data e.g. to i2s or to queue <br /></td></tr>
@@ -769,9 +775,6 @@ PinCodeRequest&#160;</td><td class="memItemRight" valign="bottom"><b>pin_code_re
 <tr class="memitem:a0097f5adbcf09b2c857528afa568c53f"><td class="memItemLeft" align="right" valign="top"><a id="a0097f5adbcf09b2c857528afa568c53f"></a>
 char&#160;</td><td class="memItemRight" valign="bottom"><b>pin_code_str</b> [20] = {0}</td></tr>
 <tr class="separator:a0097f5adbcf09b2c857528afa568c53f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3589ffe4b88230d5e4d38c9eae6b67e4"><td class="memItemLeft" align="right" valign="top"><a id="a3589ffe4b88230d5e4d38c9eae6b67e4"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>player_init</b> = false</td></tr>
-<tr class="separator:a3589ffe4b88230d5e4d38c9eae6b67e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a89dd2612e77c42a858e6365fffd00b9b"><td class="memItemLeft" align="right" valign="top"><a id="a89dd2612e77c42a858e6365fffd00b9b"></a>
 void(*&#160;</td><td class="memItemRight" valign="bottom"><b>raw_stream_reader</b> )(const uint8_t *, uint32_t) = nullptr</td></tr>
 <tr class="separator:a89dd2612e77c42a858e6365fffd00b9b"><td class="memSeparator" colspan="2">&#160;</td></tr>

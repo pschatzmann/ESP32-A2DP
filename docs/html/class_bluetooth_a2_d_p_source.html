@@ -101,7 +101,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memdesc:a962cc9aef396b06c7eb6f56462a743ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">clean last connection (delete) <br /></td></tr>
 <tr class="separator:a962cc9aef396b06c7eb6f56462a743ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a788d81fe538021f912d737de72ed6be6"><td class="memItemLeft" align="right" valign="top"><a id="a788d81fe538021f912d737de72ed6be6"></a>
-virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a788d81fe538021f912d737de72ed6be6">connect_to</a> (esp_bd_addr_t peer)</td></tr>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a788d81fe538021f912d737de72ed6be6">connect_to</a> (<a class="el" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a> peer)</td></tr>
 <tr class="memdesc:a788d81fe538021f912d737de72ed6be6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connnects to the indicated address. <br /></td></tr>
 <tr class="separator:a788d81fe538021f912d737de72ed6be6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa6601d3c57e37f77bfdd03a3ef6231e2"><td class="memItemLeft" align="right" valign="top"><a id="aa6601d3c57e37f77bfdd03a3ef6231e2"></a>
@@ -133,7 +133,7 @@ virtual int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el"
 <tr class="memdesc:ab199a1240a5850a43738f3872805c9ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">callback for data <br /></td></tr>
 <tr class="separator:ab199a1240a5850a43738f3872805c9ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac21e1dbd2f5f475da871a7e778ba1a40"><td class="memItemLeft" align="right" valign="top"><a id="ac21e1dbd2f5f475da871a7e778ba1a40"></a>
-virtual esp_bd_addr_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#ac21e1dbd2f5f475da871a7e778ba1a40">get_last_peer_address</a> ()</td></tr>
+virtual <a class="el" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#ac21e1dbd2f5f475da871a7e778ba1a40">get_last_peer_address</a> ()</td></tr>
 <tr class="memdesc:ac21e1dbd2f5f475da871a7e778ba1a40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides the address of the last device. <br /></td></tr>
 <tr class="separator:ac21e1dbd2f5f475da871a7e778ba1a40"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a688bfd727bfed94f255b63c16a6b1b3c"><td class="memItemLeft" align="right" valign="top"><a id="a688bfd727bfed94f255b63c16a6b1b3c"></a>
@@ -173,7 +173,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memdesc:a65ac6f2b0777c97874ee358119de3790"><td class="mdescLeft">&#160;</td><td class="mdescRight">activate / deactivate the automatic reconnection to the last address (per default this is on) <br /></td></tr>
 <tr class="separator:a65ac6f2b0777c97874ee358119de3790"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab94a0596fd595994f3ae4d2d6d2e5a5b"><td class="memItemLeft" align="right" valign="top"><a id="ab94a0596fd595994f3ae4d2d6d2e5a5b"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_source.html#ab94a0596fd595994f3ae4d2d6d2e5a5b">set_auto_reconnect</a> (esp_bd_addr_t addr)</td></tr>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_source.html#ab94a0596fd595994f3ae4d2d6d2e5a5b">set_auto_reconnect</a> (<a class="el" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a> addr)</td></tr>
 <tr class="memdesc:ab94a0596fd595994f3ae4d2d6d2e5a5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">automatically tries to reconnect to the indicated address <br /></td></tr>
 <tr class="separator:ab94a0596fd595994f3ae4d2d6d2e5a5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a145c20271b53d4329e0e2c7fa36692b0"><td class="memItemLeft" align="right" valign="top"><a id="a145c20271b53d4329e0e2c7fa36692b0"></a>
@@ -189,10 +189,10 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memdesc:a0a8a860a325348cdf210637e8d1159e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls disconnect or reconnect. <br /></td></tr>
 <tr class="separator:a0a8a860a325348cdf210637e8d1159e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a41ab8453d4f7f88d68d6cdb1a866532b"><td class="memItemLeft" align="right" valign="top"><a id="a41ab8453d4f7f88d68d6cdb1a866532b"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a41ab8453d4f7f88d68d6cdb1a866532b">set_default_bt_mode</a> (esp_bt_mode_t mode)</td></tr>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a41ab8453d4f7f88d68d6cdb1a866532b">set_default_bt_mode</a> (<a class="el" href="group__a2dp.html#ga9861ef3ac455a4b2875219d457073de4">esp_bt_mode_t</a> mode)</td></tr>
 <tr class="memdesc:a41ab8453d4f7f88d68d6cdb1a866532b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the default bt mode. The default is ESP_BT_MODE_CLASSIC_BT: use this e.g. to set to ESP_BT_MODE_BTDM. <br /></td></tr>
 <tr class="separator:a41ab8453d4f7f88d68d6cdb1a866532b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e53adc58f665113c9ac6a5521e58814"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a8e53adc58f665113c9ac6a5521e58814">set_discoverability</a> (esp_bt_discovery_mode_t d)</td></tr>
+<tr class="memitem:a8e53adc58f665113c9ac6a5521e58814"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a8e53adc58f665113c9ac6a5521e58814">set_discoverability</a> (<a class="el" href="group__a2dp.html#ga6562796046744d7333ad2c64d2c8557d">esp_bt_discovery_mode_t</a> d)</td></tr>
 <tr class="memdesc:a8e53adc58f665113c9ac6a5521e58814"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bluetooth discoverability.  <a href="class_bluetooth_a2_d_p_common.html#a8e53adc58f665113c9ac6a5521e58814">More...</a><br /></td></tr>
 <tr class="separator:a8e53adc58f665113c9ac6a5521e58814"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73eea280b254473cab7c3b1e528b030f"><td class="memItemLeft" align="right" valign="top"><a id="a73eea280b254473cab7c3b1e528b030f"></a>
@@ -232,7 +232,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memdesc:a5efcc4c32c6ec8ce7eac2c1acb59f27c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines if the BLE should be reset on start. <br /></td></tr>
 <tr class="separator:a5efcc4c32c6ec8ce7eac2c1acb59f27c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6ba5496831ff64bdd515fc2ad811d76d"><td class="memItemLeft" align="right" valign="top"><a id="a6ba5496831ff64bdd515fc2ad811d76d"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_source.html#a6ba5496831ff64bdd515fc2ad811d76d">set_ssid_callback</a> (bool(*callback)(const char *ssid, esp_bd_addr_t address, int rrsi))</td></tr>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_source.html#a6ba5496831ff64bdd515fc2ad811d76d">set_ssid_callback</a> (bool(*callback)(const char *ssid, <a class="el" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a> address, int rrsi))</td></tr>
 <tr class="memdesc:a6ba5496831ff64bdd515fc2ad811d76d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define callback to be notified about the found ssids. <br /></td></tr>
 <tr class="separator:a6ba5496831ff64bdd515fc2ad811d76d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a959ff7f30a6064f018dcdad5deb8e3d9"><td class="memItemLeft" align="right" valign="top"><a id="a959ff7f30a6064f018dcdad5deb8e3d9"></a>
@@ -293,7 +293,7 @@ const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memdesc:a7896335b8f2cc324da86e16efb1544c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">converts esp_avrc_playback_stat_t to a string  <a href="class_bluetooth_a2_d_p_common.html#a7896335b8f2cc324da86e16efb1544c9">More...</a><br /></td></tr>
 <tr class="separator:a7896335b8f2cc324da86e16efb1544c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afa76a15aa8922301e72a745b540b040c"><td class="memItemLeft" align="right" valign="top"><a id="afa76a15aa8922301e72a745b540b040c"></a>
-const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#afa76a15aa8922301e72a745b540b040c">to_str</a> (esp_bd_addr_t bda)</td></tr>
+const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#afa76a15aa8922301e72a745b540b040c">to_str</a> (<a class="el" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a> bda)</td></tr>
 <tr class="memdesc:afa76a15aa8922301e72a745b540b040c"><td class="mdescLeft">&#160;</td><td class="mdescRight">converts a esp_bd_addr_t to a string - the string is 18 characters long! <br /></td></tr>
 <tr class="separator:afa76a15aa8922301e72a745b540b040c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0a5976c3d81ae96e5e3be06fd6a662da"><td class="memItemLeft" align="right" valign="top"><a id="a0a5976c3d81ae96e5e3be06fd6a662da"></a>
@@ -372,7 +372,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>bt_av_volume_changed<
 <tr class="memdesc:a8be3cf8679b236293658c06cd1ed010b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Startup logic as implemented by Arduino.  <a href="class_bluetooth_a2_d_p_common.html#a8be3cf8679b236293658c06cd1ed010b">More...</a><br /></td></tr>
 <tr class="separator:a8be3cf8679b236293658c06cd1ed010b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2626298e32edfc399ddb0bf5efc32fc7"><td class="memItemLeft" align="right" valign="top"><a id="a2626298e32edfc399ddb0bf5efc32fc7"></a>
-virtual esp_err_t&#160;</td><td class="memItemRight" valign="bottom"><b>esp_a2d_connect</b> (esp_bd_addr_t peer)</td></tr>
+virtual esp_err_t&#160;</td><td class="memItemRight" valign="bottom"><b>esp_a2d_connect</b> (<a class="el" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a> peer)</td></tr>
 <tr class="separator:a2626298e32edfc399ddb0bf5efc32fc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adf9c78e8b30f3c3faa74001bf102cef3"><td class="memItemLeft" align="right" valign="top"><a id="adf9c78e8b30f3c3faa74001bf102cef3"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>filter_inquiry_scan_result</b> (esp_bt_gap_cb_param_t *param)</td></tr>
@@ -397,14 +397,14 @@ virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><b>last_
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>process_user_state_callbacks</b> (uint16_t event, void *param)</td></tr>
 <tr class="separator:a3d189b51d912e0f7711d9d68cc9a2b82"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace4f3d087602a6db592df68ef8a2ded5"><td class="memItemLeft" align="right" valign="top"><a id="ace4f3d087602a6db592df68ef8a2ded5"></a>
-virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>read_address</b> (const char *name, esp_bd_addr_t &amp;bda)</td></tr>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>read_address</b> (const char *name, <a class="el" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a> &amp;bda)</td></tr>
 <tr class="separator:ace4f3d087602a6db592df68ef8a2ded5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a190c59464f53e2d4c3f121afbb7a3c21"><td class="memItemLeft" align="right" valign="top"><a id="a190c59464f53e2d4c3f121afbb7a3c21"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_source.html#a190c59464f53e2d4c3f121afbb7a3c21">reset_last_connection</a> ()</td></tr>
 <tr class="memdesc:a190c59464f53e2d4c3f121afbb7a3c21"><td class="mdescLeft">&#160;</td><td class="mdescRight">resets the last connectioin so that we can reconnect <br /></td></tr>
 <tr class="separator:a190c59464f53e2d4c3f121afbb7a3c21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af3a2ee313a97da4e788ba3489847115c"><td class="memItemLeft" align="right" valign="top"><a id="af3a2ee313a97da4e788ba3489847115c"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>set_last_connection</b> (esp_bd_addr_t bda)</td></tr>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>set_last_connection</b> (<a class="el" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a> bda)</td></tr>
 <tr class="separator:af3a2ee313a97da4e788ba3489847115c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af1e2f14ddbe9266b61f5e721095c3685"><td class="memItemLeft" align="right" valign="top"><a id="af1e2f14ddbe9266b61f5e721095c3685"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#af1e2f14ddbe9266b61f5e721095c3685">set_scan_mode_connectable</a> (bool connectable)</td></tr>
@@ -422,7 +422,7 @@ virtual <a class="el" href="class_a2_d_p_volume_control.html">A2DPVolumeControl<
 <tr class="memdesc:a6fec0cfd3d0d9017b7ffcf82630ab89a"><td class="mdescLeft">&#160;</td><td class="mdescRight">provides access to the VolumeControl object <br /></td></tr>
 <tr class="separator:a6fec0cfd3d0d9017b7ffcf82630ab89a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aadd7d6f698bc8b97b3833c210eb38025"><td class="memItemLeft" align="right" valign="top"><a id="aadd7d6f698bc8b97b3833c210eb38025"></a>
-virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>write_address</b> (const char *name, esp_bd_addr_t bda)</td></tr>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>write_address</b> (const char *name, <a class="el" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a> bda)</td></tr>
 <tr class="separator:aadd7d6f698bc8b97b3833c210eb38025"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
@@ -445,7 +445,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><b>audio_state_obj_pos
 <tr class="memitem:a729840e194330a64ffbccc52d853ac4a"><td class="memItemLeft" align="right" valign="top">esp_bluedroid_config_t&#160;</td><td class="memItemRight" valign="bottom"><b>bluedroid_config</b></td></tr>
 <tr class="separator:a729840e194330a64ffbccc52d853ac4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1cd750d4718e5f4053131668c9851b63"><td class="memItemLeft" align="right" valign="top"><a id="a1cd750d4718e5f4053131668c9851b63"></a>
-esp_bt_mode_t&#160;</td><td class="memItemRight" valign="bottom"><b>bt_mode</b> = ESP_BT_MODE_CLASSIC_BT</td></tr>
+<a class="el" href="group__a2dp.html#ga9861ef3ac455a4b2875219d457073de4">esp_bt_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>bt_mode</b> = <a class="el" href="group__a2dp.html#gga9861ef3ac455a4b2875219d457073de4a9fab3664192991a2bd656ba090c1da85">ESP_BT_MODE_CLASSIC_BT</a></td></tr>
 <tr class="separator:a1cd750d4718e5f4053131668c9851b63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e53210a1eeea015457cfc94df7883e1"><td class="memItemLeft" align="right" valign="top"><a id="a6e53210a1eeea015457cfc94df7883e1"></a>
 const char *&#160;</td><td class="memItemRight" valign="bottom"><b>bt_name</b> = {0}</td></tr>
@@ -481,7 +481,7 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>default_recon
 const char *&#160;</td><td class="memItemRight" valign="bottom"><b>dev_name</b> = &quot;ESP32_A2DP_SRC&quot;</td></tr>
 <tr class="separator:a5b050c002df7459c95a3d1dc325c5c20"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2ca23dacb41661dd91b202c0f7939f69"><td class="memItemLeft" align="right" valign="top"><a id="a2ca23dacb41661dd91b202c0f7939f69"></a>
-esp_bt_discovery_mode_t&#160;</td><td class="memItemRight" valign="bottom"><b>discoverability</b> = ESP_BT_GENERAL_DISCOVERABLE</td></tr>
+<a class="el" href="group__a2dp.html#ga6562796046744d7333ad2c64d2c8557d">esp_bt_discovery_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>discoverability</b> = <a class="el" href="group__a2dp.html#gga6562796046744d7333ad2c64d2c8557da4fa5e4d5a80a86974515a8a362989711">ESP_BT_GENERAL_DISCOVERABLE</a></td></tr>
 <tr class="separator:a2ca23dacb41661dd91b202c0f7939f69"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af0030e1cfe0ff1e30a290e7deb7c77f1"><td class="memItemLeft" align="right" valign="top"><a id="af0030e1cfe0ff1e30a290e7deb7c77f1"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>discovery_active</b> = false</td></tr>
@@ -511,7 +511,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_start_disabled</b>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_volume_used</b> = false</td></tr>
 <tr class="separator:aa3f1abcd092657807bd4a4cab205ba88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:add25164fa6c099827e04db70d7ab0f62"><td class="memItemLeft" align="right" valign="top"><a id="add25164fa6c099827e04db70d7ab0f62"></a>
-esp_bd_addr_t&#160;</td><td class="memItemRight" valign="bottom"><b>last_connection</b> = {0,0,0,0,0,0}</td></tr>
+<a class="el" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>last_connection</b> = {0,0,0,0,0,0}</td></tr>
 <tr class="separator:add25164fa6c099827e04db70d7ab0f62"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abbe69860108ab18edee3cd24fa64be53"><td class="memItemLeft" align="right" valign="top"><a id="abbe69860108ab18edee3cd24fa64be53"></a>
 const char *&#160;</td><td class="memItemRight" valign="bottom"><b>m_a2d_audio_state_str</b> [3] = {&quot;Suspended&quot;, &quot;Stopped&quot;, &quot;Started&quot;}</td></tr>
@@ -526,7 +526,7 @@ const char *&#160;</td><td class="memItemRight" valign="bottom"><b>m_avrc_playba
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>nvs_init</b> = true</td></tr>
 <tr class="separator:af34d6e4890bf2b59d25b043c9a8b41ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a83cff3bdeb407a6c19618ba208438604"><td class="memItemLeft" align="right" valign="top"><a id="a83cff3bdeb407a6c19618ba208438604"></a>
-esp_bd_addr_t&#160;</td><td class="memItemRight" valign="bottom"><b>peer_bd_addr</b></td></tr>
+<a class="el" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>peer_bd_addr</b></td></tr>
 <tr class="separator:a83cff3bdeb407a6c19618ba208438604"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad4fabc0ba19e85aeae783aedf9adb9da"><td class="memItemLeft" align="right" valign="top"><a id="ad4fabc0ba19e85aeae783aedf9adb9da"></a>
 esp_bt_pin_code_t&#160;</td><td class="memItemRight" valign="bottom"><b>pin_code</b></td></tr>
@@ -586,7 +586,7 @@ TimerHandle_t&#160;</td><td class="memItemRight" valign="bottom"><b>s_tmr</b></t
 int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>sound_data_current_pos</b> = 0</td></tr>
 <tr class="separator:a6a74b3dc3c33528bc628bda84ea8ed7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8d936972af8aae81f06c17af6e22113"><td class="memItemLeft" align="right" valign="top"><a id="ae8d936972af8aae81f06c17af6e22113"></a>
-bool(*&#160;</td><td class="memItemRight" valign="bottom"><b>ssid_callback</b> )(const char *ssid, esp_bd_addr_t address, int rrsi) = nullptr</td></tr>
+bool(*&#160;</td><td class="memItemRight" valign="bottom"><b>ssid_callback</b> )(const char *ssid, <a class="el" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a> address, int rrsi) = nullptr</td></tr>
 <tr class="separator:ae8d936972af8aae81f06c17af6e22113"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a63d502a55a545054c10bae478c01f66c"><td class="memItemLeft" align="right" valign="top"><a id="a63d502a55a545054c10bae478c01f66c"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>ssp_enabled</b> =false</td></tr>
@@ -764,7 +764,7 @@ false </dd></dl>
         <tr>
           <td class="memname">void BluetoothA2DPCommon::set_discoverability </td>
           <td>(</td>
-          <td class="paramtype">esp_bt_discovery_mode_t&#160;</td>
+          <td class="paramtype"><a class="el" href="group__a2dp.html#ga6562796046744d7333ad2c64d2c8557d">esp_bt_discovery_mode_t</a>&#160;</td>
           <td class="paramname"><em>d</em></td><td>)</td>
           <td></td>
         </tr>

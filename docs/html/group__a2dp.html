@@ -63,6 +63,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
@@ -93,6 +94,13 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sound_data.html">SoundData</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sound data as byte stream. We support <a class="el" href="class_two_channel_sound_data.html" title="Data is provided in two channels of int16 data: so len is in 4 byte entries (int16 + int16)">TwoChannelSoundData</a> (uint16_t + uint16_t) and <a class="el" href="class_one_channel_sound_data.html" title="1 Channel data is provided as int16 values">OneChannelSoundData</a> which stores the data as array of uint16_t We provide the complete sound data as a simple c array which can be prepared e.g. in the following way.  <a href="class_sound_data.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gae1f72542f04666cd97c26732366bf109"><td class="memItemLeft" align="right" valign="top"><a id="gae1f72542f04666cd97c26732366bf109"></a>
+typedef uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a>[ESP_BD_ADDR_LEN]</td></tr>
+<tr class="memdesc:gae1f72542f04666cd97c26732366bf109"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bluetooth address. <br /></td></tr>
+<tr class="separator:gae1f72542f04666cd97c26732366bf109"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -144,6 +152,19 @@ Enumerations</h2></td></tr>
 <tr class="memitem:ga0af05e9d744ec14ee33e345d678e8ade"><td class="memItemLeft" align="right" valign="top"><a id="ga0af05e9d744ec14ee33e345d678e8ade"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__a2dp.html#ga0af05e9d744ec14ee33e345d678e8ade">esp_avrc_rn_event_ids_t</a> </td></tr>
 <tr class="memdesc:ga0af05e9d744ec14ee33e345d678e8ade"><td class="mdescLeft">&#160;</td><td class="mdescRight">AVRC event notification ids. <br /></td></tr>
 <tr class="separator:ga0af05e9d744ec14ee33e345d678e8ade"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6562796046744d7333ad2c64d2c8557d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__a2dp.html#ga6562796046744d7333ad2c64d2c8557d">esp_bt_discovery_mode_t</a> { <a class="el" href="group__a2dp.html#gga6562796046744d7333ad2c64d2c8557da41f6ad4d6283fe67dfeaf9cb3e14da65">ESP_BT_NON_DISCOVERABLE</a>
+, <a class="el" href="group__a2dp.html#gga6562796046744d7333ad2c64d2c8557da286efd17a5bec03100355acf2dd198de">ESP_BT_LIMITED_DISCOVERABLE</a>
+, <a class="el" href="group__a2dp.html#gga6562796046744d7333ad2c64d2c8557da4fa5e4d5a80a86974515a8a362989711">ESP_BT_GENERAL_DISCOVERABLE</a>
+ }</td></tr>
+<tr class="memdesc:ga6562796046744d7333ad2c64d2c8557d"><td class="mdescLeft">&#160;</td><td class="mdescRight">AVRCP discovery mode.  <a href="group__a2dp.html#ga6562796046744d7333ad2c64d2c8557d">More...</a><br /></td></tr>
+<tr class="separator:ga6562796046744d7333ad2c64d2c8557d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9861ef3ac455a4b2875219d457073de4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__a2dp.html#ga9861ef3ac455a4b2875219d457073de4">esp_bt_mode_t</a> { <a class="el" href="group__a2dp.html#gga9861ef3ac455a4b2875219d457073de4a479cab8a16f9567cb00a7940564d3943">ESP_BT_MODE_IDLE</a> = 0x00
+, <a class="el" href="group__a2dp.html#gga9861ef3ac455a4b2875219d457073de4aedb9bdfab09a30a92faa66165dc35c36">ESP_BT_MODE_BLE</a> = 0x01
+, <a class="el" href="group__a2dp.html#gga9861ef3ac455a4b2875219d457073de4a9fab3664192991a2bd656ba090c1da85">ESP_BT_MODE_CLASSIC_BT</a> = 0x02
+, <a class="el" href="group__a2dp.html#gga9861ef3ac455a4b2875219d457073de4a3d0aa499ec6f785eeaa44765e8585cb3">ESP_BT_MODE_BTDM</a> = 0x03
+ }</td></tr>
+<tr class="memdesc:ga9861ef3ac455a4b2875219d457073de4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bluetooth Controller mode.  <a href="group__a2dp.html#ga9861ef3ac455a4b2875219d457073de4">More...</a><br /></td></tr>
+<tr class="separator:ga9861ef3ac455a4b2875219d457073de4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga28a6ac1cbaf47c9d341da5391e2e72b3"><td class="memItemLeft" align="right" valign="top"><a id="ga28a6ac1cbaf47c9d341da5391e2e72b3"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__a2dp.html#ga28a6ac1cbaf47c9d341da5391e2e72b3">ReconnectStatus</a> { <b>NoReconnect</b>
 , <b>AutoReconnect</b>
 , <b>IsReconnecting</b>
@@ -264,6 +285,56 @@ Variables</h2></td></tr>
 <tr><td class="fieldname"><a id="gga89fdf5fb26b1ea6f33d36cc0eebca4fba98c8358017f0694e2af18dcecf87eb6e"></a>ESP_AVRC_PLAYBACK_REV_SEEK&#160;</td><td class="fielddoc"><p>reverse seek </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga89fdf5fb26b1ea6f33d36cc0eebca4fbab141fa00060af447da20081cb396f02d"></a>ESP_AVRC_PLAYBACK_ERROR&#160;</td><td class="fielddoc"><p>error </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga6562796046744d7333ad2c64d2c8557d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6562796046744d7333ad2c64d2c8557d">&#9670;&nbsp;</a></span>esp_bt_discovery_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group__a2dp.html#ga6562796046744d7333ad2c64d2c8557d">esp_bt_discovery_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>AVRCP discovery mode. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga6562796046744d7333ad2c64d2c8557da41f6ad4d6283fe67dfeaf9cb3e14da65"></a>ESP_BT_NON_DISCOVERABLE&#160;</td><td class="fielddoc"><p>Non-discoverable </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6562796046744d7333ad2c64d2c8557da286efd17a5bec03100355acf2dd198de"></a>ESP_BT_LIMITED_DISCOVERABLE&#160;</td><td class="fielddoc"><p>Limited Discoverable </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6562796046744d7333ad2c64d2c8557da4fa5e4d5a80a86974515a8a362989711"></a>ESP_BT_GENERAL_DISCOVERABLE&#160;</td><td class="fielddoc"><p>General Discoverable </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga9861ef3ac455a4b2875219d457073de4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9861ef3ac455a4b2875219d457073de4">&#9670;&nbsp;</a></span>esp_bt_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group__a2dp.html#ga9861ef3ac455a4b2875219d457073de4">esp_bt_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Bluetooth Controller mode. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga9861ef3ac455a4b2875219d457073de4a479cab8a16f9567cb00a7940564d3943"></a>ESP_BT_MODE_IDLE&#160;</td><td class="fielddoc"><p>Bluetooth is not operating. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9861ef3ac455a4b2875219d457073de4aedb9bdfab09a30a92faa66165dc35c36"></a>ESP_BT_MODE_BLE&#160;</td><td class="fielddoc"><p>Bluetooth is operating in BLE mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9861ef3ac455a4b2875219d457073de4a9fab3664192991a2bd656ba090c1da85"></a>ESP_BT_MODE_CLASSIC_BT&#160;</td><td class="fielddoc"><p>Bluetooth is operating in Classic Bluetooth mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9861ef3ac455a4b2875219d457073de4a3d0aa499ec6f785eeaa44765e8585cb3"></a>ESP_BT_MODE_BTDM&#160;</td><td class="fielddoc"><p>Bluetooth is operating in Dual mode. </p>
 </td></tr>
 </table>
 

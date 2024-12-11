@@ -78,4 +78,30 @@ enum  esp_avrc_playback_stat_t{
     ESP_AVRC_PLAYBACK_ERROR = 0xFF,               /*!< error */
 } ;
 
+/**
+ * @brief AVRCP discovery mode
+ * @ingroup a2dp
+ */ 
+enum esp_bt_discovery_mode_t{
+    ESP_BT_NON_DISCOVERABLE,            /*!< Non-discoverable */
+    ESP_BT_LIMITED_DISCOVERABLE,        /*!< Limited Discoverable */
+    ESP_BT_GENERAL_DISCOVERABLE,        /*!< General Discoverable */
+} ;
 
+
+/**
+ * @brief Bluetooth Controller mode
+ * @ingroup a2dp
+ */
+enum esp_bt_mode_t {
+    ESP_BT_MODE_IDLE       = 0x00,   /*!< Bluetooth is not operating. */
+    ESP_BT_MODE_BLE        = 0x01,   /*!< Bluetooth is operating in BLE mode. */
+    ESP_BT_MODE_CLASSIC_BT = 0x02,   /*!< Bluetooth is operating in Classic Bluetooth mode. */
+    ESP_BT_MODE_BTDM       = 0x03,   /*!< Bluetooth is operating in Dual mode. */
+} ;
+
+/**
+ * @brief Bluetooth address
+ * @ingroup a2dp
+ */
+typedef uint8_t esp_bd_addr_t[ESP_BD_ADDR_LEN];

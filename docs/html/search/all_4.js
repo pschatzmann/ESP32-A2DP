@@ -21,5 +21,15 @@ var searchData=
   ['esp_5favrc_5fplayback_5fstopped_67',['ESP_AVRC_PLAYBACK_STOPPED',['../group__a2dp.html#gga89fdf5fb26b1ea6f33d36cc0eebca4fba91a5ffbfe55aba08e1d323848e719fd7',1,'external_lists.h']]],
   ['esp_5favrc_5frn_5fevent_5fids_5ft_68',['esp_avrc_rn_event_ids_t',['../group__a2dp.html#ga0af05e9d744ec14ee33e345d678e8ade',1,'external_lists.h']]],
   ['esp_5favrc_5frn_5fplay_5fstatus_5fchange_69',['ESP_AVRC_RN_PLAY_STATUS_CHANGE',['../group__a2dp.html#gab981cf845089ef19df871466126b6f14',1,'external_lists.h']]],
-  ['event_70',['event',['../structbt__app__msg__t.html#a74f4561abb15d9ae98c3eefdd68de7c4',1,'bt_app_msg_t']]]
+  ['esp_5fbd_5faddr_5ft_70',['esp_bd_addr_t',['../group__a2dp.html#gae1f72542f04666cd97c26732366bf109',1,'external_lists.h']]],
+  ['esp_5fbt_5fdiscovery_5fmode_5ft_71',['esp_bt_discovery_mode_t',['../group__a2dp.html#ga6562796046744d7333ad2c64d2c8557d',1,'external_lists.h']]],
+  ['esp_5fbt_5fgeneral_5fdiscoverable_72',['ESP_BT_GENERAL_DISCOVERABLE',['../group__a2dp.html#gga6562796046744d7333ad2c64d2c8557da4fa5e4d5a80a86974515a8a362989711',1,'external_lists.h']]],
+  ['esp_5fbt_5flimited_5fdiscoverable_73',['ESP_BT_LIMITED_DISCOVERABLE',['../group__a2dp.html#gga6562796046744d7333ad2c64d2c8557da286efd17a5bec03100355acf2dd198de',1,'external_lists.h']]],
+  ['esp_5fbt_5fmode_5fble_74',['ESP_BT_MODE_BLE',['../group__a2dp.html#gga9861ef3ac455a4b2875219d457073de4aedb9bdfab09a30a92faa66165dc35c36',1,'external_lists.h']]],
+  ['esp_5fbt_5fmode_5fbtdm_75',['ESP_BT_MODE_BTDM',['../group__a2dp.html#gga9861ef3ac455a4b2875219d457073de4a3d0aa499ec6f785eeaa44765e8585cb3',1,'external_lists.h']]],
+  ['esp_5fbt_5fmode_5fclassic_5fbt_76',['ESP_BT_MODE_CLASSIC_BT',['../group__a2dp.html#gga9861ef3ac455a4b2875219d457073de4a9fab3664192991a2bd656ba090c1da85',1,'external_lists.h']]],
+  ['esp_5fbt_5fmode_5fidle_77',['ESP_BT_MODE_IDLE',['../group__a2dp.html#gga9861ef3ac455a4b2875219d457073de4a479cab8a16f9567cb00a7940564d3943',1,'external_lists.h']]],
+  ['esp_5fbt_5fmode_5ft_78',['esp_bt_mode_t',['../group__a2dp.html#ga9861ef3ac455a4b2875219d457073de4',1,'external_lists.h']]],
+  ['esp_5fbt_5fnon_5fdiscoverable_79',['ESP_BT_NON_DISCOVERABLE',['../group__a2dp.html#gga6562796046744d7333ad2c64d2c8557da41f6ad4d6283fe67dfeaf9cb3e14da65',1,'external_lists.h']]],
+  ['event_80',['event',['../structbt__app__msg__t.html#a74f4561abb15d9ae98c3eefdd68de7c4',1,'bt_app_msg_t']]]
 ];

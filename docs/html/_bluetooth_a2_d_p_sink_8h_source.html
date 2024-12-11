@@ -278,7 +278,7 @@ $(function() {
 <div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_sink.html#af65219e635fadbbc90f4663b33abd3e0">set_on_data_received</a>(<span class="keywordtype">void</span> (*callBack)());</div>
 <div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160; </div>
 <div class="line"><a name="l00265"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_sink.html#ad25155f02bad11da6c130aae00c8ab9c">  265</a></span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_sink.html#ad25155f02bad11da6c130aae00c8ab9c">set_address_validator</a>(</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;      <span class="keywordtype">bool</span> (*callBack)(esp_bd_addr_t remote_bda)) {</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;      <span class="keywordtype">bool</span> (*callBack)(<a class="code" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a> remote_bda)) {</div>
 <div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;    address_validator = callBack;</div>
 <div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;  }</div>
 <div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160; </div>
@@ -328,7 +328,7 @@ $(function() {
 <div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;    try_reconnect_max_count = count;</div>
 <div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;  }</div>
 <div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160; </div>
-<div class="line"><a name="l00345"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_sink.html#ac08fff859e0ccfbb12cbb6b119dba438">  345</a></span>&#160;  <span class="keyword">virtual</span> esp_bd_addr_t *<a class="code" href="class_bluetooth_a2_d_p_sink.html#ac08fff859e0ccfbb12cbb6b119dba438">get_current_peer_address</a>() { <span class="keywordflow">return</span> &amp;peer_bd_addr; }</div>
+<div class="line"><a name="l00345"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_sink.html#ac08fff859e0ccfbb12cbb6b119dba438">  345</a></span>&#160;  <span class="keyword">virtual</span> <a class="code" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a> *<a class="code" href="class_bluetooth_a2_d_p_sink.html#ac08fff859e0ccfbb12cbb6b119dba438">get_current_peer_address</a>() { <span class="keywordflow">return</span> &amp;peer_bd_addr; }</div>
 <div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160; </div>
 <div class="line"><a name="l00348"></a><span class="lineno"><a class="line" href="class_bluetooth_a2_d_p_sink.html#a452b509a46930ab1ed58188a4181c67b">  348</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_bluetooth_a2_d_p_sink.html#a452b509a46930ab1ed58188a4181c67b">set_rssi_active</a>(<span class="keywordtype">bool</span> active) { rssi_active = active; }</div>
 <div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160; </div>
@@ -411,7 +411,7 @@ $(function() {
 <div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;  uint32_t notif_interval_s = 10;</div>
 <div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;  void (*avrc_rn_volchg_complete_callback)(int) = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;  bool (*address_validator)(esp_bd_addr_t remote_bda) = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;  bool (*address_validator)(<a class="code" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a> remote_bda) = <span class="keyword">nullptr</span>;</div>
 <div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;  void (*sample_rate_callback)(uint16_t rate) = <span class="keyword">nullptr</span>;</div>
 <div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;  <span class="keywordtype">bool</span> swap_left_right = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;  <span class="keywordtype">int</span> try_reconnect_max_count = AUTOCONNECT_TRY_NUM;</div>
@@ -507,7 +507,7 @@ $(function() {
 <div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span> bt_i2s_task_start_up(<span class="keywordtype">void</span>) {}</div>
 <div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span> bt_i2s_task_shut_down(<span class="keywordtype">void</span>) {}</div>
 <div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160; </div>
-<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;  <span class="keyword">virtual</span> esp_err_t esp_a2d_connect(esp_bd_addr_t peer) {</div>
+<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;  <span class="keyword">virtual</span> esp_err_t esp_a2d_connect(<a class="code" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a> peer) {</div>
 <div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;    <span class="keywordflow">return</span> esp_a2d_sink_connect(peer);</div>
 <div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;  }</div>
 <div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160; </div>
@@ -603,6 +603,7 @@ $(function() {
 <div class="ttc" id="aclass_bluetooth_a2_d_p_sink_html_afdc2f08c0547393704fd6fb56bde204f"><div class="ttname"><a href="class_bluetooth_a2_d_p_sink.html#afdc2f08c0547393704fd6fb56bde204f">BluetoothA2DPSink::i2s_task_handler</a></div><div class="ttdeci">virtual void i2s_task_handler(void *arg)</div><div class="ttdoc">dummy functions needed for BluetoothA2DPSinkQueued</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSink.h:540</div></div>
 <div class="ttc" id="agroup__a2dp_html_ga0af05e9d744ec14ee33e345d678e8ade"><div class="ttname"><a href="group__a2dp.html#ga0af05e9d744ec14ee33e345d678e8ade">esp_avrc_rn_event_ids_t</a></div><div class="ttdeci">esp_avrc_rn_event_ids_t</div><div class="ttdoc">AVRC event notification ids.</div><div class="ttdef"><b>Definition:</b> external_lists.h:50</div></div>
 <div class="ttc" id="agroup__a2dp_html_ga89fdf5fb26b1ea6f33d36cc0eebca4fb"><div class="ttname"><a href="group__a2dp.html#ga89fdf5fb26b1ea6f33d36cc0eebca4fb">esp_avrc_playback_stat_t</a></div><div class="ttdeci">esp_avrc_playback_stat_t</div><div class="ttdoc">AVRCP current status of playback.</div><div class="ttdef"><b>Definition:</b> external_lists.h:72</div></div>
+<div class="ttc" id="agroup__a2dp_html_gae1f72542f04666cd97c26732366bf109"><div class="ttname"><a href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a></div><div class="ttdeci">uint8_t esp_bd_addr_t[ESP_BD_ADDR_LEN]</div><div class="ttdoc">Bluetooth address.</div><div class="ttdef"><b>Definition:</b> external_lists.h:107</div></div>
 <div class="ttc" id="astructbt__app__msg__t_html"><div class="ttname"><a href="structbt__app__msg__t.html">bt_app_msg_t</a></div><div class="ttdoc">Internal message to be sent for BluetoothA2DPSink and BluetoothA2DPSource.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPCommon.h:107</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

@@ -123,7 +123,10 @@ typedef struct {
 #define APP_RC_CT_TL_RN_PLAYBACK_CHANGE  (3)
 #define APP_RC_CT_TL_RN_PLAY_POS_CHANGE  (4)
 
-
+/**
+ * @brief Buetooth A2DP Reconnect Status
+ * @ingroup a2dp
+ */ 
 enum ReconnectStatus { NoReconnect, AutoReconnect, IsReconnecting};
 
 /** 

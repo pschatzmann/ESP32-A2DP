@@ -45,11 +45,12 @@ using Channels = Frame;
  * @brief Channel Information
  * @author Phil Schatzmann
  * @copyright Apache License Version 2
+ * @ingroup a2dp
  */
 enum ChannelInfo {
-    Both,
-    Left,
-    Right
+    Both, /*!< left and right */
+    Left, /*!< left channel */
+    Right /*!< right channel */
 };
 
 /**

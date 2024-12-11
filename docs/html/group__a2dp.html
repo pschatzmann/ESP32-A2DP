@@ -62,7 +62,9 @@ $(function() {
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">ESP32 A2DP</div>  </div>
 </div><!--header-->
@@ -91,9 +93,200 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sound_data.html">SoundData</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sound data as byte stream. We support <a class="el" href="class_two_channel_sound_data.html" title="Data is provided in two channels of int16 data: so len is in 4 byte entries (int16 + int16)">TwoChannelSoundData</a> (uint16_t + uint16_t) and <a class="el" href="class_one_channel_sound_data.html" title="1 Channel data is provided as int16 values">OneChannelSoundData</a> which stores the data as array of uint16_t We provide the complete sound data as a simple c array which can be prepared e.g. in the following way.  <a href="class_sound_data.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gabf9f46a0805b93eedaeccb8e512ef7fa"><td class="memItemLeft" align="right" valign="top"><a id="gabf9f46a0805b93eedaeccb8e512ef7fa"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__a2dp.html#gabf9f46a0805b93eedaeccb8e512ef7fa">APP_AV_STATE</a> { <br />
+&#160;&#160;<b>APP_AV_STATE_IDLE</b>
+, <b>APP_AV_STATE_DISCOVERING</b>
+, <b>APP_AV_STATE_DISCOVERED</b>
+, <b>APP_AV_STATE_UNCONNECTED</b>
+, <br />
+&#160;&#160;<b>APP_AV_STATE_CONNECTING</b>
+, <b>APP_AV_STATE_CONNECTED</b>
+, <b>APP_AV_STATE_DISCONNECTING</b>
+<br />
+ }</td></tr>
+<tr class="memdesc:gabf9f46a0805b93eedaeccb8e512ef7fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buetooth A2DP global state. <br /></td></tr>
+<tr class="separator:gabf9f46a0805b93eedaeccb8e512ef7fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadd07e8b0b75b5153b83a4580f2d5c6c0"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__a2dp.html#gadd07e8b0b75b5153b83a4580f2d5c6c0">ChannelInfo</a> { <a class="el" href="group__a2dp.html#ggadd07e8b0b75b5153b83a4580f2d5c6c0aedf69634e61e7ec5d006874d299bc0d4">Both</a>
+, <a class="el" href="group__a2dp.html#ggadd07e8b0b75b5153b83a4580f2d5c6c0a9d4d8b0b72fc2659da772d761a3c5ecb">Left</a>
+, <a class="el" href="group__a2dp.html#ggadd07e8b0b75b5153b83a4580f2d5c6c0ad48f7af8c070184f3774c8e85854eb66">Right</a>
+ }</td></tr>
+<tr class="memdesc:gadd07e8b0b75b5153b83a4580f2d5c6c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Channel Information.  <a href="group__a2dp.html#gadd07e8b0b75b5153b83a4580f2d5c6c0">More...</a><br /></td></tr>
+<tr class="separator:gadd07e8b0b75b5153b83a4580f2d5c6c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga49adfa87b1ad7420b0075a0ac03cc194"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__a2dp.html#ga49adfa87b1ad7420b0075a0ac03cc194">esp_a2d_audio_state_t</a> { <a class="el" href="group__a2dp.html#gga49adfa87b1ad7420b0075a0ac03cc194a4f131f965f55142fa9fb3557f88b8793">ESP_A2D_AUDIO_STATE_SUSPEND</a> = 0
+, <a class="el" href="group__a2dp.html#gga49adfa87b1ad7420b0075a0ac03cc194a1fb2443ca89d24271931c19e1554b088">ESP_A2D_AUDIO_STATE_STARTED</a>
+, <a class="el" href="group__a2dp.html#gga49adfa87b1ad7420b0075a0ac03cc194a2cac45c7b95065ed02420c5a632ab538">ESP_A2D_AUDIO_STATE_STOPPED</a> = ESP_A2D_AUDIO_STATE_SUSPEND
+, <a class="el" href="group__a2dp.html#gga49adfa87b1ad7420b0075a0ac03cc194a2144df52646c47f697ec1f0e4b59686f">ESP_A2D_AUDIO_STATE_REMOTE_SUSPEND</a> = ESP_A2D_AUDIO_STATE_SUSPEND
+ }</td></tr>
+<tr class="memdesc:ga49adfa87b1ad7420b0075a0ac03cc194"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buetooth A2DP datapath states.  <a href="group__a2dp.html#ga49adfa87b1ad7420b0075a0ac03cc194">More...</a><br /></td></tr>
+<tr class="separator:ga49adfa87b1ad7420b0075a0ac03cc194"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga52caa2d1e1c9d880c9651d52ff78a590"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__a2dp.html#ga52caa2d1e1c9d880c9651d52ff78a590">esp_a2d_connection_state_t</a> { <a class="el" href="group__a2dp.html#gga52caa2d1e1c9d880c9651d52ff78a590ab87fa9d0f4c2fa39a931532f0e02e410">ESP_A2D_CONNECTION_STATE_DISCONNECTED</a> = 0
+, <a class="el" href="group__a2dp.html#gga52caa2d1e1c9d880c9651d52ff78a590a3661beedfd8bd0804def35a94a948543">ESP_A2D_CONNECTION_STATE_CONNECTING</a>
+, <a class="el" href="group__a2dp.html#gga52caa2d1e1c9d880c9651d52ff78a590a0248c5f6ba7c85f2044a9a2c79bc57d4">ESP_A2D_CONNECTION_STATE_CONNECTED</a>
+, <a class="el" href="group__a2dp.html#gga52caa2d1e1c9d880c9651d52ff78a590aca30f95d06a691676a9d85a0998ea1e0">ESP_A2D_CONNECTION_STATE_DISCONNECTING</a>
+ }</td></tr>
+<tr class="memdesc:ga52caa2d1e1c9d880c9651d52ff78a590"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buetooth A2DP connection states.  <a href="group__a2dp.html#ga52caa2d1e1c9d880c9651d52ff78a590">More...</a><br /></td></tr>
+<tr class="separator:ga52caa2d1e1c9d880c9651d52ff78a590"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga89fdf5fb26b1ea6f33d36cc0eebca4fb"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__a2dp.html#ga89fdf5fb26b1ea6f33d36cc0eebca4fb">esp_avrc_playback_stat_t</a> { <br />
+&#160;&#160;<a class="el" href="group__a2dp.html#gga89fdf5fb26b1ea6f33d36cc0eebca4fba91a5ffbfe55aba08e1d323848e719fd7">ESP_AVRC_PLAYBACK_STOPPED</a> = 0
+, <a class="el" href="group__a2dp.html#gga89fdf5fb26b1ea6f33d36cc0eebca4fba080ee68b71dd63f15c1f4f28ad9c7fec">ESP_AVRC_PLAYBACK_PLAYING</a> = 1
+, <a class="el" href="group__a2dp.html#gga89fdf5fb26b1ea6f33d36cc0eebca4fbaad9f30b7d23101c762b775f083e76a80">ESP_AVRC_PLAYBACK_PAUSED</a> = 2
+, <a class="el" href="group__a2dp.html#gga89fdf5fb26b1ea6f33d36cc0eebca4fba4b13603deb02c5bc0a9f60bdbe3f55d9">ESP_AVRC_PLAYBACK_FWD_SEEK</a> = 3
+, <br />
+&#160;&#160;<a class="el" href="group__a2dp.html#gga89fdf5fb26b1ea6f33d36cc0eebca4fba98c8358017f0694e2af18dcecf87eb6e">ESP_AVRC_PLAYBACK_REV_SEEK</a> = 4
+, <a class="el" href="group__a2dp.html#gga89fdf5fb26b1ea6f33d36cc0eebca4fbab141fa00060af447da20081cb396f02d">ESP_AVRC_PLAYBACK_ERROR</a> = 0xFF
+<br />
+ }</td></tr>
+<tr class="memdesc:ga89fdf5fb26b1ea6f33d36cc0eebca4fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">AVRCP current status of playback.  <a href="group__a2dp.html#ga89fdf5fb26b1ea6f33d36cc0eebca4fb">More...</a><br /></td></tr>
+<tr class="separator:ga89fdf5fb26b1ea6f33d36cc0eebca4fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0af05e9d744ec14ee33e345d678e8ade"><td class="memItemLeft" align="right" valign="top"><a id="ga0af05e9d744ec14ee33e345d678e8ade"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__a2dp.html#ga0af05e9d744ec14ee33e345d678e8ade">esp_avrc_rn_event_ids_t</a> </td></tr>
+<tr class="memdesc:ga0af05e9d744ec14ee33e345d678e8ade"><td class="mdescLeft">&#160;</td><td class="mdescRight">AVRC event notification ids. <br /></td></tr>
+<tr class="separator:ga0af05e9d744ec14ee33e345d678e8ade"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga28a6ac1cbaf47c9d341da5391e2e72b3"><td class="memItemLeft" align="right" valign="top"><a id="ga28a6ac1cbaf47c9d341da5391e2e72b3"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__a2dp.html#ga28a6ac1cbaf47c9d341da5391e2e72b3">ReconnectStatus</a> { <b>NoReconnect</b>
+, <b>AutoReconnect</b>
+, <b>IsReconnecting</b>
+ }</td></tr>
+<tr class="memdesc:ga28a6ac1cbaf47c9d341da5391e2e72b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buetooth A2DP Reconnect Status. <br /></td></tr>
+<tr class="separator:ga28a6ac1cbaf47c9d341da5391e2e72b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:gab981cf845089ef19df871466126b6f14"><td class="memItemLeft" align="right" valign="top">enum <a class="el" href="group__a2dp.html#ga0af05e9d744ec14ee33e345d678e8ade">esp_avrc_rn_event_ids_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__a2dp.html#gab981cf845089ef19df871466126b6f14">ESP_AVRC_RN_PLAY_STATUS_CHANGE</a> = 0x01</td></tr>
+<tr class="memdesc:gab981cf845089ef19df871466126b6f14"><td class="mdescLeft">&#160;</td><td class="mdescRight">AVRC event notification ids.  <a href="group__a2dp.html#gab981cf845089ef19df871466126b6f14">More...</a><br /></td></tr>
+<tr class="separator:gab981cf845089ef19df871466126b6f14"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>A Simple ESP32 Bluetooth A2DP Library (to implement a Music Receiver or Sender) that supports Arduino, PlatformIO and Espressif IDF. </p>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="gadd07e8b0b75b5153b83a4580f2d5c6c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadd07e8b0b75b5153b83a4580f2d5c6c0">&#9670;&nbsp;</a></span>ChannelInfo</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group__a2dp.html#gadd07e8b0b75b5153b83a4580f2d5c6c0">ChannelInfo</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Channel Information. </p>
+<dl class="section author"><dt>Author</dt><dd>Phil Schatzmann </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>Apache License Version 2 </dd></dl>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggadd07e8b0b75b5153b83a4580f2d5c6c0aedf69634e61e7ec5d006874d299bc0d4"></a>Both&#160;</td><td class="fielddoc"><p>left and right </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadd07e8b0b75b5153b83a4580f2d5c6c0a9d4d8b0b72fc2659da772d761a3c5ecb"></a>Left&#160;</td><td class="fielddoc"><p>left channel </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadd07e8b0b75b5153b83a4580f2d5c6c0ad48f7af8c070184f3774c8e85854eb66"></a>Right&#160;</td><td class="fielddoc"><p>right channel </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga49adfa87b1ad7420b0075a0ac03cc194"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga49adfa87b1ad7420b0075a0ac03cc194">&#9670;&nbsp;</a></span>esp_a2d_audio_state_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group__a2dp.html#ga49adfa87b1ad7420b0075a0ac03cc194">esp_a2d_audio_state_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Buetooth A2DP datapath states. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga49adfa87b1ad7420b0075a0ac03cc194a4f131f965f55142fa9fb3557f88b8793"></a>ESP_A2D_AUDIO_STATE_SUSPEND&#160;</td><td class="fielddoc"><p>audio stream datapath suspended by remote device </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga49adfa87b1ad7420b0075a0ac03cc194a1fb2443ca89d24271931c19e1554b088"></a>ESP_A2D_AUDIO_STATE_STARTED&#160;</td><td class="fielddoc"><p>audio stream datapath started </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga49adfa87b1ad7420b0075a0ac03cc194a2cac45c7b95065ed02420c5a632ab538"></a>ESP_A2D_AUDIO_STATE_STOPPED&#160;</td><td class="fielddoc"><dl class="section note"><dt>Note</dt><dd>Deprecated </dd></dl>
+</td></tr>
+<tr><td class="fieldname"><a id="gga49adfa87b1ad7420b0075a0ac03cc194a2144df52646c47f697ec1f0e4b59686f"></a>ESP_A2D_AUDIO_STATE_REMOTE_SUSPEND&#160;</td><td class="fielddoc"><dl class="section note"><dt>Note</dt><dd>Deprecated </dd></dl>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga52caa2d1e1c9d880c9651d52ff78a590"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga52caa2d1e1c9d880c9651d52ff78a590">&#9670;&nbsp;</a></span>esp_a2d_connection_state_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group__a2dp.html#ga52caa2d1e1c9d880c9651d52ff78a590">esp_a2d_connection_state_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Buetooth A2DP connection states. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga52caa2d1e1c9d880c9651d52ff78a590ab87fa9d0f4c2fa39a931532f0e02e410"></a>ESP_A2D_CONNECTION_STATE_DISCONNECTED&#160;</td><td class="fielddoc"><p>connection released <br  />
+ </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga52caa2d1e1c9d880c9651d52ff78a590a3661beedfd8bd0804def35a94a948543"></a>ESP_A2D_CONNECTION_STATE_CONNECTING&#160;</td><td class="fielddoc"><p>connecting remote device </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga52caa2d1e1c9d880c9651d52ff78a590a0248c5f6ba7c85f2044a9a2c79bc57d4"></a>ESP_A2D_CONNECTION_STATE_CONNECTED&#160;</td><td class="fielddoc"><p>connection established </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga52caa2d1e1c9d880c9651d52ff78a590aca30f95d06a691676a9d85a0998ea1e0"></a>ESP_A2D_CONNECTION_STATE_DISCONNECTING&#160;</td><td class="fielddoc"><p>disconnecting remote device </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga89fdf5fb26b1ea6f33d36cc0eebca4fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga89fdf5fb26b1ea6f33d36cc0eebca4fb">&#9670;&nbsp;</a></span>esp_avrc_playback_stat_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group__a2dp.html#ga89fdf5fb26b1ea6f33d36cc0eebca4fb">esp_avrc_playback_stat_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>AVRCP current status of playback. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga89fdf5fb26b1ea6f33d36cc0eebca4fba91a5ffbfe55aba08e1d323848e719fd7"></a>ESP_AVRC_PLAYBACK_STOPPED&#160;</td><td class="fielddoc"><p>stopped </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga89fdf5fb26b1ea6f33d36cc0eebca4fba080ee68b71dd63f15c1f4f28ad9c7fec"></a>ESP_AVRC_PLAYBACK_PLAYING&#160;</td><td class="fielddoc"><p>playing </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga89fdf5fb26b1ea6f33d36cc0eebca4fbaad9f30b7d23101c762b775f083e76a80"></a>ESP_AVRC_PLAYBACK_PAUSED&#160;</td><td class="fielddoc"><p>paused </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga89fdf5fb26b1ea6f33d36cc0eebca4fba4b13603deb02c5bc0a9f60bdbe3f55d9"></a>ESP_AVRC_PLAYBACK_FWD_SEEK&#160;</td><td class="fielddoc"><p>forward seek </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga89fdf5fb26b1ea6f33d36cc0eebca4fba98c8358017f0694e2af18dcecf87eb6e"></a>ESP_AVRC_PLAYBACK_REV_SEEK&#160;</td><td class="fielddoc"><p>reverse seek </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga89fdf5fb26b1ea6f33d36cc0eebca4fbab141fa00060af447da20081cb396f02d"></a>ESP_AVRC_PLAYBACK_ERROR&#160;</td><td class="fielddoc"><p>error </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="gab981cf845089ef19df871466126b6f14"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab981cf845089ef19df871466126b6f14">&#9670;&nbsp;</a></span>ESP_AVRC_RN_PLAY_STATUS_CHANGE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ESP_AVRC_RN_PLAY_STATUS_CHANGE = 0x01</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>AVRC event notification ids. </p>
+<p>track status change, eg. from playing to paused </p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

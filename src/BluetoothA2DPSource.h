@@ -44,7 +44,10 @@ extern "C" int32_t ccall_bt_app_a2d_data_cb(uint8_t *data, int32_t len);
 extern "C" int32_t ccall_get_channel_data_wrapper(uint8_t *data, int32_t len) ;
 extern "C" int32_t ccall_get_data_default(uint8_t *data, int32_t len) ;
 
-/* A2DP global state */
+/**
+ * @brief Buetooth A2DP global state
+ * @ingroup a2dp
+ */ 
 enum APP_AV_STATE {
   APP_AV_STATE_IDLE,
   APP_AV_STATE_DISCOVERING,

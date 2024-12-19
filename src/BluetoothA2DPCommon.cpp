@@ -32,6 +32,7 @@ void BluetoothA2DPCommon::set_auto_reconnect(bool active){
 /// Reconnects to the last device
 bool BluetoothA2DPCommon::reconnect() {
     if (has_last_connection()) {
+        is_target_status_active = true;
         is_autoreconnect_allowed = true;
         reconnect_status = IsReconnecting;
         reconnect_timout = get_millis() + default_reconnect_timout;
@@ -66,6 +67,7 @@ void BluetoothA2DPCommon::disconnect()
 {
     ESP_LOGI(BT_AV_TAG, "disconect a2d: %s", to_str(last_connection));
 
+    is_target_status_active = false;
     // Prevent automatic reconnect
     is_autoreconnect_allowed = false;
 

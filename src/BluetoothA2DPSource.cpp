@@ -700,9 +700,12 @@ void BluetoothA2DPSource::bt_app_av_state_unconnected_hdlr(uint16_t event,
   case ESP_A2D_MEDIA_CTRL_ACK_EVT:
     break;
   case BT_APP_HEART_BEAT_EVT: {
-    esp_a2d_connect(peer_bd_addr);
-    s_a2d_state = APP_AV_STATE_CONNECTING;
-    s_connecting_heatbeat_count = 0;
+    // prevent reconnect after disconnect()
+    if (is_target_status_active) {
+      esp_a2d_connect(peer_bd_addr);  
+      s_a2d_state = APP_AV_STATE_CONNECTING;
+      s_connecting_heatbeat_count = 0;
+    } 
     break;
   }
   // case ESP_A2D_REPORT_SNK_DELAY_VALUE_EVT: {

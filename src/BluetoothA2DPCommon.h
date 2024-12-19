@@ -288,6 +288,7 @@ class BluetoothA2DPCommon {
         A2DPVolumeControl *volume_control_ptr = nullptr;
         esp_bd_addr_t last_connection = {0,0,0,0,0,0};
         bool is_start_disabled = false;
+        bool is_target_status_active = true;
         void (*connection_state_callback)(esp_a2d_connection_state_t state, void* obj) = nullptr;
         void (*audio_state_callback)(esp_a2d_audio_state_t state, void* obj) = nullptr;
         void (*audio_state_callback_post)(esp_a2d_audio_state_t state, void* obj) = nullptr;

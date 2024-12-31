@@ -337,6 +337,7 @@ class BluetoothA2DPCommon {
 
         virtual bool bt_start();
         virtual esp_err_t bluedroid_init();
+        virtual esp_err_t esp_a2d_disconnect(esp_bd_addr_t remote_bda) = 0;
         
 };
 

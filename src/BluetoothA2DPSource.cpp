@@ -307,12 +307,12 @@ void BluetoothA2DPSource::bt_app_task_handler(void *arg) {
                msg.event);
 
       switch (msg.sig) {
-      case BT_APP_SIG_WORK_DISPATCH:
-        bt_app_work_dispatched(&msg);
-        break;
-      default:
-        ESP_LOGW(BT_APP_TAG, "%s, unhandled signal: %d", __func__, msg.sig);
-        break;
+        case BT_APP_SIG_WORK_DISPATCH:
+          bt_app_work_dispatched(&msg);
+          break;
+        default:
+          ESP_LOGW(BT_APP_TAG, "%s, unhandled signal: %d", __func__, msg.sig);
+          break;
       }
 
       if (msg.param) {
@@ -545,9 +545,17 @@ void BluetoothA2DPSource::bt_app_gap_callback(esp_bt_gap_cb_event_t event,
     ESP_LOGI( BT_AV_TAG,"ESP_BT_GAP_ACL_CONN_CMPL_STAT_EVT");
     break;
 
+  case ESP_BT_GAP_ACL_DISCONN_CMPL_STAT_EVT:
+    ESP_LOGI( BT_AV_TAG,"ESP_BT_GAP_ACL_DISCONN_CMPL_STAT_EVT");
+    break;
+
   case ESP_BT_GAP_MODE_CHG_EVT:
     ESP_LOGI(BT_AV_TAG, "ESP_BT_GAP_MODE_CHG_EVT mode:%d",
              param->mode_chg.mode);
+        break;
+
+  case ESP_BT_GAP_ENC_CHG_EVT:
+    ESP_LOGI(BT_AV_TAG, "ESP_BT_GAP_ENC_CHG_EVT");
     break;
 #endif
 
@@ -563,56 +571,57 @@ void BluetoothA2DPSource::bt_av_hdl_stack_evt(uint16_t event, void *p_param) {
   ESP_LOGD(BT_AV_TAG, "%s event: %d", __func__, event);
 
   switch (event) {
-  /* when stack up worked, this event comes */
-  case BT_APP_EVT_STACK_UP: {
-    // set up device name
-    esp_bt_gap_set_device_name(dev_name);
+    /* when stack up worked, this event comes */
+    case BT_APP_EVT_STACK_UP: {
+      // set up device name
+      esp_bt_gap_set_device_name(dev_name);
 
-    // register GAP callback function
-    esp_bt_gap_register_callback(ccall_bt_app_gap_callback);
+      // register GAP callback function
+      esp_bt_gap_register_callback(ccall_bt_app_gap_callback);
 
-    // initialize AVRCP controller
-    esp_avrc_ct_init();
-    esp_avrc_ct_register_callback(ccall_bt_app_rc_ct_cb);
+      // initialize AVRCP controller
+      esp_avrc_ct_init();
+      esp_avrc_ct_register_callback(ccall_bt_app_rc_ct_cb);
 
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
-    esp_avrc_rn_evt_cap_mask_t evt_set = {0};
-    esp_avrc_rn_evt_bit_mask_operation(ESP_AVRC_BIT_MASK_OP_SET, &evt_set,
-                                       ESP_AVRC_RN_VOLUME_CHANGE);
-    assert(esp_avrc_tg_set_rn_evt_cap(&evt_set) == ESP_OK);
+      esp_avrc_rn_evt_cap_mask_t evt_set = {0};
+      esp_avrc_rn_evt_bit_mask_operation(ESP_AVRC_BIT_MASK_OP_SET, &evt_set,
+                                        ESP_AVRC_RN_VOLUME_CHANGE);
+      assert(esp_avrc_tg_set_rn_evt_cap(&evt_set) == ESP_OK);
 #endif
 
-    esp_a2d_source_init();
-    esp_a2d_register_callback(&ccall_bt_app_a2d_cb);
-    esp_a2d_source_register_data_callback(&ccall_bt_app_a2d_data_cb);
+      esp_a2d_source_init();
+      esp_a2d_register_callback(&ccall_bt_app_a2d_cb);
+      esp_a2d_source_register_data_callback(&ccall_bt_app_a2d_data_cb);
 
-    /* Avoid the state error of s_a2d_state caused by the connection initiated
-     * by the peer device. */
-    //esp_bt_gap_set_scan_mode(ESP_BT_NON_CONNECTABLE, ESP_BT_NON_DISCOVERABLE);
-    set_scan_mode_connectable(false);
-    if (reconnect_status == AutoReconnect && has_last_connection()) {
-      ESP_LOGW(BT_AV_TAG, "Reconnecting to %s", to_str(last_connection));
-      memcpy(peer_bd_addr, last_connection, ESP_BD_ADDR_LEN);
-      connect_to(last_connection);
-      s_a2d_state = APP_AV_STATE_CONNECTING;
-    } else {
+      /* Avoid the state error of s_a2d_state caused by the connection initiated
+      * by the peer device. */
+      //esp_bt_gap_set_scan_mode(ESP_BT_NON_CONNECTABLE, ESP_BT_NON_DISCOVERABLE);
+      set_scan_mode_connectable(false);
 
-      ESP_LOGI(BT_AV_TAG, "Starting device discovery...");
-      s_a2d_state = APP_AV_STATE_DISCOVERING;
-      esp_bt_gap_start_discovery(ESP_BT_INQ_MODE_GENERAL_INQUIRY, 10, 0);
+      if (reconnect_status == AutoReconnect && has_last_connection()) {
+        ESP_LOGW(BT_AV_TAG, "Reconnecting to %s", to_str(last_connection));
+        memcpy(peer_bd_addr, last_connection, ESP_BD_ADDR_LEN);
+        connect_to(last_connection);
+        s_a2d_state = APP_AV_STATE_CONNECTING;
+      } else {
+
+        ESP_LOGI(BT_AV_TAG, "Starting device discovery...");
+        s_a2d_state = APP_AV_STATE_DISCOVERING;
+        esp_bt_gap_start_discovery(ESP_BT_INQ_MODE_GENERAL_INQUIRY, 10, 0);
+      }
+      /* create and start heart beat timer */
+        int tmr_id = 0;
+        s_tmr = xTimerCreate("connTmr", (10000 / portTICK_PERIOD_MS), pdTRUE,
+                            (void *)&tmr_id, ccall_a2d_app_heart_beat);
+        xTimerStart(s_tmr, portMAX_DELAY);
+      break;
     }
-    /* create and start heart beat timer */
-      int tmr_id = 0;
-      s_tmr = xTimerCreate("connTmr", (10000 / portTICK_PERIOD_MS), pdTRUE,
-                           (void *)&tmr_id, ccall_a2d_app_heart_beat);
-      xTimerStart(s_tmr, portMAX_DELAY);
-    break;
-  }
-  /* other */
-  default: {
-    ESP_LOGW(BT_AV_TAG, "%s unhandled event: %d", __func__, event);
-    break;
-  }
+    /* other */
+    default: {
+      ESP_LOGW(BT_AV_TAG, "%s unhandled event: %d", __func__, event);
+      break;
+    }
   }
 }
 
@@ -698,11 +707,15 @@ void BluetoothA2DPSource::bt_app_av_state_unconnected_hdlr(uint16_t event,
   case ESP_A2D_AUDIO_STATE_EVT:
   case ESP_A2D_AUDIO_CFG_EVT:
   case ESP_A2D_MEDIA_CTRL_ACK_EVT:
+    ESP_LOGW(BT_AV_TAG,"Events unprocessed: %d", event);
+
     break;
   case BT_APP_HEART_BEAT_EVT: {
     // prevent reconnect after disconnect()
     if (is_target_status_active) {
-      esp_a2d_connect(peer_bd_addr);  
+      if (esp_a2d_connect(peer_bd_addr)!=ESP_OK){
+          ESP_LOGE(BT_AV_TAG, "esp_a2d_connect failed");
+      };  
       s_a2d_state = APP_AV_STATE_CONNECTING;
       s_connecting_heatbeat_count = 0;
     } 
@@ -741,8 +754,14 @@ void BluetoothA2DPSource::bt_app_av_state_connecting_hdlr(uint16_t event,
   case ESP_A2D_AUDIO_STATE_EVT:
   case ESP_A2D_AUDIO_CFG_EVT:
   case ESP_A2D_MEDIA_CTRL_ACK_EVT:
-    break;
+      // if we got here -> we must be still connected
+      // This is called when we request to reconnect
+      s_a2d_state = APP_AV_STATE_CONNECTED;
+      esp_a2d_media_ctrl(ESP_A2D_MEDIA_CTRL_CHECK_SRC_RDY);
+      break;
   case BT_APP_HEART_BEAT_EVT:
+    // we might be still active
+    esp_a2d_media_ctrl(ESP_A2D_MEDIA_CTRL_CHECK_SRC_RDY);
     /**
      * Switch state to APP_AV_STATE_UNCONNECTED
      * when connecting lasts more than 2 heart beat intervals.
@@ -824,6 +843,7 @@ void BluetoothA2DPSource::bt_app_av_state_disconnecting_hdlr(uint16_t event,
   case ESP_A2D_AUDIO_CFG_EVT:
   case ESP_A2D_MEDIA_CTRL_ACK_EVT:
   case BT_APP_HEART_BEAT_EVT:
+    ESP_LOGW(BT_AV_TAG, "Events unprocessed");
     break;
   // case ESP_A2D_REPORT_SNK_DELAY_VALUE_EVT: {
   //     a2d = (esp_a2d_cb_param_t *)(param);
@@ -874,6 +894,7 @@ void BluetoothA2DPSource::bt_app_av_media_proc(uint16_t event, void *param) {
   }
 
   case APP_AV_MEDIA_STATE_STARTED: {
+    ESP_LOGI(BT_AV_TAG, "a2dp media started");
     break;
   }
 

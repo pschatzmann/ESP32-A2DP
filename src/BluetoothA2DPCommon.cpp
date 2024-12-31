@@ -71,7 +71,7 @@ void BluetoothA2DPCommon::disconnect()
     // Prevent automatic reconnect
     is_autoreconnect_allowed = false;
 
-    esp_err_t status = esp_a2d_sink_disconnect(last_connection);
+    esp_err_t status = esp_a2d_disconnect(last_connection);
     if (status == ESP_FAIL) {
         ESP_LOGE(BT_AV_TAG, "Failed disconnecting to device!");
     }

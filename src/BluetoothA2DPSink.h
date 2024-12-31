@@ -541,8 +541,11 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   virtual void bt_i2s_task_start_up(void) {}
   virtual void bt_i2s_task_shut_down(void) {}
 
-  virtual esp_err_t esp_a2d_connect(esp_bd_addr_t peer) {
+  esp_err_t esp_a2d_connect(esp_bd_addr_t peer) override {
     return esp_a2d_sink_connect(peer);
+  }
+  esp_err_t esp_a2d_disconnect(esp_bd_addr_t remote_bda) override {
+    return esp_a2d_sink_disconnect(remote_bda);
   }
 
   void set_scan_mode_connectable_default() override {
@@ -550,5 +553,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   }
 
   virtual void set_i2s_active(bool active);
+
 };
 

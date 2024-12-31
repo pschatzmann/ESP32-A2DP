@@ -208,7 +208,6 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
     const char *dev_name = "ESP32_A2DP_SRC";
 
     bool ssp_enabled=false;
-    bool is_connecting = false;
     std::vector<const char*> bt_names;
 
     esp_bt_pin_type_t pin_type;
@@ -290,9 +289,17 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
     /// returns true for ESP_BT_COD_SRVC_RENDERING,ESP_BT_COD_SRVC_AUDIO,ESP_BT_COD_SRVC_TELEPHONY
     virtual bool is_valid_cod_service(uint32_t cod);
 
-    virtual esp_err_t esp_a2d_connect(esp_bd_addr_t peer) {
-        ESP_LOGI(BT_AV_TAG, "a2dp connecting to: %s", to_str(peer));
+    esp_err_t esp_a2d_connect(esp_bd_addr_t peer) override {
+        ESP_LOGI(BT_AV_TAG, "==> a2dp connecting to: %s", to_str(peer));
+        s_media_state = 0;
+        s_a2d_state = APP_AV_STATE_CONNECTING;
         return esp_a2d_source_connect(peer);
+    }
+
+    esp_err_t esp_a2d_disconnect(esp_bd_addr_t peer) override {
+        ESP_LOGI(BT_AV_TAG, "==> a2dp esp_a2d_source_disconnect from: %s", to_str(peer));
+        esp_a2d_media_ctrl(ESP_A2D_MEDIA_CTRL_STOP);
+        return esp_a2d_source_disconnect(peer);
     }
 
     /// converts a APP_AV_STATE_ENUM to a string
@@ -303,7 +310,6 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
     void set_scan_mode_connectable_default() override {
         set_scan_mode_connectable(false);
     }
-
 
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
     void bt_av_notify_evt_handler(uint8_t event, esp_avrc_rn_param_t *param);

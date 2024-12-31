@@ -203,11 +203,6 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
       this->valid_cod_services = filter;
     }
 
-    /// Define mask with ESP_AVRC_RN_PLAY_STATUS_CHANGE | ESP_AVRC_RN_TRACK_CHANGE | ESP_AVRC_RN_TRACK_REACHED_END | ESP_AVRC_RN_TRACK_REACHED_START | ESP_AVRC_RN_PLAY_POS_CHANGED | ESP_AVRC_RN_BATTERY_STATUS_CHANGE | ESP_AVRC_RN_SYSTEM_STATUS_CHANGE | ESP_AVRC_RN_APP_SETTING_CHANGE | ESP_AVRC_RN_NOW_PLAYING_CHANGE | ESP_AVRC_RN_AVAILABLE_PLAYERS_CHANGE | ESP_AVRC_RN_ADDRESSED_PLAYER_CHANGE | ESP_AVRC_RN_UIDS_CHANGE|ESP_AVRC_RN_VOLUME_CHANGE
-    virtual void set_avrc_rn_event_mask(int mask){
-      avrc_operations = (esp_avrc_rn_event_ids_t) mask;
-    }
-
   protected:
     music_data_channels_cb_t data_stream_channels_callback;
     const char *dev_name = "ESP32_A2DP_SRC";
@@ -240,7 +235,6 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
     music_data_cb_t data_stream_callback;
     bool discovery_active = false;
     uint16_t valid_cod_services = ESP_BT_COD_SRVC_RENDERING | ESP_BT_COD_SRVC_AUDIO | ESP_BT_COD_SRVC_TELEPHONY;
-    esp_avrc_rn_event_ids_t avrc_operations = (esp_avrc_rn_event_ids_t) (ESP_AVRC_RN_VOLUME_CHANGE | ESP_AVRC_RN_PLAY_STATUS_CHANGE);
 
     bool(*ssid_callback)(const char*ssid, esp_bd_addr_t address, int rrsi) = nullptr;
     void(*discovery_mode_callback)(esp_bt_gap_discovery_state_t discoveryMode) = nullptr;

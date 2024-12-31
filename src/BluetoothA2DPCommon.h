@@ -276,6 +276,9 @@ class BluetoothA2DPCommon {
         /// Provides the time in milliseconds since the last system boot
         unsigned long get_millis();
 
+        /// Define mask with ESP_AVRC_RN_PLAY_STATUS_CHANGE | ESP_AVRC_RN_TRACK_CHANGE | ESP_AVRC_RN_TRACK_REACHED_END | ESP_AVRC_RN_TRACK_REACHED_START | ESP_AVRC_RN_PLAY_POS_CHANGED | ESP_AVRC_RN_BATTERY_STATUS_CHANGE | ESP_AVRC_RN_SYSTEM_STATUS_CHANGE | ESP_AVRC_RN_APP_SETTING_CHANGE | ESP_AVRC_RN_NOW_PLAYING_CHANGE | ESP_AVRC_RN_AVAILABLE_PLAYERS_CHANGE | ESP_AVRC_RN_ADDRESSED_PLAYER_CHANGE | ESP_AVRC_RN_UIDS_CHANGE|ESP_AVRC_RN_VOLUME_CHANGE
+        virtual void set_avrc_rn_event_mask(int mask) {avrc_rn_events = (esp_avrc_rn_event_ids_t) mask;}
+
     protected:
         const char* bt_name = {0};
         esp_bd_addr_t peer_bd_addr;
@@ -309,6 +312,7 @@ class BluetoothA2DPCommon {
         int event_queue_size = 20;
         int event_stack_size = 3072;
         esp_bt_mode_t bt_mode  = ESP_BT_MODE_CLASSIC_BT;
+        esp_avrc_rn_event_ids_t avrc_rn_events = (esp_avrc_rn_event_ids_t) (ESP_AVRC_RN_VOLUME_CHANGE );
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
         esp_bt_discovery_mode_t discoverability = ESP_BT_GENERAL_DISCOVERABLE;
 #endif

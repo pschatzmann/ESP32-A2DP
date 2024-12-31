@@ -1110,6 +1110,14 @@ void BluetoothA2DPSink::rewind() {
   execute_avrc_command(ESP_AVRC_PT_CMD_REWIND);
 }
 
+void BluetoothA2DPSink::volume_up() {
+  execute_avrc_command(ESP_AVRC_PT_CMD_VOL_UP);
+}
+
+void BluetoothA2DPSink::volume_down() {
+  execute_avrc_command(ESP_AVRC_PT_CMD_VOL_DOWN);
+}
+
 void BluetoothA2DPSink::set_volume(uint8_t volume) {
   // limit the volume to 127
   s_volume = std::min((int)volume, 0x7f);

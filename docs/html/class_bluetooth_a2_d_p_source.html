@@ -371,9 +371,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>bt_av_volume_changed<
 <tr class="memitem:a8be3cf8679b236293658c06cd1ed010b"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a8be3cf8679b236293658c06cd1ed010b">bt_start</a> ()</td></tr>
 <tr class="memdesc:a8be3cf8679b236293658c06cd1ed010b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Startup logic as implemented by Arduino.  <a href="class_bluetooth_a2_d_p_common.html#a8be3cf8679b236293658c06cd1ed010b">More...</a><br /></td></tr>
 <tr class="separator:a8be3cf8679b236293658c06cd1ed010b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2626298e32edfc399ddb0bf5efc32fc7"><td class="memItemLeft" align="right" valign="top"><a id="a2626298e32edfc399ddb0bf5efc32fc7"></a>
-virtual esp_err_t&#160;</td><td class="memItemRight" valign="bottom"><b>esp_a2d_connect</b> (<a class="el" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a> peer)</td></tr>
-<tr class="separator:a2626298e32edfc399ddb0bf5efc32fc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3956be0a376b8a0b8c5deca08c8ae7a0"><td class="memItemLeft" align="right" valign="top"><a id="a3956be0a376b8a0b8c5deca08c8ae7a0"></a>
+esp_err_t&#160;</td><td class="memItemRight" valign="bottom"><b>esp_a2d_connect</b> (<a class="el" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a> peer) override</td></tr>
+<tr class="separator:a3956be0a376b8a0b8c5deca08c8ae7a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e8eaac56cce4822b4241e5d55aa0413"><td class="memItemLeft" align="right" valign="top"><a id="a7e8eaac56cce4822b4241e5d55aa0413"></a>
+esp_err_t&#160;</td><td class="memItemRight" valign="bottom"><b>esp_a2d_disconnect</b> (<a class="el" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a> peer) override</td></tr>
+<tr class="separator:a7e8eaac56cce4822b4241e5d55aa0413"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adf9c78e8b30f3c3faa74001bf102cef3"><td class="memItemLeft" align="right" valign="top"><a id="adf9c78e8b30f3c3faa74001bf102cef3"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>filter_inquiry_scan_result</b> (esp_bt_gap_cb_param_t *param)</td></tr>
 <tr class="separator:adf9c78e8b30f3c3faa74001bf102cef3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -501,12 +504,12 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>has_sound_data_flag</
 <tr class="memitem:ad383ee1fca4929326b02b671aa03ee44"><td class="memItemLeft" align="right" valign="top"><a id="ad383ee1fca4929326b02b671aa03ee44"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_autoreconnect_allowed</b> = false</td></tr>
 <tr class="separator:ad383ee1fca4929326b02b671aa03ee44"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e23d7e31a65cb560050bb2a4a0bb08c"><td class="memItemLeft" align="right" valign="top"><a id="a2e23d7e31a65cb560050bb2a4a0bb08c"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_connecting</b> = false</td></tr>
-<tr class="separator:a2e23d7e31a65cb560050bb2a4a0bb08c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a44c96686a0e2d7da22805a1c9fb7ab85"><td class="memItemLeft" align="right" valign="top"><a id="a44c96686a0e2d7da22805a1c9fb7ab85"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_start_disabled</b> = false</td></tr>
 <tr class="separator:a44c96686a0e2d7da22805a1c9fb7ab85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeafe33810da405203ac3a38de6b43086"><td class="memItemLeft" align="right" valign="top"><a id="aeafe33810da405203ac3a38de6b43086"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_target_status_active</b> = true</td></tr>
+<tr class="separator:aeafe33810da405203ac3a38de6b43086"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa3f1abcd092657807bd4a4cab205ba88"><td class="memItemLeft" align="right" valign="top"><a id="aa3f1abcd092657807bd4a4cab205ba88"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_volume_used</b> = false</td></tr>
 <tr class="separator:aa3f1abcd092657807bd4a4cab205ba88"><td class="memSeparator" colspan="2">&#160;</td></tr>

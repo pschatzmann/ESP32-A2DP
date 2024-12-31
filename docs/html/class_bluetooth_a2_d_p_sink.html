@@ -425,6 +425,14 @@ const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a3b43ee67031c300d07638f9c969fa4ef">update_rssi</a> ()</td></tr>
 <tr class="memdesc:a3b43ee67031c300d07638f9c969fa4ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Requests an update of the rssi delta value. <br /></td></tr>
 <tr class="separator:a3b43ee67031c300d07638f9c969fa4ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae823f16ed3ee17cf9c6d1731b9d19a34"><td class="memItemLeft" align="right" valign="top"><a id="ae823f16ed3ee17cf9c6d1731b9d19a34"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#ae823f16ed3ee17cf9c6d1731b9d19a34">volume_down</a> ()</td></tr>
+<tr class="memdesc:ae823f16ed3ee17cf9c6d1731b9d19a34"><td class="mdescLeft">&#160;</td><td class="mdescRight">AVRC decrease the volume. <br /></td></tr>
+<tr class="separator:ae823f16ed3ee17cf9c6d1731b9d19a34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42866994c045e27584e0438eb2d4cc79"><td class="memItemLeft" align="right" valign="top"><a id="a42866994c045e27584e0438eb2d4cc79"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a42866994c045e27584e0438eb2d4cc79">volume_up</a> ()</td></tr>
+<tr class="memdesc:a42866994c045e27584e0438eb2d4cc79"><td class="mdescLeft">&#160;</td><td class="mdescRight">AVRC increase the volume. <br /></td></tr>
+<tr class="separator:a42866994c045e27584e0438eb2d4cc79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -499,9 +507,12 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>bt_i2s_task_s
 <tr class="memitem:a8be3cf8679b236293658c06cd1ed010b"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a8be3cf8679b236293658c06cd1ed010b">bt_start</a> ()</td></tr>
 <tr class="memdesc:a8be3cf8679b236293658c06cd1ed010b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Startup logic as implemented by Arduino.  <a href="class_bluetooth_a2_d_p_common.html#a8be3cf8679b236293658c06cd1ed010b">More...</a><br /></td></tr>
 <tr class="separator:a8be3cf8679b236293658c06cd1ed010b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a49cd09f400b4e6cdffc89dd92ab23455"><td class="memItemLeft" align="right" valign="top"><a id="a49cd09f400b4e6cdffc89dd92ab23455"></a>
-virtual esp_err_t&#160;</td><td class="memItemRight" valign="bottom"><b>esp_a2d_connect</b> (<a class="el" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a> peer)</td></tr>
-<tr class="separator:a49cd09f400b4e6cdffc89dd92ab23455"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4cb5a9aa6654ad8e6f518a36620657e9"><td class="memItemLeft" align="right" valign="top"><a id="a4cb5a9aa6654ad8e6f518a36620657e9"></a>
+esp_err_t&#160;</td><td class="memItemRight" valign="bottom"><b>esp_a2d_connect</b> (<a class="el" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a> peer) override</td></tr>
+<tr class="separator:a4cb5a9aa6654ad8e6f518a36620657e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebc005e6b28bd68fb086ba1341c68669"><td class="memItemLeft" align="right" valign="top"><a id="aebc005e6b28bd68fb086ba1341c68669"></a>
+esp_err_t&#160;</td><td class="memItemRight" valign="bottom"><b>esp_a2d_disconnect</b> (<a class="el" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a> remote_bda) override</td></tr>
+<tr class="separator:aebc005e6b28bd68fb086ba1341c68669"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adb1442dcf53b7e8ccfd099db82ca0e60"><td class="memItemLeft" align="right" valign="top"><a id="adb1442dcf53b7e8ccfd099db82ca0e60"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>execute_avrc_command</b> (int cmd)</td></tr>
 <tr class="separator:adb1442dcf53b7e8ccfd099db82ca0e60"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -700,6 +711,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_pin_code_active</b
 <tr class="memitem:a44c96686a0e2d7da22805a1c9fb7ab85"><td class="memItemLeft" align="right" valign="top"><a id="a44c96686a0e2d7da22805a1c9fb7ab85"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_start_disabled</b> = false</td></tr>
 <tr class="separator:a44c96686a0e2d7da22805a1c9fb7ab85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeafe33810da405203ac3a38de6b43086"><td class="memItemLeft" align="right" valign="top"><a id="aeafe33810da405203ac3a38de6b43086"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_target_status_active</b> = true</td></tr>
+<tr class="separator:aeafe33810da405203ac3a38de6b43086"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa3f1abcd092657807bd4a4cab205ba88"><td class="memItemLeft" align="right" valign="top"><a id="aa3f1abcd092657807bd4a4cab205ba88"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_volume_used</b> = false</td></tr>
 <tr class="separator:aa3f1abcd092657807bd4a4cab205ba88"><td class="memSeparator" colspan="2">&#160;</td></tr>

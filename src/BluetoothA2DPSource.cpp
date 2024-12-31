@@ -585,8 +585,7 @@ void BluetoothA2DPSource::bt_av_hdl_stack_evt(uint16_t event, void *p_param) {
 
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
       esp_avrc_rn_evt_cap_mask_t evt_set = {0};
-      esp_avrc_rn_evt_bit_mask_operation(ESP_AVRC_BIT_MASK_OP_SET, &evt_set,
-                                        ESP_AVRC_RN_VOLUME_CHANGE);
+      esp_avrc_rn_evt_bit_mask_operation(ESP_AVRC_BIT_MASK_OP_SET, &evt_set, avrc_operations);
       assert(esp_avrc_tg_set_rn_evt_cap(&evt_set) == ESP_OK);
 #endif
 

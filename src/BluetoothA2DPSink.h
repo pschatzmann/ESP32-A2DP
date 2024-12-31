@@ -302,6 +302,10 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   /// AVRC rewind
   virtual void rewind();
 
+  virtual void volume_up();
+
+  virtual void volume_down();
+
   /// mix stereo into single mono signal
   virtual void set_mono_downmix(bool enabled) {
     volume_control()->set_mono_downmix(enabled);

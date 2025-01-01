@@ -457,7 +457,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
 
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
   esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap = {0};
-  esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap_set = {0};
   char remote_name[ESP_BT_GAP_MAX_BDNAME_LEN + 1];
 #endif
 

@@ -553,7 +553,8 @@ void BluetoothA2DPSource::bt_app_gap_callback(esp_bt_gap_cb_event_t event,
     ESP_LOGI(BT_AV_TAG, "ESP_BT_GAP_MODE_CHG_EVT mode:%d",
              param->mode_chg.mode);
         break;
-
+#endif
+#if ESP_IDF_VERSION > ESP_IDF_VERSION_VAL(5, 3, 2)
   case ESP_BT_GAP_ENC_CHG_EVT:
     ESP_LOGI(BT_AV_TAG, "ESP_BT_GAP_ENC_CHG_EVT");
     break;

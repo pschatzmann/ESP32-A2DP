@@ -14,7 +14,15 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-// ==> Example A2DP Receiver which uses the A2DP I2S output to an AudioKit board
+// ==> Example A2DP Receiver which uses the A2DP I2S output to an Audio board which is 
+//     supported by the arduino-audio-driver library e.g.
+//     - AudioKitAC101 
+//     - AudioKitEs8388V1 
+//     - AudioKitEs8388V2 
+//     - LyratMini
+//     - LyratV42 
+//     - LyratV43 
+
 
 #include "AudioTools.h"
 #include "AudioTools/AudioLibs/AudioBoardStream.h" // install https://github.com/pschatzmann/arduino-audio-driver

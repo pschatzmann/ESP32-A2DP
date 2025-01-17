@@ -35,62 +35,62 @@ enum {
   APP_AV_MEDIA_STATE_STOPPING,
 };
 
-BluetoothA2DPSource *self_BluetoothA2DPSource;
+BluetoothA2DPSource *actual_bluetooth_a2dp_source;
 
 extern "C" void ccall_bt_av_hdl_stack_evt(uint16_t event, void *p_param) {
-  if (self_BluetoothA2DPSource)
-    self_BluetoothA2DPSource->bt_av_hdl_stack_evt(event, p_param);
+  if (actual_bluetooth_a2dp_source)
+    actual_bluetooth_a2dp_source->bt_av_hdl_stack_evt(event, p_param);
 }
 
 extern "C" void ccall_bt_app_task_handler(void *arg) {
-  if (self_BluetoothA2DPSource)
-    self_BluetoothA2DPSource->bt_app_task_handler(arg);
+  if (actual_bluetooth_a2dp_source)
+    actual_bluetooth_a2dp_source->bt_app_task_handler(arg);
 }
 
 extern "C" void ccall_bt_app_gap_callback(esp_bt_gap_cb_event_t event,
                                           esp_bt_gap_cb_param_t *param) {
-  if (self_BluetoothA2DPSource)
-    self_BluetoothA2DPSource->bt_app_gap_callback(event, param);
+  if (actual_bluetooth_a2dp_source)
+    actual_bluetooth_a2dp_source->bt_app_gap_callback(event, param);
 }
 
 extern "C" void ccall_bt_app_rc_ct_cb(esp_avrc_ct_cb_event_t event,
                                       esp_avrc_ct_cb_param_t *param) {
-  if (self_BluetoothA2DPSource)
-    self_BluetoothA2DPSource->bt_app_rc_ct_cb(event, param);
+  if (actual_bluetooth_a2dp_source)
+    actual_bluetooth_a2dp_source->bt_app_rc_ct_cb(event, param);
 }
 
 extern "C" void ccall_a2d_app_heart_beat(TIMER_ARG_TYPE arg) {
-  if (self_BluetoothA2DPSource)
-    self_BluetoothA2DPSource->a2d_app_heart_beat(arg);
+  if (actual_bluetooth_a2dp_source)
+    actual_bluetooth_a2dp_source->a2d_app_heart_beat(arg);
 }
 
 extern "C" void ccall_bt_app_a2d_cb(esp_a2d_cb_event_t event,
                                     esp_a2d_cb_param_t *param) {
-  if (self_BluetoothA2DPSource)
-    self_BluetoothA2DPSource->bt_app_a2d_cb(event, param);
+  if (actual_bluetooth_a2dp_source)
+    actual_bluetooth_a2dp_source->bt_app_a2d_cb(event, param);
 }
 
 extern "C" void ccall_bt_app_av_sm_hdlr(uint16_t event, void *param) {
-  if (self_BluetoothA2DPSource)
-    self_BluetoothA2DPSource->bt_app_av_sm_hdlr(event, param);
+  if (actual_bluetooth_a2dp_source)
+    actual_bluetooth_a2dp_source->bt_app_av_sm_hdlr(event, param);
 }
 
 extern "C" void ccall_bt_av_hdl_avrc_ct_evt(uint16_t event, void *param) {
-  if (self_BluetoothA2DPSource)
-    self_BluetoothA2DPSource->bt_av_hdl_avrc_ct_evt(event, param);
+  if (actual_bluetooth_a2dp_source)
+    actual_bluetooth_a2dp_source->bt_av_hdl_avrc_ct_evt(event, param);
 }
 
 extern "C" int32_t ccall_bt_app_a2d_data_cb(uint8_t *data, int32_t len) {
   // ESP_LOGD(BT_APP_TAG, "x%x - len: %d", __func__, len);
-  if (len <= 0 || data == NULL || self_BluetoothA2DPSource == NULL ||
-      self_BluetoothA2DPSource->data_stream_callback == NULL) {
+  if (len <= 0 || data == NULL || actual_bluetooth_a2dp_source == NULL ||
+      actual_bluetooth_a2dp_source->data_stream_callback == NULL) {
     return 0;
   }
   int32_t result =
-      (*(self_BluetoothA2DPSource->data_stream_callback))(data, len);
+      (*(actual_bluetooth_a2dp_source->data_stream_callback))(data, len);
   // adapt volume
-  if (result > 0 && self_BluetoothA2DPSource->is_volume_used) {
-    self_BluetoothA2DPSource->volume_control()->update_audio_data((Frame *)data,
+  if (result > 0 && actual_bluetooth_a2dp_source->is_volume_used) {
+    actual_bluetooth_a2dp_source->volume_control()->update_audio_data((Frame *)data,
                                                                   result / 4);
   }
   return result;
@@ -98,23 +98,25 @@ extern "C" int32_t ccall_bt_app_a2d_data_cb(uint8_t *data, int32_t len) {
 
 extern "C" int32_t ccall_get_channel_data_wrapper(uint8_t *data, int32_t len) {
   // ESP_LOGD(BT_APP_TAG, "x%x - len: %d", __func__, len);
-  if (len < 0 || data == NULL || self_BluetoothA2DPSource == NULL ||
-      self_BluetoothA2DPSource->data_stream_channels_callback == NULL) {
+  if (len < 0 || data == NULL || actual_bluetooth_a2dp_source == NULL ||
+      actual_bluetooth_a2dp_source->data_stream_channels_callback == NULL) {
     return 0;
   }
   memset(data, 0, len);
-  return (*(self_BluetoothA2DPSource->data_stream_channels_callback))(
+  return (*(actual_bluetooth_a2dp_source->data_stream_channels_callback))(
              (Frame *)data, len / 4) *
          4;
 }
 
 extern "C" int32_t ccall_get_data_default(uint8_t *data, int32_t len) {
-  return self_BluetoothA2DPSource->get_data_default(data, len);
+  return actual_bluetooth_a2dp_source->get_data_default(data, len);
 }
 
 BluetoothA2DPSource::BluetoothA2DPSource() {
   ESP_LOGD(BT_APP_TAG, "%s, ", __func__);
-  self_BluetoothA2DPSource = this;
+  actual_bluetooth_a2dp_source = this;
+  actual_bluetooth_a2dp_common = this;
+
   this->ssp_enabled = false;
   this->pin_type = ESP_BT_PIN_TYPE_VARIABLE;
 
@@ -179,10 +181,6 @@ void BluetoothA2DPSource::start_raw(std::vector<const char *> names,
     get_last_connection();
   }
 
-  // commented out because this is not working: the only way to get reliable reconnects
-  // is to close the session properly before restarting!
-  // reset last connection if we do not reconnect
-  //reset_last_connection();
 
   if (nvs_init) {
     // Initialize NVS (Non-volatile storage library).
@@ -243,9 +241,6 @@ void BluetoothA2DPSource::reset_last_connection() {
     // the device might not have noticed that we are diconnected
     disconnect();
     delay_ms(2000);
-    // remove bonding - so that we can reconnect
-    //ESP_LOGD(BT_APP_TAG, "resetting %s, ", bda_str);
-    //esp_bt_gap_remove_bond_device(last_connection);
   }
 }
 
@@ -296,6 +291,7 @@ void BluetoothA2DPSource::bt_app_work_dispatched(bt_app_msg_t *msg) {
     msg->cb(msg->event, msg->param);
   }
 }
+
 void BluetoothA2DPSource::bt_app_task_handler(void *arg) {
   bt_app_msg_t msg;
 
@@ -553,8 +549,18 @@ void BluetoothA2DPSource::bt_app_gap_callback(esp_bt_gap_cb_event_t event,
     ESP_LOGI(BT_AV_TAG, "ESP_BT_GAP_MODE_CHG_EVT mode:%d",
              param->mode_chg.mode);
         break;
+
 #endif
+
 #if ESP_IDF_VERSION > ESP_IDF_VERSION_VAL(5, 3, 2)
+  case ESP_BT_GAP_GET_DEV_NAME_CMPL_EVT:
+    if (param->get_dev_name_cmpl.status == ESP_BT_STATUS_SUCCESS) {
+        ESP_LOGI(BT_AV_TAG, "ESP_BT_GAP_GET_DEV_NAME_CMPL_EVT device name: %s", param->get_dev_name_cmpl.name);
+    } else {
+        ESP_LOGI(BT_AV_TAG, "ESP_BT_GAP_GET_DEV_NAME_CMPL_EVT failed, state: %d", param->get_dev_name_cmpl.status);
+    }
+    break;
+
   case ESP_BT_GAP_ENC_CHG_EVT:
     ESP_LOGI(BT_AV_TAG, "ESP_BT_GAP_ENC_CHG_EVT");
     break;
@@ -585,9 +591,22 @@ void BluetoothA2DPSource::bt_av_hdl_stack_evt(uint16_t event, void *p_param) {
       esp_avrc_ct_register_callback(ccall_bt_app_rc_ct_cb);
 
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
-      esp_avrc_rn_evt_cap_mask_t evt_set = {0};
-      esp_avrc_rn_evt_bit_mask_operation(ESP_AVRC_BIT_MASK_OP_SET, &evt_set, avrc_rn_events);
-      assert(esp_avrc_tg_set_rn_evt_cap(&evt_set) == ESP_OK);
+      /* initialize AVRCP target */
+      if (esp_avrc_tg_init() == ESP_OK) {
+        esp_avrc_tg_register_callback(ccall_app_rc_tg_callback);
+        // add request to ESP_AVRC_RN_VOLUME_CHANGE
+        esp_avrc_rn_evt_cap_mask_t evt_set = {0};
+        for (auto event : avrc_rn_events) {
+          esp_avrc_rn_evt_bit_mask_operation(ESP_AVRC_BIT_MASK_OP_SET,
+                                            &evt_set,
+                                            event);
+          if (esp_avrc_tg_set_rn_evt_cap(&evt_set) != ESP_OK) {
+            ESP_LOGE(BT_AV_TAG, "esp_avrc_tg_set_rn_evt_cap failed: %d", event);
+          }
+         }
+      } else {
+        ESP_LOGE(BT_AV_TAG, "esp_avrc_tg_init failed");
+      }
 #endif
 
       esp_a2d_source_init();
@@ -610,11 +629,11 @@ void BluetoothA2DPSource::bt_av_hdl_stack_evt(uint16_t event, void *p_param) {
         s_a2d_state = APP_AV_STATE_DISCOVERING;
         esp_bt_gap_start_discovery(ESP_BT_INQ_MODE_GENERAL_INQUIRY, 10, 0);
       }
-      /* create and start heart beat timer */
-        int tmr_id = 0;
-        s_tmr = xTimerCreate("connTmr", (10000 / portTICK_PERIOD_MS), pdTRUE,
-                            (void *)&tmr_id, ccall_a2d_app_heart_beat);
-        xTimerStart(s_tmr, portMAX_DELAY);
+      // create and start heart beat timer 
+      int tmr_id = 0;
+      s_tmr = xTimerCreate("connTmr", (10000 / portTICK_PERIOD_MS), pdTRUE,
+                          (void *)&tmr_id, ccall_a2d_app_heart_beat);
+      xTimerStart(s_tmr, portMAX_DELAY);
       break;
     }
     /* other */
@@ -721,11 +740,13 @@ void BluetoothA2DPSource::bt_app_av_state_unconnected_hdlr(uint16_t event,
     } 
     break;
   }
-  // case ESP_A2D_REPORT_SNK_DELAY_VALUE_EVT: {
-  //     a2d = (esp_a2d_cb_param_t *)(param);
-  //     ESP_LOGI(BT_AV_TAG, "%s, delay value: %u * 1/10 ms", __func__,
-  //     a2d->a2d_report_delay_value_stat.delay_value); break;
-  // }
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 3, 0)
+  case ESP_A2D_REPORT_SNK_DELAY_VALUE_EVT: {
+      esp_a2d_cb_param_t* a2d = (esp_a2d_cb_param_t *)(param);
+      ESP_LOGI(BT_AV_TAG, "%s, delay value: %u * 1/10 ms", __func__,
+      a2d->a2d_report_delay_value_stat.delay_value); break;
+  }
+#endif
   default: {
     ESP_LOGW(BT_AV_TAG, "%s unhandled event: %d", __func__, event);
     break;
@@ -746,6 +767,7 @@ void BluetoothA2DPSource::bt_app_av_state_connecting_hdlr(uint16_t event,
       ESP_LOGI(BT_AV_TAG, "a2dp connected");
       s_a2d_state = APP_AV_STATE_CONNECTED;
       s_media_state = APP_AV_MEDIA_STATE_IDLE;
+
     } else if (a2d->conn_stat.state == ESP_A2D_CONNECTION_STATE_DISCONNECTED) {
       s_a2d_state = APP_AV_STATE_UNCONNECTED;
     }
@@ -771,11 +793,13 @@ void BluetoothA2DPSource::bt_app_av_state_connecting_hdlr(uint16_t event,
       s_connecting_heatbeat_count = 0;
     }
     break;
-  // case ESP_A2D_REPORT_SNK_DELAY_VALUE_EVT: {
-  //     a2d = (esp_a2d_cb_param_t *)(param);
-  //     ESP_LOGI(BT_AV_TAG, "%s, delay value: %u * 1/10 ms", __func__,
-  //     a2d->a2d_report_delay_value_stat.delay_value); break;
-  // }
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 3, 0)
+  case ESP_A2D_REPORT_SNK_DELAY_VALUE_EVT: {
+      esp_a2d_cb_param_t* a2d = (esp_a2d_cb_param_t *)(param);
+      ESP_LOGI(BT_AV_TAG, "%s, delay value: %u * 1/10 ms", __func__,
+      a2d->a2d_report_delay_value_stat.delay_value); break;
+  }
+#endif
   default:
     ESP_LOGW(BT_AV_TAG, "%s unhandled event: %d", __func__, event);
     break;
@@ -794,7 +818,7 @@ void BluetoothA2DPSource::bt_app_av_state_connected_hdlr(uint16_t event,
     if (a2d->conn_stat.state == ESP_A2D_CONNECTION_STATE_DISCONNECTED) {
       ESP_LOGI(BT_AV_TAG, "a2dp disconnected");
       s_a2d_state = APP_AV_STATE_UNCONNECTED;
-    }
+    }   
     break;
   }
   case ESP_A2D_AUDIO_STATE_EVT: {
@@ -812,11 +836,13 @@ void BluetoothA2DPSource::bt_app_av_state_connected_hdlr(uint16_t event,
     bt_app_av_media_proc(event, param);
     break;
   }
-  // case ESP_A2D_REPORT_SNK_DELAY_VALUE_EVT: {
-  //     a2d = (esp_a2d_cb_param_t *)(param);
-  //     ESP_LOGI(BT_AV_TAG, "%s, delay value: %u * 1/10 ms", __func__,
-  //     a2d->a2d_report_delay_value_stat.delay_value); break;
-  // }
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 3, 0)
+  case ESP_A2D_REPORT_SNK_DELAY_VALUE_EVT: {
+      esp_a2d_cb_param_t* a2d = (esp_a2d_cb_param_t *)(param);
+      ESP_LOGI(BT_AV_TAG, "%s, delay value: %u * 1/10 ms", __func__,
+      a2d->a2d_report_delay_value_stat.delay_value); break;
+  }
+#endif
   default: {
     ESP_LOGW(BT_AV_TAG, "%s unhandled event: %d", __func__, event);
     break;
@@ -845,11 +871,13 @@ void BluetoothA2DPSource::bt_app_av_state_disconnecting_hdlr(uint16_t event,
   case BT_APP_HEART_BEAT_EVT:
     ESP_LOGW(BT_AV_TAG, "Events unprocessed");
     break;
-  // case ESP_A2D_REPORT_SNK_DELAY_VALUE_EVT: {
-  //     a2d = (esp_a2d_cb_param_t *)(param);
-  //     ESP_LOGI(BT_AV_TAG, "%s, delay value: 0x%u * 1/10 ms", __func__,
-  //     a2d->a2d_report_delay_value_stat.delay_value); break;
-  // }
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 3, 0)
+  case ESP_A2D_REPORT_SNK_DELAY_VALUE_EVT: {
+      esp_a2d_cb_param_t* a2d = (esp_a2d_cb_param_t *)(param);
+      ESP_LOGI(BT_AV_TAG, "%s, delay value: 0x%u * 1/10 ms", __func__,
+      a2d->a2d_report_delay_value_stat.delay_value); break;
+  }
+#endif
   default: {
     ESP_LOGW(BT_AV_TAG, "%s unhandled event: %d", __func__, event);
     break;
@@ -988,10 +1016,23 @@ void BluetoothA2DPSource::bt_av_hdl_avrc_ct_evt(uint16_t event, void *p_param) {
 
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
     if (rc->conn_stat.connected) {
+
+      ESP_LOGI(BT_AV_TAG, "esp_avrc_ct_send_register_notification_cmd");
+      uint8_t tl = 2;
+      uint32_t event_par;
+      for (auto event : avrc_rn_events) {
+        if(esp_avrc_ct_send_register_notification_cmd(tl, event, event_par) != ESP_OK){
+          ESP_LOGE(BT_AV_TAG, "esp_avrc_ct_send_register_notification_cmd failed for %d", event);
+          if (++tl == 16) tl = 0;
+        }
+      }
+
       esp_avrc_ct_send_get_rn_capabilities_cmd(APP_RC_CT_TL_GET_CAPS);
+
     } else {
       s_avrc_peer_rn_cap.bits = 0;
     }
+
 #endif
     break;
   }
@@ -1100,3 +1141,79 @@ int32_t BluetoothA2DPSource::get_data_default(uint8_t *data, int32_t len) {
 void BluetoothA2DPSource::set_nvs_init(bool doInit) { nvs_init = doInit; }
 
 void BluetoothA2DPSource::set_reset_ble(bool doInit) { reset_ble = doInit; }
+
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
+
+void BluetoothA2DPSource::app_rc_tg_callback(esp_avrc_tg_cb_event_t event,
+                                           esp_avrc_tg_cb_param_t *param) {
+  ESP_LOGI(BT_AV_TAG, "%s", __func__);
+  switch (event) {
+    case ESP_AVRC_TG_CONNECTION_STATE_EVT:
+    case ESP_AVRC_TG_REMOTE_FEATURES_EVT:
+    case ESP_AVRC_TG_PASSTHROUGH_CMD_EVT:
+    case ESP_AVRC_TG_SET_ABSOLUTE_VOLUME_CMD_EVT:
+    case ESP_AVRC_TG_REGISTER_NOTIFICATION_EVT:
+    case ESP_AVRC_TG_SET_PLAYER_APP_VALUE_EVT: {
+      bt_app_work_dispatch(ccall_bt_app_av_sm_hdlr, event, param,
+                          sizeof(esp_a2d_cb_param_t), NULL);
+      break;
+    }
+    default:
+      ESP_LOGE(BT_AV_TAG, "Unsupported AVRC event: %d", event);
+      break;
+  }
+}
+
+void BluetoothA2DPSource::av_hdl_avrc_tg_evt(uint16_t event, void *p_param) {
+  ESP_LOGI(BT_AV_TAG, "%s evt %d", __func__, event);
+  esp_avrc_tg_cb_param_t *rc = (esp_avrc_tg_cb_param_t *)(p_param);
+
+  switch (event) {
+    case ESP_AVRC_TG_CONNECTION_STATE_EVT: {
+      ESP_LOGI(BT_AV_TAG, "AVRC conn_state evt: state %d, [%s]",
+               rc->conn_stat.connected, to_str(rc->conn_stat.remote_bda));
+      break;
+    }
+
+    case ESP_AVRC_TG_PASSTHROUGH_CMD_EVT: {
+      ESP_LOGI(BT_AV_TAG, "AVRC passthrough cmd: key_code 0x%x, key_state %d",
+               rc->psth_cmd.key_code, rc->psth_cmd.key_state);
+      break;
+    }
+
+    case ESP_AVRC_TG_SET_ABSOLUTE_VOLUME_CMD_EVT: {
+      ESP_LOGI(BT_AV_TAG, "AVRC remote set absolute volume: %d%%",
+               (int)rc->set_abs_vol.volume * 100 / 0x7f);
+      break;
+    }
+
+    case ESP_AVRC_TG_REGISTER_NOTIFICATION_EVT: {
+      ESP_LOGI(BT_AV_TAG, "AVRC register event notification: %d, param: 0x%x",
+               rc->reg_ntf.event_id, rc->reg_ntf.event_parameter);
+      if (rc->reg_ntf.event_id == ESP_AVRC_RN_VOLUME_CHANGE) {
+        //s_volume_notify = true;
+        // esp_avrc_rn_param_t rn_param;
+        // rn_param.volume = s_volume;
+        // esp_avrc_tg_send_rn_rsp(ESP_AVRC_RN_VOLUME_CHANGE,
+        //                         ESP_AVRC_RN_RSP_INTERIM, &rn_param);
+        // // notify user aplication volume change by local is completed
+        // if (avrc_rn_volchg_complete_callback != nullptr) {
+        //   (*avrc_rn_volchg_complete_callback)(s_volume);
+        // }
+      }
+      break;
+    }
+
+    case ESP_AVRC_TG_REMOTE_FEATURES_EVT: {
+      ESP_LOGI(BT_AV_TAG, "AVRC remote features %x, CT features %x",
+               rc->rmt_feats.feat_mask, rc->rmt_feats.ct_feat_flag);
+      break;
+    }
+
+    default:
+      ESP_LOGE(BT_AV_TAG, "%s unhandled evt %d", __func__, event);
+      break;
+  }
+}
+
+#endif

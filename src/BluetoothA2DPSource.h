@@ -314,6 +314,9 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
     void bt_av_notify_evt_handler(uint8_t event, esp_avrc_rn_param_t *param);
     void bt_av_volume_changed(void);
+    void app_rc_tg_callback(esp_avrc_tg_cb_event_t event, esp_avrc_tg_cb_param_t *param) override;
+    void av_hdl_avrc_tg_evt(uint16_t event, void *p_param) override;
+
 #endif
 
 };

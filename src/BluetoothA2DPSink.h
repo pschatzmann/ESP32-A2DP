@@ -48,11 +48,6 @@ extern "C" void ccall_av_hdl_stack_evt(uint16_t event, void *p_param);
 extern "C" void ccall_av_hdl_a2d_evt(uint16_t event, void *p_param);
 extern "C" void ccall_av_hdl_avrc_evt(uint16_t event, void *p_param);
 
-#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
-extern "C" void ccall_app_rc_tg_callback(esp_avrc_tg_cb_event_t event,
-                                         esp_avrc_tg_cb_param_t *param);
-extern "C" void ccall_av_hdl_avrc_tg_evt(uint16_t event, void *p_param);
-#endif
 
 // defines the mechanism to confirm a pin request
 enum PinCodeRequest { Undefined, Confirm, Reply };
@@ -94,15 +89,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   /// avrc event handler
   friend void ccall_av_hdl_avrc_evt(uint16_t event, void *p_param);
 
-#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
-
-  /// handle esp_avrc_tg_cb_event_t
-  friend void ccall_app_rc_tg_callback(esp_avrc_tg_cb_event_t event,
-                                       esp_avrc_tg_cb_param_t *param);
-  /* avrc TG event handler */
-  friend void ccall_av_hdl_avrc_tg_evt(uint16_t event, void *p_param);
-
-#endif
 
  public:
   /// Default Constructor:  output via callback or Legacy I2S
@@ -522,8 +508,8 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   virtual void av_notify_evt_handler(uint8_t event_id,
                                      esp_avrc_rn_param_t *event_parameter);
   virtual void app_rc_tg_callback(esp_avrc_tg_cb_event_t event,
-                                  esp_avrc_tg_cb_param_t *param);
-  virtual void av_hdl_avrc_tg_evt(uint16_t event, void *p_param);
+                                  esp_avrc_tg_cb_param_t *param) override;
+  virtual void av_hdl_avrc_tg_evt(uint16_t event, void *p_param) override;
 #else
   virtual void av_notify_evt_handler(uint8_t event_id,
                                      uint32_t event_parameter);

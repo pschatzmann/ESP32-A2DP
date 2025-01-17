@@ -40,6 +40,7 @@ using namespace esp_i2s;
 #include <stdbool.h>
 #include <string.h>
 #include <math.h>    
+#include <vector>
 #include "freertos/FreeRTOS.h" // needed for ESP Arduino < 2.0    
 #include "freertos/timers.h"
 #include "freertos/FreeRTOSConfig.h"
@@ -123,6 +124,13 @@ typedef struct {
 #define APP_RC_CT_TL_RN_PLAYBACK_CHANGE  (3)
 #define APP_RC_CT_TL_RN_PLAY_POS_CHANGE  (4)
 
+
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
+extern "C" void ccall_app_rc_tg_callback(esp_avrc_tg_cb_event_t event,
+                                         esp_avrc_tg_cb_param_t *param);
+extern "C" void ccall_av_hdl_avrc_tg_evt(uint16_t event, void *p_param);
+#endif
+
 /**
  * @brief Buetooth A2DP Reconnect Status
  * @ingroup a2dp
@@ -135,6 +143,16 @@ enum ReconnectStatus { NoReconnect, AutoReconnect, IsReconnecting};
  * @copyright Apache License Version 2
 */
 class BluetoothA2DPCommon {
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
+
+  /// handle esp_avrc_tg_cb_event_t
+  friend void ccall_app_rc_tg_callback(esp_avrc_tg_cb_event_t event,
+                                       esp_avrc_tg_cb_param_t *param);
+  /* avrc TG event handler */
+  friend void ccall_av_hdl_avrc_tg_evt(uint16_t event, void *p_param);
+
+#endif
+
     public:
         /// Destructor
         virtual ~BluetoothA2DPCommon() = default;
@@ -276,8 +294,8 @@ class BluetoothA2DPCommon {
         /// Provides the time in milliseconds since the last system boot
         unsigned long get_millis();
 
-        /// Define the esp_avrc_rn_event_ids_t mask with e.g. ESP_AVRC_RN_PLAY_STATUS_CHANGE | ESP_AVRC_RN_TRACK_CHANGE | ESP_AVRC_RN_TRACK_REACHED_END | ESP_AVRC_RN_TRACK_REACHED_START | ESP_AVRC_RN_PLAY_POS_CHANGED | ESP_AVRC_RN_BATTERY_STATUS_CHANGE | ESP_AVRC_RN_SYSTEM_STATUS_CHANGE | ESP_AVRC_RN_APP_SETTING_CHANGE | ESP_AVRC_RN_NOW_PLAYING_CHANGE | ESP_AVRC_RN_AVAILABLE_PLAYERS_CHANGE | ESP_AVRC_RN_ADDRESSED_PLAYER_CHANGE | ESP_AVRC_RN_UIDS_CHANGE|ESP_AVRC_RN_VOLUME_CHANGE
-        virtual void set_avrc_rn_event_mask(int mask) {avrc_rn_events = (esp_avrc_rn_event_ids_t) mask;}
+        /// Define the vector of esp_avrc_rn_event_ids_t with e.g. ESP_AVRC_RN_PLAY_STATUS_CHANGE | ESP_AVRC_RN_TRACK_CHANGE | ESP_AVRC_RN_TRACK_REACHED_END | ESP_AVRC_RN_TRACK_REACHED_START | ESP_AVRC_RN_PLAY_POS_CHANGED | ESP_AVRC_RN_BATTERY_STATUS_CHANGE | ESP_AVRC_RN_SYSTEM_STATUS_CHANGE | ESP_AVRC_RN_APP_SETTING_CHANGE | ESP_AVRC_RN_NOW_PLAYING_CHANGE | ESP_AVRC_RN_AVAILABLE_PLAYERS_CHANGE | ESP_AVRC_RN_ADDRESSED_PLAYER_CHANGE | ESP_AVRC_RN_UIDS_CHANGE|ESP_AVRC_RN_VOLUME_CHANGE
+        virtual void set_avrc_rn_events(std::vector<esp_avrc_rn_event_ids_t> events) {avrc_rn_events =  events;}
 
     protected:
         const char* bt_name = {0};
@@ -312,9 +330,12 @@ class BluetoothA2DPCommon {
         int event_queue_size = 20;
         int event_stack_size = 3072;
         esp_bt_mode_t bt_mode  = ESP_BT_MODE_CLASSIC_BT;
-        esp_avrc_rn_event_ids_t avrc_rn_events = (esp_avrc_rn_event_ids_t) (ESP_AVRC_RN_VOLUME_CHANGE );
+        std::vector<esp_avrc_rn_event_ids_t> avrc_rn_events = {ESP_AVRC_RN_VOLUME_CHANGE };
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
         esp_bt_discovery_mode_t discoverability = ESP_BT_GENERAL_DISCOVERABLE;
+        virtual void app_rc_tg_callback(esp_avrc_tg_cb_event_t event,
+                                  esp_avrc_tg_cb_param_t *param) = 0;
+        virtual void av_hdl_avrc_tg_evt(uint16_t event, void *p_param) = 0;
 #endif
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 2, 1)
         esp_bluedroid_config_t bluedroid_config {
@@ -345,3 +366,4 @@ class BluetoothA2DPCommon {
         
 };
 
+extern BluetoothA2DPCommon* actual_bluetooth_a2dp_common;

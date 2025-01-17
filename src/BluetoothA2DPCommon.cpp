@@ -15,6 +15,8 @@
 
 #include "BluetoothA2DPCommon.h"
 
+BluetoothA2DPCommon *actual_bluetooth_a2dp_common = nullptr;
+
 esp_a2d_audio_state_t BluetoothA2DPCommon::get_audio_state() {
   return audio_state;
 }
@@ -412,7 +414,21 @@ unsigned long BluetoothA2DPCommon::get_millis() {
 #endif
 }
 
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
 
+void ccall_app_rc_tg_callback(esp_avrc_tg_cb_event_t event,
+                              esp_avrc_tg_cb_param_t *param) {
+  ESP_LOGI(BT_AV_TAG, "%s", __func__);
+  if (actual_bluetooth_a2dp_common)
+    actual_bluetooth_a2dp_common->app_rc_tg_callback(event, param);
+}
+
+void ccall_av_hdl_avrc_tg_evt(uint16_t event, void *param) {
+  ESP_LOGI(BT_AV_TAG, "%s", __func__);
+  if (actual_bluetooth_a2dp_common)
+    actual_bluetooth_a2dp_common->av_hdl_avrc_tg_evt(event, param);
+}
+#endif
 
 
 

@@ -40,9 +40,9 @@ void button_handler(uint8_t id, bool isReleased){
 
 void setup() {
   Serial.begin(115200);
-
+  a2dp_source.set_data_callback_in_frames(get_data_frames);
   a2dp_source.set_avrc_passthru_command_callback(button_handler);
-  a2dp_source.start("My vision", get_data_channels);  
+  a2dp_source.start("My vision");  
 }
 
 

@@ -206,8 +206,7 @@ We can also generate sound and send it e.g. to a Bluetooth Speaker.
 
 The supported audio codec in ESP32 A2DP is SBC: The API is using PCM data normally formatted as 44.1kHz sampling rate, two-channel 16-bit sample data. 
 
-When you start the BluetoothA2DPSource, you need to pass the Bluetooth name that you want to connect to and a 'call back
-function' that generates the sound data:
+When you start the BluetoothA2DPSource, you need to pass the Bluetooth name that you want to connect to and a 'call back function' that generates the sound data:
 
 ```cpp
 #include "BluetoothA2DPSource.h"
@@ -215,83 +214,36 @@ function' that generates the sound data:
 BluetoothA2DPSource a2dp_source;
 
 // callback 
-int32_t get_sound_data(Frame *data, int32_t frameCount) {
+int32_t get_sound_data(uint8 *data, int32_t byteCount) {
     // generate your sound data 
     // return the effective length (in frames) of the generated sound  (which usually is identical with the requested len)
     // 1 frame is 2 channels * 2 bytes = 4 bytes
-    return frameCount;
+    return byteCount;
 }
 
 void setup() {
-  a2dp_source.start("MyMusic", get_sound_data);  
+  a2dp_source.set_data_callback(get_sound_data)
+  a2dp_source.start("MyMusic");  
 }
 
-void loop() {
-}
+void loop() {}
 
 ```
+Instead of the ```set_data_callback callback``` method you can also use ```set_data_callback_in_frames``` wich uses frames instead of bytes. In Arduio you can also provide a Stream (e.g a File) as data source or a callback which provides streams.
 
 In the examples you can find an implentation that generates sound with the help of the sin() function.
-You can also inticate multiple alternative Bluetooth names. The system just connects to the first one
-which is available:
+
+You can also inticate multiple alternative Bluetooth names. The system just connects to the first one which is available:
 
 ```cpp
 void setup() {
   static std::vector<char*> bt_names = {"MyMusic","RadioPlayer","MusicPlayer"};
-  a2dp_source.start(bt_names, get_sound_data); 
+  a2dp_source.set_data_callback(get_sound_data)
+  a2dp_source.start(bt_names); 
 } 
 
 ```
 
-### Sending Data from a A2DS Data Source with Recorded Data
-
-You can also provide the data directly as simple array of uint8_t:
-
-```cpp
-#include "BluetoothA2DPSource.h"
-
-extern const uint8_t StarWars10_raw[];
-extern const unsigned int StarWars10_raw_len;
-
-BluetoothA2DPSource a2dp_source;
-SoundData *music = new OneChannelSoundData((int16_t*)StarWars30_raw, StarWars30_raw_len/2);
-
-void setup() {
-  a2dp_source.start("RadioPlayer");  
-  a2dp_source.write_data(music);
-}
-
-void loop() {
-}
-
-```
-
-The array can be prepared e.g. in the following way:
-
-  - Open any sound file in Audacity. 
-    - Select Tracks -> Resample and select 44100
-    - Export -> Export Audio -> Header Raw ; Signed 16 bit PCM
-  - Convert to c file e.g. with "xxd -i file_example_WAV_1MG.raw file_example_WAV_1MG.c"
-    - add the const qualifier to the generated array definition. E.g const unsigned char file_example_WAV_1MG_raw[] = {
-
-You might want to compile with the Partition Scheme: Huge App!
-
-In the example above we provide the data with one channel. This has the advantage that it uses much less space then 
-a 2 channel recording, which you could use in the following way: 
-
-```
-SoundData *data = new TwoChannelSoundData((Frame*)StarWars10_raw,StarWars10_raw_len/4);
-
-```
-
-In the constructor you can pass additional parameters:
-
-```cpp
-TwoChannelSoundData(Frame *data, int32_t frameCount, bool loop=false);
-OneChannelSoundData(int16_t *data, int32_t frameCount, bool loop=false, ChannelInfo channelInfo=Both);
-OneChannel8BitSoundData(int8_t *data, int32_t frameCount, bool loop=false, ChannelInfo channelInfo=Both);
-
-```
 ## Logging
 
 This library uses the ESP32 logger that you can activate in Arduino in - Tools - Core Debug Log.

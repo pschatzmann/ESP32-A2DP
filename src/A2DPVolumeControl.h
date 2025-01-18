@@ -15,8 +15,26 @@
 // Copyright 2020 Phil Schatzmann
 // Copyright 2015-2016 Espressif Systems (Shanghai) PTE LTD
 
-#include "SoundData.h"
 #include "esp_log.h"
+
+/**
+ * @brief Utility structure that can be used to split a int32_t up into 2 separate channels with int16_t data.
+ * @author Phil Schatzmann
+ * @copyright Apache License Version 2
+ */
+struct __attribute__((packed)) Frame {
+  int16_t channel1;
+  int16_t channel2;
+
+  Frame(int v=0){
+    channel1 = channel2 = v;
+  }
+  
+  Frame(int ch1, int ch2){
+    channel1 = ch1;
+    channel2 = ch2;
+  }
+};
 
 /**
  * @brief Abstract class for handling of the volume of the audio data
@@ -29,6 +47,10 @@ class A2DPVolumeControl {
     public:
         A2DPVolumeControl() {
             volumeFactorMax = 0x1000;
+        }
+
+        virtual void update_audio_data(uint8_t* data, uint16_t byteCount) {
+            update_audio_data((Frame*)data, byteCount / 4);
         }
 
         virtual void update_audio_data(Frame* data, uint16_t frameCount) {
@@ -139,8 +161,6 @@ class A2DPLinearVolumeControl : public A2DPVolumeControl {
  */
 class A2DPNoVolumeControl : public A2DPVolumeControl {
     public:
-        void update_audio_data(Frame* data, uint16_t frameCount) override {
-        }
-        void set_volume(uint8_t volume) override {
-        }
+        void update_audio_data(Frame* data, uint16_t frameCount) override {}
+        void set_volume(uint8_t volume) override {}
 };

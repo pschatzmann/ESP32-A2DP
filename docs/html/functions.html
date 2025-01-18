@@ -92,14 +92,14 @@ $(function() {
 <li>bt_app_av_state_connecting_hdlr()
 : <a class="el" href="class_bluetooth_a2_d_p_source.html#ac7131b626b43a516ae4ae9df6a7ec366">BluetoothA2DPSource</a>
 </li>
+<li>bt_app_av_state_unconnected_hdlr()
+: <a class="el" href="class_bluetooth_a2_d_p_source.html#a025e54e7d0e8a4e07d5a125273fcb875">BluetoothA2DPSource</a>
+</li>
 <li>bt_app_rc_ct_cb()
 : <a class="el" href="class_bluetooth_a2_d_p_source.html#a7fd7b02f3a3f7595453eb981137b3e54">BluetoothA2DPSource</a>
 </li>
 <li>bt_av_hdl_avrc_ct_evt()
 : <a class="el" href="class_bluetooth_a2_d_p_source.html#ae9f14078c1d5dd00c93049fa8b2e283e">BluetoothA2DPSource</a>
-</li>
-<li>bt_av_hdl_stack_evt()
-: <a class="el" href="class_bluetooth_a2_d_p_source.html#a71d1b1f7d91b04383d0c578a80544fbb">BluetoothA2DPSource</a>
 </li>
 <li>bt_start()
 : <a class="el" href="class_bluetooth_a2_d_p_common.html#a8be3cf8679b236293658c06cd1ed010b">BluetoothA2DPCommon</a>
@@ -163,9 +163,6 @@ $(function() {
 <li>disconnect()
 : <a class="el" href="class_bluetooth_a2_d_p_common.html#ab63e627832d6377be32dd700130bf0d8">BluetoothA2DPCommon</a>
 </li>
-<li>doLoop()
-: <a class="el" href="class_sound_data.html#ac79933ed3379cf5ef58d5675aa4bf12e">SoundData</a>
-</li>
 </ul>
 
 
@@ -188,10 +185,11 @@ $(function() {
 
 
 <h3><a id="index_g"></a>- g -</h3><ul>
-<li>get2ChannelData()
-: <a class="el" href="class_one_channel8_bit_sound_data.html#a0d7a1fdf7cc8aee06c158b7dc72d491d">OneChannel8BitSoundData</a>
-, <a class="el" href="class_one_channel_sound_data.html#a3ed4a75be0bb4dbb42752f5ae83badbb">OneChannelSoundData</a>
-, <a class="el" href="class_two_channel_sound_data.html#a0a39d70aca39dbeca3d20676635b7615">TwoChannelSoundData</a>
+<li>get_audio_data()
+: <a class="el" href="class_bluetooth_a2_d_p_source.html#a2c3a7aa140cf42a1f324e7669a65e5cc">BluetoothA2DPSource</a>
+</li>
+<li>get_audio_data_volume()
+: <a class="el" href="class_bluetooth_a2_d_p_source.html#a03d1c23eb8a98bccdd15970f9d35db8c">BluetoothA2DPSource</a>
 </li>
 <li>get_audio_state()
 : <a class="el" href="class_bluetooth_a2_d_p_common.html#a74eadbd69b5c7adf1b190c7e41b75b10">BluetoothA2DPCommon</a>
@@ -208,8 +206,8 @@ $(function() {
 <li>get_current_peer_address()
 : <a class="el" href="class_bluetooth_a2_d_p_sink.html#ac08fff859e0ccfbb12cbb6b119dba438">BluetoothA2DPSink</a>
 </li>
-<li>get_data_default()
-: <a class="el" href="class_bluetooth_a2_d_p_source.html#ab199a1240a5850a43738f3872805c9ba">BluetoothA2DPSource</a>
+<li>get_data_cb
+: <a class="el" href="class_bluetooth_a2_d_p_source.html#ac77d0c29cc27815f703469aa0083439e">BluetoothA2DPSource</a>
 </li>
 <li>get_last_peer_address()
 : <a class="el" href="class_bluetooth_a2_d_p_common.html#ac21e1dbd2f5f475da871a7e778ba1a40">BluetoothA2DPCommon</a>
@@ -232,13 +230,6 @@ $(function() {
 <li>get_volume()
 : <a class="el" href="class_bluetooth_a2_d_p_common.html#a0e570c2c2f9db40873286e0571f0d93a">BluetoothA2DPCommon</a>
 , <a class="el" href="class_bluetooth_a2_d_p_sink.html#aca1119f20d2321fb950ae859000cce7b">BluetoothA2DPSink</a>
-</li>
-</ul>
-
-
-<h3><a id="index_h"></a>- h -</h3><ul>
-<li>has_sound_data()
-: <a class="el" href="class_bluetooth_a2_d_p_source.html#adb93cd1d697bb1e9dfaf263f3d05c900">BluetoothA2DPSource</a>
 </li>
 </ul>
 
@@ -289,16 +280,6 @@ $(function() {
 </ul>
 
 
-<h3><a id="index_o"></a>- o -</h3><ul>
-<li>OneChannel8BitSoundData()
-: <a class="el" href="class_one_channel8_bit_sound_data.html#a056d8a555b92a29189b64d609450dd4d">OneChannel8BitSoundData</a>
-</li>
-<li>OneChannelSoundData()
-: <a class="el" href="class_one_channel_sound_data.html#a95a08a39b92863edbc6c759e7c98e4ac">OneChannelSoundData</a>
-</li>
-</ul>
-
-
 <h3><a id="index_p"></a>- p -</h3><ul>
 <li>param
 : <a class="el" href="structbt__app__msg__t.html#aae06d9a8a215b9ae4b5a3827f5e5e7a7">bt_app_msg_t</a>
@@ -341,7 +322,7 @@ $(function() {
 <li>set_auto_reconnect()
 : <a class="el" href="class_bluetooth_a2_d_p_common.html#a537d576b12d1158eb0681a6195b258de">BluetoothA2DPCommon</a>
 , <a class="el" href="class_bluetooth_a2_d_p_sink.html#af7d10cfe632a3c2f95409f6a23daecdd">BluetoothA2DPSink</a>
-, <a class="el" href="class_bluetooth_a2_d_p_source.html#ab94a0596fd595994f3ae4d2d6d2e5a5b">BluetoothA2DPSource</a>
+, <a class="el" href="class_bluetooth_a2_d_p_source.html#a65ac6f2b0777c97874ee358119de3790">BluetoothA2DPSource</a>
 </li>
 <li>set_avrc_connection_state_callback()
 : <a class="el" href="class_bluetooth_a2_d_p_sink.html#aedd80fe4cf8bd887224efa2716ad9d69">BluetoothA2DPSink</a>
@@ -381,6 +362,18 @@ $(function() {
 </li>
 <li>set_connected()
 : <a class="el" href="class_bluetooth_a2_d_p_common.html#a0a8a860a325348cdf210637e8d1159e6">BluetoothA2DPCommon</a>
+</li>
+<li>set_data_callback()
+: <a class="el" href="class_bluetooth_a2_d_p_source.html#a9eb67e480675059a96014f2c1b84b0c3">BluetoothA2DPSource</a>
+</li>
+<li>set_data_callback_in_frames()
+: <a class="el" href="class_bluetooth_a2_d_p_source.html#ad42fbe4ec00846ab22157545b3885db9">BluetoothA2DPSource</a>
+</li>
+<li>set_data_source()
+: <a class="el" href="class_bluetooth_a2_d_p_source.html#a75f389f93441fe0735c3bae5f68043ae">BluetoothA2DPSource</a>
+</li>
+<li>set_data_source_callback()
+: <a class="el" href="class_bluetooth_a2_d_p_source.html#a90f7e0445fffbc5ff4ac2f0d50f0b51e">BluetoothA2DPSource</a>
 </li>
 <li>set_default_bt_mode()
 : <a class="el" href="class_bluetooth_a2_d_p_common.html#a41ab8453d4f7f88d68d6cdb1a866532b">BluetoothA2DPCommon</a>
@@ -435,16 +428,16 @@ $(function() {
 </li>
 <li>set_output()
 : <a class="el" href="class_bluetooth_a2_d_p_output.html#a67fc2cf760ae2a48ac6bfa6ed235f8b8">BluetoothA2DPOutput</a>
-, <a class="el" href="class_bluetooth_a2_d_p_output_audio_tools.html#a3c360cc7bf000d4e8bc241007e34f7d9">BluetoothA2DPOutputAudioTools</a>
+, <a class="el" href="class_bluetooth_a2_d_p_output_audio_tools.html#a7304b027857f382bfb1838b4b36df7f3">BluetoothA2DPOutputAudioTools</a>
 , <a class="el" href="class_bluetooth_a2_d_p_output_default.html#a69efd35a5b96a8c4ea45286ec02cb550">BluetoothA2DPOutputDefault</a>
 , <a class="el" href="class_bluetooth_a2_d_p_output_print.html#aa9e40b46faaba5afdbbf6dbf403c627e">BluetoothA2DPOutputPrint</a>
-, <a class="el" href="class_bluetooth_a2_d_p_sink.html#a2076eebe22254b2238ba097e8749d24d">BluetoothA2DPSink</a>
+, <a class="el" href="class_bluetooth_a2_d_p_sink.html#af87666dc2c00c5917db709e2edaf1dab">BluetoothA2DPSink</a>
 </li>
 <li>set_output_active()
 : <a class="el" href="class_bluetooth_a2_d_p_sink.html#a68d88c33b8ec218fe3bd45f61c39f754">BluetoothA2DPSink</a>
 </li>
 <li>set_pin_code()
-: <a class="el" href="class_bluetooth_a2_d_p_source.html#a615fbfaeb4cad862209fa4b3c2c8286c">BluetoothA2DPSource</a>
+: <a class="el" href="class_bluetooth_a2_d_p_source.html#a098d9fdb6cfe044406025e89725c449d">BluetoothA2DPSource</a>
 </li>
 <li>set_raw_stream_reader()
 : <a class="el" href="class_bluetooth_a2_d_p_sink.html#a035b0e2534970acd2c35b65842374e51">BluetoothA2DPSink</a>
@@ -503,10 +496,10 @@ $(function() {
 </li>
 <li>start()
 : <a class="el" href="class_bluetooth_a2_d_p_sink.html#af85e99324638d1c814e221ac4ba815dd">BluetoothA2DPSink</a>
-, <a class="el" href="class_bluetooth_a2_d_p_source.html#a403b0e21db02c81b948534258e5ff37b">BluetoothA2DPSource</a>
+, <a class="el" href="class_bluetooth_a2_d_p_source.html#a98c1eb3ad55af189fd3f1ddeac8f3636">BluetoothA2DPSource</a>
 </li>
 <li>start_raw()
-: <a class="el" href="class_bluetooth_a2_d_p_source.html#aed760968d1114bf993325302deef0fb1">BluetoothA2DPSource</a>
+: <a class="el" href="class_bluetooth_a2_d_p_source.html#ad6aac053cc521667ea15a87277009574">BluetoothA2DPSource</a>
 </li>
 <li>stop()
 : <a class="el" href="class_bluetooth_a2_d_p_sink.html#a37dcbcd418b84310ccedf3330e44834f">BluetoothA2DPSink</a>
@@ -520,9 +513,6 @@ $(function() {
 </li>
 <li>to_str()
 : <a class="el" href="class_bluetooth_a2_d_p_common.html#a2b78346084e12feeea035d006e7cf07a">BluetoothA2DPCommon</a>
-</li>
-<li>TwoChannelSoundData()
-: <a class="el" href="class_two_channel_sound_data.html#ae66d339668c00d667a44dcafe6421810">TwoChannelSoundData</a>
 </li>
 </ul>
 
@@ -551,9 +541,6 @@ $(function() {
 <li>write_audio()
 : <a class="el" href="class_bluetooth_a2_d_p_sink.html#aa211fefd101a639938a20dc3478b48ae">BluetoothA2DPSink</a>
 , <a class="el" href="class_bluetooth_a2_d_p_sink_queued.html#a1846088388d294f04469885b9bb560e4">BluetoothA2DPSinkQueued</a>
-</li>
-<li>write_data()
-: <a class="el" href="class_bluetooth_a2_d_p_source.html#a0a5976c3d81ae96e5e3be06fd6a662da">BluetoothA2DPSource</a>
 </li>
 </ul>
 

@@ -91,9 +91,6 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_source.html">BluetoothA2DPSource</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A2DP Bluetooth Source.  <a href="class_bluetooth_a2_d_p_source.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sound_data.html">SoundData</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sound data as byte stream. We support <a class="el" href="class_two_channel_sound_data.html" title="Data is provided in two channels of int16 data: so len is in 4 byte entries (int16 + int16)">TwoChannelSoundData</a> (uint16_t + uint16_t) and <a class="el" href="class_one_channel_sound_data.html" title="1 Channel data is provided as int16 values">OneChannelSoundData</a> which stores the data as array of uint16_t We provide the complete sound data as a simple c array which can be prepared e.g. in the following way.  <a href="class_sound_data.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -117,12 +114,6 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:gabf9f46a0805b93eedaeccb8e512ef7fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buetooth A2DP global state. <br /></td></tr>
 <tr class="separator:gabf9f46a0805b93eedaeccb8e512ef7fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadd07e8b0b75b5153b83a4580f2d5c6c0"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__a2dp.html#gadd07e8b0b75b5153b83a4580f2d5c6c0">ChannelInfo</a> { <a class="el" href="group__a2dp.html#ggadd07e8b0b75b5153b83a4580f2d5c6c0aedf69634e61e7ec5d006874d299bc0d4">Both</a>
-, <a class="el" href="group__a2dp.html#ggadd07e8b0b75b5153b83a4580f2d5c6c0a9d4d8b0b72fc2659da772d761a3c5ecb">Left</a>
-, <a class="el" href="group__a2dp.html#ggadd07e8b0b75b5153b83a4580f2d5c6c0ad48f7af8c070184f3774c8e85854eb66">Right</a>
- }</td></tr>
-<tr class="memdesc:gadd07e8b0b75b5153b83a4580f2d5c6c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Channel Information.  <a href="group__a2dp.html#gadd07e8b0b75b5153b83a4580f2d5c6c0">More...</a><br /></td></tr>
-<tr class="separator:gadd07e8b0b75b5153b83a4580f2d5c6c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga49adfa87b1ad7420b0075a0ac03cc194"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__a2dp.html#ga49adfa87b1ad7420b0075a0ac03cc194">esp_a2d_audio_state_t</a> { <a class="el" href="group__a2dp.html#gga49adfa87b1ad7420b0075a0ac03cc194a4f131f965f55142fa9fb3557f88b8793">ESP_A2D_AUDIO_STATE_SUSPEND</a> = 0
 , <a class="el" href="group__a2dp.html#gga49adfa87b1ad7420b0075a0ac03cc194a1fb2443ca89d24271931c19e1554b088">ESP_A2D_AUDIO_STATE_STARTED</a>
 , <a class="el" href="group__a2dp.html#gga49adfa87b1ad7420b0075a0ac03cc194a2cac45c7b95065ed02420c5a632ab538">ESP_A2D_AUDIO_STATE_STOPPED</a> = ESP_A2D_AUDIO_STATE_SUSPEND
@@ -181,32 +172,6 @@ Variables</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>A Simple ESP32 Bluetooth A2DP Library (to implement a Music Receiver or Sender) that supports Arduino, PlatformIO and Espressif IDF. </p>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a id="gadd07e8b0b75b5153b83a4580f2d5c6c0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gadd07e8b0b75b5153b83a4580f2d5c6c0">&#9670;&nbsp;</a></span>ChannelInfo</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="group__a2dp.html#gadd07e8b0b75b5153b83a4580f2d5c6c0">ChannelInfo</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Channel Information. </p>
-<dl class="section author"><dt>Author</dt><dd>Phil Schatzmann </dd></dl>
-<dl class="section copyright"><dt>Copyright</dt><dd>Apache License Version 2 </dd></dl>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggadd07e8b0b75b5153b83a4580f2d5c6c0aedf69634e61e7ec5d006874d299bc0d4"></a>Both&#160;</td><td class="fielddoc"><p>left and right </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggadd07e8b0b75b5153b83a4580f2d5c6c0a9d4d8b0b72fc2659da772d761a3c5ecb"></a>Left&#160;</td><td class="fielddoc"><p>left channel </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggadd07e8b0b75b5153b83a4580f2d5c6c0ad48f7af8c070184f3774c8e85854eb66"></a>Right&#160;</td><td class="fielddoc"><p>right channel </p>
-</td></tr>
-</table>
-
-</div>
-</div>
 <a id="ga49adfa87b1ad7420b0075a0ac03cc194"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga49adfa87b1ad7420b0075a0ac03cc194">&#9670;&nbsp;</a></span>esp_a2d_audio_state_t</h2>
 

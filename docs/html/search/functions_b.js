@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['onechannel8bitsounddata_259',['OneChannel8BitSoundData',['../class_one_channel8_bit_sound_data.html#a056d8a555b92a29189b64d609450dd4d',1,'OneChannel8BitSoundData']]],
-  ['onechannelsounddata_260',['OneChannelSoundData',['../class_one_channel_sound_data.html#a95a08a39b92863edbc6c759e7c98e4ac',1,'OneChannelSoundData']]]
+  ['reconnect_251',['reconnect',['../class_bluetooth_a2_d_p_common.html#ac795a023f85438355a1b00644f2b040f',1,'BluetoothA2DPCommon']]],
+  ['reset_5flast_5fconnection_252',['reset_last_connection',['../class_bluetooth_a2_d_p_source.html#a190c59464f53e2d4c3f121afbb7a3c21',1,'BluetoothA2DPSource']]],
+  ['rewind_253',['rewind',['../class_bluetooth_a2_d_p_sink.html#a9ee01e6d11ee3c6c546a510029a23a12',1,'BluetoothA2DPSink']]]
 ];

@@ -1,6 +1,5 @@
 /*
-  Streaming of sound data with Bluetooth to other Bluetooth device.
-  We generate 2 tones which will be sent to the 2 channels.
+  Example that demonstrates how to handle button presses on a bluetooth speaker.
   
   Copyright (C) 2020 Phil Schatzmann
   This program is free software: you can redistribute it and/or modify
@@ -14,8 +13,6 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-
-// Example that demonstrates how to handle button presses on a bluetooth speaker
 
 #include "BluetoothA2DPSource.h"
 

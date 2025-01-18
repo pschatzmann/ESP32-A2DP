@@ -203,6 +203,12 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
       this->valid_cod_services = filter;
     }
 
+    /// Define the handler fur button presses on the remote bluetooth speaker
+    virtual void set_avrc_passthru_command_callback(void (*cb)(uint8_t key, bool isReleased)){
+      passthru_command_callback = cb;
+      is_passthru_active = (cb != nullptr);
+    }
+
   protected:
     music_data_channels_cb_t data_stream_channels_callback;
     const char *dev_name = "ESP32_A2DP_SRC";
@@ -238,6 +244,8 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
 
     bool(*ssid_callback)(const char*ssid, esp_bd_addr_t address, int rrsi) = nullptr;
     void(*discovery_mode_callback)(esp_bt_gap_discovery_state_t discoveryMode) = nullptr;
+    void(*passthru_command_callback)(uint8_t, bool) = nullptr;
+    bool is_passthru_active = false;
 
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
     esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap;

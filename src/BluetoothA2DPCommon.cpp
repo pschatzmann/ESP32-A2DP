@@ -418,13 +418,13 @@ unsigned long BluetoothA2DPCommon::get_millis() {
 
 void ccall_app_rc_tg_callback(esp_avrc_tg_cb_event_t event,
                               esp_avrc_tg_cb_param_t *param) {
-  ESP_LOGI(BT_AV_TAG, "%s", __func__);
+  ESP_LOGD(BT_AV_TAG, "%s", __func__);
   if (actual_bluetooth_a2dp_common)
     actual_bluetooth_a2dp_common->app_rc_tg_callback(event, param);
 }
 
 void ccall_av_hdl_avrc_tg_evt(uint16_t event, void *param) {
-  ESP_LOGI(BT_AV_TAG, "%s", __func__);
+  ESP_LOGD(BT_AV_TAG, "%s", __func__);
   if (actual_bluetooth_a2dp_common)
     actual_bluetooth_a2dp_common->av_hdl_avrc_tg_evt(event, param);
 }

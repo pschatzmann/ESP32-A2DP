@@ -590,22 +590,22 @@ void BluetoothA2DPSource::bt_av_hdl_stack_evt(uint16_t event, void *p_param) {
       esp_avrc_ct_init();
       esp_avrc_ct_register_callback(ccall_bt_app_rc_ct_cb);
 
-#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
+  #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
       /* initialize AVRCP target */
-      if (esp_avrc_tg_init() == ESP_OK) {
+      if (is_passthru_active){
+        esp_avrc_tg_init();
         esp_avrc_tg_register_callback(ccall_app_rc_tg_callback);
-        // add request to ESP_AVRC_RN_VOLUME_CHANGE
-        esp_avrc_rn_evt_cap_mask_t evt_set = {0};
-        for (auto event : avrc_rn_events) {
-          esp_avrc_rn_evt_bit_mask_operation(ESP_AVRC_BIT_MASK_OP_SET,
-                                            &evt_set,
-                                            event);
-          if (esp_avrc_tg_set_rn_evt_cap(&evt_set) != ESP_OK) {
-            ESP_LOGE(BT_AV_TAG, "esp_avrc_tg_set_rn_evt_cap failed: %d", event);
-          }
-         }
-      } else {
-        ESP_LOGE(BT_AV_TAG, "esp_avrc_tg_init failed");
+      }  
+
+      // add request to ESP_AVRC_RN_VOLUME_CHANGE
+      esp_avrc_rn_evt_cap_mask_t evt_set = {0};
+      for (auto event : avrc_rn_events) {
+        esp_avrc_rn_evt_bit_mask_operation(ESP_AVRC_BIT_MASK_OP_SET,
+                                          &evt_set,
+                                          event);
+      }
+      if (esp_avrc_tg_set_rn_evt_cap(&evt_set) != ESP_OK) {
+        ESP_LOGE(BT_AV_TAG, "esp_avrc_tg_set_rn_evt_cap failed");
       }
 #endif
 
@@ -979,6 +979,8 @@ void BluetoothA2DPSource::bt_av_volume_changed(void) {
                                          ESP_AVRC_RN_VOLUME_CHANGE)) {
     esp_avrc_ct_send_register_notification_cmd(APP_RC_CT_TL_RN_VOLUME_CHANGE,
                                                ESP_AVRC_RN_VOLUME_CHANGE, 0);
+  }else {
+    ESP_LOGW(BT_RC_CT_TAG, "Unhandled event");
   }
 }
 
@@ -1146,7 +1148,7 @@ void BluetoothA2DPSource::set_reset_ble(bool doInit) { reset_ble = doInit; }
 
 void BluetoothA2DPSource::app_rc_tg_callback(esp_avrc_tg_cb_event_t event,
                                            esp_avrc_tg_cb_param_t *param) {
-  ESP_LOGI(BT_AV_TAG, "%s", __func__);
+  ESP_LOGD(BT_AV_TAG, "%s", __func__);
   switch (event) {
     case ESP_AVRC_TG_CONNECTION_STATE_EVT:
     case ESP_AVRC_TG_REMOTE_FEATURES_EVT:
@@ -1154,12 +1156,12 @@ void BluetoothA2DPSource::app_rc_tg_callback(esp_avrc_tg_cb_event_t event,
     case ESP_AVRC_TG_SET_ABSOLUTE_VOLUME_CMD_EVT:
     case ESP_AVRC_TG_REGISTER_NOTIFICATION_EVT:
     case ESP_AVRC_TG_SET_PLAYER_APP_VALUE_EVT: {
-      bt_app_work_dispatch(ccall_bt_app_av_sm_hdlr, event, param,
+      bt_app_work_dispatch(ccall_av_hdl_avrc_tg_evt, event, param,
                           sizeof(esp_a2d_cb_param_t), NULL);
       break;
     }
     default:
-      ESP_LOGE(BT_AV_TAG, "Unsupported AVRC event: %d", event);
+      ESP_LOGE(BT_AV_TAG, "Unsupported AVRC TG event: %d", event);
       break;
   }
 }
@@ -1172,12 +1174,20 @@ void BluetoothA2DPSource::av_hdl_avrc_tg_evt(uint16_t event, void *p_param) {
     case ESP_AVRC_TG_CONNECTION_STATE_EVT: {
       ESP_LOGI(BT_AV_TAG, "AVRC conn_state evt: state %d, [%s]",
                rc->conn_stat.connected, to_str(rc->conn_stat.remote_bda));
+     if (rc->conn_stat.connected){
+          esp_avrc_psth_bit_mask_t psth_set = {0};
+          esp_avrc_tg_get_psth_cmd_filter(ESP_AVRC_PSTH_FILTER_ALLOWED_CMD, &psth_set);
+          if (!esp_avrc_tg_set_psth_cmd_filter(ESP_AVRC_PSTH_FILTER_SUPPORTED_CMD, &psth_set)!=ESP_OK){
+            ESP_LOGE(BT_AV_TAG,"esp_avrc_tg_set_psth_cmd_filter");
+          }  
+          ESP_LOGI(BT_AV_TAG, "Set passthru capabilities: 0x%0x", psth_set);     
+      }
       break;
     }
-
     case ESP_AVRC_TG_PASSTHROUGH_CMD_EVT: {
       ESP_LOGI(BT_AV_TAG, "AVRC passthrough cmd: key_code 0x%x, key_state %d",
                rc->psth_cmd.key_code, rc->psth_cmd.key_state);
+      if (passthru_command_callback) passthru_command_callback(rc->psth_cmd.key_code, rc->psth_cmd.key_state);
       break;
     }
 
@@ -1191,6 +1201,7 @@ void BluetoothA2DPSource::av_hdl_avrc_tg_evt(uint16_t event, void *p_param) {
       ESP_LOGI(BT_AV_TAG, "AVRC register event notification: %d, param: 0x%x",
                rc->reg_ntf.event_id, rc->reg_ntf.event_parameter);
       if (rc->reg_ntf.event_id == ESP_AVRC_RN_VOLUME_CHANGE) {
+        ESP_LOGW(BT_AV_TAG, "ESP_AVRC_RN_VOLUME_CHANGE");
         //s_volume_notify = true;
         // esp_avrc_rn_param_t rn_param;
         // rn_param.volume = s_volume;

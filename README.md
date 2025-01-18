@@ -206,7 +206,7 @@ We can also generate sound and send it e.g. to a Bluetooth Speaker.
 
 The supported audio codec in ESP32 A2DP is SBC: The API is using PCM data normally formatted as 44.1kHz sampling rate, two-channel 16-bit sample data. 
 
-When you start the BluetoothA2DPSource, you need to pass the Bluetooth name that you want to connect to and a 'call back function' that generates the sound data:
+When you start the BluetoothA2DPSource, you need to pass the Bluetooth name that you want to connect to and a 'call back function' that provides the sound data:
 
 ```cpp
 #include "BluetoothA2DPSource.h"
@@ -229,7 +229,7 @@ void setup() {
 void loop() {}
 
 ```
-Instead of the ```set_data_callback callback``` method you can also use ```set_data_callback_in_frames``` wich uses frames instead of bytes. In Arduio you can also provide a Stream (e.g a File) as data source or a callback which provides streams.
+Instead of the ```set_data_callback callback``` method you can also use ```set_data_callback_in_frames``` which uses frames instead of bytes. In Arduio you can also provide a Stream (e.g a File) as data source or a callback which provides streams.
 
 In the examples you can find an implentation that generates sound with the help of the sin() function.
 
@@ -243,6 +243,9 @@ void setup() {
 } 
 
 ```
+
+Further information can be found in the [related class documentation](https://pschatzmann.github.io/ESP32-A2DP/html/class_bluetooth_a2_d_p_source.html)!
+
 
 ## Logging
 

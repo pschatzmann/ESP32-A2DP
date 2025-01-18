@@ -176,6 +176,14 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_source.html#ab94a0596fd595994f3ae4d2d6d2e5a5b">set_auto_reconnect</a> (<a class="el" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a> addr)</td></tr>
 <tr class="memdesc:ab94a0596fd595994f3ae4d2d6d2e5a5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">automatically tries to reconnect to the indicated address <br /></td></tr>
 <tr class="separator:ab94a0596fd595994f3ae4d2d6d2e5a5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72999af828301ef39f1f388fd7356b3b"><td class="memItemLeft" align="right" valign="top"><a id="a72999af828301ef39f1f388fd7356b3b"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_source.html#a72999af828301ef39f1f388fd7356b3b">set_avrc_passthru_command_callback</a> (void(*cb)(uint8_t key, bool isReleased))</td></tr>
+<tr class="memdesc:a72999af828301ef39f1f388fd7356b3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define the handler fur button presses on the remote bluetooth speaker. <br /></td></tr>
+<tr class="separator:a72999af828301ef39f1f388fd7356b3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17013c6f40042c68821548cab9ddb5eb"><td class="memItemLeft" align="right" valign="top"><a id="a17013c6f40042c68821548cab9ddb5eb"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a17013c6f40042c68821548cab9ddb5eb">set_avrc_rn_events</a> (std::vector&lt; <a class="el" href="group__a2dp.html#ga0af05e9d744ec14ee33e345d678e8ade">esp_avrc_rn_event_ids_t</a> &gt; events)</td></tr>
+<tr class="memdesc:a17013c6f40042c68821548cab9ddb5eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define the vector of esp_avrc_rn_event_ids_t with e.g. ESP_AVRC_RN_PLAY_STATUS_CHANGE | ESP_AVRC_RN_TRACK_CHANGE | ESP_AVRC_RN_TRACK_REACHED_END | ESP_AVRC_RN_TRACK_REACHED_START | ESP_AVRC_RN_PLAY_POS_CHANGED | ESP_AVRC_RN_BATTERY_STATUS_CHANGE | ESP_AVRC_RN_SYSTEM_STATUS_CHANGE | ESP_AVRC_RN_APP_SETTING_CHANGE | ESP_AVRC_RN_NOW_PLAYING_CHANGE | ESP_AVRC_RN_AVAILABLE_PLAYERS_CHANGE | ESP_AVRC_RN_ADDRESSED_PLAYER_CHANGE | ESP_AVRC_RN_UIDS_CHANGE|ESP_AVRC_RN_VOLUME_CHANGE. <br /></td></tr>
+<tr class="separator:a17013c6f40042c68821548cab9ddb5eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a145c20271b53d4329e0e2c7fa36692b0"><td class="memItemLeft" align="right" valign="top"><a id="a145c20271b53d4329e0e2c7fa36692b0"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a145c20271b53d4329e0e2c7fa36692b0">set_bluedroid_config_t</a> (esp_bluedroid_config_t cfg)</td></tr>
 <tr class="memdesc:a145c20271b53d4329e0e2c7fa36692b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the esp_bluedroid_config_t: Available from IDF 5.2.1. <br /></td></tr>
@@ -306,6 +314,12 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a036c89c702ec1a5a3fa10f8017ff91cc"><td class="memItemLeft" align="right" valign="top"><a id="a036c89c702ec1a5a3fa10f8017ff91cc"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>a2d_app_heart_beat</b> (void *arg)</td></tr>
 <tr class="separator:a036c89c702ec1a5a3fa10f8017ff91cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff227b14b0c2cced1d4c203f2491ea85"><td class="memItemLeft" align="right" valign="top"><a id="aff227b14b0c2cced1d4c203f2491ea85"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>app_rc_tg_callback</b> (esp_avrc_tg_cb_event_t event, esp_avrc_tg_cb_param_t *param) override</td></tr>
+<tr class="separator:aff227b14b0c2cced1d4c203f2491ea85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aead01574605ffcb8daf621f6632d8345"><td class="memItemLeft" align="right" valign="top"><a id="aead01574605ffcb8daf621f6632d8345"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>av_hdl_avrc_tg_evt</b> (uint16_t event, void *p_param) override</td></tr>
+<tr class="separator:aead01574605ffcb8daf621f6632d8345"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aecacd14836e61b3a08a0f415095d3f98"><td class="memItemLeft" align="right" valign="top"><a id="aecacd14836e61b3a08a0f415095d3f98"></a>
 virtual esp_err_t&#160;</td><td class="memItemRight" valign="bottom"><b>bluedroid_init</b> ()</td></tr>
 <tr class="separator:aecacd14836e61b3a08a0f415095d3f98"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -445,6 +459,9 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><b>audio_state_obj</b>
 <tr class="memitem:a7d6ebc612bc39d8c0d774b05b5fb5435"><td class="memItemLeft" align="right" valign="top"><a id="a7d6ebc612bc39d8c0d774b05b5fb5435"></a>
 void *&#160;</td><td class="memItemRight" valign="bottom"><b>audio_state_obj_post</b> = nullptr</td></tr>
 <tr class="separator:a7d6ebc612bc39d8c0d774b05b5fb5435"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2eaf5d6672d7cfcac7622790254b1afd"><td class="memItemLeft" align="right" valign="top"><a id="a2eaf5d6672d7cfcac7622790254b1afd"></a>
+std::vector&lt; <a class="el" href="group__a2dp.html#ga0af05e9d744ec14ee33e345d678e8ade">esp_avrc_rn_event_ids_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>avrc_rn_events</b> = {ESP_AVRC_RN_VOLUME_CHANGE }</td></tr>
+<tr class="separator:a2eaf5d6672d7cfcac7622790254b1afd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a729840e194330a64ffbccc52d853ac4a"><td class="memItemLeft" align="right" valign="top">esp_bluedroid_config_t&#160;</td><td class="memItemRight" valign="bottom"><b>bluedroid_config</b></td></tr>
 <tr class="separator:a729840e194330a64ffbccc52d853ac4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1cd750d4718e5f4053131668c9851b63"><td class="memItemLeft" align="right" valign="top"><a id="a1cd750d4718e5f4053131668c9851b63"></a>
@@ -504,6 +521,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>has_sound_data_flag</
 <tr class="memitem:ad383ee1fca4929326b02b671aa03ee44"><td class="memItemLeft" align="right" valign="top"><a id="ad383ee1fca4929326b02b671aa03ee44"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_autoreconnect_allowed</b> = false</td></tr>
 <tr class="separator:ad383ee1fca4929326b02b671aa03ee44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50a71340c824a79e6ad6db87741b2d7d"><td class="memItemLeft" align="right" valign="top"><a id="a50a71340c824a79e6ad6db87741b2d7d"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_passthru_active</b> = false</td></tr>
+<tr class="separator:a50a71340c824a79e6ad6db87741b2d7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a44c96686a0e2d7da22805a1c9fb7ab85"><td class="memItemLeft" align="right" valign="top"><a id="a44c96686a0e2d7da22805a1c9fb7ab85"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_start_disabled</b> = false</td></tr>
 <tr class="separator:a44c96686a0e2d7da22805a1c9fb7ab85"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -528,6 +548,9 @@ const char *&#160;</td><td class="memItemRight" valign="bottom"><b>m_avrc_playba
 <tr class="memitem:af34d6e4890bf2b59d25b043c9a8b41ae"><td class="memItemLeft" align="right" valign="top"><a id="af34d6e4890bf2b59d25b043c9a8b41ae"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>nvs_init</b> = true</td></tr>
 <tr class="separator:af34d6e4890bf2b59d25b043c9a8b41ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a865b4c8aa72f5fe7f28e8fc385989d4e"><td class="memItemLeft" align="right" valign="top"><a id="a865b4c8aa72f5fe7f28e8fc385989d4e"></a>
+void(*&#160;</td><td class="memItemRight" valign="bottom"><b>passthru_command_callback</b> )(uint8_t, bool) = nullptr</td></tr>
+<tr class="separator:a865b4c8aa72f5fe7f28e8fc385989d4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a83cff3bdeb407a6c19618ba208438604"><td class="memItemLeft" align="right" valign="top"><a id="a83cff3bdeb407a6c19618ba208438604"></a>
 <a class="el" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>peer_bd_addr</b></td></tr>
 <tr class="separator:a83cff3bdeb407a6c19618ba208438604"><td class="memSeparator" colspan="2">&#160;</td></tr>

@@ -65,6 +65,7 @@ $(function() {
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="#friends">Friends</a> &#124;
 <a href="class_bluetooth_a2_d_p_common-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">BluetoothA2DPCommon Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -157,6 +158,10 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a537d576b12d1158eb0681a6195b258de">set_auto_reconnect</a> (bool active)</td></tr>
 <tr class="memdesc:a537d576b12d1158eb0681a6195b258de"><td class="mdescLeft">&#160;</td><td class="mdescRight">activate / deactivate the automatic reconnection to the last address (per default this is on) <br /></td></tr>
 <tr class="separator:a537d576b12d1158eb0681a6195b258de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17013c6f40042c68821548cab9ddb5eb"><td class="memItemLeft" align="right" valign="top"><a id="a17013c6f40042c68821548cab9ddb5eb"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a17013c6f40042c68821548cab9ddb5eb">set_avrc_rn_events</a> (std::vector&lt; <a class="el" href="group__a2dp.html#ga0af05e9d744ec14ee33e345d678e8ade">esp_avrc_rn_event_ids_t</a> &gt; events)</td></tr>
+<tr class="memdesc:a17013c6f40042c68821548cab9ddb5eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define the vector of esp_avrc_rn_event_ids_t with e.g. ESP_AVRC_RN_PLAY_STATUS_CHANGE | ESP_AVRC_RN_TRACK_CHANGE | ESP_AVRC_RN_TRACK_REACHED_END | ESP_AVRC_RN_TRACK_REACHED_START | ESP_AVRC_RN_PLAY_POS_CHANGED | ESP_AVRC_RN_BATTERY_STATUS_CHANGE | ESP_AVRC_RN_SYSTEM_STATUS_CHANGE | ESP_AVRC_RN_APP_SETTING_CHANGE | ESP_AVRC_RN_NOW_PLAYING_CHANGE | ESP_AVRC_RN_AVAILABLE_PLAYERS_CHANGE | ESP_AVRC_RN_ADDRESSED_PLAYER_CHANGE | ESP_AVRC_RN_UIDS_CHANGE|ESP_AVRC_RN_VOLUME_CHANGE. <br /></td></tr>
+<tr class="separator:a17013c6f40042c68821548cab9ddb5eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a145c20271b53d4329e0e2c7fa36692b0"><td class="memItemLeft" align="right" valign="top"><a id="a145c20271b53d4329e0e2c7fa36692b0"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a145c20271b53d4329e0e2c7fa36692b0">set_bluedroid_config_t</a> (esp_bluedroid_config_t cfg)</td></tr>
 <tr class="memdesc:a145c20271b53d4329e0e2c7fa36692b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the esp_bluedroid_config_t: Available from IDF 5.2.1. <br /></td></tr>
@@ -226,6 +231,12 @@ const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
+<tr class="memitem:adf59aad0f6c7117c8fba44e956cde7f3"><td class="memItemLeft" align="right" valign="top"><a id="adf59aad0f6c7117c8fba44e956cde7f3"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>app_rc_tg_callback</b> (esp_avrc_tg_cb_event_t event, esp_avrc_tg_cb_param_t *param)=0</td></tr>
+<tr class="separator:adf59aad0f6c7117c8fba44e956cde7f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a806340a7bf9e75a2ff6bbd407726f266"><td class="memItemLeft" align="right" valign="top"><a id="a806340a7bf9e75a2ff6bbd407726f266"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>av_hdl_avrc_tg_evt</b> (uint16_t event, void *p_param)=0</td></tr>
+<tr class="separator:a806340a7bf9e75a2ff6bbd407726f266"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aecacd14836e61b3a08a0f415095d3f98"><td class="memItemLeft" align="right" valign="top"><a id="aecacd14836e61b3a08a0f415095d3f98"></a>
 virtual esp_err_t&#160;</td><td class="memItemRight" valign="bottom"><b>bluedroid_init</b> ()</td></tr>
 <tr class="separator:aecacd14836e61b3a08a0f415095d3f98"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -285,6 +296,9 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><b>audio_state_obj</b>
 <tr class="memitem:a7d6ebc612bc39d8c0d774b05b5fb5435"><td class="memItemLeft" align="right" valign="top"><a id="a7d6ebc612bc39d8c0d774b05b5fb5435"></a>
 void *&#160;</td><td class="memItemRight" valign="bottom"><b>audio_state_obj_post</b> = nullptr</td></tr>
 <tr class="separator:a7d6ebc612bc39d8c0d774b05b5fb5435"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2eaf5d6672d7cfcac7622790254b1afd"><td class="memItemLeft" align="right" valign="top"><a id="a2eaf5d6672d7cfcac7622790254b1afd"></a>
+std::vector&lt; <a class="el" href="group__a2dp.html#ga0af05e9d744ec14ee33e345d678e8ade">esp_avrc_rn_event_ids_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>avrc_rn_events</b> = {ESP_AVRC_RN_VOLUME_CHANGE }</td></tr>
+<tr class="separator:a2eaf5d6672d7cfcac7622790254b1afd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a729840e194330a64ffbccc52d853ac4a"><td class="memItemLeft" align="right" valign="top">esp_bluedroid_config_t&#160;</td><td class="memItemRight" valign="bottom"><b>bluedroid_config</b></td></tr>
 <tr class="separator:a729840e194330a64ffbccc52d853ac4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1cd750d4718e5f4053131668c9851b63"><td class="memItemLeft" align="right" valign="top"><a id="a1cd750d4718e5f4053131668c9851b63"></a>
@@ -365,6 +379,16 @@ UBaseType_t&#160;</td><td class="memItemRight" valign="bottom"><b>task_priority<
 <tr class="memitem:aaf02ccde9ba626cea64870a255672dba"><td class="memItemLeft" align="right" valign="top"><a id="aaf02ccde9ba626cea64870a255672dba"></a>
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>volume_value</b> = 0</td></tr>
 <tr class="separator:aaf02ccde9ba626cea64870a255672dba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:ac82ed712dca89857181a7d1835cced7c"><td class="memItemLeft" align="right" valign="top"><a id="ac82ed712dca89857181a7d1835cced7c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#ac82ed712dca89857181a7d1835cced7c">ccall_app_rc_tg_callback</a> (esp_avrc_tg_cb_event_t event, esp_avrc_tg_cb_param_t *param)</td></tr>
+<tr class="memdesc:ac82ed712dca89857181a7d1835cced7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">handle esp_avrc_tg_cb_event_t <br /></td></tr>
+<tr class="separator:ac82ed712dca89857181a7d1835cced7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0260114b8032359247b14f8e7f613af6"><td class="memItemLeft" align="right" valign="top"><a id="a0260114b8032359247b14f8e7f613af6"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ccall_av_hdl_avrc_tg_evt</b> (uint16_t event, void *p_param)</td></tr>
+<tr class="separator:a0260114b8032359247b14f8e7f613af6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Common Bluetooth A2DP functions. </p>

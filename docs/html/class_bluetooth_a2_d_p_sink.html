@@ -272,6 +272,10 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#aac9074521c80d7574a855f30b8301d13">set_avrc_metadata_callback</a> (void(*callback)(uint8_t, const uint8_t *))</td></tr>
 <tr class="memdesc:aac9074521c80d7574a855f30b8301d13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define a callback method which provides the meta data. <br /></td></tr>
 <tr class="separator:aac9074521c80d7574a855f30b8301d13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17013c6f40042c68821548cab9ddb5eb"><td class="memItemLeft" align="right" valign="top"><a id="a17013c6f40042c68821548cab9ddb5eb"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a17013c6f40042c68821548cab9ddb5eb">set_avrc_rn_events</a> (std::vector&lt; <a class="el" href="group__a2dp.html#ga0af05e9d744ec14ee33e345d678e8ade">esp_avrc_rn_event_ids_t</a> &gt; events)</td></tr>
+<tr class="memdesc:a17013c6f40042c68821548cab9ddb5eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define the vector of esp_avrc_rn_event_ids_t with e.g. ESP_AVRC_RN_PLAY_STATUS_CHANGE | ESP_AVRC_RN_TRACK_CHANGE | ESP_AVRC_RN_TRACK_REACHED_END | ESP_AVRC_RN_TRACK_REACHED_START | ESP_AVRC_RN_PLAY_POS_CHANGED | ESP_AVRC_RN_BATTERY_STATUS_CHANGE | ESP_AVRC_RN_SYSTEM_STATUS_CHANGE | ESP_AVRC_RN_APP_SETTING_CHANGE | ESP_AVRC_RN_NOW_PLAYING_CHANGE | ESP_AVRC_RN_AVAILABLE_PLAYERS_CHANGE | ESP_AVRC_RN_ADDRESSED_PLAYER_CHANGE | ESP_AVRC_RN_UIDS_CHANGE|ESP_AVRC_RN_VOLUME_CHANGE. <br /></td></tr>
+<tr class="separator:a17013c6f40042c68821548cab9ddb5eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5dd8ed8e61d6bb6d0c1e05d5c17e45e7"><td class="memItemLeft" align="right" valign="top"><a id="a5dd8ed8e61d6bb6d0c1e05d5c17e45e7"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a5dd8ed8e61d6bb6d0c1e05d5c17e45e7">set_avrc_rn_play_pos_callback</a> (void(*callback)(uint32_t play_pos), uint32_t notif_interval=10)</td></tr>
 <tr class="memdesc:a5dd8ed8e61d6bb6d0c1e05d5c17e45e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define a callback method which provides esp_avrc_rn_param_t play position notifications, at a modifiable interval over 1s. <br /></td></tr>
@@ -448,9 +452,9 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>app_gap_callb
 <tr class="memitem:a15339f3f739d3cfae3612d3469c22940"><td class="memItemLeft" align="right" valign="top"><a id="a15339f3f739d3cfae3612d3469c22940"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>app_rc_ct_callback</b> (esp_avrc_ct_cb_event_t event, esp_avrc_ct_cb_param_t *param)</td></tr>
 <tr class="separator:a15339f3f739d3cfae3612d3469c22940"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae7de77dbd610f8388e0de62d42fff67f"><td class="memItemLeft" align="right" valign="top"><a id="ae7de77dbd610f8388e0de62d42fff67f"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>app_rc_tg_callback</b> (esp_avrc_tg_cb_event_t event, esp_avrc_tg_cb_param_t *param)</td></tr>
-<tr class="separator:ae7de77dbd610f8388e0de62d42fff67f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fac4c5cd734abf986d5ccf1851689e7"><td class="memItemLeft" align="right" valign="top"><a id="a0fac4c5cd734abf986d5ccf1851689e7"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>app_rc_tg_callback</b> (esp_avrc_tg_cb_event_t event, esp_avrc_tg_cb_param_t *param) override</td></tr>
+<tr class="separator:a0fac4c5cd734abf986d5ccf1851689e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae29de9cb7224c5876de81418ae9b664d"><td class="memItemLeft" align="right" valign="top"><a id="ae29de9cb7224c5876de81418ae9b664d"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>app_send_msg</b> (<a class="el" href="structbt__app__msg__t.html">bt_app_msg_t</a> *msg)</td></tr>
 <tr class="separator:ae29de9cb7224c5876de81418ae9b664d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -477,9 +481,9 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>av_hdl_a2d_ev
 <tr class="memitem:afa1e8675ff5ee96ed74d2491d3505c37"><td class="memItemLeft" align="right" valign="top"><a id="afa1e8675ff5ee96ed74d2491d3505c37"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>av_hdl_avrc_evt</b> (uint16_t event, void *p_param)</td></tr>
 <tr class="separator:afa1e8675ff5ee96ed74d2491d3505c37"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3bd14c27e34e1e8d4ef1dba2535ccc06"><td class="memItemLeft" align="right" valign="top"><a id="a3bd14c27e34e1e8d4ef1dba2535ccc06"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>av_hdl_avrc_tg_evt</b> (uint16_t event, void *p_param)</td></tr>
-<tr class="separator:a3bd14c27e34e1e8d4ef1dba2535ccc06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade57e43b77bf7e4f837c9ae75f2d71ca"><td class="memItemLeft" align="right" valign="top"><a id="ade57e43b77bf7e4f837c9ae75f2d71ca"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>av_hdl_avrc_tg_evt</b> (uint16_t event, void *p_param) override</td></tr>
+<tr class="separator:ade57e43b77bf7e4f837c9ae75f2d71ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac28af7c0b719cc34c03454df94880439"><td class="memItemLeft" align="right" valign="top"><a id="ac28af7c0b719cc34c03454df94880439"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>av_hdl_stack_evt</b> (uint16_t event, void *p_param)</td></tr>
 <tr class="separator:ac28af7c0b719cc34c03454df94880439"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -631,6 +635,9 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><b>avrc_metadata_callb
 <tr class="separator:ae2dd652a4ae05689eec6edc1be4c0add"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8edf3f614972dbee071afb8eb7b2779a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><b>avrc_metadata_flags</b></td></tr>
 <tr class="separator:a8edf3f614972dbee071afb8eb7b2779a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2eaf5d6672d7cfcac7622790254b1afd"><td class="memItemLeft" align="right" valign="top"><a id="a2eaf5d6672d7cfcac7622790254b1afd"></a>
+std::vector&lt; <a class="el" href="group__a2dp.html#ga0af05e9d744ec14ee33e345d678e8ade">esp_avrc_rn_event_ids_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>avrc_rn_events</b> = {ESP_AVRC_RN_VOLUME_CHANGE }</td></tr>
+<tr class="separator:a2eaf5d6672d7cfcac7622790254b1afd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6f34cb9044bd3381d73775ec32e64351"><td class="memItemLeft" align="right" valign="top"><a id="a6f34cb9044bd3381d73775ec32e64351"></a>
 void(*&#160;</td><td class="memItemRight" valign="bottom"><b>avrc_rn_play_pos_callback</b> )(uint32_t) = nullptr</td></tr>
 <tr class="separator:a6f34cb9044bd3381d73775ec32e64351"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -782,9 +789,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>rssi_active</b> = fal
 <tr class="memitem:ad0f5f42d8ee5ebd9cf79c91eb0d9918c"><td class="memItemLeft" align="right" valign="top"><a id="ad0f5f42d8ee5ebd9cf79c91eb0d9918c"></a>
 esp_avrc_rn_evt_cap_mask_t&#160;</td><td class="memItemRight" valign="bottom"><b>s_avrc_peer_rn_cap</b> = {0}</td></tr>
 <tr class="separator:ad0f5f42d8ee5ebd9cf79c91eb0d9918c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acb116e02acda058a2a4948ce14c37e95"><td class="memItemLeft" align="right" valign="top"><a id="acb116e02acda058a2a4948ce14c37e95"></a>
-esp_avrc_rn_evt_cap_mask_t&#160;</td><td class="memItemRight" valign="bottom"><b>s_avrc_peer_rn_cap_set</b> = {0}</td></tr>
-<tr class="separator:acb116e02acda058a2a4948ce14c37e95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac450046d5182d0574059f7ddf4a5c611"><td class="memItemLeft" align="right" valign="top"><a id="ac450046d5182d0574059f7ddf4a5c611"></a>
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>s_volume</b> = 0</td></tr>
 <tr class="separator:ac450046d5182d0574059f7ddf4a5c611"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -836,10 +840,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a88292248eabbb77aee7c6d390bd23f62">ccall_app_rc_ct_callback</a> (esp_avrc_ct_cb_event_t event, esp_avrc_ct_cb_param_t *param)</td></tr>
 <tr class="memdesc:a88292248eabbb77aee7c6d390bd23f62"><td class="mdescLeft">&#160;</td><td class="mdescRight">handle esp_avrc_ct_cb_event_t <br /></td></tr>
 <tr class="separator:a88292248eabbb77aee7c6d390bd23f62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac82ed712dca89857181a7d1835cced7c"><td class="memItemLeft" align="right" valign="top"><a id="ac82ed712dca89857181a7d1835cced7c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#ac82ed712dca89857181a7d1835cced7c">ccall_app_rc_tg_callback</a> (esp_avrc_tg_cb_event_t event, esp_avrc_tg_cb_param_t *param)</td></tr>
-<tr class="memdesc:ac82ed712dca89857181a7d1835cced7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">handle esp_avrc_tg_cb_event_t <br /></td></tr>
-<tr class="separator:ac82ed712dca89857181a7d1835cced7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc5b990ea466f26e3a38a1aebb0c2ca2"><td class="memItemLeft" align="right" valign="top"><a id="acc5b990ea466f26e3a38a1aebb0c2ca2"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#acc5b990ea466f26e3a38a1aebb0c2ca2">ccall_app_task_handler</a> (void *arg)</td></tr>
 <tr class="memdesc:acc5b990ea466f26e3a38a1aebb0c2ca2"><td class="mdescLeft">&#160;</td><td class="mdescRight">task handler <br /></td></tr>
@@ -856,9 +856,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a2f773677a4da51d582e6cadd5a2cc514">ccall_av_hdl_avrc_evt</a> (uint16_t event, void *p_param)</td></tr>
 <tr class="memdesc:a2f773677a4da51d582e6cadd5a2cc514"><td class="mdescLeft">&#160;</td><td class="mdescRight">avrc event handler <br /></td></tr>
 <tr class="separator:a2f773677a4da51d582e6cadd5a2cc514"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0260114b8032359247b14f8e7f613af6"><td class="memItemLeft" align="right" valign="top"><a id="a0260114b8032359247b14f8e7f613af6"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>ccall_av_hdl_avrc_tg_evt</b> (uint16_t event, void *p_param)</td></tr>
-<tr class="separator:a0260114b8032359247b14f8e7f613af6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a38e69e5d70cecace49c90db414b97970"><td class="memItemLeft" align="right" valign="top"><a id="a38e69e5d70cecace49c90db414b97970"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a38e69e5d70cecace49c90db414b97970">ccall_av_hdl_stack_evt</a> (uint16_t event, void *p_param)</td></tr>
 <tr class="memdesc:a38e69e5d70cecace49c90db414b97970"><td class="mdescLeft">&#160;</td><td class="mdescRight">av event handler <br /></td></tr>

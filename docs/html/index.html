@@ -99,7 +99,7 @@ A Simple I2S Example (A2DS Sink) using default Pins</h2>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> loop() {</div>
 <div class="line">}</div>
-<div class="ttc" id="aclass_bluetooth_a2_d_p_sink_html"><div class="ttname"><a href="class_bluetooth_a2_d_p_sink.html">BluetoothA2DPSink</a></div><div class="ttdoc">A2DP Bluethooth Sink - We initialize and start the Bluetooth A2DP Sink. The example https://github....</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSink.h:74</div></div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_sink_html"><div class="ttname"><a href="class_bluetooth_a2_d_p_sink.html">BluetoothA2DPSink</a></div><div class="ttdoc">A2DP Bluethooth Sink - We initialize and start the Bluetooth A2DP Sink. The example https://github....</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSink.h:69</div></div>
 </div><!-- fragment --><p> This creates a new Bluetooth device with the name “MyMusic” and the output will be sent to the following default I2S pins which need to be connected to an external DAC:</p>
 <ul>
 <li>bck_io_num = 14</li>
@@ -243,7 +243,7 @@ Sending Data from a A2DS Data Source with a Callback</h2>
 <div class="line"><span class="keywordtype">void</span> loop() {</div>
 <div class="line">}</div>
 <div class="ttc" id="aclass_bluetooth_a2_d_p_source_html"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html">BluetoothA2DPSource</a></div><div class="ttdoc">A2DP Bluetooth Source.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSource.h:79</div></div>
-<div class="ttc" id="aclass_bluetooth_a2_d_p_source_html_a403b0e21db02c81b948534258e5ff37b"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html#a403b0e21db02c81b948534258e5ff37b">BluetoothA2DPSource::start</a></div><div class="ttdeci">virtual void start(const char *name, music_data_channels_cb_t callback=NULL)</div><div class="ttdoc">starts the bluetooth source</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSource.cpp:145</div></div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_source_html_a403b0e21db02c81b948534258e5ff37b"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html#a403b0e21db02c81b948534258e5ff37b">BluetoothA2DPSource::start</a></div><div class="ttdeci">virtual void start(const char *name, music_data_channels_cb_t callback=NULL)</div><div class="ttdoc">starts the bluetooth source</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSource.cpp:147</div></div>
 </div><!-- fragment --><p>In the examples you can find an implentation that generates sound with the help of the sin() function. You can also inticate multiple alternative Bluetooth names. The system just connects to the first one which is available:</p>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> setup() {</div>
 <div class="line">  <span class="keyword">static</span> std::vector&lt;char*&gt; bt_names = {<span class="stringliteral">&quot;MyMusic&quot;</span>,<span class="stringliteral">&quot;RadioPlayer&quot;</span>,<span class="stringliteral">&quot;MusicPlayer&quot;</span>};</div>
@@ -267,7 +267,7 @@ Sending Data from a A2DS Data Source with Recorded Data</h2>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> loop() {</div>
 <div class="line">}</div>
-<div class="ttc" id="aclass_bluetooth_a2_d_p_source_html_a0a5976c3d81ae96e5e3be06fd6a662da"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html#a0a5976c3d81ae96e5e3be06fd6a662da">BluetoothA2DPSource::write_data</a></div><div class="ttdeci">virtual bool write_data(SoundData *data)</div><div class="ttdoc">write sound data: In some cases it is very difficult to use the callback function....</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSource.cpp:1066</div></div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_source_html_a0a5976c3d81ae96e5e3be06fd6a662da"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html#a0a5976c3d81ae96e5e3be06fd6a662da">BluetoothA2DPSource::write_data</a></div><div class="ttdeci">virtual bool write_data(SoundData *data)</div><div class="ttdoc">write sound data: In some cases it is very difficult to use the callback function....</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSource.cpp:1109</div></div>
 <div class="ttc" id="aclass_one_channel_sound_data_html"><div class="ttname"><a href="class_one_channel_sound_data.html">OneChannelSoundData</a></div><div class="ttdoc">1 Channel data is provided as int16 values</div><div class="ttdef"><b>Definition:</b> SoundData.h:118</div></div>
 <div class="ttc" id="aclass_sound_data_html"><div class="ttname"><a href="class_sound_data.html">SoundData</a></div><div class="ttdoc">Sound data as byte stream. We support TwoChannelSoundData (uint16_t + uint16_t) and OneChannelSoundDa...</div><div class="ttdef"><b>Definition:</b> SoundData.h:72</div></div>
 </div><!-- fragment --><p>The array can be prepared e.g. in the following way:</p>
@@ -309,7 +309,7 @@ Architecture / Dependencies</h1>
 <p>Before you clone the project, please read the following information which can be found in the <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki/Design-Overview">Wiki</a>.</p>
 <h1><a class="anchor" id="autotoc_md17"></a>
 Digital Sound Processing</h1>
-<p>You can use this library stand alone, but it is part of my <a href="https://github.com/pschatzmann/arduino-audio-tools">audio-tools</a> project. So you can easily enhance this functionality with sound effects, use filters, use alternative audio sinks or audio sources, do FFT etc. Here is a <a href="https://github.com/pschatzmann/arduino-audio-tools/blob/main/examples/examples-basic-api/basic-a2dp-fft/basic-a2dp-fft.ino">simple example</a> how you can analyse the audio data with FFT.</p>
+<p>You can use this library stand alone, but it is part of my <a href="https://github.com/pschatzmann/arduino-audio-tools">audio-tools</a> project. So you can easily enhance this functionality with sound effects, use filters or an equilizer, use alternative audio sinks or audio sources, do FFT etc. Here is a <a href="https://github.com/pschatzmann/arduino-audio-tools/blob/main/examples/examples-basic-api/basic-a2dp-fft/basic-a2dp-fft.ino">simple example</a> how you can analyse the audio data with FFT.</p>
 <h1><a class="anchor" id="autotoc_md18"></a>
 Documentation</h1>
 <ul>

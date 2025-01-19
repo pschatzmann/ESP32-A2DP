@@ -77,33 +77,33 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;config.h&quot;</code><br />
-<code>#include &quot;esp_idf_version.h&quot;</code><br />
+<code>#include &lt;math.h&gt;</code><br />
+<code>#include &lt;stdbool.h&gt;</code><br />
 <code>#include &lt;stdint.h&gt;</code><br />
 <code>#include &lt;stdio.h&gt;</code><br />
 <code>#include &lt;stdlib.h&gt;</code><br />
-<code>#include &lt;unistd.h&gt;</code><br />
-<code>#include &lt;stdbool.h&gt;</code><br />
 <code>#include &lt;string.h&gt;</code><br />
-<code>#include &lt;math.h&gt;</code><br />
+<code>#include &lt;unistd.h&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
+<code>#include &quot;esp_idf_version.h&quot;</code><br />
 <code>#include &quot;freertos/FreeRTOS.h&quot;</code><br />
-<code>#include &quot;freertos/timers.h&quot;</code><br />
 <code>#include &quot;freertos/FreeRTOSConfig.h&quot;</code><br />
 <code>#include &quot;freertos/queue.h&quot;</code><br />
 <code>#include &quot;freertos/task.h&quot;</code><br />
+<code>#include &quot;freertos/timers.h&quot;</code><br />
 <code>#include &quot;xtensa_api.h&quot;</code><br />
-<code>#include &quot;esp_bt.h&quot;</code><br />
-<code>#include &quot;esp_bt_main.h&quot;</code><br />
-<code>#include &quot;esp_bt_device.h&quot;</code><br />
-<code>#include &quot;esp_gap_bt_api.h&quot;</code><br />
+<code>#include &quot;A2DPVolumeControl.h&quot;</code><br />
 <code>#include &quot;esp_a2dp_api.h&quot;</code><br />
 <code>#include &quot;esp_avrc_api.h&quot;</code><br />
+<code>#include &quot;esp_bt.h&quot;</code><br />
+<code>#include &quot;esp_bt_device.h&quot;</code><br />
+<code>#include &quot;esp_bt_main.h&quot;</code><br />
+<code>#include &quot;esp_gap_bt_api.h&quot;</code><br />
 <code>#include &quot;esp_spp_api.h&quot;</code><br />
-<code>#include &quot;nvs.h&quot;</code><br />
-<code>#include &quot;nvs_flash.h&quot;</code><br />
-<code>#include &quot;A2DPVolumeControl.h&quot;</code><br />
 <code>#include &quot;esp_task_wdt.h&quot;</code><br />
 <code>#include &quot;esp_timer.h&quot;</code><br />
+<code>#include &quot;nvs.h&quot;</code><br />
+<code>#include &quot;nvs_flash.h&quot;</code><br />
 <code>#include &quot;esp_log.h&quot;</code><br />
 </div>
 <p><a href="_bluetooth_a2_d_p_common_8h_source.html">Go to the source code of this file.</a></p>
@@ -165,12 +165,27 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a4321b5374a1413fafafaec82f896eb1c"><td class="memItemLeft" align="right" valign="top"><a id="a4321b5374a1413fafafaec82f896eb1c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ccall_app_a2d_callback</b> (esp_a2d_cb_event_t event, esp_a2d_cb_param_t *param)</td></tr>
+<tr class="separator:a4321b5374a1413fafafaec82f896eb1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad11e4bda6ef98605d8df00e510e2703f"><td class="memItemLeft" align="right" valign="top"><a id="ad11e4bda6ef98605d8df00e510e2703f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ccall_app_gap_callback</b> (esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *param)</td></tr>
+<tr class="separator:ad11e4bda6ef98605d8df00e510e2703f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88292248eabbb77aee7c6d390bd23f62"><td class="memItemLeft" align="right" valign="top"><a id="a88292248eabbb77aee7c6d390bd23f62"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ccall_app_rc_ct_callback</b> (esp_avrc_ct_cb_event_t event, esp_avrc_ct_cb_param_t *param)</td></tr>
+<tr class="separator:a88292248eabbb77aee7c6d390bd23f62"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac82ed712dca89857181a7d1835cced7c"><td class="memItemLeft" align="right" valign="top"><a id="ac82ed712dca89857181a7d1835cced7c"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>ccall_app_rc_tg_callback</b> (esp_avrc_tg_cb_event_t event, esp_avrc_tg_cb_param_t *param)</td></tr>
 <tr class="separator:ac82ed712dca89857181a7d1835cced7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0260114b8032359247b14f8e7f613af6"><td class="memItemLeft" align="right" valign="top"><a id="a0260114b8032359247b14f8e7f613af6"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>ccall_av_hdl_avrc_tg_evt</b> (uint16_t event, void *p_param)</td></tr>
 <tr class="separator:a0260114b8032359247b14f8e7f613af6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38e69e5d70cecace49c90db414b97970"><td class="memItemLeft" align="right" valign="top"><a id="a38e69e5d70cecace49c90db414b97970"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ccall_av_hdl_stack_evt</b> (uint16_t event, void *p_param)</td></tr>
+<tr class="separator:a38e69e5d70cecace49c90db414b97970"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c7e4fb41d19a7d79bce115bd1502649"><td class="memItemLeft" align="right" valign="top"><a id="a6c7e4fb41d19a7d79bce115bd1502649"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ccall_bt_app_task_handler</b> (void *arg)</td></tr>
+<tr class="separator:a6c7e4fb41d19a7d79bce115bd1502649"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>

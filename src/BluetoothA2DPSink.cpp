@@ -18,6 +18,34 @@
 // to support static callback functions
 BluetoothA2DPSink *actual_bluetooth_a2dp_sink;
 
+extern "C" void ccall_i2s_task_handler(void *arg) {
+  ESP_LOGD(BT_AV_TAG, "%s", __func__);
+  if (actual_bluetooth_a2dp_sink)
+    actual_bluetooth_a2dp_sink->i2s_task_handler(arg);
+}
+
+extern "C" void ccall_audio_data_callback(const uint8_t *data, uint32_t len) {
+  // ESP_LOGD(BT_AV_TAG, "%s", __func__);
+  if (actual_bluetooth_a2dp_sink)
+    actual_bluetooth_a2dp_sink->audio_data_callback(data, len);
+}
+
+extern "C" void ccall_av_hdl_avrc_evt(uint16_t event, void *param) {
+  ESP_LOGD(BT_AV_TAG, "%s", __func__);
+  if (actual_bluetooth_a2dp_sink) {
+    actual_bluetooth_a2dp_sink->av_hdl_avrc_evt(event, param);
+  }
+}
+
+extern "C" void ccall_av_hdl_a2d_evt(uint16_t event, void *param) {
+  ESP_LOGD(BT_AV_TAG, "%s", __func__);
+  if (actual_bluetooth_a2dp_sink) {
+    actual_bluetooth_a2dp_sink->av_hdl_a2d_evt(event, param);
+  }
+}
+
+
+
 /**
  * Constructor
  */
@@ -40,13 +68,12 @@ BluetoothA2DPSink::~BluetoothA2DPSink() {
 void BluetoothA2DPSink::end(bool release_memory) {
   // reconnect should not work after end
   is_autoreconnect_allowed = false;
+
   BluetoothA2DPCommon::end(release_memory);
-  app_task_shut_down();
 
   if (is_output) {
     out->end();
   }
-  log_free_heap();
 }
 
 void BluetoothA2DPSink::set_stream_reader(void (*callBack)(const uint8_t *,
@@ -280,8 +307,8 @@ void BluetoothA2DPSink::app_task_handler(void *arg) {
     if (!app_task_queue) {
       ESP_LOGE(BT_APP_TAG, "%s, app_task_queue is null", __func__);
       delay_ms(100);
-    } else if (pdTRUE == xQueueReceive(app_task_queue, &msg,
-                                       (TickType_t)portMAX_DELAY)) {
+    } else if (pdTRUE ==
+               xQueueReceive(app_task_queue, &msg, (TickType_t)portMAX_DELAY)) {
       ESP_LOGD(BT_APP_TAG, "%s, sig 0x%x, 0x%x", __func__, msg.sig, msg.event);
       switch (msg.sig) {
         case APP_SIG_WORK_DISPATCH:
@@ -307,39 +334,13 @@ void BluetoothA2DPSink::app_task_handler(void *arg) {
           reconnect();
         }
       } else {
-        delay(10);
+        delay_ms(10);
       }
 #else
       ESP_LOGI(BT_APP_TAG, "%s, xQueueReceive -> no data", __func__);
       delay_ms(10);
 #endif
     }
-  }
-}
-
-void BluetoothA2DPSink::app_task_start_up(void) {
-  ESP_LOGD(BT_AV_TAG, "%s", __func__);
-  if (app_task_queue == NULL)
-    app_task_queue = xQueueCreate(event_queue_size, sizeof(bt_app_msg_t));
-
-  if (app_task_handle == NULL) {
-    if (xTaskCreatePinnedToCore(ccall_app_task_handler, "BtAppT",
-                                event_stack_size, NULL, task_priority,
-                                &app_task_handle, task_core) != pdPASS) {
-      ESP_LOGE(BT_APP_TAG, "%s failed", __func__);
-    }
-  }
-}
-
-void BluetoothA2DPSink::app_task_shut_down(void) {
-  ESP_LOGD(BT_AV_TAG, "%s", __func__);
-  if (app_task_handle != NULL) {
-    vTaskDelete(app_task_handle);
-    app_task_handle = NULL;
-  }
-  if (app_task_queue != NULL) {
-    vQueueDelete(app_task_queue);
-    app_task_queue = NULL;
   }
 }
 
@@ -742,8 +743,8 @@ void BluetoothA2DPSink::av_new_track() {
   if (esp_avrc_rn_evt_bit_mask_operation(ESP_AVRC_BIT_MASK_OP_TEST,
                                          &s_avrc_peer_rn_cap,
                                          ESP_AVRC_RN_TRACK_CHANGE)) {
-    esp_avrc_ct_send_register_notification_cmd(
-      APP_RC_CT_TL_RN_TRACK_CHANGE, ESP_AVRC_RN_TRACK_CHANGE, 0);
+    esp_avrc_ct_send_register_notification_cmd(APP_RC_CT_TL_RN_TRACK_CHANGE,
+                                               ESP_AVRC_RN_TRACK_CHANGE, 0);
   }
 #endif
 }
@@ -766,8 +767,9 @@ void BluetoothA2DPSink::av_play_pos_changed(void) {
   if (esp_avrc_rn_evt_bit_mask_operation(ESP_AVRC_BIT_MASK_OP_TEST,
                                          &s_avrc_peer_rn_cap,
                                          ESP_AVRC_RN_PLAY_POS_CHANGED)) {
-    esp_avrc_ct_send_register_notification_cmd(
-        APP_RC_CT_TL_RN_PLAY_POS_CHANGE, ESP_AVRC_RN_PLAY_POS_CHANGED, notif_interval_s);
+    esp_avrc_ct_send_register_notification_cmd(APP_RC_CT_TL_RN_PLAY_POS_CHANGE,
+                                               ESP_AVRC_RN_PLAY_POS_CHANGED,
+                                               notif_interval_s);
   }
 #endif
 }
@@ -784,7 +786,7 @@ void BluetoothA2DPSink::av_notify_evt_handler(uint8_t event_id,
   switch (event_id) {
     case ESP_AVRC_RN_TRACK_CHANGE:
       ESP_LOGD(BT_AV_TAG, "%s ESP_AVRC_RN_TRACK_CHANGE %d", __func__, event_id);
-      av_new_track();    
+      av_new_track();
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
       // call avrc track change notification callback if available
       if (avrc_rn_track_change_callback != nullptr) {
@@ -937,9 +939,8 @@ void BluetoothA2DPSink::av_hdl_stack_evt(uint16_t event, void *p_param) {
         // add request to ESP_AVRC_RN_VOLUME_CHANGE
         esp_avrc_rn_evt_cap_mask_t evt_set = {0};
         for (auto event : avrc_rn_events) {
-          esp_avrc_rn_evt_bit_mask_operation(ESP_AVRC_BIT_MASK_OP_SET,
-                                            &evt_set,
-                                            event);
+          esp_avrc_rn_evt_bit_mask_operation(ESP_AVRC_BIT_MASK_OP_SET, &evt_set,
+                                             event);
         }
         if (esp_avrc_tg_set_rn_evt_cap(&evt_set) != ESP_OK) {
           ESP_LOGE(BT_AV_TAG, "esp_avrc_tg_set_rn_evt_cap failed");
@@ -1172,74 +1173,9 @@ void BluetoothA2DPSink::confirm_pin_code(int code) {
   }
 }
 
-/**
- * public Callbacks
- *
- */
-
-void ccall_i2s_task_handler(void *arg) {
-  ESP_LOGD(BT_AV_TAG, "%s", __func__);
-  if (actual_bluetooth_a2dp_sink)
-    actual_bluetooth_a2dp_sink->i2s_task_handler(arg);
-}
-
-void ccall_app_task_handler(void *arg) {
-  ESP_LOGD(BT_AV_TAG, "%s", __func__);
-  if (actual_bluetooth_a2dp_sink)
-    actual_bluetooth_a2dp_sink->app_task_handler(arg);
-}
-
-void ccall_audio_data_callback(const uint8_t *data, uint32_t len) {
-  // ESP_LOGD(BT_AV_TAG, "%s", __func__);
-  if (actual_bluetooth_a2dp_sink)
-    actual_bluetooth_a2dp_sink->audio_data_callback(data, len);
-}
-
-void ccall_app_a2d_callback(esp_a2d_cb_event_t event,
-                            esp_a2d_cb_param_t *param) {
-  ESP_LOGD(BT_AV_TAG, "%s", __func__);
-  if (actual_bluetooth_a2dp_sink)
-    actual_bluetooth_a2dp_sink->app_a2d_callback(event, param);
-}
-
-void ccall_app_rc_ct_callback(esp_avrc_ct_cb_event_t event,
-                              esp_avrc_ct_cb_param_t *param) {
-  ESP_LOGD(BT_AV_TAG, "%s", __func__);
-  if (actual_bluetooth_a2dp_sink)
-    actual_bluetooth_a2dp_sink->app_rc_ct_callback(event, param);
-}
-
-void ccall_app_gap_callback(esp_bt_gap_cb_event_t event,
-                            esp_bt_gap_cb_param_t *param) {
-  ESP_LOGD(BT_AV_TAG, "%s", __func__);
-  if (actual_bluetooth_a2dp_sink)
-    actual_bluetooth_a2dp_sink->app_gap_callback(event, param);
-}
-
-void ccall_av_hdl_stack_evt(uint16_t event, void *param) {
-  ESP_LOGD(BT_AV_TAG, "%s", __func__);
-  if (actual_bluetooth_a2dp_sink) {
-    actual_bluetooth_a2dp_sink->av_hdl_stack_evt(event, param);
-  }
-}
-
-void ccall_av_hdl_avrc_evt(uint16_t event, void *param) {
-  ESP_LOGD(BT_AV_TAG, "%s", __func__);
-  if (actual_bluetooth_a2dp_sink) {
-    actual_bluetooth_a2dp_sink->av_hdl_avrc_evt(event, param);
-  }
-}
-
-void ccall_av_hdl_a2d_evt(uint16_t event, void *param) {
-  ESP_LOGD(BT_AV_TAG, "%s", __func__);
-  if (actual_bluetooth_a2dp_sink) {
-    actual_bluetooth_a2dp_sink->av_hdl_a2d_evt(event, param);
-  }
-}
 
 size_t BluetoothA2DPSink::i2s_write_data(const uint8_t *data,
                                          size_t item_size) {
-
   if (!is_output) return item_size;
 
   if (!is_i2s_active) {
@@ -1250,8 +1186,9 @@ size_t BluetoothA2DPSink::i2s_write_data(const uint8_t *data,
   // split up outout to max size
   int open = item_size;
   int processed = 0;
-  while(open >0){
-    int written = out->write(data+processed, std::min(open, A2DP_I2S_MAX_WRITE_SIZE));
+  while (open > 0) {
+    int written =
+        out->write(data + processed, std::min(open, A2DP_I2S_MAX_WRITE_SIZE));
     open -= written;
     processed += written;
   }

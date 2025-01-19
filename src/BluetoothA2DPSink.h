@@ -20,9 +20,8 @@
 
 // Comment out next line to deactivate warnings
 #ifndef A2DP_I2S_AUDIOTOOLS
-#  warning "AudioTools library is not included first or installed"
+#warning "AudioTools library is not included first or installed"
 #endif
-
 
 #define APP_SIG_WORK_DISPATCH (0x01)
 
@@ -35,19 +34,10 @@ enum {
   BT_APP_EVT_STACK_UP = 0,
 };
 
-extern "C" void ccall_app_a2d_callback(esp_a2d_cb_event_t event,
-                                       esp_a2d_cb_param_t *param);
-extern "C" void ccall_app_rc_ct_callback(esp_avrc_ct_cb_event_t event,
-                                         esp_avrc_ct_cb_param_t *param);
-extern "C" void ccall_app_gap_callback(esp_bt_gap_cb_event_t event,
-                                       esp_bt_gap_cb_param_t *param);
-extern "C" void ccall_app_task_handler(void *arg);
 extern "C" void ccall_i2s_task_handler(void *arg);
 extern "C" void ccall_audio_data_callback(const uint8_t *data, uint32_t len);
-extern "C" void ccall_av_hdl_stack_evt(uint16_t event, void *p_param);
 extern "C" void ccall_av_hdl_a2d_evt(uint16_t event, void *p_param);
 extern "C" void ccall_av_hdl_avrc_evt(uint16_t event, void *p_param);
-
 
 // defines the mechanism to confirm a pin request
 enum PinCodeRequest { Undefined, Confirm, Reply };
@@ -67,37 +57,21 @@ extern BluetoothA2DPSink *actual_bluetooth_a2dp_sink;
  */
 
 class BluetoothA2DPSink : public BluetoothA2DPCommon {
-  /// handle esp_a2d_cb_event_t
-  friend void ccall_app_a2d_callback(esp_a2d_cb_event_t event,
-                                     esp_a2d_cb_param_t *param);
-  /// handle esp_avrc_ct_cb_event_t
-  friend void ccall_app_rc_ct_callback(esp_avrc_ct_cb_event_t event,
-                                       esp_avrc_ct_cb_param_t *param);
-  /// GAP callback
-  friend void ccall_app_gap_callback(esp_bt_gap_cb_event_t event,
-                                     esp_bt_gap_cb_param_t *param);
-  /// task handler
-  friend void ccall_app_task_handler(void *arg);
   /// task hander for i2s
   friend void ccall_i2s_task_handler(void *arg);
   /// Callback for music stream
   friend void ccall_audio_data_callback(const uint8_t *data, uint32_t len);
-  /// av event handler
-  friend void ccall_av_hdl_stack_evt(uint16_t event, void *p_param);
   /// a2dp event handler
   friend void ccall_av_hdl_a2d_evt(uint16_t event, void *p_param);
   /// avrc event handler
   friend void ccall_av_hdl_avrc_evt(uint16_t event, void *p_param);
 
-
  public:
   /// Default Constructor:  output via callback or Legacy I2S
   BluetoothA2DPSink();
-  
+
   /// Define output scenario class
-  BluetoothA2DPSink(BluetoothA2DPOutput &out){
-    set_output(out);
-  }
+  BluetoothA2DPSink(BluetoothA2DPOutput &out) { set_output(out); }
 
 #if A2DP_I2S_AUDIOTOOLS
   /// Output AudioOutput using AudioTools library
@@ -156,14 +130,10 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
 #endif
 
   /// Defines the output class: by default we use BluetoothA2DPOutputDefault
-  void set_output(BluetoothA2DPOutput &output){
-    out = &output;
-  }
+  void set_output(BluetoothA2DPOutput &output) { out = &output; }
 
-  /// Provides access to the output class 
-  BluetoothA2DPOutput* get_output(){
-    return out;
-  }
+  /// Provides access to the output class
+  BluetoothA2DPOutput *get_output() { return out; }
 
 #ifdef ARDUINO
   /// Output to Arduino Print
@@ -176,13 +146,9 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
 
 #if A2DP_I2S_AUDIOTOOLS
   /// Output AudioOutput using AudioTools library
-  void set_output(audio_tools::AudioOutput &output) {
-    out->set_output(output);
-  }
+  void set_output(audio_tools::AudioOutput &output) { out->set_output(output); }
   /// Output AudioStream using AudioTools library
-  void set_output(audio_tools::AudioStream &output) {
-    out->set_output(output);
-  }
+  void set_output(audio_tools::AudioStream &output) { out->set_output(output); }
 #endif
 
   /// starts the I2S bluetooth sink with the inidicated name
@@ -210,23 +176,26 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   }
 
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
-  /// Define a callback method which provides esp_avrc_playback_stat_t playback status notifications
+  /// Define a callback method which provides esp_avrc_playback_stat_t playback
+  /// status notifications
   virtual void set_avrc_rn_playstatus_callback(
       void (*callback)(esp_avrc_playback_stat_t playback)) {
     this->avrc_rn_playstatus_callback = callback;
   }
-  /// Define a callback method which provides esp_avrc_rn_param_t play position notifications, at a modifiable interval over 1s
+  /// Define a callback method which provides esp_avrc_rn_param_t play position
+  /// notifications, at a modifiable interval over 1s
   virtual void set_avrc_rn_play_pos_callback(
-      void (*callback)(uint32_t play_pos),uint32_t notif_interval = 10) {
+      void (*callback)(uint32_t play_pos), uint32_t notif_interval = 10) {
     this->avrc_rn_play_pos_callback = callback;
-    this->notif_interval_s = std::max(notif_interval,(uint32_t)1);
+    this->notif_interval_s = std::max(notif_interval, (uint32_t)1);
   }
-  /// Define a callback method which provides an 8bit array for track change notifications 
-  /// Typically the last bit is 1 when there is a track change (so can be cast to a uint8_t)
+  /// Define a callback method which provides an 8bit array for track change
+  /// notifications Typically the last bit is 1 when there is a track change (so
+  /// can be cast to a uint8_t)
   virtual void set_avrc_rn_track_change_callback(
       void (*callback)(uint8_t *id)) {
     this->avrc_rn_track_change_callback = callback;
-    }
+  }
 #endif
 
   /// Defines the method which will be called with the sample rate is updated
@@ -362,7 +331,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   void set_spp_active(bool flag) { spp_active = flag; }
 
   /// Activate/Deactivate output e.g. to I2S
-  void set_output_active(bool flag){ is_i2s_active = flag;}
+  void set_output_active(bool flag) { is_i2s_active = flag; }
 
   /// Checks if output is active
   bool is_output_active() { return is_i2s_active; }
@@ -387,10 +356,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
  protected:
   BluetoothA2DPOutputDefault out_default;
   BluetoothA2DPOutput *out = &out_default;
-
-  // protected data
-  QueueHandle_t app_task_queue = nullptr;
-  TaskHandle_t app_task_handle = nullptr;
 
   volatile bool is_i2s_active = false;
   // activate output via BluetoothA2DPOutput
@@ -445,11 +410,16 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap = {0};
   char remote_name[ESP_BT_GAP_MAX_BDNAME_LEN + 1];
 #endif
+  void app_gap_callback(esp_bt_gap_cb_event_t event,
+                        esp_bt_gap_cb_param_t *param) override;
+  void app_rc_ct_callback(esp_avrc_ct_cb_event_t event,
+                          esp_avrc_ct_cb_param_t *param) override;
+  void app_a2d_callback(esp_a2d_cb_event_t event,
+                        esp_a2d_cb_param_t *param) override;
+  void av_hdl_stack_evt(uint16_t event, void *p_param) override;
+  void app_task_handler(void *arg) override;
 
-  // protected methods
   virtual int init_bluetooth();
-  virtual void app_task_start_up(void);
-  virtual void app_task_shut_down(void);
   virtual bool app_send_msg(bt_app_msg_t *msg);
   virtual bool app_work_dispatch(app_callback_t p_cback, uint16_t event,
                                  void *p_params, int param_len);
@@ -476,21 +446,8 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   /**
    * Wrappbed methods called from callbacks
    */
-  // task handler
-  virtual void app_task_handler(void *arg);
-  // a2d callback
-  virtual void app_a2d_callback(esp_a2d_cb_event_t event,
-                                esp_a2d_cb_param_t *param);
-  // GAP callback
-  virtual void app_gap_callback(esp_bt_gap_cb_event_t event,
-                                esp_bt_gap_cb_param_t *param);
-  // avrc callback
-  virtual void app_rc_ct_callback(esp_avrc_ct_cb_event_t event,
-                                  esp_avrc_ct_cb_param_t *param);
   // Callback for music stream
   virtual void audio_data_callback(const uint8_t *data, uint32_t len);
-  // av event handler
-  virtual void av_hdl_stack_evt(uint16_t event, void *p_param);
   // a2dp event handler
   virtual void av_hdl_a2d_evt(uint16_t event, void *p_param);
   // avrc event handler
@@ -543,5 +500,5 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
 
   virtual void set_i2s_active(bool active);
 
+  virtual bool isSource() { return false; }
 };
-

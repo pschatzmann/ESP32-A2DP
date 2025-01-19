@@ -37,37 +37,9 @@ enum {
 
 BluetoothA2DPSource *actual_bluetooth_a2dp_source;
 
-extern "C" void ccall_bt_av_hdl_stack_evt(uint16_t event, void *p_param) {
-  if (actual_bluetooth_a2dp_source)
-    actual_bluetooth_a2dp_source->bt_av_hdl_stack_evt(event, p_param);
-}
-
-extern "C" void ccall_bt_app_task_handler(void *arg) {
-  if (actual_bluetooth_a2dp_source)
-    actual_bluetooth_a2dp_source->bt_app_task_handler(arg);
-}
-
-extern "C" void ccall_bt_app_gap_callback(esp_bt_gap_cb_event_t event,
-                                          esp_bt_gap_cb_param_t *param) {
-  if (actual_bluetooth_a2dp_source)
-    actual_bluetooth_a2dp_source->bt_app_gap_callback(event, param);
-}
-
-extern "C" void ccall_bt_app_rc_ct_cb(esp_avrc_ct_cb_event_t event,
-                                      esp_avrc_ct_cb_param_t *param) {
-  if (actual_bluetooth_a2dp_source)
-    actual_bluetooth_a2dp_source->bt_app_rc_ct_cb(event, param);
-}
-
 extern "C" void ccall_a2d_app_heart_beat(TIMER_ARG_TYPE arg) {
   if (actual_bluetooth_a2dp_source)
     actual_bluetooth_a2dp_source->a2d_app_heart_beat(arg);
-}
-
-extern "C" void ccall_bt_app_a2d_cb(esp_a2d_cb_event_t event,
-                                    esp_a2d_cb_param_t *param) {
-  if (actual_bluetooth_a2dp_source)
-    actual_bluetooth_a2dp_source->bt_app_a2d_cb(event, param);
 }
 
 extern "C" void ccall_bt_app_av_sm_hdlr(uint16_t event, void *param) {
@@ -105,8 +77,8 @@ BluetoothA2DPSource::BluetoothA2DPSource() {
   s_connecting_heatbeat_count = 0;
   s_pkt_cnt = 0;
 
-  s_bt_app_task_queue = NULL;
-  s_bt_app_task_handle = NULL;
+  app_task_queue = nullptr;
+  app_task_handle = nullptr;
 }
 
 BluetoothA2DPSource::~BluetoothA2DPSource() { end(); }
@@ -173,11 +145,21 @@ void BluetoothA2DPSource::start(std::vector<const char *> names) {
   esp_bt_gap_set_pin(pin_type, 0, pin_code);
 
   /* create application task */
-  bt_app_task_start_up();
+  app_task_start_up();
 
   /* Bluetooth device name, connection mode and profile set up */
-  bt_app_work_dispatch(ccall_bt_av_hdl_stack_evt, BT_APP_EVT_STACK_UP, NULL, 0,
-                       NULL);
+  bt_app_work_dispatch(ccall_av_hdl_stack_evt, BT_APP_EVT_STACK_UP, nullptr, 0,
+                       nullptr);
+}
+
+void BluetoothA2DPSource::end(bool release_memory) {
+  // release the heart beat timer
+  if(s_tmr != nullptr) {
+    xTimerDelete(s_tmr, portMAX_DELAY);
+    s_tmr = nullptr;
+  }
+  // standard end
+  BluetoothA2DPCommon::end(release_memory);
 }
 
 int32_t BluetoothA2DPSource::get_audio_data_volume(uint8_t *data, int32_t len) {
@@ -240,7 +222,7 @@ bool BluetoothA2DPSource::bt_app_work_dispatch(bt_app_cb_t p_cback,
   if (param_len == 0) {
     return bt_app_send_msg(&msg);
   } else if (p_params && param_len > 0) {
-    if ((msg.param = malloc(param_len)) != NULL) {
+    if ((msg.param = malloc(param_len)) != nullptr) {
       memcpy(msg.param, p_params, param_len);
       /* check if caller has provided a copy callback to do the deep copy */
       if (p_copy_cback) {
@@ -254,11 +236,11 @@ bool BluetoothA2DPSource::bt_app_work_dispatch(bt_app_cb_t p_cback,
 }
 
 bool BluetoothA2DPSource::bt_app_send_msg(bt_app_msg_t *msg) {
-  if (msg == NULL) {
+  if (msg == nullptr) {
     return false;
   }
 
-  if (xQueueSend(s_bt_app_task_queue, msg, 10 / portTICK_PERIOD_MS) != pdTRUE) {
+  if (xQueueSend(app_task_queue, msg, 10 / portTICK_PERIOD_MS) != pdTRUE) {
     ESP_LOGE(BT_APP_TAG, "%s xQueue send failed", __func__);
     return false;
   }
@@ -271,13 +253,13 @@ void BluetoothA2DPSource::bt_app_work_dispatched(bt_app_msg_t *msg) {
   }
 }
 
-void BluetoothA2DPSource::bt_app_task_handler(void *arg) {
+void BluetoothA2DPSource::app_task_handler(void *arg) {
   bt_app_msg_t msg;
 
   for (;;) {
     /* receive message from work queue and handle it */
     if (pdTRUE ==
-        xQueueReceive(s_bt_app_task_queue, &msg, (TickType_t)portMAX_DELAY)) {
+        xQueueReceive(app_task_queue, &msg, (TickType_t)portMAX_DELAY)) {
       ESP_LOGD(BT_APP_TAG, "%s, signal: 0x%x, event: 0x%x", __func__, msg.sig,
                msg.event);
 
@@ -297,32 +279,10 @@ void BluetoothA2DPSource::bt_app_task_handler(void *arg) {
   }
 }
 
-void BluetoothA2DPSource::bt_app_task_start_up(void) {
-  ESP_LOGD(BT_AV_TAG, "%s", __func__);
-  s_bt_app_task_queue = xQueueCreate(event_queue_size, sizeof(bt_app_msg_t));
-  if (xTaskCreatePinnedToCore(ccall_bt_app_task_handler, "BtAppT",
-                              event_stack_size, NULL, task_priority,
-                              &s_bt_app_task_handle, task_core) != pdPASS) {
-    ESP_LOGE(BT_AV_TAG, "xTaskCreatePinnedToCore");
-  }
-  return;
-}
-
-void BluetoothA2DPSource::bt_app_task_shut_down(void) {
-  ESP_LOGD(BT_AV_TAG, "%s", __func__);
-  if (s_bt_app_task_handle != NULL) {
-    vTaskDelete(s_bt_app_task_handle);
-    s_bt_app_task_handle = NULL;
-  }
-  if (s_bt_app_task_queue != NULL) {
-    vQueueDelete(s_bt_app_task_queue);
-    s_bt_app_task_queue = NULL;
-  }
-}
 
 bool BluetoothA2DPSource::get_name_from_eir(uint8_t *eir, uint8_t *bdname,
                                             uint8_t *bdname_len) {
-  uint8_t *rmt_bdname = NULL;
+  uint8_t *rmt_bdname = nullptr;
   uint8_t rmt_bdname_len = 0;
 
   if (!eir) {
@@ -363,7 +323,7 @@ void BluetoothA2DPSource::filter_inquiry_scan_result(
     esp_bt_gap_cb_param_t *param) {
   uint32_t cod = 0;
   int32_t rssi = -129; /* invalid value */
-  uint8_t *eir = NULL;
+  uint8_t *eir = nullptr;
   esp_bt_gap_dev_prop_t *p;
 
   ESP_LOGI(BT_AV_TAG, "Scanned device: %s", to_str(param->disc_res.bda));
@@ -395,7 +355,7 @@ void BluetoothA2DPSource::filter_inquiry_scan_result(
   /* search for target device in its Extended Inqury Response */
   if (eir) {
     ESP_LOGI(BT_AV_TAG, "--Compatiblity: Compatible");
-    get_name_from_eir(eir, s_peer_bdname, NULL);
+    get_name_from_eir(eir, s_peer_bdname, nullptr);
     ESP_LOGI(BT_AV_TAG, "--Name: %s", s_peer_bdname);
 
     // check ssid names from provided list
@@ -429,7 +389,7 @@ void BluetoothA2DPSource::filter_inquiry_scan_result(
   }
 }
 
-void BluetoothA2DPSource::bt_app_gap_callback(esp_bt_gap_cb_event_t event,
+void BluetoothA2DPSource::app_gap_callback(esp_bt_gap_cb_event_t event,
                                               esp_bt_gap_cb_param_t *param) {
   ESP_LOGD(BT_AV_TAG, "%s evt %d", __func__, event);
   switch (event) {
@@ -557,7 +517,7 @@ void BluetoothA2DPSource::bt_app_gap_callback(esp_bt_gap_cb_event_t event,
   return;
 }
 
-void BluetoothA2DPSource::bt_av_hdl_stack_evt(uint16_t event, void *p_param) {
+void BluetoothA2DPSource::av_hdl_stack_evt(uint16_t event, void *p_param) {
   ESP_LOGD(BT_AV_TAG, "%s event: %d", __func__, event);
 
   switch (event) {
@@ -567,11 +527,11 @@ void BluetoothA2DPSource::bt_av_hdl_stack_evt(uint16_t event, void *p_param) {
       esp_bt_gap_set_device_name(dev_name);
 
       // register GAP callback function
-      esp_bt_gap_register_callback(ccall_bt_app_gap_callback);
+      esp_bt_gap_register_callback(ccall_app_gap_callback);
 
       // initialize AVRCP controller
       esp_avrc_ct_init();
-      esp_avrc_ct_register_callback(ccall_bt_app_rc_ct_cb);
+      esp_avrc_ct_register_callback(ccall_app_rc_ct_callback);
 
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
       /* initialize AVRCP target */
@@ -592,7 +552,7 @@ void BluetoothA2DPSource::bt_av_hdl_stack_evt(uint16_t event, void *p_param) {
 #endif
 
       esp_a2d_source_init();
-      esp_a2d_register_callback(&ccall_bt_app_a2d_cb);
+      esp_a2d_register_callback(&ccall_app_a2d_callback);
       esp_a2d_source_register_data_callback(&ccall_bt_app_a2d_data_cb);
 
       /* Avoid the state error of s_a2d_state caused by the connection initiated
@@ -626,22 +586,22 @@ void BluetoothA2DPSource::bt_av_hdl_stack_evt(uint16_t event, void *p_param) {
   }
 }
 
-void BluetoothA2DPSource::bt_app_a2d_cb(esp_a2d_cb_event_t event,
+void BluetoothA2DPSource::app_a2d_callback(esp_a2d_cb_event_t event,
                                         esp_a2d_cb_param_t *param) {
   bt_app_work_dispatch(ccall_bt_app_av_sm_hdlr, event, param,
-                       sizeof(esp_a2d_cb_param_t), NULL);
+                       sizeof(esp_a2d_cb_param_t), nullptr);
 }
 
 void BluetoothA2DPSource::a2d_app_heart_beat(void *arg) {
-  bt_app_work_dispatch(ccall_bt_app_av_sm_hdlr, BT_APP_HEART_BEAT_EVT, NULL, 0,
-                       NULL);
+  bt_app_work_dispatch(ccall_bt_app_av_sm_hdlr, BT_APP_HEART_BEAT_EVT, nullptr, 0,
+                       nullptr);
 }
 
 void BluetoothA2DPSource::process_user_state_callbacks(uint16_t event,
                                                        void *param) {
   ESP_LOGD(BT_AV_TAG, "%s", __func__);
 
-  esp_a2d_cb_param_t *a2d = NULL;
+  esp_a2d_cb_param_t *a2d = nullptr;
 
   // callbacks
   switch (event) {
@@ -702,7 +662,7 @@ void BluetoothA2DPSource::bt_app_av_sm_hdlr(uint16_t event, void *param) {
 void BluetoothA2DPSource::bt_app_av_state_unconnected_hdlr(uint16_t event,
                                                            void *param) {
   ESP_LOGD(BT_AV_TAG, "%s evt %d", __func__, event);
-  // esp_a2d_cb_param_t *a2d = NULL;
+  // esp_a2d_cb_param_t *a2d = nullptr;
   /* handle the events of intrest in unconnected state */
   switch (event) {
     case ESP_A2D_CONNECTION_STATE_EVT:
@@ -741,7 +701,7 @@ void BluetoothA2DPSource::bt_app_av_state_unconnected_hdlr(uint16_t event,
 void BluetoothA2DPSource::bt_app_av_state_connecting_hdlr(uint16_t event,
                                                           void *param) {
   ESP_LOGD(BT_AV_TAG, "%s evt %d", __func__, event);
-  esp_a2d_cb_param_t *a2d = NULL;
+  esp_a2d_cb_param_t *a2d = nullptr;
 
   /* handle the events of intrest in connecting state */
   switch (event) {
@@ -795,7 +755,7 @@ void BluetoothA2DPSource::bt_app_av_state_connecting_hdlr(uint16_t event,
 void BluetoothA2DPSource::bt_app_av_state_connected_hdlr(uint16_t event,
                                                          void *param) {
   ESP_LOGD(BT_AV_TAG, "%s evt %d", __func__, event);
-  esp_a2d_cb_param_t *a2d = NULL;
+  esp_a2d_cb_param_t *a2d = nullptr;
 
   /* handle the events of intrest in connected state */
   switch (event) {
@@ -840,7 +800,7 @@ void BluetoothA2DPSource::bt_app_av_state_connected_hdlr(uint16_t event,
 void BluetoothA2DPSource::bt_app_av_state_disconnecting_hdlr(uint16_t event,
                                                              void *param) {
   ESP_LOGD(BT_AV_TAG, "%s evt %d", __func__, event);
-  esp_a2d_cb_param_t *a2d = NULL;
+  esp_a2d_cb_param_t *a2d = nullptr;
 
   /* handle the events of intrest in disconnecing state */
   switch (event) {
@@ -875,7 +835,7 @@ void BluetoothA2DPSource::bt_app_av_state_disconnecting_hdlr(uint16_t event,
 
 void BluetoothA2DPSource::bt_app_av_media_proc(uint16_t event, void *param) {
   ESP_LOGD(BT_AV_TAG, "%s evt %d", __func__, event);
-  esp_a2d_cb_param_t *a2d = NULL;
+  esp_a2d_cb_param_t *a2d = nullptr;
   switch (s_media_state) {
     case APP_AV_MEDIA_STATE_IDLE: {
       if (event == BT_APP_HEART_BEAT_EVT) {
@@ -934,7 +894,7 @@ void BluetoothA2DPSource::bt_app_av_media_proc(uint16_t event, void *param) {
   }
 }
 
-void BluetoothA2DPSource::bt_app_rc_ct_cb(esp_avrc_ct_cb_event_t event,
+void BluetoothA2DPSource::app_rc_ct_callback(esp_avrc_ct_cb_event_t event,
                                           esp_avrc_ct_cb_param_t *param) {
   ESP_LOGD(BT_RC_CT_TAG, "%s evt %d", __func__, event);
   switch (event) {
@@ -949,7 +909,7 @@ void BluetoothA2DPSource::bt_app_rc_ct_cb(esp_avrc_ct_cb_event_t event,
 #endif
     {
       bt_app_work_dispatch(ccall_bt_av_hdl_avrc_ct_evt, event, param,
-                           sizeof(esp_avrc_ct_cb_param_t), NULL);
+                           sizeof(esp_avrc_ct_cb_param_t), nullptr);
       break;
     }
     default: {
@@ -1111,7 +1071,7 @@ void BluetoothA2DPSource::app_rc_tg_callback(esp_avrc_tg_cb_event_t event,
     case ESP_AVRC_TG_REGISTER_NOTIFICATION_EVT:
     case ESP_AVRC_TG_SET_PLAYER_APP_VALUE_EVT: {
       bt_app_work_dispatch(ccall_av_hdl_avrc_tg_evt, event, param,
-                           sizeof(esp_a2d_cb_param_t), NULL);
+                           sizeof(esp_a2d_cb_param_t), nullptr);
       break;
     }
     default:

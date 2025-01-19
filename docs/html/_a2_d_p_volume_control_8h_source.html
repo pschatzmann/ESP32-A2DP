@@ -88,127 +88,120 @@ $(function() {
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;esp_log.h&quot;</span></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">struct </span>__attribute__((packed)) Frame {</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  int16_t channel1;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  int16_t channel2;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  Frame(<span class="keywordtype">int</span> v=0){</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    channel1 = channel2 = v;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  }</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  Frame(<span class="keywordtype">int</span> ch1, <span class="keywordtype">int</span> ch2){</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    channel1 = ch1;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    channel2 = ch2;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  }</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;};</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="class_a2_d_p_volume_control.html">   46</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_a2_d_p_volume_control.html">A2DPVolumeControl</a> {</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <a class="code" href="class_a2_d_p_volume_control.html">A2DPVolumeControl</a>() {</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            volumeFactorMax = 0x1000;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        }</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> update_audio_data(uint8_t* data, uint16_t byteCount) {</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            update_audio_data((Frame*)data, byteCount / 4);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        }</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> update_audio_data(Frame* data, uint16_t frameCount) {</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            <span class="keywordflow">if</span> (data!=<span class="keyword">nullptr</span> &amp;&amp; frameCount&gt;0 &amp;&amp; ( mono_downmix || is_volume_used)) {</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                ESP_LOGD(<span class="stringliteral">&quot;VolumeControl&quot;</span>, <span class="stringliteral">&quot;update_audio_data&quot;</span>);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0;i&lt;frameCount;i++){</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                    int32_t pcmLeft = data[i].channel1;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;                    int32_t pcmRight = data[i].channel2;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;                    <span class="comment">// if mono -&gt; we provide the same output on both channels</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;                    <span class="keywordflow">if</span> (mono_downmix) {</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                        pcmRight = pcmLeft = (pcmLeft + pcmRight) / 2;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;                    }</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                    <span class="comment">// adjust the volume</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;                    <span class="keywordflow">if</span> (is_volume_used) {</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;                        pcmLeft = pcmLeft * volumeFactor / volumeFactorMax;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;                        pcmRight = pcmRight * volumeFactor / volumeFactorMax;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                    }</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                    data[i].channel1 = pcmLeft;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;                    data[i].channel2 = pcmRight;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                }</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            }</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        }</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">struct </span>__attribute__((packed)) Frame {</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  int16_t channel1;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  int16_t channel2;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  Frame(<span class="keywordtype">int</span> v = 0) { channel1 = channel2 = v; }</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  Frame(<span class="keywordtype">int</span> ch1, <span class="keywordtype">int</span> ch2) {</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    channel1 = ch1;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    channel2 = ch2;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  }</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;};</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="class_a2_d_p_volume_control.html">   45</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_a2_d_p_volume_control.html">A2DPVolumeControl</a> {</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <a class="code" href="class_a2_d_p_volume_control.html">A2DPVolumeControl</a>() { volumeFactorMax = 0x1000; }</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span> update_audio_data(uint8_t* data, uint16_t byteCount) {</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    update_audio_data((Frame*)data, byteCount / 4);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  }</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span> update_audio_data(Frame* data, uint16_t frameCount) {</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordflow">if</span> (data != <span class="keyword">nullptr</span> &amp;&amp; frameCount &gt; 0 &amp;&amp; (mono_downmix || is_volume_used)) {</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;      ESP_LOGD(<span class="stringliteral">&quot;VolumeControl&quot;</span>, <span class="stringliteral">&quot;update_audio_data&quot;</span>);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; frameCount; i++) {</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        int32_t pcmLeft = data[i].channel1;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        int32_t pcmRight = data[i].channel2;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="comment">// if mono -&gt; we provide the same output on both channels</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keywordflow">if</span> (mono_downmix) {</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;          pcmRight = pcmLeft = (pcmLeft + pcmRight) / 2;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        }</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="comment">// adjust the volume</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keywordflow">if</span> (is_volume_used) {</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;          pcmLeft = clip(pcmLeft * volumeFactor / volumeFactorMax);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;          pcmRight = clip(pcmRight * volumeFactor / volumeFactorMax);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        }</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        data[i].channel1 = pcmLeft;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        data[i].channel2 = pcmRight;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;      }</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    }</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  }</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <span class="comment">// provides a factor in the range of 0 to 4096</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  int32_t get_volume_factor() { <span class="keywordflow">return</span> volumeFactor; }</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <span class="comment">// provides a factor in the range of 0 to 4096</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        int32_t get_volume_factor() {</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            <span class="keywordflow">return</span> volumeFactor;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        }</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  <span class="comment">// provides the max factor value 4096</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  int32_t get_volume_factor_max() { <span class="keywordflow">return</span> volumeFactorMax; }</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  <span class="keywordtype">void</span> set_enabled(<span class="keywordtype">bool</span> enabled) { is_volume_used = enabled; }</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <span class="comment">// provides the max factor value 4096</span></div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        int32_t get_volume_factor_max() {</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            <span class="keywordflow">return</span> volumeFactorMax;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        }</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keywordtype">void</span> set_enabled(<span class="keywordtype">bool</span> enabled) {</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            is_volume_used = enabled;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        }</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        <span class="keywordtype">void</span> set_mono_downmix(<span class="keywordtype">bool</span> enabled) {</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;            mono_downmix = enabled;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        }</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> set_volume(uint8_t volume) = 0;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        <span class="keywordtype">bool</span> is_volume_used = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="keywordtype">bool</span> mono_downmix = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        int32_t volumeFactor;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        int32_t volumeFactorMax;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;};</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
-<div class="line"><a name="l00110"></a><span class="lineno"><a class="line" href="class_a2_d_p_default_volume_control.html">  110</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_a2_d_p_default_volume_control.html">A2DPDefaultVolumeControl</a> : <span class="keyword">public</span> <a class="code" href="class_a2_d_p_volume_control.html">A2DPVolumeControl</a> {</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        <span class="keywordtype">void</span> set_volume(uint8_t volume)<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;            constexpr <span class="keywordtype">float</span> base = 1.4f;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;            constexpr <span class="keywordtype">float</span> bits = 12.0f;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;            constexpr <span class="keywordtype">float</span> zero_ofs = pow(base, -bits);</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;            constexpr <span class="keywordtype">float</span> scale = pow(2.0f, bits);</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;            <span class="keywordtype">float</span> volumeFactorFloat = (pow(base, volume * bits / 127.0f - bits) - zero_ofs) * scale / (1.0f - zero_ofs);</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;            volumeFactor = volumeFactorFloat;</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;            <span class="keywordflow">if</span> (volumeFactor &gt; 0x1000) {</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;                volumeFactor = 0x1000;</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;            }</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        }</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;};</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; </div>
-<div class="line"><a name="l00129"></a><span class="lineno"><a class="line" href="class_a2_d_p_simple_exponential_volume_control.html">  129</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_a2_d_p_simple_exponential_volume_control.html">A2DPSimpleExponentialVolumeControl</a> : <span class="keyword">public</span> <a class="code" href="class_a2_d_p_volume_control.html">A2DPVolumeControl</a> {</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        <span class="keywordtype">void</span> set_volume(uint8_t volume)<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;            <span class="keywordtype">float</span> volumeFactorFloat = volume;</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;            volumeFactorFloat = pow(2.0f, volumeFactorFloat * 12.0f / 127.0f);</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;            volumeFactor = volumeFactorFloat - 1.0f;</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;            <span class="keywordflow">if</span> (volumeFactor &gt; 0xfff) {</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;                volumeFactor = 0xfff;</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;            }</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;        }</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;};</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160; </div>
-<div class="line"><a name="l00146"></a><span class="lineno"><a class="line" href="class_a2_d_p_linear_volume_control.html">  146</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_a2_d_p_linear_volume_control.html">A2DPLinearVolumeControl</a> : <span class="keyword">public</span> <a class="code" href="class_a2_d_p_volume_control.html">A2DPVolumeControl</a> {</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;        <a class="code" href="class_a2_d_p_linear_volume_control.html">A2DPLinearVolumeControl</a>() {</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;            volumeFactorMax = 128;</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;        }</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;        <span class="keywordtype">void</span> set_volume(uint8_t volume)<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;            volumeFactor = volume;</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;        }</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;};</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160; </div>
-<div class="line"><a name="l00162"></a><span class="lineno"><a class="line" href="class_a2_d_p_no_volume_control.html">  162</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_a2_d_p_no_volume_control.html">A2DPNoVolumeControl</a> : <span class="keyword">public</span> <a class="code" href="class_a2_d_p_volume_control.html">A2DPVolumeControl</a> {</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;        <span class="keywordtype">void</span> update_audio_data(Frame* data, uint16_t frameCount)<span class="keyword"> override </span>{}</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;        <span class="keywordtype">void</span> set_volume(uint8_t volume)<span class="keyword"> override </span>{}</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;};</div>
-<div class="ttc" id="aclass_a2_d_p_default_volume_control_html"><div class="ttname"><a href="class_a2_d_p_default_volume_control.html">A2DPDefaultVolumeControl</a></div><div class="ttdoc">Default implementation for handling of the volume of the audio data.</div><div class="ttdef"><b>Definition:</b> A2DPVolumeControl.h:110</div></div>
-<div class="ttc" id="aclass_a2_d_p_linear_volume_control_html"><div class="ttname"><a href="class_a2_d_p_linear_volume_control.html">A2DPLinearVolumeControl</a></div><div class="ttdoc">The simplest possible implementation of a VolumeControl.</div><div class="ttdef"><b>Definition:</b> A2DPVolumeControl.h:146</div></div>
-<div class="ttc" id="aclass_a2_d_p_no_volume_control_html"><div class="ttname"><a href="class_a2_d_p_no_volume_control.html">A2DPNoVolumeControl</a></div><div class="ttdoc">Keeps the audio data as is -&gt; no volume control!</div><div class="ttdef"><b>Definition:</b> A2DPVolumeControl.h:162</div></div>
-<div class="ttc" id="aclass_a2_d_p_simple_exponential_volume_control_html"><div class="ttname"><a href="class_a2_d_p_simple_exponential_volume_control.html">A2DPSimpleExponentialVolumeControl</a></div><div class="ttdoc">Exponentional volume control.</div><div class="ttdef"><b>Definition:</b> A2DPVolumeControl.h:129</div></div>
-<div class="ttc" id="aclass_a2_d_p_volume_control_html"><div class="ttname"><a href="class_a2_d_p_volume_control.html">A2DPVolumeControl</a></div><div class="ttdoc">Abstract class for handling of the volume of the audio data.</div><div class="ttdef"><b>Definition:</b> A2DPVolumeControl.h:46</div></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  <span class="keywordtype">void</span> set_mono_downmix(<span class="keywordtype">bool</span> enabled) { mono_downmix = enabled; }</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span> set_volume(uint8_t volume) = 0;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  <span class="keywordtype">bool</span> is_volume_used = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  <span class="keywordtype">bool</span> mono_downmix = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  int32_t volumeFactor;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  int32_t volumeFactorMax;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  int32_t clip(int32_t value) {</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    int32_t result = value;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keywordflow">if</span> (value &lt; -32768) result = -32768;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keywordflow">if</span> (value &gt; 32767) result = 32767;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="keywordflow">return</span> result;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  }</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;};</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
+<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="class_a2_d_p_default_volume_control.html">  105</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_a2_d_p_default_volume_control.html">A2DPDefaultVolumeControl</a> : <span class="keyword">public</span> <a class="code" href="class_a2_d_p_volume_control.html">A2DPVolumeControl</a> {</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  <span class="keywordtype">void</span> set_volume(uint8_t volume)<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    constexpr <span class="keywordtype">float</span> base = 1.4f;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    constexpr <span class="keywordtype">float</span> bits = 12.0f;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    constexpr <span class="keywordtype">float</span> zero_ofs = pow(base, -bits);</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    constexpr <span class="keywordtype">float</span> scale = pow(2.0f, bits);</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    <span class="keywordtype">float</span> volumeFactorFloat =</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        (pow(base, volume * bits / 127.0f - bits) - zero_ofs) * scale /</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        (1.0f - zero_ofs);</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    volumeFactor = volumeFactorFloat;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <span class="keywordflow">if</span> (volumeFactor &gt; 0xfff) {</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;      volumeFactor = 0xfff;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    }</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  }</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;};</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160; </div>
+<div class="line"><a name="l00126"></a><span class="lineno"><a class="line" href="class_a2_d_p_simple_exponential_volume_control.html">  126</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_a2_d_p_simple_exponential_volume_control.html">A2DPSimpleExponentialVolumeControl</a> : <span class="keyword">public</span> <a class="code" href="class_a2_d_p_volume_control.html">A2DPVolumeControl</a> {</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160; <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;  <span class="keywordtype">void</span> set_volume(uint8_t volume)<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    <span class="keywordtype">float</span> volumeFactorFloat = volume;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    volumeFactorFloat = pow(2.0f, volumeFactorFloat * 12.0f / 127.0f);</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    volumeFactor = volumeFactorFloat - 1.0f;</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    <span class="keywordflow">if</span> (volumeFactor &gt; 0xfff) {</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;      volumeFactor = 0xfff;</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    }</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;  }</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;};</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160; </div>
+<div class="line"><a name="l00143"></a><span class="lineno"><a class="line" href="class_a2_d_p_linear_volume_control.html">  143</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_a2_d_p_linear_volume_control.html">A2DPLinearVolumeControl</a> : <span class="keyword">public</span> <a class="code" href="class_a2_d_p_volume_control.html">A2DPVolumeControl</a> {</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160; <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;  <a class="code" href="class_a2_d_p_linear_volume_control.html">A2DPLinearVolumeControl</a>() { volumeFactorMax = 128; }</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160; </div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160; <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;  <span class="keywordtype">void</span> set_volume(uint8_t volume)<span class="keyword"> override </span>{ volumeFactor = volume; }</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;};</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160; </div>
+<div class="line"><a name="l00156"></a><span class="lineno"><a class="line" href="class_a2_d_p_no_volume_control.html">  156</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_a2_d_p_no_volume_control.html">A2DPNoVolumeControl</a> : <span class="keyword">public</span> <a class="code" href="class_a2_d_p_volume_control.html">A2DPVolumeControl</a> {</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160; <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;  <span class="keywordtype">void</span> update_audio_data(Frame* data, uint16_t frameCount)<span class="keyword"> override </span>{}</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;  <span class="keywordtype">void</span> set_volume(uint8_t volume)<span class="keyword"> override </span>{}</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;};</div>
+<div class="ttc" id="aclass_a2_d_p_default_volume_control_html"><div class="ttname"><a href="class_a2_d_p_default_volume_control.html">A2DPDefaultVolumeControl</a></div><div class="ttdoc">Default implementation for handling of the volume of the audio data.</div><div class="ttdef"><b>Definition:</b> A2DPVolumeControl.h:105</div></div>
+<div class="ttc" id="aclass_a2_d_p_linear_volume_control_html"><div class="ttname"><a href="class_a2_d_p_linear_volume_control.html">A2DPLinearVolumeControl</a></div><div class="ttdoc">The simplest possible implementation of a VolumeControl.</div><div class="ttdef"><b>Definition:</b> A2DPVolumeControl.h:143</div></div>
+<div class="ttc" id="aclass_a2_d_p_no_volume_control_html"><div class="ttname"><a href="class_a2_d_p_no_volume_control.html">A2DPNoVolumeControl</a></div><div class="ttdoc">Keeps the audio data as is -&gt; no volume control!</div><div class="ttdef"><b>Definition:</b> A2DPVolumeControl.h:156</div></div>
+<div class="ttc" id="aclass_a2_d_p_simple_exponential_volume_control_html"><div class="ttname"><a href="class_a2_d_p_simple_exponential_volume_control.html">A2DPSimpleExponentialVolumeControl</a></div><div class="ttdoc">Exponentional volume control.</div><div class="ttdef"><b>Definition:</b> A2DPVolumeControl.h:126</div></div>
+<div class="ttc" id="aclass_a2_d_p_volume_control_html"><div class="ttname"><a href="class_a2_d_p_volume_control.html">A2DPVolumeControl</a></div><div class="ttdoc">Abstract class for handling of the volume of the audio data.</div><div class="ttdef"><b>Definition:</b> A2DPVolumeControl.h:45</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

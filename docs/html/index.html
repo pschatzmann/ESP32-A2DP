@@ -223,7 +223,7 @@ Sending Data from a A2DS Data Source with a Callback</h2>
 <p>We can also generate sound and send it e.g. to a Bluetooth Speaker. <br  />
 </p>
 <p>The supported audio codec in ESP32 A2DP is SBC: The API is using PCM data normally formatted as 44.1kHz sampling rate, two-channel 16-bit sample data.</p>
-<p>When you start the <a class="el" href="class_bluetooth_a2_d_p_source.html" title="A2DP Bluetooth Source.">BluetoothA2DPSource</a>, you need to pass the Bluetooth name that you want to connect to and a 'call back function' that generates the sound data:</p>
+<p>When you start the <a class="el" href="class_bluetooth_a2_d_p_source.html" title="A2DP Bluetooth Source.">BluetoothA2DPSource</a>, you need to pass the Bluetooth name that you want to connect to and a 'call back function' that provides the sound data:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;BluetoothA2DPSource.h&quot;</span></div>
 <div class="line"> </div>
 <div class="line"><a class="code" href="class_bluetooth_a2_d_p_source.html">BluetoothA2DPSource</a> a2dp_source;</div>
@@ -245,7 +245,7 @@ Sending Data from a A2DS Data Source with a Callback</h2>
 <div class="ttc" id="aclass_bluetooth_a2_d_p_source_html"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html">BluetoothA2DPSource</a></div><div class="ttdoc">A2DP Bluetooth Source.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSource.h:81</div></div>
 <div class="ttc" id="aclass_bluetooth_a2_d_p_source_html_a98c1eb3ad55af189fd3f1ddeac8f3636"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html#a98c1eb3ad55af189fd3f1ddeac8f3636">BluetoothA2DPSource::start</a></div><div class="ttdeci">virtual void start()</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSource.h:145</div></div>
 <div class="ttc" id="aclass_bluetooth_a2_d_p_source_html_a9eb67e480675059a96014f2c1b84b0c3"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html#a9eb67e480675059a96014f2c1b84b0c3">BluetoothA2DPSource::set_data_callback</a></div><div class="ttdeci">virtual void set_data_callback(int32_t(cb)(uint8_t *data, int32_t len))</div><div class="ttdoc">Defines the data callback.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSource.h:123</div></div>
-</div><!-- fragment --><p> Instead of the <code>set_data_callback callback</code> method you can also use <code>set_data_callback_in_frames</code> wich uses frames instead of bytes. In Arduio you can also provide a Stream (e.g a File) as data source or a callback which provides streams.</p>
+</div><!-- fragment --><p> Instead of the <code>set_data_callback callback</code> method you can also use <code>set_data_callback_in_frames</code> which uses frames instead of bytes. In Arduio you can also provide a Stream (e.g a File) as data source or a callback which provides streams.</p>
 <p>In the examples you can find an implentation that generates sound with the help of the sin() function.</p>
 <p>You can also inticate multiple alternative Bluetooth names. The system just connects to the first one which is available:</p>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> setup() {</div>
@@ -253,7 +253,8 @@ Sending Data from a A2DS Data Source with a Callback</h2>
 <div class="line">  a2dp_source.<a class="code" href="class_bluetooth_a2_d_p_source.html#a9eb67e480675059a96014f2c1b84b0c3">set_data_callback</a>(get_sound_data)</div>
 <div class="line">  a2dp_source.<a class="code" href="class_bluetooth_a2_d_p_source.html#a98c1eb3ad55af189fd3f1ddeac8f3636">start</a>(bt_names); </div>
 <div class="line">} </div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md14"></a>
+</div><!-- fragment --><p>Further information can be found in the <a href="https://pschatzmann.github.io/ESP32-A2DP/html/class_bluetooth_a2_d_p_source.html">related class documentation</a>!</p>
+<h1><a class="anchor" id="autotoc_md14"></a>
 Logging</h1>
 <p>This library uses the ESP32 logger that you can activate in Arduino in - Tools - Core Debug Log.</p>
 <h1><a class="anchor" id="autotoc_md15"></a>

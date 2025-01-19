@@ -403,12 +403,12 @@ esp_err_t BluetoothA2DPCommon::bluedroid_init() {
 
 void BluetoothA2DPCommon::app_task_start_up() {
   ESP_LOGD(BT_AV_TAG, "%s", __func__);
-  if (app_task_queue == NULL)
+  if (app_task_queue == nullptr)
     app_task_queue = xQueueCreate(event_queue_size, sizeof(bt_app_msg_t));
 
-  if (app_task_handle == NULL) {
+  if (app_task_handle == nullptr) {
     if (xTaskCreatePinnedToCore(ccall_bt_app_task_handler, "BtAppT",
-                                event_stack_size, NULL, task_priority,
+                                event_stack_size, nullptr, task_priority,
                                 &app_task_handle, task_core) != pdPASS) {
       ESP_LOGE(BT_APP_TAG, "%s failed", __func__);
     }

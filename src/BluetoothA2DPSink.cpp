@@ -60,7 +60,7 @@ BluetoothA2DPSink::BluetoothA2DPSink() {
 }
 
 BluetoothA2DPSink::~BluetoothA2DPSink() {
-  if (app_task_queue != NULL) {
+  if (app_task_queue != nullptr) {
     end();
   }
 }
@@ -159,7 +159,7 @@ void BluetoothA2DPSink::start(const char *name) {
   app_task_start_up();
 
   // Bluetooth device name, connection mode and profile set up
-  app_work_dispatch(ccall_av_hdl_stack_evt, BT_APP_EVT_STACK_UP, NULL, 0);
+  app_work_dispatch(ccall_av_hdl_stack_evt, BT_APP_EVT_STACK_UP, nullptr, 0);
 
   // handle security pin
   if (is_pin_code_active) {
@@ -270,7 +270,7 @@ bool BluetoothA2DPSink::app_work_dispatch(app_callback_t p_cback,
   if (param_len == 0) {
     return app_send_msg(&msg);
   } else if (p_params && param_len > 0) {
-    if ((msg.param = malloc(param_len)) != NULL) {
+    if ((msg.param = malloc(param_len)) != nullptr) {
       memcpy(msg.param, p_params, param_len);
       return app_send_msg(&msg);
     }
@@ -288,7 +288,7 @@ void BluetoothA2DPSink::app_work_dispatched(bt_app_msg_t *msg) {
 
 bool BluetoothA2DPSink::app_send_msg(bt_app_msg_t *msg) {
   ESP_LOGD(BT_AV_TAG, "%s", __func__);
-  if (msg == NULL || app_task_queue == NULL) {
+  if (msg == nullptr || app_task_queue == nullptr) {
     ESP_LOGE(BT_APP_TAG, "%s app_send_msg failed", __func__);
     return false;
   }
@@ -490,7 +490,7 @@ void BluetoothA2DPSink::app_rc_ct_callback(esp_avrc_ct_cb_event_t event,
 
 void BluetoothA2DPSink::av_hdl_a2d_evt(uint16_t event, void *p_param) {
   ESP_LOGD(BT_AV_TAG, "%s evt %d", __func__, event);
-  esp_a2d_cb_param_t *a2d = NULL;
+  esp_a2d_cb_param_t *a2d = nullptr;
   switch (event) {
     case ESP_A2D_CONNECTION_STATE_EVT: {
       ESP_LOGD(BT_AV_TAG, "%s ESP_A2D_CONNECTION_STATE_EVT", __func__);

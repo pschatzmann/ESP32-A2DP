@@ -20,13 +20,10 @@ BluetoothA2DPSource a2dp_source;
 
 // The supported audio codec in ESP32 A2DP is SBC. SBC audio stream is encoded
 // from PCM data normally formatted as 44.1kHz sampling rate, two-channel 16-bit sample data
-int32_t get_data_channels(Frame *frame, int32_t channel_len) {
+int32_t get_data(uint8_t *data, int32_t bytes) {
     // fill the channel silence data
-    for (int sample = 0; sample < channel_len; ++sample) {
-        frame[sample].channel1 = 0;
-        frame[sample].channel2 = 0;
-    }
-    return channel_len;
+    memset(data, 0, bytes);
+    return bytes;
 }
 
 // gets called when button on bluetooth speaker is pressed
@@ -40,11 +37,10 @@ void button_handler(uint8_t id, bool isReleased){
 
 void setup() {
   Serial.begin(115200);
-
+  a2dp_source.set_data_callback(get_data);
   a2dp_source.set_avrc_passthru_command_callback(button_handler);
-  a2dp_source.start("My vision", get_data_channels);  
+  a2dp_source.start("My vision");  
 }
-
 
 void loop() {
   delay(1000);

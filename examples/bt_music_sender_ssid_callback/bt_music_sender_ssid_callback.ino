@@ -52,9 +52,10 @@ void setup() {
 
   a2dp_source.set_ssid_callback(isValid);
   a2dp_source.set_auto_reconnect(false);
-  a2dp_source.start(get_data_frames);  
-
+  a2dp_source.set_data_callback_in_frames(get_data_frames);
   a2dp_source.set_volume(30);
+  a2dp_source.start();  
+
 }
 
 void loop() {

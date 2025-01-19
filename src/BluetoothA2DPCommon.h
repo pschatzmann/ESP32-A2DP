@@ -60,7 +60,6 @@ using namespace esp_i2s;
 #include "esp_spp_api.h"
 #include "nvs.h"
 #include "nvs_flash.h"
-#include "SoundData.h"
 #include "A2DPVolumeControl.h"
 #include "esp_task_wdt.h"
 #include "esp_timer.h"

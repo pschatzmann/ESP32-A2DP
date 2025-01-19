@@ -229,74 +229,34 @@ Sending Data from a A2DS Data Source with a Callback</h2>
 <div class="line"><a class="code" href="class_bluetooth_a2_d_p_source.html">BluetoothA2DPSource</a> a2dp_source;</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// callback </span></div>
-<div class="line">int32_t get_sound_data(Frame *data, int32_t frameCount) {</div>
+<div class="line">int32_t get_sound_data(uint8 *data, int32_t byteCount) {</div>
 <div class="line">    <span class="comment">// generate your sound data </span></div>
 <div class="line">    <span class="comment">// return the effective length (in frames) of the generated sound  (which usually is identical with the requested len)</span></div>
 <div class="line">    <span class="comment">// 1 frame is 2 channels * 2 bytes = 4 bytes</span></div>
-<div class="line">    <span class="keywordflow">return</span> frameCount;</div>
+<div class="line">    <span class="keywordflow">return</span> byteCount;</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> setup() {</div>
-<div class="line">  a2dp_source.<a class="code" href="class_bluetooth_a2_d_p_source.html#a403b0e21db02c81b948534258e5ff37b">start</a>(<span class="stringliteral">&quot;MyMusic&quot;</span>, get_sound_data);  </div>
+<div class="line">  a2dp_source.<a class="code" href="class_bluetooth_a2_d_p_source.html#a9eb67e480675059a96014f2c1b84b0c3">set_data_callback</a>(get_sound_data)</div>
+<div class="line">  a2dp_source.<a class="code" href="class_bluetooth_a2_d_p_source.html#a98c1eb3ad55af189fd3f1ddeac8f3636">start</a>(<span class="stringliteral">&quot;MyMusic&quot;</span>);  </div>
 <div class="line">}</div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> loop() {</div>
-<div class="line">}</div>
-<div class="ttc" id="aclass_bluetooth_a2_d_p_source_html"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html">BluetoothA2DPSource</a></div><div class="ttdoc">A2DP Bluetooth Source.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSource.h:79</div></div>
-<div class="ttc" id="aclass_bluetooth_a2_d_p_source_html_a403b0e21db02c81b948534258e5ff37b"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html#a403b0e21db02c81b948534258e5ff37b">BluetoothA2DPSource::start</a></div><div class="ttdeci">virtual void start(const char *name, music_data_channels_cb_t callback=NULL)</div><div class="ttdoc">starts the bluetooth source</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSource.cpp:147</div></div>
-</div><!-- fragment --><p>In the examples you can find an implentation that generates sound with the help of the sin() function. You can also inticate multiple alternative Bluetooth names. The system just connects to the first one which is available:</p>
+<div class="line"><span class="keywordtype">void</span> loop() {}</div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_source_html"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html">BluetoothA2DPSource</a></div><div class="ttdoc">A2DP Bluetooth Source.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSource.h:81</div></div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_source_html_a98c1eb3ad55af189fd3f1ddeac8f3636"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html#a98c1eb3ad55af189fd3f1ddeac8f3636">BluetoothA2DPSource::start</a></div><div class="ttdeci">virtual void start()</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSource.h:145</div></div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_source_html_a9eb67e480675059a96014f2c1b84b0c3"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html#a9eb67e480675059a96014f2c1b84b0c3">BluetoothA2DPSource::set_data_callback</a></div><div class="ttdeci">virtual void set_data_callback(int32_t(cb)(uint8_t *data, int32_t len))</div><div class="ttdoc">Defines the data callback.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSource.h:123</div></div>
+</div><!-- fragment --><p> Instead of the <code>set_data_callback callback</code> method you can also use <code>set_data_callback_in_frames</code> wich uses frames instead of bytes. In Arduio you can also provide a Stream (e.g a File) as data source or a callback which provides streams.</p>
+<p>In the examples you can find an implentation that generates sound with the help of the sin() function.</p>
+<p>You can also inticate multiple alternative Bluetooth names. The system just connects to the first one which is available:</p>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> setup() {</div>
 <div class="line">  <span class="keyword">static</span> std::vector&lt;char*&gt; bt_names = {<span class="stringliteral">&quot;MyMusic&quot;</span>,<span class="stringliteral">&quot;RadioPlayer&quot;</span>,<span class="stringliteral">&quot;MusicPlayer&quot;</span>};</div>
-<div class="line">  a2dp_source.<a class="code" href="class_bluetooth_a2_d_p_source.html#a403b0e21db02c81b948534258e5ff37b">start</a>(bt_names, get_sound_data); </div>
+<div class="line">  a2dp_source.<a class="code" href="class_bluetooth_a2_d_p_source.html#a9eb67e480675059a96014f2c1b84b0c3">set_data_callback</a>(get_sound_data)</div>
+<div class="line">  a2dp_source.<a class="code" href="class_bluetooth_a2_d_p_source.html#a98c1eb3ad55af189fd3f1ddeac8f3636">start</a>(bt_names); </div>
 <div class="line">} </div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md14"></a>
-Sending Data from a A2DS Data Source with Recorded Data</h2>
-<p>You can also provide the data directly as simple array of uint8_t:</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;BluetoothA2DPSource.h&quot;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">extern</span> <span class="keyword">const</span> uint8_t StarWars10_raw[];</div>
-<div class="line"><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> StarWars10_raw_len;</div>
-<div class="line"> </div>
-<div class="line"><a class="code" href="class_bluetooth_a2_d_p_source.html">BluetoothA2DPSource</a> a2dp_source;</div>
-<div class="line"><a class="code" href="class_sound_data.html">SoundData</a> *music = <span class="keyword">new</span> <a class="code" href="class_one_channel_sound_data.html">OneChannelSoundData</a>((int16_t*)StarWars30_raw, StarWars30_raw_len/2);</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> setup() {</div>
-<div class="line">  a2dp_source.<a class="code" href="class_bluetooth_a2_d_p_source.html#a403b0e21db02c81b948534258e5ff37b">start</a>(<span class="stringliteral">&quot;RadioPlayer&quot;</span>);  </div>
-<div class="line">  a2dp_source.<a class="code" href="class_bluetooth_a2_d_p_source.html#a0a5976c3d81ae96e5e3be06fd6a662da">write_data</a>(music);</div>
-<div class="line">}</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> loop() {</div>
-<div class="line">}</div>
-<div class="ttc" id="aclass_bluetooth_a2_d_p_source_html_a0a5976c3d81ae96e5e3be06fd6a662da"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html#a0a5976c3d81ae96e5e3be06fd6a662da">BluetoothA2DPSource::write_data</a></div><div class="ttdeci">virtual bool write_data(SoundData *data)</div><div class="ttdoc">write sound data: In some cases it is very difficult to use the callback function....</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSource.cpp:1109</div></div>
-<div class="ttc" id="aclass_one_channel_sound_data_html"><div class="ttname"><a href="class_one_channel_sound_data.html">OneChannelSoundData</a></div><div class="ttdoc">1 Channel data is provided as int16 values</div><div class="ttdef"><b>Definition:</b> SoundData.h:118</div></div>
-<div class="ttc" id="aclass_sound_data_html"><div class="ttname"><a href="class_sound_data.html">SoundData</a></div><div class="ttdoc">Sound data as byte stream. We support TwoChannelSoundData (uint16_t + uint16_t) and OneChannelSoundDa...</div><div class="ttdef"><b>Definition:</b> SoundData.h:72</div></div>
-</div><!-- fragment --><p>The array can be prepared e.g. in the following way:</p>
-<ul>
-<li>Open any sound file in Audacity.<ul>
-<li>Select Tracks -&gt; Resample and select 44100</li>
-<li>Export -&gt; Export Audio -&gt; Header Raw ; Signed 16 bit PCM</li>
-</ul>
-</li>
-<li>Convert to c file e.g. with "xxd -i file_example_WAV_1MG.raw file_example_WAV_1MG.c"<ul>
-<li>add the const qualifier to the generated array definition. E.g const unsigned char file_example_WAV_1MG_raw[] = {</li>
-</ul>
-</li>
-</ul>
-<p>You might want to compile with the Partition Scheme: Huge App!</p>
-<p>In the example above we provide the data with one channel. This has the advantage that it uses much less space then a 2 channel recording, which you could use in the following way:</p>
-<div class="fragment"><div class="line">SoundData *data = new TwoChannelSoundData((Frame*)StarWars10_raw,StarWars10_raw_len/4);</div>
-</div><!-- fragment --><p>In the constructor you can pass additional parameters:</p>
-<div class="fragment"><div class="line"><a class="code" href="class_two_channel_sound_data.html">TwoChannelSoundData</a>(Frame *data, int32_t frameCount, <span class="keywordtype">bool</span> loop=<span class="keyword">false</span>);</div>
-<div class="line"><a class="code" href="class_one_channel_sound_data.html">OneChannelSoundData</a>(int16_t *data, int32_t frameCount, <span class="keywordtype">bool</span> loop=<span class="keyword">false</span>, <a class="code" href="group__a2dp.html#gadd07e8b0b75b5153b83a4580f2d5c6c0">ChannelInfo</a> channelInfo=<a class="code" href="group__a2dp.html#ggadd07e8b0b75b5153b83a4580f2d5c6c0aedf69634e61e7ec5d006874d299bc0d4">Both</a>);</div>
-<div class="line"><a class="code" href="class_one_channel8_bit_sound_data.html">OneChannel8BitSoundData</a>(int8_t *data, int32_t frameCount, <span class="keywordtype">bool</span> loop=<span class="keyword">false</span>, <a class="code" href="group__a2dp.html#gadd07e8b0b75b5153b83a4580f2d5c6c0">ChannelInfo</a> channelInfo=<a class="code" href="group__a2dp.html#ggadd07e8b0b75b5153b83a4580f2d5c6c0aedf69634e61e7ec5d006874d299bc0d4">Both</a>);</div>
-<div class="ttc" id="aclass_one_channel8_bit_sound_data_html"><div class="ttname"><a href="class_one_channel8_bit_sound_data.html">OneChannel8BitSoundData</a></div><div class="ttdoc">1 Channel data is provided as signed int8 values.</div><div class="ttdef"><b>Definition:</b> SoundData.h:139</div></div>
-<div class="ttc" id="aclass_two_channel_sound_data_html"><div class="ttname"><a href="class_two_channel_sound_data.html">TwoChannelSoundData</a></div><div class="ttdoc">Data is provided in two channels of int16 data: so len is in 4 byte entries (int16 + int16)</div><div class="ttdef"><b>Definition:</b> SoundData.h:94</div></div>
-<div class="ttc" id="agroup__a2dp_html_gadd07e8b0b75b5153b83a4580f2d5c6c0"><div class="ttname"><a href="group__a2dp.html#gadd07e8b0b75b5153b83a4580f2d5c6c0">ChannelInfo</a></div><div class="ttdeci">ChannelInfo</div><div class="ttdoc">Channel Information.</div><div class="ttdef"><b>Definition:</b> SoundData.h:50</div></div>
-<div class="ttc" id="agroup__a2dp_html_ggadd07e8b0b75b5153b83a4580f2d5c6c0aedf69634e61e7ec5d006874d299bc0d4"><div class="ttname"><a href="group__a2dp.html#ggadd07e8b0b75b5153b83a4580f2d5c6c0aedf69634e61e7ec5d006874d299bc0d4">Both</a></div><div class="ttdeci">@ Both</div><div class="ttdef"><b>Definition:</b> SoundData.h:51</div></div>
-</div><!-- fragment --> <h1><a class="anchor" id="autotoc_md15"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md14"></a>
 Logging</h1>
 <p>This library uses the ESP32 logger that you can activate in Arduino in - Tools - Core Debug Log.</p>
-<h1><a class="anchor" id="autotoc_md16"></a>
+<h1><a class="anchor" id="autotoc_md15"></a>
 Architecture / Dependencies</h1>
 <p>The current code is purely dependent on the ESP-IDF (which is also provided by the Arduino ESP32 core). There are no other dependencies and this includes the Arduino API!</p>
 <p>Therefore we support:</p>
@@ -307,16 +267,16 @@ Architecture / Dependencies</h1>
 </ul>
 <p>This restriction limits however the provided examples.</p>
 <p>Before you clone the project, please read the following information which can be found in the <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki/Design-Overview">Wiki</a>.</p>
-<h1><a class="anchor" id="autotoc_md17"></a>
+<h1><a class="anchor" id="autotoc_md16"></a>
 Digital Sound Processing</h1>
 <p>You can use this library stand alone, but it is part of my <a href="https://github.com/pschatzmann/arduino-audio-tools">audio-tools</a> project. So you can easily enhance this functionality with sound effects, use filters or an equilizer, use alternative audio sinks or audio sources, do FFT etc. Here is a <a href="https://github.com/pschatzmann/arduino-audio-tools/blob/main/examples/examples-basic-api/basic-a2dp-fft/basic-a2dp-fft.ino">simple example</a> how you can analyse the audio data with FFT.</p>
-<h1><a class="anchor" id="autotoc_md18"></a>
+<h1><a class="anchor" id="autotoc_md17"></a>
 Documentation</h1>
 <ul>
 <li>The <a href="https://pschatzmann.github.io/ESP32-A2DP/html/group__a2dp.html">class documentation can be found here</a></li>
 <li>You can also find further information in the <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki">Wiki</a></li>
 </ul>
-<h1><a class="anchor" id="autotoc_md19"></a>
+<h1><a class="anchor" id="autotoc_md18"></a>
 Support</h1>
 <p>I spent a lot of time to provide a comprehensive and complete documentation. So please read the documentation first and check the issues and discussions before posting any new ones on Github.</p>
 <p>Open issues only for bugs and if it is not a bug, use a discussion: Provide enough information about</p><ul>
@@ -331,20 +291,20 @@ Support</h1>
 </ul>
 <p>to enable others to understand and reproduce your issue.</p>
 <p>Finally above all <b>don't</b> send me any e-mails or post questions on my personal website!</p>
-<h1><a class="anchor" id="autotoc_md20"></a>
+<h1><a class="anchor" id="autotoc_md19"></a>
 Show and Tell</h1>
 <p>Get some inspiration <a href="https://github.com/pschatzmann/ESP32-A2DP/discussions/categories/show-and-tell">from projects that were using this library</a> and share your projects with the community.</p>
-<h1><a class="anchor" id="autotoc_md21"></a>
+<h1><a class="anchor" id="autotoc_md20"></a>
 Installation</h1>
 <p>For Arduino you can download the library as zip and call include Library -&gt; zip library. Or you can git clone this project into the Arduino libraries folder e.g. with </p><div class="fragment"><div class="line">cd  ~/Documents/Arduino/libraries</div>
 <div class="line">git clone https://github.com/pschatzmann/ESP32-A2DP.git</div>
 <div class="line">git clone https://github.com/pschatzmann/arduino-audio-tools.git</div>
 </div><!-- fragment --><p> For the provided examples, you will need to install the <a href="https://github.com/pschatzmann/arduino-audio-tools">audio-tools library</a> as well.</p>
 <p>For other frameworks <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki">see the Wiki</a></p>
-<h1><a class="anchor" id="autotoc_md22"></a>
+<h1><a class="anchor" id="autotoc_md21"></a>
 Change History</h1>
 <p>The <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki/Change-History">Change History can be found in the Wiki</a></p>
-<h1><a class="anchor" id="autotoc_md23"></a>
+<h1><a class="anchor" id="autotoc_md22"></a>
 Sponsor Me</h1>
 <p>This software is totally free, but you can make me happy by rewarding me with a treat</p>
 <ul>

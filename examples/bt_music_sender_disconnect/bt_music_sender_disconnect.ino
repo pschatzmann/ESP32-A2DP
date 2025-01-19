@@ -22,7 +22,7 @@ bool state = true;
 
 // The supported audio codec in ESP32 A2DP is SBC. SBC audio stream is encoded
 // from PCM data normally formatted as 44.1kHz sampling rate, two-channel 16-bit sample data
-int32_t get_data_channels(Frame *frame, int32_t channel_len) {
+int32_t get_data_frames(Frame *frame, int32_t channel_len) {
     static double m_time = 0.0;
     double m_amplitude = 10000.0;  // -32,768 to 32,767
     double m_deltaTime = 1.0 / 44100.0;
@@ -43,8 +43,9 @@ int32_t get_data_channels(Frame *frame, int32_t channel_len) {
 void setup() {
   Serial.begin(115200);
   //a2dp_source.set_auto_reconnect(false);
-  a2dp_source.start("LEXON MINO L", get_data_channels);  
+  a2dp_source.set_data_callback_in_frames(get_data_frames);
   a2dp_source.set_volume(20);
+  a2dp_source.start("LEXON MINO L");  
 }
 
 

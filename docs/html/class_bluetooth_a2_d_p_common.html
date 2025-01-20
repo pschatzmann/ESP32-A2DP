@@ -90,6 +90,10 @@ Inheritance diagram for BluetoothA2DPCommon:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a7cbfe59ac018d6886622c24139742ebe"><td class="memItemLeft" align="right" valign="top"><a id="a7cbfe59ac018d6886622c24139742ebe"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a7cbfe59ac018d6886622c24139742ebe">BluetoothA2DPCommon</a> ()</td></tr>
+<tr class="memdesc:a7cbfe59ac018d6886622c24139742ebe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
+<tr class="separator:a7cbfe59ac018d6886622c24139742ebe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4bbbd1a2c9c85004afaa7c6dbad45322"><td class="memItemLeft" align="right" valign="top"><a id="a4bbbd1a2c9c85004afaa7c6dbad45322"></a>
 virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a4bbbd1a2c9c85004afaa7c6dbad45322">~BluetoothA2DPCommon</a> ()=default</td></tr>
 <tr class="memdesc:a4bbbd1a2c9c85004afaa7c6dbad45322"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
@@ -235,15 +239,21 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memitem:adf59aad0f6c7117c8fba44e956cde7f3"><td class="memItemLeft" align="right" valign="top"><a id="adf59aad0f6c7117c8fba44e956cde7f3"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>app_rc_tg_callback</b> (esp_avrc_tg_cb_event_t event, esp_avrc_tg_cb_param_t *param)=0</td></tr>
 <tr class="separator:adf59aad0f6c7117c8fba44e956cde7f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a535744f88cb70df363c3e2ec2ecbfe88"><td class="memItemLeft" align="right" valign="top"><a id="a535744f88cb70df363c3e2ec2ecbfe88"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>app_task_handler</b> (void *arg)=0</td></tr>
-<tr class="separator:a535744f88cb70df363c3e2ec2ecbfe88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79bd60b9299d8936ad49036181400f95"><td class="memItemLeft" align="right" valign="top"><a id="a79bd60b9299d8936ad49036181400f95"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>app_send_msg</b> (<a class="el" href="structbt__app__msg__t.html">bt_app_msg_t</a> *msg)</td></tr>
+<tr class="separator:a79bd60b9299d8936ad49036181400f95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cbcdb1d650ee5e472b86fd6fda03d14"><td class="memItemLeft" align="right" valign="top"><a id="a2cbcdb1d650ee5e472b86fd6fda03d14"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>app_task_handler</b> (void *arg)</td></tr>
+<tr class="separator:a2cbcdb1d650ee5e472b86fd6fda03d14"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7f6518060f0a1d114ff7da3b923868e8"><td class="memItemLeft" align="right" valign="top"><a id="a7f6518060f0a1d114ff7da3b923868e8"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>app_task_shut_down</b> ()</td></tr>
 <tr class="separator:a7f6518060f0a1d114ff7da3b923868e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8005f3e388e1ea5e0daab828713b34c6"><td class="memItemLeft" align="right" valign="top"><a id="a8005f3e388e1ea5e0daab828713b34c6"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>app_task_start_up</b> ()</td></tr>
 <tr class="separator:a8005f3e388e1ea5e0daab828713b34c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69518d11bb3efb446cd49d5c08337327"><td class="memItemLeft" align="right" valign="top"><a id="a69518d11bb3efb446cd49d5c08337327"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>app_work_dispatched</b> (<a class="el" href="structbt__app__msg__t.html">bt_app_msg_t</a> *msg)</td></tr>
+<tr class="separator:a69518d11bb3efb446cd49d5c08337327"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a806340a7bf9e75a2ff6bbd407726f266"><td class="memItemLeft" align="right" valign="top"><a id="a806340a7bf9e75a2ff6bbd407726f266"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>av_hdl_avrc_tg_evt</b> (uint16_t event, void *p_param)=0</td></tr>
 <tr class="separator:a806340a7bf9e75a2ff6bbd407726f266"><td class="memSeparator" colspan="2">&#160;</td></tr>

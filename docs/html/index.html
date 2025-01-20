@@ -99,7 +99,7 @@ A Simple I2S Example (A2DS Sink) using default Pins</h2>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> loop() {</div>
 <div class="line">}</div>
-<div class="ttc" id="aclass_bluetooth_a2_d_p_sink_html"><div class="ttname"><a href="class_bluetooth_a2_d_p_sink.html">BluetoothA2DPSink</a></div><div class="ttdoc">A2DP Bluethooth Sink - We initialize and start the Bluetooth A2DP Sink. The example https://github....</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSink.h:69</div></div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_sink_html"><div class="ttname"><a href="class_bluetooth_a2_d_p_sink.html">BluetoothA2DPSink</a></div><div class="ttdoc">A2DP Bluethooth Sink - We initialize and start the Bluetooth A2DP Sink. The example https://github....</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSink.h:59</div></div>
 </div><!-- fragment --><p> This creates a new Bluetooth device with the name “MyMusic” and the output will be sent to the following default I2S pins which need to be connected to an external DAC:</p>
 <ul>
 <li>bck_io_num = 14</li>
@@ -242,9 +242,9 @@ Sending Data from a A2DS Data Source with a Callback</h2>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> loop() {}</div>
-<div class="ttc" id="aclass_bluetooth_a2_d_p_source_html"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html">BluetoothA2DPSource</a></div><div class="ttdoc">A2DP Bluetooth Source.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSource.h:81</div></div>
-<div class="ttc" id="aclass_bluetooth_a2_d_p_source_html_a98c1eb3ad55af189fd3f1ddeac8f3636"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html#a98c1eb3ad55af189fd3f1ddeac8f3636">BluetoothA2DPSource::start</a></div><div class="ttdeci">virtual void start()</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSource.h:145</div></div>
-<div class="ttc" id="aclass_bluetooth_a2_d_p_source_html_a9eb67e480675059a96014f2c1b84b0c3"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html#a9eb67e480675059a96014f2c1b84b0c3">BluetoothA2DPSource::set_data_callback</a></div><div class="ttdeci">virtual void set_data_callback(int32_t(cb)(uint8_t *data, int32_t len))</div><div class="ttdoc">Defines the data callback.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSource.h:123</div></div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_source_html"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html">BluetoothA2DPSource</a></div><div class="ttdoc">A2DP Bluetooth Source.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSource.h:71</div></div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_source_html_a98c1eb3ad55af189fd3f1ddeac8f3636"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html#a98c1eb3ad55af189fd3f1ddeac8f3636">BluetoothA2DPSource::start</a></div><div class="ttdeci">virtual void start()</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSource.h:125</div></div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_source_html_a9eb67e480675059a96014f2c1b84b0c3"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html#a9eb67e480675059a96014f2c1b84b0c3">BluetoothA2DPSource::set_data_callback</a></div><div class="ttdeci">virtual void set_data_callback(int32_t(cb)(uint8_t *data, int32_t len))</div><div class="ttdoc">Defines the data callback.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSource.h:103</div></div>
 </div><!-- fragment --><p> Instead of the <code>set_data_callback callback</code> method you can also use <code>set_data_callback_in_frames</code> which uses frames instead of bytes. In Arduio you can also provide a Stream (e.g a File) as data source or a callback which provides streams.</p>
 <p>In the examples you can find an implentation that generates sound with the help of the sin() function.</p>
 <p>You can also inticate multiple alternative Bluetooth names. The system just connects to the first one which is available:</p>

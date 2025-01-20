@@ -38,20 +38,10 @@ typedef int32_t (*music_data_frames_cb_t)(Frame *data, int32_t len);
 typedef void (*bt_app_copy_cb_t)(bt_app_msg_t *msg, void *p_dest, void *p_src);
 typedef void (*bt_app_cb_t)(uint16_t event, void *param);
 
-extern "C" void ccall_bt_av_hdl_stack_evt(uint16_t event, void *p_param);
-extern "C" void ccall_bt_app_task_handler(void *arg);
-extern "C" void ccall_bt_app_gap_callback(esp_bt_gap_cb_event_t event,
-                                          esp_bt_gap_cb_param_t *param);
-extern "C" void ccall_bt_app_rc_ct_cb(esp_avrc_ct_cb_event_t event,
-                                      esp_avrc_ct_cb_param_t *param);
 extern "C" void ccall_a2d_app_heart_beat(TIMER_ARG_TYPE arg);
-extern "C" void ccall_bt_app_a2d_cb(esp_a2d_cb_event_t event,
-                                    esp_a2d_cb_param_t *param);
 extern "C" void ccall_bt_app_av_sm_hdlr(uint16_t event, void *param);
 extern "C" void ccall_bt_av_hdl_avrc_ct_evt(uint16_t event, void *param);
 extern "C" int32_t ccall_bt_app_a2d_data_cb(uint8_t *data, int32_t len);
-extern "C" int32_t ccall_get_channel_data_wrapper(uint8_t *data, int32_t len);
-extern "C" int32_t ccall_get_data_default(uint8_t *data, int32_t len);
 
 /**
  * @brief Buetooth A2DP global state
@@ -79,20 +69,10 @@ static const char *APP_AV_STATE_STR[] = {
  */
 
 class BluetoothA2DPSource : public BluetoothA2DPCommon {
-  friend void ccall_bt_av_hdl_stack_evt(uint16_t event, void *p_param);
-  friend void ccall_bt_app_task_handler(void *arg);
-  friend void ccall_bt_app_gap_callback(esp_bt_gap_cb_event_t event,
-                                        esp_bt_gap_cb_param_t *param);
-  friend void ccall_bt_app_rc_ct_cb(esp_avrc_ct_cb_event_t event,
-                                    esp_avrc_ct_cb_param_t *param);
   friend void ccall_a2d_app_heart_beat(TIMER_ARG_TYPE arg);
-  friend void ccall_bt_app_a2d_cb(esp_a2d_cb_event_t event,
-                                  esp_a2d_cb_param_t *param);
   friend void ccall_bt_app_av_sm_hdlr(uint16_t event, void *param);
   friend void ccall_bt_av_hdl_avrc_ct_evt(uint16_t event, void *param);
   friend int32_t ccall_bt_app_a2d_data_cb(uint8_t *data, int32_t len);
-  friend int32_t ccall_get_channel_data_wrapper(uint8_t *data, int32_t len);
-  friend int32_t ccall_get_data_default(uint8_t *data, int32_t len);
 
  public:
   /// Constructor
@@ -235,6 +215,9 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
     is_passthru_active = (cb != nullptr);
   }
 
+  /// Ends the processing and releases the resources
+  void end(bool releaseMemory=false) override;
+
  protected:
   /// callback for data
   int32_t (*get_data_cb)(uint8_t *data, int32_t len) = nullptr;
@@ -258,8 +241,6 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
   int s_connecting_heatbeat_count;
   uint32_t s_pkt_cnt;
   TimerHandle_t s_tmr;
-  QueueHandle_t s_bt_app_task_queue = nullptr;
-  TaskHandle_t s_bt_app_task_handle = nullptr;
 
   // initialization
   bool nvs_init = true;
@@ -280,18 +261,25 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
   esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap;
 #endif
 
+  void app_gap_callback(esp_bt_gap_cb_event_t event,
+                        esp_bt_gap_cb_param_t *param) override;
+  void app_rc_ct_callback(esp_avrc_ct_cb_event_t event,
+                          esp_avrc_ct_cb_param_t *param) override;
+  void app_a2d_callback(esp_a2d_cb_event_t event,
+                        esp_a2d_cb_param_t *param) override;
+  void av_hdl_stack_evt(uint16_t event, void *p_param) override;
+
   /// provides the audio data to be sent
   virtual int32_t get_audio_data(uint8_t *data, int32_t len);
   /// provides the audio after applying the volume
   virtual int32_t get_audio_data_volume(uint8_t *data, int32_t len);
+  
 
   virtual void process_user_state_callbacks(uint16_t event, void *param);
 
   virtual bool bt_app_work_dispatch(bt_app_cb_t p_cback, uint16_t event,
                                     void *p_params, int param_len,
                                     bt_app_copy_cb_t p_copy_cback);
-  virtual void bt_app_task_start_up(void);
-  virtual void bt_app_task_shut_down(void);
   virtual void bt_app_av_media_proc(uint16_t event, void *param);
 
   /// A2DP application state machine handler for each state
@@ -300,27 +288,13 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
   virtual void bt_app_av_state_connected_hdlr(uint16_t event, void *param);
   virtual void bt_app_av_state_disconnecting_hdlr(uint16_t event, void *param);
 
-  virtual bool bt_app_send_msg(bt_app_msg_t *msg);
-  virtual void bt_app_work_dispatched(bt_app_msg_t *msg);
-
   virtual bool get_name_from_eir(uint8_t *eir, uint8_t *bdname,
                                  uint8_t *bdname_len);
   virtual void filter_inquiry_scan_result(esp_bt_gap_cb_param_t *param);
 
   virtual const char *last_bda_nvs_name() { return "src_bda"; }
 
-  // handler for bluetooth stack enabled events
-  virtual void bt_av_hdl_stack_evt(uint16_t event, void *p_param);
-  virtual void bt_app_task_handler(void *arg);
-  virtual void bt_app_gap_callback(esp_bt_gap_cb_event_t event,
-                                   esp_bt_gap_cb_param_t *param);
-  /// callback function for AVRCP controller
-  virtual void bt_app_rc_ct_cb(esp_avrc_ct_cb_event_t event,
-                               esp_avrc_ct_cb_param_t *param);
   virtual void a2d_app_heart_beat(void *arg);
-  /// callback function for A2DP source
-  virtual void bt_app_a2d_cb(esp_a2d_cb_event_t event,
-                             esp_a2d_cb_param_t *param);
   /// A2DP application state machine
   virtual void bt_app_av_sm_hdlr(uint16_t event, void *param);
   /// avrc CT event handler
@@ -358,6 +332,7 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
   virtual void app_rc_tg_callback(esp_avrc_tg_cb_event_t event,
                           esp_avrc_tg_cb_param_t *param) override;
   virtual void av_hdl_avrc_tg_evt(uint16_t event, void *p_param) override;
+  virtual bool isSource() { return true;}
 
 #endif
 };

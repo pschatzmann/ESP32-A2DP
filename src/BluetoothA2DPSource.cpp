@@ -16,9 +16,6 @@
 
 #include "BluetoothA2DPSource.h"
 
-#define BT_APP_SIG_WORK_DISPATCH (0x01)
-#define BT_APP_SIG_WORK_DISPATCH (0x01)
-
 #define APP_RC_CT_TL_RN_VOLUME_CHANGE (1)
 #define BT_APP_HEART_BEAT_EVT (0xff00)
 
@@ -76,9 +73,6 @@ BluetoothA2DPSource::BluetoothA2DPSource() {
   s_intv_cnt = 0;
   s_connecting_heatbeat_count = 0;
   s_pkt_cnt = 0;
-
-  app_task_queue = nullptr;
-  app_task_handle = nullptr;
 }
 
 BluetoothA2DPSource::~BluetoothA2DPSource() { end(); }
@@ -220,7 +214,7 @@ bool BluetoothA2DPSource::bt_app_work_dispatch(bt_app_cb_t p_cback,
   msg.cb = p_cback;
 
   if (param_len == 0) {
-    return bt_app_send_msg(&msg);
+    return app_send_msg(&msg);
   } else if (p_params && param_len > 0) {
     if ((msg.param = malloc(param_len)) != nullptr) {
       memcpy(msg.param, p_params, param_len);
@@ -228,55 +222,11 @@ bool BluetoothA2DPSource::bt_app_work_dispatch(bt_app_cb_t p_cback,
       if (p_copy_cback) {
         p_copy_cback(&msg, msg.param, p_params);
       }
-      return bt_app_send_msg(&msg);
+      return app_send_msg(&msg);
     }
   }
 
   return false;
-}
-
-bool BluetoothA2DPSource::bt_app_send_msg(bt_app_msg_t *msg) {
-  if (msg == nullptr) {
-    return false;
-  }
-
-  if (xQueueSend(app_task_queue, msg, 10 / portTICK_PERIOD_MS) != pdTRUE) {
-    ESP_LOGE(BT_APP_TAG, "%s xQueue send failed", __func__);
-    return false;
-  }
-  return true;
-}
-
-void BluetoothA2DPSource::bt_app_work_dispatched(bt_app_msg_t *msg) {
-  if (msg->cb) {
-    msg->cb(msg->event, msg->param);
-  }
-}
-
-void BluetoothA2DPSource::app_task_handler(void *arg) {
-  bt_app_msg_t msg;
-
-  for (;;) {
-    /* receive message from work queue and handle it */
-    if (pdTRUE ==
-        xQueueReceive(app_task_queue, &msg, (TickType_t)portMAX_DELAY)) {
-      ESP_LOGD(BT_APP_TAG, "%s, signal: 0x%x, event: 0x%x", __func__, msg.sig,
-               msg.event);
-
-      switch (msg.sig) {
-        case BT_APP_SIG_WORK_DISPATCH:
-          bt_app_work_dispatched(&msg);
-          break;
-        default:
-          ESP_LOGW(BT_APP_TAG, "%s, unhandled signal: %d", __func__, msg.sig);
-          break;
-      }
-
-      if (msg.param) {
-        free(msg.param);
-      }
-    }
-  }
 }
 
 

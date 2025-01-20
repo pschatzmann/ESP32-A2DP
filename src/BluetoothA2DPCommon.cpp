@@ -17,7 +17,6 @@
 
 BluetoothA2DPCommon* actual_bluetooth_a2dp_common = nullptr;
 
-
 extern "C" void ccall_bt_app_task_handler(void* arg) {
   if (actual_bluetooth_a2dp_common)
     actual_bluetooth_a2dp_common->app_task_handler(arg);
@@ -43,7 +42,6 @@ extern "C" void ccall_app_a2d_callback(esp_a2d_cb_event_t event,
 }
 
 extern "C" void ccall_av_hdl_stack_evt(uint16_t event, void* p_param) {
-  ESP_LOGD(BT_AV_TAG, "%s", __func__);
   if (actual_bluetooth_a2dp_common)
     actual_bluetooth_a2dp_common->av_hdl_stack_evt(event, p_param);
 }
@@ -64,6 +62,9 @@ void ccall_av_hdl_avrc_tg_evt(uint16_t event, void* param) {
 }
 #endif
 
+BluetoothA2DPCommon::BluetoothA2DPCommon() {
+  actual_bluetooth_a2dp_common = this;
+}
 
 esp_a2d_audio_state_t BluetoothA2DPCommon::get_audio_state() {
   return audio_state;
@@ -126,6 +127,9 @@ void BluetoothA2DPCommon::disconnect() {
 }
 
 void BluetoothA2DPCommon::end(bool release_memory) {
+  ESP_LOGI(BT_AV_TAG, "%s", __func__);
+  // delay which prevents a crash when log level Warning or Error
+  int wait_ms = 50;
   // reconnect should not work after end
   is_start_disabled = false;
   clean_last_connection();
@@ -142,14 +146,20 @@ void BluetoothA2DPCommon::end(bool release_memory) {
     };
   }
 
-  // deinit AVRC
-  ESP_LOGI(BT_AV_TAG, "deinit avrc");
+  delay_ms(wait_ms);
+
   if (esp_avrc_ct_deinit() != ESP_OK) {
     ESP_LOGE(BT_AV_TAG, "Failed to deinit avrc ct");
   }
+
+  delay_ms(wait_ms);
+
   if (esp_avrc_tg_deinit() != ESP_OK) {
     ESP_LOGE(BT_AV_TAG, "Failed to deinit avrc tg");
   }
+
+  delay_ms(wait_ms);
+
   if (isSource()) {
     if (esp_a2d_source_deinit() != ESP_OK) {
       ESP_LOGE(BT_AV_TAG, "Failed to deinit source");
@@ -160,6 +170,7 @@ void BluetoothA2DPCommon::end(bool release_memory) {
     }
   }
 
+  delay_ms(wait_ms);
   log_free_heap();
 
   if (release_memory) {
@@ -208,8 +219,11 @@ void BluetoothA2DPCommon::end(bool release_memory) {
     is_start_disabled = true;
   }
 
+  delay_ms(wait_ms);
+
   app_task_shut_down();
 
+  delay_ms(wait_ms);
   log_free_heap();
 }
 
@@ -403,8 +417,9 @@ esp_err_t BluetoothA2DPCommon::bluedroid_init() {
 
 void BluetoothA2DPCommon::app_task_start_up() {
   ESP_LOGD(BT_AV_TAG, "%s", __func__);
-  if (app_task_queue == nullptr)
+  if (app_task_queue == nullptr){
     app_task_queue = xQueueCreate(event_queue_size, sizeof(bt_app_msg_t));
+  }
 
   if (app_task_handle == nullptr) {
     if (xTaskCreatePinnedToCore(ccall_bt_app_task_handler, "BtAppT",
@@ -421,10 +436,63 @@ void BluetoothA2DPCommon::app_task_shut_down(void) {
     vTaskDelete(app_task_handle);
     app_task_handle = nullptr;
   }
+
   if (app_task_queue != nullptr) {
-    vQueueDelete(app_task_queue);
+    QueueHandle_t queue = app_task_queue;
     app_task_queue = nullptr;
+    vQueueDelete(queue);
   }
+}
+
+void BluetoothA2DPCommon::app_task_handler(void* arg) {
+  ESP_LOGI(BT_AV_TAG, "%s", __func__);
+  bt_app_msg_t msg;
+
+  for (;;) {
+    while (app_task_queue == nullptr) {
+      ESP_LOGW(BT_APP_TAG, "app_task_queue is null");
+      delay_ms(1000);
+    }
+
+    /* receive message from work queue and handle it */
+    if (pdTRUE ==
+        xQueueReceive(app_task_queue, &msg, (TickType_t)portMAX_DELAY)) {
+      ESP_LOGD(BT_APP_TAG, "%s, signal: 0x%x, event: 0x%x", __func__, msg.sig,
+               msg.event);
+
+      switch (msg.sig) {
+        case BT_APP_SIG_WORK_DISPATCH:
+          app_work_dispatched(&msg);
+          break;
+        default:
+          ESP_LOGW(BT_APP_TAG, "%s, unhandled signal: %d", __func__, msg.sig);
+          break;
+      }
+
+      if (msg.param) {
+        free(msg.param);
+      }
+    }
+  }
+}
+
+void BluetoothA2DPCommon::app_work_dispatched(bt_app_msg_t* msg) {
+  ESP_LOGD(BT_AV_TAG, "%s", __func__);
+  if (msg->cb) {
+    msg->cb(msg->event, msg->param);
+  }
+}
+
+bool BluetoothA2DPCommon::app_send_msg(bt_app_msg_t* msg) {
+  if (msg == nullptr || app_task_queue == nullptr) {
+    return false;
+  }
+
+  if (xQueueSend(app_task_queue, msg, 10 / portTICK_PERIOD_MS) != pdTRUE) {
+    ESP_LOGE(BT_APP_TAG, "%s xQueue send failed", __func__);
+    return false;
+  }
+  return true;
 }
 
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
@@ -498,4 +566,3 @@ unsigned long BluetoothA2DPCommon::get_millis() {
   return (unsigned long)(esp_timer_get_time() / 1000ULL);
 #endif
 }
-

@@ -269,8 +269,6 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
                         esp_a2d_cb_param_t *param) override;
   void av_hdl_stack_evt(uint16_t event, void *p_param) override;
 
-  void app_task_handler(void *arg) override;
-
   /// provides the audio data to be sent
   virtual int32_t get_audio_data(uint8_t *data, int32_t len);
   /// provides the audio after applying the volume
@@ -289,9 +287,6 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
   virtual void bt_app_av_state_connecting_hdlr(uint16_t event, void *param);
   virtual void bt_app_av_state_connected_hdlr(uint16_t event, void *param);
   virtual void bt_app_av_state_disconnecting_hdlr(uint16_t event, void *param);
-
-  virtual bool bt_app_send_msg(bt_app_msg_t *msg);
-  virtual void bt_app_work_dispatched(bt_app_msg_t *msg);
 
   virtual bool get_name_from_eir(uint8_t *eir, uint8_t *bdname,
                                  uint8_t *bdname_len);

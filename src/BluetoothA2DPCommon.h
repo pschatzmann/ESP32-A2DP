@@ -74,7 +74,6 @@ using namespace esp_i2s;
 #include "esp32-hal-log.h"
 #else
 #include "esp_log.h"
-
 #endif
 
 #if !defined(ESP_IDF_VERSION)
@@ -107,6 +106,8 @@ using namespace esp_i2s;
 #endif
 
 #define A2DP_DEPRECATED __attribute__((deprecated))
+
+#define BT_APP_SIG_WORK_DISPATCH (0x01)
 
 /**
  * @brief     handler for the dispatched work
@@ -180,6 +181,8 @@ class BluetoothA2DPCommon {
 #endif
 
  public:
+  /// Default constructor
+  BluetoothA2DPCommon();
   /// Destructor
   virtual ~BluetoothA2DPCommon() = default;
 
@@ -372,12 +375,6 @@ class BluetoothA2DPCommon {
   QueueHandle_t app_task_queue = nullptr;
   TaskHandle_t app_task_handle = nullptr;
 
-#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
-  esp_bt_discovery_mode_t discoverability = ESP_BT_GENERAL_DISCOVERABLE;
-  virtual void app_rc_tg_callback(esp_avrc_tg_cb_event_t event,
-                                  esp_avrc_tg_cb_param_t *param) = 0;
-  virtual void av_hdl_avrc_tg_evt(uint16_t event, void *p_param) = 0;
-#endif
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 2, 1)
   esp_bluedroid_config_t bluedroid_config{.ssp_en = true};
 #endif
@@ -405,7 +402,9 @@ class BluetoothA2DPCommon {
   virtual esp_err_t esp_a2d_disconnect(esp_bd_addr_t remote_bda) = 0;
   virtual void app_task_start_up();
   virtual void app_task_shut_down();
-  virtual void app_task_handler(void *arg) = 0;
+  virtual bool app_send_msg(bt_app_msg_t *msg);
+  virtual void app_task_handler(void *arg);
+  virtual void app_work_dispatched(bt_app_msg_t *msg);
   virtual bool isSource() = 0;
   // GAP callback
   virtual void app_gap_callback(esp_bt_gap_cb_event_t event,
@@ -418,6 +417,14 @@ class BluetoothA2DPCommon {
                                 esp_a2d_cb_param_t *param) = 0;
   // handler for bluetooth stack enabled events
   virtual void av_hdl_stack_evt(uint16_t event, void *p_param) = 0;
+
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
+  esp_bt_discovery_mode_t discoverability = ESP_BT_GENERAL_DISCOVERABLE;
+  virtual void app_rc_tg_callback(esp_avrc_tg_cb_event_t event,
+                                  esp_avrc_tg_cb_param_t *param) = 0;
+  virtual void av_hdl_avrc_tg_evt(uint16_t event, void *p_param) = 0;
+#endif
+
 };
 
 extern BluetoothA2DPCommon *actual_bluetooth_a2dp_common;

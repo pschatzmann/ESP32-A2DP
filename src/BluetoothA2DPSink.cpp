@@ -66,6 +66,7 @@ BluetoothA2DPSink::~BluetoothA2DPSink() {
 }
 
 void BluetoothA2DPSink::end(bool release_memory) {
+  ESP_LOGI(BT_AV_TAG, "%s", __func__);
   // reconnect should not work after end
   is_autoreconnect_allowed = false;
 
@@ -279,70 +280,6 @@ bool BluetoothA2DPSink::app_work_dispatch(app_callback_t p_cback,
   return false;
 }
 
-void BluetoothA2DPSink::app_work_dispatched(bt_app_msg_t *msg) {
-  ESP_LOGD(BT_AV_TAG, "%s", __func__);
-  if (msg->cb) {
-    msg->cb(msg->event, msg->param);
-  }
-}
-
-bool BluetoothA2DPSink::app_send_msg(bt_app_msg_t *msg) {
-  ESP_LOGD(BT_AV_TAG, "%s", __func__);
-  if (msg == nullptr || app_task_queue == nullptr) {
-    ESP_LOGE(BT_APP_TAG, "%s app_send_msg failed", __func__);
-    return false;
-  }
-
-  if (xQueueSend(app_task_queue, msg, 10 / portTICK_PERIOD_MS) != pdTRUE) {
-    ESP_LOGE(BT_APP_TAG, "%s xQueue send failed", __func__);
-    return false;
-  }
-  return true;
-}
-
-void BluetoothA2DPSink::app_task_handler(void *arg) {
-  ESP_LOGD(BT_AV_TAG, "%s", __func__);
-  bt_app_msg_t msg;
-  while (true) {
-    if (!app_task_queue) {
-      ESP_LOGE(BT_APP_TAG, "%s, app_task_queue is null", __func__);
-      delay_ms(100);
-    } else if (pdTRUE ==
-               xQueueReceive(app_task_queue, &msg, (TickType_t)portMAX_DELAY)) {
-      ESP_LOGD(BT_APP_TAG, "%s, sig 0x%x, 0x%x", __func__, msg.sig, msg.event);
-      switch (msg.sig) {
-        case APP_SIG_WORK_DISPATCH:
-          ESP_LOGD(BT_APP_TAG, "%s, APP_SIG_WORK_DISPATCH sig: %d", __func__,
-                   msg.sig);
-          app_work_dispatched(&msg);
-          break;
-        default:
-          ESP_LOGW(BT_APP_TAG, "%s, unhandled sig: %d", __func__, msg.sig);
-          break;
-      }  // switch (msg.sig)
-
-      if (msg.param) {
-        free(msg.param);
-      }
-    } else {
-#ifdef A2DP_EXPERIMENTAL_RECONNECT_AFTER_IDLE
-      // RECONNECTION MGMT
-      // ESP_LOGI(BT_APP_TAG, "%s, xQueueReceive -> no data", __func__);
-      if (reconnect_status == IsReconnecting && millis() > reconnect_timout) {
-        // if we do not reconnect within the timeout we try to reconnect again.
-        if (connection_rety_count++ < try_reconnect_max_count) {
-          reconnect();
-        }
-      } else {
-        delay_ms(10);
-      }
-#else
-      ESP_LOGI(BT_APP_TAG, "%s, xQueueReceive -> no data", __func__);
-      delay_ms(10);
-#endif
-    }
-  }
-}
 
 void BluetoothA2DPSink::app_alloc_meta_buffer(esp_avrc_ct_cb_param_t *param) {
   ESP_LOGD(BT_AV_TAG, "%s", __func__);

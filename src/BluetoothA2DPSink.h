@@ -417,13 +417,10 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   void app_a2d_callback(esp_a2d_cb_event_t event,
                         esp_a2d_cb_param_t *param) override;
   void av_hdl_stack_evt(uint16_t event, void *p_param) override;
-  void app_task_handler(void *arg) override;
 
   virtual int init_bluetooth();
-  virtual bool app_send_msg(bt_app_msg_t *msg);
   virtual bool app_work_dispatch(app_callback_t p_cback, uint16_t event,
                                  void *p_params, int param_len);
-  virtual void app_work_dispatched(bt_app_msg_t *msg);
   virtual void app_alloc_meta_buffer(esp_avrc_ct_cb_param_t *param);
   virtual void av_new_track();
   virtual void av_playback_changed();

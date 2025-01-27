@@ -29,9 +29,14 @@
 using namespace esp_i2s;
 #endif
 // Compile only for ESP32
-#if defined(CONFIG_IDF_TARGET_ESP32C3) || \
+#if defined(CONFIG_IDF_TARGET_ESP32C2) || \
+    defined(CONFIG_IDF_TARGET_ESP32C3) || \
+    defined(CONFIG_IDF_TARGET_ESP32C5) || \
+    defined(CONFIG_IDF_TARGET_ESP32C6) || \
     defined(CONFIG_IDF_TARGET_ESP32S2) || \
-    defined(CONFIG_IDF_TARGET_ESP32S3) || defined(CONFIG_IDF_TARGET_ESP32C6)
+    defined(CONFIG_IDF_TARGET_ESP32S3) || \
+    defined(CONFIG_IDF_TARGET_ESP32H2) || \
+    defined(CONFIG_IDF_TARGET_ESP32P4) 
 #error "ESP32C3, ESP32S2, ESP32S3 do not support A2DP"
 #endif
 

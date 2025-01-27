@@ -37,7 +37,7 @@ using namespace esp_i2s;
     defined(CONFIG_IDF_TARGET_ESP32S3) || \
     defined(CONFIG_IDF_TARGET_ESP32H2) || \
     defined(CONFIG_IDF_TARGET_ESP32P4) 
-#error "ESP32C3, ESP32S2, ESP32S3 do not support A2DP"
+#error "ESP32C3, ESP32S2, ESP32S3... do not support A2DP"
 #endif
 
 #include <math.h>

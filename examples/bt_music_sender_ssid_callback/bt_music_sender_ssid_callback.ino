@@ -1,6 +1,7 @@
 /*
   Streaming of sound data with Bluetooth to other Bluetooth device.
-  We generate 2 tones which will be sent to the 2 channels.
+  We can build a list of available devices and connect to a specific one,
+  or connnect to the closest device.
   
   Copyright (C) 2020 Phil Schatzmann
   This program is free software: you can redistribute it and/or modify
@@ -40,7 +41,8 @@ int32_t get_data_frames(Frame *frame, int32_t frame_count) {
     return frame_count;
 }
 
-// Return true to connect, false will continue scanning
+// Return true to connect, false will continue scanning: You can can use this
+// callback to build a list.
 bool isValid(const char* ssid, esp_bd_addr_t address, int rssi){
    Serial.print("available SSID: ");
    Serial.println(ssid);

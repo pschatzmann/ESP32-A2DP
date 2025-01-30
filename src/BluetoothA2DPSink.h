@@ -71,25 +71,24 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   BluetoothA2DPSink();
 
   /// Define output scenario class
-  BluetoothA2DPSink(BluetoothA2DPOutput &out) { set_output(out); }
+  BluetoothA2DPSink(BluetoothA2DPOutput &out) : BluetoothA2DPSink() { 
+    set_output(out); 
+  }
 
 #if A2DP_I2S_AUDIOTOOLS
   /// Output AudioOutput using AudioTools library
-  BluetoothA2DPSink(audio_tools::AudioOutput &output) {
-    actual_bluetooth_a2dp_sink = this;
+  BluetoothA2DPSink(audio_tools::AudioOutput &output) : BluetoothA2DPSink() {
     set_output(output);
   }
   /// Output AudioStream using AudioTools library
-  BluetoothA2DPSink(audio_tools::AudioStream &output) {
-    actual_bluetooth_a2dp_sink = this;
+  BluetoothA2DPSink(audio_tools::AudioStream &output) : BluetoothA2DPSink(){
     set_output(output);
   }
 #endif
 
 #ifdef ARDUINO
   /// Output to Arduino Print
-  BluetoothA2DPSink(Print &output) {
-    actual_bluetooth_a2dp_sink = this;
+  BluetoothA2DPSink(Print &output) : BluetoothA2DPSink() {
     set_output(output);
   }
 #endif

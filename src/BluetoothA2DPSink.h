@@ -424,7 +424,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   virtual void av_new_track();
   virtual void av_playback_changed();
   virtual void av_play_pos_changed();
-  virtual void init_nvs();
   // execute AVRC command
   virtual void execute_avrc_command(int cmd);
 

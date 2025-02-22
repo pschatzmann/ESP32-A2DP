@@ -178,9 +178,6 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
   /// Defines the pin code. If nothing is defined we use "1234"
   void set_pin_code(const char *pin_code, esp_bt_pin_type_t pin_type);
 
-  /// Defines if the Flash NVS should be reset on start
-  virtual void set_nvs_init(bool doInit);
-
   /// Defines if the BLE should be reset on start
   virtual void set_reset_ble(bool doInit);
 
@@ -243,7 +240,6 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
   TimerHandle_t s_tmr;
 
   // initialization
-  bool nvs_init = true;
   bool reset_ble = false;
   bool discovery_active = false;
   uint16_t valid_cod_services = ESP_BT_COD_SRVC_RENDERING |

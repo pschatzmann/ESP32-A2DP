@@ -95,16 +95,7 @@ void BluetoothA2DPSource::start(std::vector<const char *> names) {
     get_last_connection();
   }
 
-  if (nvs_init) {
-    // Initialize NVS (Non-volatile storage library).
-    esp_err_t ret = nvs_flash_init();
-    if (ret == ESP_ERR_NVS_NO_FREE_PAGES ||
-        ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
-      ESP_ERROR_CHECK(nvs_flash_erase());
-      ret = nvs_flash_init();
-    }
-    ESP_ERROR_CHECK(ret);
-  }
+  init_nvs();
 
   if (reset_ble) {
     ESP_ERROR_CHECK(esp_bt_controller_mem_release(ESP_BT_MODE_BLE));
@@ -1003,8 +994,6 @@ void BluetoothA2DPSource::bt_av_hdl_avrc_ct_evt(uint16_t event, void *p_param) {
     }
   }
 }
-
-void BluetoothA2DPSource::set_nvs_init(bool doInit) { nvs_init = doInit; }
 
 void BluetoothA2DPSource::set_reset_ble(bool doInit) { reset_ble = doInit; }
 

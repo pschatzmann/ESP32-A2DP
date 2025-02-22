@@ -227,6 +227,17 @@ void BluetoothA2DPCommon::end(bool release_memory) {
   log_free_heap();
 }
 
+void BluetoothA2DPCommon::init_nvs() {
+  ESP_LOGD(BT_AV_TAG, "%s", __func__);
+  esp_err_t err = nvs_flash_init();
+  if (err == ESP_ERR_NVS_NO_FREE_PAGES ||
+      err == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+    ESP_ERROR_CHECK(nvs_flash_erase());
+    err = nvs_flash_init();
+  }
+  ESP_ERROR_CHECK(err);
+}
+
 bool BluetoothA2DPCommon::has_last_connection() {
   esp_bd_addr_t empty_connection = {0, 0, 0, 0, 0, 0};
   int result = memcmp(last_connection, empty_connection, ESP_BD_ADDR_LEN);

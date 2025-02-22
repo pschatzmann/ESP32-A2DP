@@ -268,6 +268,7 @@ bool BluetoothA2DPCommon::read_address(const char* name, esp_bd_addr_t& bda) {
   err = nvs_open("connected_bda", NVS_READONLY, &my_handle);
   if (err != ESP_OK) {
     ESP_LOGE(BT_AV_TAG, "NVS OPEN ERROR");
+    return false;
   }
 
   size_t size = ESP_BD_ADDR_LEN;

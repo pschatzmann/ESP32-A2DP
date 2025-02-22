@@ -247,9 +247,11 @@ bool BluetoothA2DPCommon::has_last_connection() {
 void BluetoothA2DPCommon::get_last_connection() {
   ESP_LOGD(BT_AV_TAG, "%s", __func__);
 
-  esp_bd_addr_t bda;
-  if (read_address(last_bda_nvs_name(), bda)) {
-    memcpy(last_connection, bda, ESP_BD_ADDR_LEN);
+  if (is_autoreconnect_allowed){
+    esp_bd_addr_t bda;
+    if (read_address(last_bda_nvs_name(), bda)) {
+      memcpy(last_connection, bda, ESP_BD_ADDR_LEN);
+    }
   }
   ESP_LOGD(BT_AV_TAG, "=> %s", to_str(last_connection));
 }
@@ -262,7 +264,11 @@ void BluetoothA2DPCommon::set_last_connection(esp_bd_addr_t bda) {
     ESP_LOGD(BT_AV_TAG, "no change!");
     return;
   }
-  write_address(last_bda_nvs_name(), bda);
+  // update nvs only when autoreconnect is enabled
+  if (is_autoreconnect_allowed){
+    write_address(last_bda_nvs_name(), bda);
+  }
+  // update last_connection variable
   memcpy(last_connection, bda, ESP_BD_ADDR_LEN);
 }
 

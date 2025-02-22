@@ -88,14 +88,15 @@ void BluetoothA2DPSource::set_pin_code(const char *pin_code,
 void BluetoothA2DPSource::start(std::vector<const char *> names) {
   ESP_LOGD(BT_APP_TAG, "%s, ", __func__);
   this->bt_names = names;
-  is_autoreconnect_allowed = true;
+  is_autoreconnect_allowed = (reconnect_status == AutoReconnect);
 
-  // get last connection if not available
-  if (!has_last_connection()) {
-    get_last_connection();
+  if (is_autoreconnect_allowed) {
+    init_nvs();
+    // get last connection if not available
+    if (!has_last_connection()) {
+      get_last_connection();
+    }
   }
-
-  init_nvs();
 
   if (reset_ble) {
     ESP_ERROR_CHECK(esp_bt_controller_mem_release(ESP_BT_MODE_BLE));
@@ -627,6 +628,7 @@ void BluetoothA2DPSource::bt_app_av_state_unconnected_hdlr(uint16_t event,
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 3, 0)
     case ESP_A2D_REPORT_SNK_DELAY_VALUE_EVT: {
       esp_a2d_cb_param_t *a2d = (esp_a2d_cb_param_t *)(param);
+      (void) a2d; // prevent unused variable warning
       ESP_LOGI(BT_AV_TAG, "%s, delay value: %u * 1/10 ms", __func__,
                a2d->a2d_report_delay_value_stat.delay_value);
       break;
@@ -682,6 +684,7 @@ void BluetoothA2DPSource::bt_app_av_state_connecting_hdlr(uint16_t event,
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 3, 0)
     case ESP_A2D_REPORT_SNK_DELAY_VALUE_EVT: {
       esp_a2d_cb_param_t *a2d = (esp_a2d_cb_param_t *)(param);
+      (void) a2d; // prevent unused variable warning
       ESP_LOGI(BT_AV_TAG, "%s, delay value: %u * 1/10 ms", __func__,
                a2d->a2d_report_delay_value_stat.delay_value);
       break;
@@ -726,6 +729,7 @@ void BluetoothA2DPSource::bt_app_av_state_connected_hdlr(uint16_t event,
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 3, 0)
     case ESP_A2D_REPORT_SNK_DELAY_VALUE_EVT: {
       esp_a2d_cb_param_t *a2d = (esp_a2d_cb_param_t *)(param);
+      (void) a2d; // prevent unused variable warning
       ESP_LOGI(BT_AV_TAG, "%s, delay value: %u * 1/10 ms", __func__,
                a2d->a2d_report_delay_value_stat.delay_value);
       break;
@@ -762,6 +766,7 @@ void BluetoothA2DPSource::bt_app_av_state_disconnecting_hdlr(uint16_t event,
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 3, 0)
     case ESP_A2D_REPORT_SNK_DELAY_VALUE_EVT: {
       esp_a2d_cb_param_t *a2d = (esp_a2d_cb_param_t *)(param);
+      (void) a2d; // prevent unused variable warning
       ESP_LOGI(BT_AV_TAG, "%s, delay value: 0x%u * 1/10 ms", __func__,
                a2d->a2d_report_delay_value_stat.delay_value);
       break;
@@ -910,7 +915,7 @@ void BluetoothA2DPSource::bt_av_hdl_avrc_ct_evt(uint16_t event, void *p_param) {
       if (rc->conn_stat.connected) {
         ESP_LOGI(BT_AV_TAG, "esp_avrc_ct_send_register_notification_cmd");
         uint8_t tl = 2;
-        uint32_t event_par;
+        uint32_t event_par = 0;
         for (auto event : avrc_rn_events) {
           if (esp_avrc_ct_send_register_notification_cmd(tl, event,
                                                          event_par) != ESP_OK) {

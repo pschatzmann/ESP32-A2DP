@@ -44,8 +44,6 @@ extern "C" void ccall_av_hdl_a2d_evt(uint16_t event, void *param) {
   }
 }
 
-
-
 /**
  * Constructor
  */
@@ -118,6 +116,8 @@ void BluetoothA2DPSink::start(const char *name) {
   ESP_LOGD(BT_AV_TAG, "%s", __func__);
   log_free_heap();
 
+  is_autoreconnect_allowed = (reconnect_status == AutoReconnect);  
+
   if (is_start_disabled) {
     ESP_LOGE(BT_AV_TAG, "re-start not supported after end(true)");
     return;
@@ -129,25 +129,19 @@ void BluetoothA2DPSink::start(const char *name) {
   }
   ESP_LOGI(BT_AV_TAG, "Device name will be set to '%s'", this->bt_name);
 
-  // Initialize NVS
-  init_nvs();
 
-  // reconnect management
-  // grab last connnectiom, even if we dont use it now for auto reconnect
-  get_last_connection();
+  if (is_autoreconnect_allowed) {
+    // Initialize NVS
+    init_nvs();
 
-  is_autoreconnect_allowed = true;  // allow automatic reconnect
-  if (reconnect_status == AutoReconnect) {
+    // reconnect management
+    // grab last connnectiom, even if we dont use it now for auto reconnect
+    get_last_connection();
+
     memcpy(peer_bd_addr, last_connection, ESP_BD_ADDR_LEN);
 
-    // force disconnect first so that a subsequent connect has a chance to work
-#ifdef A2DP_EXPERIMENTAL_DISCONNECT_ON_START
-    ESP_LOGW(BT_AV_TAG, "A2DP_EXPERIMENTAL_DISCONNECT_ON_START");
-    disconnect();
-#else
     // trigger timeout
     delay_ms(reconnect_delay);
-#endif
   }
 
   // setup i2s
@@ -945,7 +939,7 @@ void BluetoothA2DPSink::app_a2d_callback(esp_a2d_cb_event_t event,
 
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
     case ESP_A2D_PROF_STATE_EVT: {
-      ESP_LOGD(BT_AV_TAG, "%s ESP_A2D_AUDIO_CFG_EVT", __func__);
+      ESP_LOGD(BT_AV_TAG, "%s ESP_A2D_PROF_STATE_EVT", __func__);
       app_work_dispatch(ccall_av_hdl_a2d_evt, event, param,
                         sizeof(esp_a2d_cb_param_t));
       break;
@@ -953,7 +947,7 @@ void BluetoothA2DPSink::app_a2d_callback(esp_a2d_cb_event_t event,
 #endif
 
     default:
-      ESP_LOGW(BT_AV_TAG, "Unhandled A2DP event: %d", event);
+      ESP_LOGI(BT_AV_TAG, "Unhandled A2DP event: %d", event);
       break;
   }
 }

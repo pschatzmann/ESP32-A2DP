@@ -336,8 +336,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   bool is_output_active() { return is_i2s_active; }
 
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
-  /// Get the name of the connected source device (obsolete)
-  virtual const char *get_connected_source_name();
   /// Provides the result of the last result for the
   /// esp_avrc_tg_get_rn_evt_cap() callback (Available from ESP_IDF_4)
   bool is_avrc_peer_rn_cap(esp_avrc_rn_event_ids_t cmd) {
@@ -455,6 +453,8 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   virtual void handle_avrc_connection_state(bool connected);
 
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
+  /// Get the name of the connected source device (obsolete): use get_peer_name()
+  virtual const char *get_connected_source_name();
   virtual void volume_set_by_local_host(uint8_t volume);
   virtual void volume_set_by_controller(uint8_t volume);
   virtual void av_notify_evt_handler(uint8_t event_id,

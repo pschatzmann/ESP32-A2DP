@@ -144,10 +144,6 @@ virtual <a class="el" href="group__a2dp.html#ga49adfa87b1ad7420b0075a0ac03cc194"
 virtual esp_a2d_mct_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a77600cb1e36b7814eb9b4126cdec62d4">get_audio_type</a> ()</td></tr>
 <tr class="memdesc:a77600cb1e36b7814eb9b4126cdec62d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine the actual audio type. <br /></td></tr>
 <tr class="separator:a77600cb1e36b7814eb9b4126cdec62d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2d277d15f94823eea70f80a327344939"><td class="memItemLeft" align="right" valign="top"><a id="a2d277d15f94823eea70f80a327344939"></a>
-virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a2d277d15f94823eea70f80a327344939">get_connected_source_name</a> ()</td></tr>
-<tr class="memdesc:a2d277d15f94823eea70f80a327344939"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the name of the connected source device (obsolete) <br /></td></tr>
-<tr class="separator:a2d277d15f94823eea70f80a327344939"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a513b32676d8fc248bb481180f832ef97"><td class="memItemLeft" align="right" valign="top"><a id="a513b32676d8fc248bb481180f832ef97"></a>
 virtual <a class="el" href="group__a2dp.html#ga52caa2d1e1c9d880c9651d52ff78a590">esp_a2d_connection_state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a513b32676d8fc248bb481180f832ef97">get_connection_state</a> ()</td></tr>
 <tr class="memdesc:a513b32676d8fc248bb481180f832ef97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine the connection state. <br /></td></tr>
@@ -518,6 +514,10 @@ esp_err_t&#160;</td><td class="memItemRight" valign="bottom"><b>esp_a2d_disconne
 <tr class="memitem:adb1442dcf53b7e8ccfd099db82ca0e60"><td class="memItemLeft" align="right" valign="top"><a id="adb1442dcf53b7e8ccfd099db82ca0e60"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>execute_avrc_command</b> (int cmd)</td></tr>
 <tr class="separator:adb1442dcf53b7e8ccfd099db82ca0e60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d277d15f94823eea70f80a327344939"><td class="memItemLeft" align="right" valign="top"><a id="a2d277d15f94823eea70f80a327344939"></a>
+virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a2d277d15f94823eea70f80a327344939">get_connected_source_name</a> ()</td></tr>
+<tr class="memdesc:a2d277d15f94823eea70f80a327344939"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the name of the connected source device (obsolete): use <a class="el" href="class_bluetooth_a2_d_p_sink.html#ac9adc3ca64e68fb3d6e816698a725dd5" title="Get the name of the connected source device.">get_peer_name()</a> <br /></td></tr>
+<tr class="separator:a2d277d15f94823eea70f80a327344939"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3771c6d300c7709f2b76ab8847574cf4"><td class="memItemLeft" align="right" valign="top"><a id="a3771c6d300c7709f2b76ab8847574cf4"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>get_last_connection</b> ()</td></tr>
 <tr class="separator:a3771c6d300c7709f2b76ab8847574cf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -552,9 +552,9 @@ virtual int&#160;</td><td class="memItemRight" valign="bottom"><b>init_bluetooth
 <tr class="memitem:a2c67b61f98c7daf25f72512cf181afbc"><td class="memItemLeft" align="right" valign="top"><a id="a2c67b61f98c7daf25f72512cf181afbc"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>init_i2s</b> ()</td></tr>
 <tr class="separator:a2c67b61f98c7daf25f72512cf181afbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a341fb3e044fa3f25f763c1efe1c6f138"><td class="memItemLeft" align="right" valign="top"><a id="a341fb3e044fa3f25f763c1efe1c6f138"></a>
+<tr class="memitem:a51e9ff42c269979cb0e11f484e883fab"><td class="memItemLeft" align="right" valign="top"><a id="a51e9ff42c269979cb0e11f484e883fab"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>init_nvs</b> ()</td></tr>
-<tr class="separator:a341fb3e044fa3f25f763c1efe1c6f138"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a51e9ff42c269979cb0e11f484e883fab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ef94c2b1e035eec0162d91d72132165"><td class="memItemLeft" align="right" valign="top"><a id="a0ef94c2b1e035eec0162d91d72132165"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_reconnect</b> (esp_a2d_disc_rsn_t type)</td></tr>
 <tr class="separator:a0ef94c2b1e035eec0162d91d72132165"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -750,9 +750,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_volume_used</b> = 
 <tr class="memitem:acd684815c84a3d29da78377615878fd6"><td class="memItemLeft" align="right" valign="top"><a id="acd684815c84a3d29da78377615878fd6"></a>
 esp_bt_gap_cb_param_t::read_rssi_delta_param&#160;</td><td class="memItemRight" valign="bottom"><b>last_rssi_delta</b></td></tr>
 <tr class="separator:acd684815c84a3d29da78377615878fd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abbe69860108ab18edee3cd24fa64be53"><td class="memItemLeft" align="right" valign="top"><a id="abbe69860108ab18edee3cd24fa64be53"></a>
-const char *&#160;</td><td class="memItemRight" valign="bottom"><b>m_a2d_audio_state_str</b> [3] = {&quot;Suspended&quot;, &quot;Stopped&quot;, &quot;Started&quot;}</td></tr>
-<tr class="separator:abbe69860108ab18edee3cd24fa64be53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25feb62133e76e60a1808a303713c973"><td class="memItemLeft" align="right" valign="top"><a id="a25feb62133e76e60a1808a303713c973"></a>
+const char *&#160;</td><td class="memItemRight" valign="bottom"><b>m_a2d_audio_state_str</b> [4] = {&quot;Suspended&quot;, &quot;Started&quot;, &quot;Suspended&quot;, &quot;Suspended&quot;}</td></tr>
+<tr class="separator:a25feb62133e76e60a1808a303713c973"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8614127c04ef9b9ef6d0c9fa2f33d1ed"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><b>m_a2d_conn_state_str</b> [4]</td></tr>
 <tr class="separator:a8614127c04ef9b9ef6d0c9fa2f33d1ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a44aeeb4214776fea1bca6ecf2e8e8dc2"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><b>m_avrc_playback_state_str</b> [5]</td></tr>

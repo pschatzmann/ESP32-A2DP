@@ -217,10 +217,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_source.html#acb9c5182525261c53b803719b3027014">set_local_name</a> (const char *name)</td></tr>
 <tr class="memdesc:acb9c5182525261c53b803719b3027014"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the local name. <br /></td></tr>
 <tr class="separator:acb9c5182525261c53b803719b3027014"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3825c8750538c5b25ba0082c30ec7ae"><td class="memItemLeft" align="right" valign="top"><a id="ac3825c8750538c5b25ba0082c30ec7ae"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_source.html#ac3825c8750538c5b25ba0082c30ec7ae">set_nvs_init</a> (bool doInit)</td></tr>
-<tr class="memdesc:ac3825c8750538c5b25ba0082c30ec7ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines if the Flash NVS should be reset on start. <br /></td></tr>
-<tr class="separator:ac3825c8750538c5b25ba0082c30ec7ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5f13ecf541393c21a5a489235bad27fb"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a5f13ecf541393c21a5a489235bad27fb">set_on_audio_state_changed</a> (void(*callBack)(<a class="el" href="group__a2dp.html#ga49adfa87b1ad7420b0075a0ac03cc194">esp_a2d_audio_state_t</a> state, void *), void *obj=nullptr)</td></tr>
 <tr class="memdesc:a5f13ecf541393c21a5a489235bad27fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the callback that is called when the audio state is changed.  <a href="class_bluetooth_a2_d_p_common.html#a5f13ecf541393c21a5a489235bad27fb">More...</a><br /></td></tr>
 <tr class="separator:a5f13ecf541393c21a5a489235bad27fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -415,6 +411,9 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>get_name_from
 <tr class="memitem:a4f98f07ba4cf5962a7cdda50317b3112"><td class="memItemLeft" align="right" valign="top"><a id="a4f98f07ba4cf5962a7cdda50317b3112"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>has_last_connection</b> ()</td></tr>
 <tr class="separator:a4f98f07ba4cf5962a7cdda50317b3112"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51e9ff42c269979cb0e11f484e883fab"><td class="memItemLeft" align="right" valign="top"><a id="a51e9ff42c269979cb0e11f484e883fab"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>init_nvs</b> ()</td></tr>
+<tr class="separator:a51e9ff42c269979cb0e11f484e883fab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a51f93bebf73f8bf9b98fa3c5fc4fcb18"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_source.html#a51f93bebf73f8bf9b98fa3c5fc4fcb18">is_valid_cod_service</a> (uint32_t cod)</td></tr>
 <tr class="separator:a51f93bebf73f8bf9b98fa3c5fc4fcb18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a726b279e22ee043b911bf8ed9d29a88a"><td class="memItemLeft" align="right" valign="top"><a id="a726b279e22ee043b911bf8ed9d29a88a"></a>
@@ -554,16 +553,13 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_volume_used</b> = 
 <tr class="memitem:add25164fa6c099827e04db70d7ab0f62"><td class="memItemLeft" align="right" valign="top"><a id="add25164fa6c099827e04db70d7ab0f62"></a>
 <a class="el" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>last_connection</b> = {0, 0, 0, 0, 0, 0}</td></tr>
 <tr class="separator:add25164fa6c099827e04db70d7ab0f62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abbe69860108ab18edee3cd24fa64be53"><td class="memItemLeft" align="right" valign="top"><a id="abbe69860108ab18edee3cd24fa64be53"></a>
-const char *&#160;</td><td class="memItemRight" valign="bottom"><b>m_a2d_audio_state_str</b> [3] = {&quot;Suspended&quot;, &quot;Stopped&quot;, &quot;Started&quot;}</td></tr>
-<tr class="separator:abbe69860108ab18edee3cd24fa64be53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25feb62133e76e60a1808a303713c973"><td class="memItemLeft" align="right" valign="top"><a id="a25feb62133e76e60a1808a303713c973"></a>
+const char *&#160;</td><td class="memItemRight" valign="bottom"><b>m_a2d_audio_state_str</b> [4] = {&quot;Suspended&quot;, &quot;Started&quot;, &quot;Suspended&quot;, &quot;Suspended&quot;}</td></tr>
+<tr class="separator:a25feb62133e76e60a1808a303713c973"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8614127c04ef9b9ef6d0c9fa2f33d1ed"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><b>m_a2d_conn_state_str</b> [4]</td></tr>
 <tr class="separator:a8614127c04ef9b9ef6d0c9fa2f33d1ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a44aeeb4214776fea1bca6ecf2e8e8dc2"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><b>m_avrc_playback_state_str</b> [5]</td></tr>
 <tr class="separator:a44aeeb4214776fea1bca6ecf2e8e8dc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af34d6e4890bf2b59d25b043c9a8b41ae"><td class="memItemLeft" align="right" valign="top"><a id="af34d6e4890bf2b59d25b043c9a8b41ae"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>nvs_init</b> = true</td></tr>
-<tr class="separator:af34d6e4890bf2b59d25b043c9a8b41ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c4e9df57c7e74f736e440de61ec1662"><td class="memItemLeft" align="right" valign="top"><a id="a6c4e9df57c7e74f736e440de61ec1662"></a>
 Stream *&#160;</td><td class="memItemRight" valign="bottom"><b>p_stream</b> = nullptr</td></tr>
 <tr class="separator:a6c4e9df57c7e74f736e440de61ec1662"><td class="memSeparator" colspan="2">&#160;</td></tr>

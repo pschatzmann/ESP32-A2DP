@@ -278,6 +278,9 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>get_last_conn
 <tr class="memitem:a4f98f07ba4cf5962a7cdda50317b3112"><td class="memItemLeft" align="right" valign="top"><a id="a4f98f07ba4cf5962a7cdda50317b3112"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>has_last_connection</b> ()</td></tr>
 <tr class="separator:a4f98f07ba4cf5962a7cdda50317b3112"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51e9ff42c269979cb0e11f484e883fab"><td class="memItemLeft" align="right" valign="top"><a id="a51e9ff42c269979cb0e11f484e883fab"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>init_nvs</b> ()</td></tr>
+<tr class="separator:a51e9ff42c269979cb0e11f484e883fab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa95604853ede79122f1187cf543d789d"><td class="memItemLeft" align="right" valign="top"><a id="aa95604853ede79122f1187cf543d789d"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>isSource</b> ()=0</td></tr>
 <tr class="separator:aa95604853ede79122f1187cf543d789d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -380,9 +383,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_volume_used</b> = 
 <tr class="memitem:add25164fa6c099827e04db70d7ab0f62"><td class="memItemLeft" align="right" valign="top"><a id="add25164fa6c099827e04db70d7ab0f62"></a>
 <a class="el" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>last_connection</b> = {0, 0, 0, 0, 0, 0}</td></tr>
 <tr class="separator:add25164fa6c099827e04db70d7ab0f62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abbe69860108ab18edee3cd24fa64be53"><td class="memItemLeft" align="right" valign="top"><a id="abbe69860108ab18edee3cd24fa64be53"></a>
-const char *&#160;</td><td class="memItemRight" valign="bottom"><b>m_a2d_audio_state_str</b> [3] = {&quot;Suspended&quot;, &quot;Stopped&quot;, &quot;Started&quot;}</td></tr>
-<tr class="separator:abbe69860108ab18edee3cd24fa64be53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25feb62133e76e60a1808a303713c973"><td class="memItemLeft" align="right" valign="top"><a id="a25feb62133e76e60a1808a303713c973"></a>
+const char *&#160;</td><td class="memItemRight" valign="bottom"><b>m_a2d_audio_state_str</b> [4] = {&quot;Suspended&quot;, &quot;Started&quot;, &quot;Suspended&quot;, &quot;Suspended&quot;}</td></tr>
+<tr class="separator:a25feb62133e76e60a1808a303713c973"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8614127c04ef9b9ef6d0c9fa2f33d1ed"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><b>m_a2d_conn_state_str</b> [4]</td></tr>
 <tr class="separator:a8614127c04ef9b9ef6d0c9fa2f33d1ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a44aeeb4214776fea1bca6ecf2e8e8dc2"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><b>m_avrc_playback_state_str</b> [5]</td></tr>

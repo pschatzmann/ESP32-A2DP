@@ -10,7 +10,8 @@
 #endif
 
 #if A2DP_I2S_AUDIOTOOLS
-#include "AudioTools.h"
+#include "AudioTools/CoreAudio/AudioStreams.h"
+#include "AudioTools/CoreAudio/AudioIO.h"
 #endif
 
 /**

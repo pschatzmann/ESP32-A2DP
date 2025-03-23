@@ -370,7 +370,7 @@ void BluetoothA2DPSource::app_gap_callback(esp_bt_gap_cb_event_t event,
       if (param->auth_cmpl.stat == ESP_BT_STATUS_SUCCESS) {
         ESP_LOGI(BT_AV_TAG, "authentication success: %s",
                  param->auth_cmpl.device_name);
-        esp_log_buffer_hex(BT_AV_TAG, param->auth_cmpl.bda, ESP_BD_ADDR_LEN);
+        // esp_log_buffer_hex(BT_AV_TAG, param->auth_cmpl.bda, ESP_BD_ADDR_LEN);
       } else {
         ESP_LOGE(BT_AV_TAG, "authentication failed, status:%d",
                  param->auth_cmpl.stat);

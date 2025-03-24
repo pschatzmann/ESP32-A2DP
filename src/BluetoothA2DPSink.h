@@ -335,6 +335,12 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   /// Checks if output is active
   bool is_output_active() { return is_i2s_active; }
 
+  /// defines the max write size: default is A2DP_I2S_MAX_WRITE_SIZE
+  void set_max_write_size(int size) { max_write_size = size; }
+
+  /// defines a small delay after each write: default is 0 ms
+  void set_max_write_delay_ms(int delay) { max_write_delay_ms = delay; }
+
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
   /// Provides the result of the last result for the
   /// esp_avrc_tg_get_rn_evt_cap() callback (Available from ESP_IDF_4)
@@ -402,6 +408,8 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   void (*rssi_callbak)(esp_bt_gap_cb_param_t::read_rssi_delta_param &rssi) =
       nullptr;
   int reconnect_delay = 1000;
+  int max_write_size = A2DP_I2S_MAX_WRITE_SIZE;
+  int max_write_delay_ms = A2DP_I2S_MAX_WRITE_DELAY_MS;
 
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
   esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap = {0};

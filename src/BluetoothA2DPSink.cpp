@@ -116,7 +116,7 @@ void BluetoothA2DPSink::start(const char *name) {
   ESP_LOGD(BT_AV_TAG, "%s", __func__);
   log_free_heap();
 
-  is_autoreconnect_allowed = (reconnect_status == AutoReconnect);  
+  is_autoreconnect_allowed = (reconnect_status == AutoReconnect);
 
   if (is_start_disabled) {
     ESP_LOGE(BT_AV_TAG, "re-start not supported after end(true)");
@@ -128,7 +128,6 @@ void BluetoothA2DPSink::start(const char *name) {
     this->bt_name = name;
   }
   ESP_LOGI(BT_AV_TAG, "Device name will be set to '%s'", this->bt_name);
-
 
   if (is_autoreconnect_allowed) {
     // Initialize NVS
@@ -273,7 +272,6 @@ bool BluetoothA2DPSink::app_work_dispatch(app_callback_t p_cback,
 
   return false;
 }
-
 
 void BluetoothA2DPSink::app_alloc_meta_buffer(esp_avrc_ct_cb_param_t *param) {
   ESP_LOGD(BT_AV_TAG, "%s", __func__);
@@ -992,7 +990,6 @@ void BluetoothA2DPSink::audio_data_callback(const uint8_t *data, uint32_t len) {
   }
 }
 
-
 bool BluetoothA2DPSink::is_avrc_connected() { return avrc_connection_state; }
 
 void BluetoothA2DPSink::execute_avrc_command(int cmd) {
@@ -1094,7 +1091,6 @@ void BluetoothA2DPSink::confirm_pin_code(int code) {
   }
 }
 
-
 size_t BluetoothA2DPSink::i2s_write_data(const uint8_t *data,
                                          size_t item_size) {
   if (!is_output) return item_size;
@@ -1109,9 +1105,11 @@ size_t BluetoothA2DPSink::i2s_write_data(const uint8_t *data,
   int processed = 0;
   while (open > 0) {
     int written =
-        out->write(data + processed, std::min(open, A2DP_I2S_MAX_WRITE_SIZE));
+        out->write(data + processed, std::min(open, max_write_size));
     open -= written;
     processed += written;
+    // add some delay between the writes
+    delay_ms(max_write_delay_ms);
   }
   return processed;
 }

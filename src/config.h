@@ -25,6 +25,10 @@
 #  define A2DP_I2S_MAX_WRITE_SIZE 1024 * 5
 #endif
 
+#ifndef A2DP_I2S_MAX_WRITE_DELAY_MS 
+#  define A2DP_I2S_MAX_WRITE_DELAY_MS 0
+#endif
+
 // Maximum wait time for status change in 100 ms when calling end()
 #ifndef A2DP_DISCONNECT_LIMIT 
 #  define A2DP_DISCONNECT_LIMIT 20

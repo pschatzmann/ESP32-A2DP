@@ -136,14 +136,16 @@ void BluetoothA2DPCommon::end(bool release_memory) {
   log_free_heap();
 
   // Disconnect and wait
-  disconnect();
   int limit = A2DP_DISCONNECT_LIMIT;
-  while (get_connection_state() != ESP_A2D_CONNECTION_STATE_DISCONNECTED) {
-    delay_ms(100);
-    if (limit-- < 0) {
-      ESP_LOGW(BT_AV_TAG, "Waiting for Disconnect has timed out");
-      break;
-    };
+  if (is_connected()){
+    disconnect();
+    while (get_connection_state() != ESP_A2D_CONNECTION_STATE_DISCONNECTED) {
+      delay_ms(100);
+      if (limit-- < 0) {
+        ESP_LOGW(BT_AV_TAG, "Waiting for Disconnect has timed out");
+        break;
+      };
+    }
   }
 
   delay_ms(wait_ms);

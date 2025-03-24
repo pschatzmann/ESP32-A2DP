@@ -252,6 +252,7 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
       nullptr;
   void (*passthru_command_callback)(uint8_t, bool) = nullptr;
   bool is_passthru_active = false;
+  bool is_end = false;
 
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
   esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap;

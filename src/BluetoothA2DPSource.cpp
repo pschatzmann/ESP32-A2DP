@@ -88,6 +88,7 @@ void BluetoothA2DPSource::set_pin_code(const char *pin_code,
 void BluetoothA2DPSource::start(std::vector<const char *> names) {
   ESP_LOGD(BT_APP_TAG, "%s, ", __func__);
   this->bt_names = names;
+  is_end = false;
   is_autoreconnect_allowed = (reconnect_status == AutoReconnect);
 
   if (is_autoreconnect_allowed) {
@@ -139,6 +140,10 @@ void BluetoothA2DPSource::start(std::vector<const char *> names) {
 }
 
 void BluetoothA2DPSource::end(bool release_memory) {
+  is_end = true;
+  while(discovery_active) {
+    delay_ms(100);
+  }
   // release the heart beat timer
   if(s_tmr != nullptr) {
     xTimerDelete(s_tmr, portMAX_DELAY);
@@ -351,9 +356,11 @@ void BluetoothA2DPSource::app_gap_callback(esp_bt_gap_cb_event_t event,
           esp_a2d_connect(peer_bd_addr);
         } else {
           // not discovered, continue to discover
-          ESP_LOGI(BT_AV_TAG,
-                   "Device discovery failed, continue to discover...");
-          esp_bt_gap_start_discovery(ESP_BT_INQ_MODE_GENERAL_INQUIRY, 10, 0);
+          if (!is_end){
+            ESP_LOGI(BT_AV_TAG,
+                    "Device discovery failed, continue to discover...");
+            esp_bt_gap_start_discovery(ESP_BT_INQ_MODE_GENERAL_INQUIRY, 10, 0);
+          }
         }
       } else if (param->disc_st_chg.state == ESP_BT_GAP_DISCOVERY_STARTED) {
         discovery_active = true;

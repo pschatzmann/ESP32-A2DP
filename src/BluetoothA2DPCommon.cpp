@@ -217,6 +217,10 @@ void BluetoothA2DPCommon::end(bool release_memory) {
     if (esp_bt_controller_mem_release(ESP_BT_MODE_CLASSIC_BT) != ESP_OK) {
       ESP_LOGE(BT_AV_TAG, "esp_bt_controller_mem_release failed");
     }
+
+    esp_bluedroid_deinit();
+    is_bluedroid_initialized = false;
+    
     log_free_heap();
     is_start_disabled = true;
   }
@@ -428,6 +432,7 @@ bool BluetoothA2DPCommon::bt_start() {
 }
 
 esp_err_t BluetoothA2DPCommon::bluedroid_init() {
+  if (is_bluedroid_initialized) return ESP_OK;
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 2, 1)
   return esp_bluedroid_init_with_cfg(&bluedroid_config);
 #else

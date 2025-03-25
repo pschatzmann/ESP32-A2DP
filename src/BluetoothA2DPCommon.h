@@ -369,6 +369,7 @@ class BluetoothA2DPCommon {
   // volume
   uint8_t volume_value = 0;
   bool is_volume_used = false;
+  bool is_bluedroid_initialized = false;
   BaseType_t task_core = 1;
 
   int event_queue_size = 20;

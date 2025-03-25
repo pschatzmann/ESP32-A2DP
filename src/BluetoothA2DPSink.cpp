@@ -217,6 +217,7 @@ int BluetoothA2DPSink::init_bluetooth() {
       ESP_LOGE(BT_AV_TAG, "Failed to initialize bluedroid");
       return false;
     }
+    is_bluedroid_initialized = true;
     ESP_LOGI(BT_AV_TAG, "bluedroid initialized");
   }
 

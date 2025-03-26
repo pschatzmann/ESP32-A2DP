@@ -384,6 +384,11 @@ const char* BluetoothA2DPCommon::to_str(esp_bd_addr_t bda) {
   return (const char*)bda_str;
 }
 
+  /// converts esp_bt_gap_discovery_state_t to a string
+  const char* BluetoothA2DPCommon::to_str(esp_bt_gap_discovery_state_t state) {
+  return m_esp_bt_gap_discovery_state_t[state];
+}
+
 /**
  * @brief Startup logic as implemented by Arduino
  *

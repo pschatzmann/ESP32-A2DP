@@ -271,6 +271,9 @@ class BluetoothA2DPCommon {
   /// converts a esp_bd_addr_t to a string - the string is 18 characters long!
   const char *to_str(esp_bd_addr_t bda);
 
+  /// converts esp_bt_gap_discovery_state_t to a string
+  const char *to_str(esp_bt_gap_discovery_state_t state);
+
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
   /// converts esp_avrc_playback_stat_t to a string
   const char *to_str(esp_avrc_playback_stat_t state);
@@ -362,6 +365,7 @@ class BluetoothA2DPCommon {
   const char *m_a2d_audio_state_str[4] = {"Suspended", "Started",  "Suspended", "Suspended"};
   const char *m_avrc_playback_state_str[5] = {"stopped", "playing", "paused",
                                               "forward seek", "reverse seek"};
+  const char *m_esp_bt_gap_discovery_state_t[2] = {"Stopped", "Started"};
   esp_a2d_audio_state_t audio_state = ESP_A2D_AUDIO_STATE_STOPPED;
   esp_a2d_connection_state_t connection_state =
       ESP_A2D_CONNECTION_STATE_DISCONNECTED;

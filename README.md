@@ -216,8 +216,7 @@ BluetoothA2DPSource a2dp_source;
 // callback 
 int32_t get_sound_data(uint8 *data, int32_t byteCount) {
     // generate your sound data 
-    // return the effective length (in frames) of the generated sound  (which usually is identical with the requested len)
-    // 1 frame is 2 channels * 2 bytes = 4 bytes
+    // return the effective length in bytes
     return byteCount;
 }
 

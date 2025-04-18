@@ -91,8 +91,8 @@ void BluetoothA2DPSource::start(std::vector<const char *> names) {
   is_end = false;
   is_autoreconnect_allowed = (reconnect_status == AutoReconnect);
 
+  init_nvs();
   if (is_autoreconnect_allowed) {
-    init_nvs();
     // get last connection if not available
     if (!has_last_connection()) {
       get_last_connection();
@@ -511,6 +511,7 @@ void BluetoothA2DPSource::av_hdl_stack_evt(uint16_t event, void *p_param) {
        * by the peer device. */
       // esp_bt_gap_set_scan_mode(ESP_BT_NON_CONNECTABLE,
       // ESP_BT_NON_DISCOVERABLE);
+      delay_ms(10000);
       set_scan_mode_connectable(false);
 
       if (reconnect_status == AutoReconnect && has_last_connection()) {

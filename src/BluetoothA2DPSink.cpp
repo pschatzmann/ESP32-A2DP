@@ -129,9 +129,9 @@ void BluetoothA2DPSink::start(const char *name) {
   }
   ESP_LOGI(BT_AV_TAG, "Device name will be set to '%s'", this->bt_name);
 
+  // Initialize NVS
+  init_nvs();
   if (is_autoreconnect_allowed) {
-    // Initialize NVS
-    init_nvs();
 
     // reconnect management
     // grab last connnectiom, even if we dont use it now for auto reconnect

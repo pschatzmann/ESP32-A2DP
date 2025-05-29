@@ -12,7 +12,7 @@ Unfortunately this example did not make me happy so I decided to convert it into
 
 ## Supported Bluetooth Protocols
 
-As the name of this libariy implies, it supports the A2DP [Bluetooth protocol](https://en.wikipedia.org/wiki/List_of_Bluetooth_profiles) which only provides audio streaming! 
+As the name of this libary implies, it supports the A2DP [Bluetooth protocol](https://en.wikipedia.org/wiki/List_of_Bluetooth_profiles) which only provides audio streaming! 
 
 It also supports Audio/Video Remote Control Profile (AVRCP) together with A2DP.
 

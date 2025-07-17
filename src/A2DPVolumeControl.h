@@ -44,7 +44,7 @@ struct __attribute__((packed)) Frame {
 
 class A2DPVolumeControl {
  public:
-  A2DPVolumeControl() { volumeFactorMax = 0x1000; }
+  A2DPVolumeControl() = default;
 
   virtual void update_audio_data(uint8_t* data, uint16_t byteCount) {
     update_audio_data((Frame*)data, byteCount / 4);
@@ -86,8 +86,8 @@ class A2DPVolumeControl {
  protected:
   bool is_volume_used = false;
   bool mono_downmix = false;
-  int32_t volumeFactor;
-  int32_t volumeFactorMax;
+  int32_t volumeFactor = 0x1000;
+  int32_t volumeFactorMax = 0x1000;  // max value is 4096
 
   int32_t clip(int32_t value) {
     int32_t result = value;
@@ -155,6 +155,12 @@ class A2DPLinearVolumeControl : public A2DPVolumeControl {
  */
 class A2DPNoVolumeControl : public A2DPVolumeControl {
  public:
+  A2DPNoVolumeControl(int32_t fixedVolume = 0x1000) {
+    is_volume_used = fixedVolume != 0x1000;
+    mono_downmix = false;
+    volumeFactor = fixedVolume;  // fixed volume
+    volumeFactorMax = 0x1000;  // no change
+  }
   void update_audio_data(Frame* data, uint16_t frameCount) override {}
   void set_volume(uint8_t volume) override {}
 };

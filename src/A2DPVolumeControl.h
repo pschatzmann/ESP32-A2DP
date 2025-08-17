@@ -17,18 +17,27 @@
 
 #include "esp_log.h"
 
-/**
- * @brief Utility structure that can be used to split a int32_t up into 2
- * separate channels with int16_t data.
- * @author Phil Schatzmann
- * @copyright Apache License Version 2
- */
-struct __attribute__((packed)) Frame {
-  int16_t channel1;
-  int16_t channel2;
+    /**
+     * @brief Utility structure that can be used to split a int32_t up into 2
+     * separate channels with int16_t data.
+     * @author Phil Schatzmann
+     * @copyright Apache License Version 2
+     */
+    struct __attribute__((packed)) Frame {
+  int16_t channel1;  ///< Left audio channel data
+  int16_t channel2;  ///< Right audio channel data
 
+  /**
+   * @brief Default constructor - sets both channels to the same value
+   * @param v Value to set for both channels (default: 0)
+   */
   Frame(int v = 0) { channel1 = channel2 = v; }
 
+  /**
+   * @brief Constructor with separate channel values
+   * @param ch1 Value for channel 1 (left)
+   * @param ch2 Value for channel 2 (right)
+   */
   Frame(int ch1, int ch2) {
     channel1 = ch1;
     channel2 = ch2;
@@ -44,12 +53,25 @@ struct __attribute__((packed)) Frame {
 
 class A2DPVolumeControl {
  public:
-  A2DPVolumeControl() { volumeFactorMax = 0x1000; }
+  /**
+   * @brief Default constructor
+   */
+  A2DPVolumeControl() = default;
 
+  /**
+   * @brief Updates audio data with volume control and optional mono downmix
+   * @param data Pointer to raw audio data (uint8_t)
+   * @param byteCount Number of bytes to process
+   */
   virtual void update_audio_data(uint8_t* data, uint16_t byteCount) {
     update_audio_data((Frame*)data, byteCount / 4);
   }
 
+  /**
+   * @brief Updates audio data with volume control and optional mono downmix
+   * @param data Pointer to audio frame data
+   * @param frameCount Number of frames to process
+   */
   virtual void update_audio_data(Frame* data, uint16_t frameCount) {
     if (data != nullptr && frameCount > 0 && (mono_downmix || is_volume_used)) {
       ESP_LOGD("VolumeControl", "update_audio_data");
@@ -71,23 +93,42 @@ class A2DPVolumeControl {
     }
   }
 
-  // provides a factor in the range of 0 to 4096
+  /**
+   * @brief Gets the current volume factor
+   * @return Volume factor in the range of 0 to 4096
+   */
   int32_t get_volume_factor() { return volumeFactor; }
 
-  // provides the max factor value 4096
+  /**
+   * @brief Gets the maximum volume factor value
+   * @return Maximum factor value (4096)
+   */
   int32_t get_volume_factor_max() { return volumeFactorMax; }
 
+  /**
+   * @brief Enables or disables volume control
+   * @param enabled True to enable volume control, false to disable
+   */
   void set_enabled(bool enabled) { is_volume_used = enabled; }
 
+  /**
+   * @brief Enables or disables mono downmix
+   * @param enabled True to enable mono downmix, false to disable
+   */
   void set_mono_downmix(bool enabled) { mono_downmix = enabled; }
 
+  /**
+   * @brief Sets the volume level (pure virtual function)
+   * @param volume Volume level (0-127)
+   */
   virtual void set_volume(uint8_t volume) = 0;
 
  protected:
   bool is_volume_used = false;
   bool mono_downmix = false;
-  int32_t volumeFactor;
-  int32_t volumeFactorMax;
+  int32_t volumeFactor = 1;
+  int32_t volumeFactorMax = 0x1000;     // 4096
+  int32_t volumeFactorClippingLimit = 0xfff;  // 4095
 
   int32_t clip(int32_t value) {
     int32_t result = value;
@@ -103,7 +144,27 @@ class A2DPVolumeControl {
  * @copyright Apache License Version 2
  */
 class A2DPDefaultVolumeControl : public A2DPVolumeControl {
+ public:
+  /**
+   * @brief Default constructor
+   */
+  A2DPDefaultVolumeControl() = default;
+
+  /**
+   * @brief Constructor with custom volume factor clipping limit
+   * @param limit Maximum volume factor limit (must be less than
+   * 4096)
+   */
+  A2DPDefaultVolumeControl(int32_t limit) {
+    assert(limit < volumeFactorMax);
+    volumeFactorClippingLimit = limit;
+  };
+
  protected:
+  /**
+   * @brief Sets the volume using exponential curve calculation
+   * @param volume Volume level (0-127)
+   */
   void set_volume(uint8_t volume) override {
     constexpr float base = 1.4f;
     constexpr float bits = 12.0f;
@@ -113,24 +174,45 @@ class A2DPDefaultVolumeControl : public A2DPVolumeControl {
         (pow(base, volume * bits / 127.0f - bits) - zero_ofs) * scale /
         (1.0f - zero_ofs);
     volumeFactor = volumeFactorFloat;
-    if (volumeFactor > 0xfff) {
-      volumeFactor = 0xfff;
+    if (volumeFactor > volumeFactorClippingLimit) {
+      volumeFactor = volumeFactorClippingLimit;
     }
   }
 };
 
 /**
- * @brief  Exponentional volume control
+ * @brief Exponential volume control
  * @author rbruelma
+ * @copyright Apache License Version 2
  */
 class A2DPSimpleExponentialVolumeControl : public A2DPVolumeControl {
+ public:
+  /**
+   * @brief Default constructor
+   */
+  A2DPSimpleExponentialVolumeControl() = default;
+
+  /**
+   * @brief Constructor with custom volume factor clipping limit
+   * @param limit Maximum volume factor limit (must be less than
+   * 4096)
+   */
+  A2DPSimpleExponentialVolumeControl(int32_t limit) {
+    assert(limit < volumeFactorMax);
+    volumeFactorClippingLimit = limit;
+  };
+
  protected:
+  /**
+   * @brief Sets the volume using simple exponential calculation
+   * @param volume Volume level (0-127)
+   */
   void set_volume(uint8_t volume) override {
     float volumeFactorFloat = volume;
     volumeFactorFloat = pow(2.0f, volumeFactorFloat * 12.0f / 127.0f);
     volumeFactor = volumeFactorFloat - 1.0f;
-    if (volumeFactor > 0xfff) {
-      volumeFactor = 0xfff;
+    if (volumeFactor > volumeFactorClippingLimit) {
+      volumeFactor = volumeFactorClippingLimit;
     }
   }
 };
@@ -142,9 +224,16 @@ class A2DPSimpleExponentialVolumeControl : public A2DPVolumeControl {
  */
 class A2DPLinearVolumeControl : public A2DPVolumeControl {
  public:
+  /**
+   * @brief Constructor that sets volumeFactorMax to 128 for linear scaling
+   */
   A2DPLinearVolumeControl() { volumeFactorMax = 128; }
 
  protected:
+  /**
+   * @brief Sets the volume using direct linear mapping
+   * @param volume Volume level (0-127) - directly used as volume factor
+   */
   void set_volume(uint8_t volume) override { volumeFactor = volume; }
 };
 
@@ -155,6 +244,16 @@ class A2DPLinearVolumeControl : public A2DPVolumeControl {
  */
 class A2DPNoVolumeControl : public A2DPVolumeControl {
  public:
+  /**
+   * @brief Override that does nothing - no audio data modification
+   * @param data Pointer to audio frame data (unused)
+   * @param frameCount Number of frames (unused)
+   */
   void update_audio_data(Frame* data, uint16_t frameCount) override {}
+
+  /**
+   * @brief Override that does nothing - no volume setting
+   * @param volume Volume level (unused)
+   */
   void set_volume(uint8_t volume) override {}
 };

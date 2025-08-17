@@ -124,12 +124,17 @@ class A2DPVolumeControl {
   virtual void set_volume(uint8_t volume) = 0;
 
  protected:
-  bool is_volume_used = false;
-  bool mono_downmix = false;
-  int32_t volumeFactor = 1;
-  int32_t volumeFactorMax = 0x1000;     // 4096
-  int32_t volumeFactorClippingLimit = 0xfff;  // 4095
+  bool is_volume_used = false;  ///< Flag indicating if volume control is enabled
+  bool mono_downmix = false;    ///< Flag indicating if mono downmix is enabled
+  int32_t volumeFactor = 1;     ///< Current volume factor
+  int32_t volumeFactorMax = 0x1000;     ///< Maximum volume factor (4096)
+  int32_t volumeFactorClippingLimit = 0xfff;  ///< Volume factor clipping limit (4095)
 
+  /**
+   * @brief Clips audio sample value to prevent overflow
+   * @param value Input audio sample value
+   * @return Clipped value within valid 16-bit range (-32768 to 32767)
+   */
   int32_t clip(int32_t value) {
     int32_t result = value;
     if (value < -32768) result = -32768;
@@ -244,12 +249,23 @@ class A2DPLinearVolumeControl : public A2DPVolumeControl {
  */
 class A2DPNoVolumeControl : public A2DPVolumeControl {
  public:
+  /**
+   * @brief Constructor with optional fixed volume setting
+   * @param fixedVolume Fixed volume factor (default: 0x1000/4096 for no change)
+   *                    If different from 0x1000, volume control will be enabled with this fixed value
+   */
   A2DPNoVolumeControl(int32_t fixedVolume = 0x1000) {
     is_volume_used = fixedVolume != 0x1000;
     mono_downmix = false;
     volumeFactor = fixedVolume;  // fixed volume
     volumeFactorMax = 0x1000;  // no change
   }
+  
+  /**
+   * @brief Override that does nothing - no audio data modification
+   * @param data Pointer to audio frame data (unused)
+   * @param frameCount Number of frames (unused)
+   */
   void update_audio_data(Frame* data, uint16_t frameCount) override {}
 
   /**

@@ -12,11 +12,11 @@ Unfortunately this example did not make me happy so I decided to convert it into
 
 ## Supported Bluetooth Protocols
 
-As the name of this libariy implies, it supports the A2DP [Bluetooth protocol](https://en.wikipedia.org/wiki/List_of_Bluetooth_profiles) which only provides audio streaming! 
+As the name of this library implies, it supports the A2DP [Bluetooth protocol](https://en.wikipedia.org/wiki/List_of_Bluetooth_profiles) which only provides audio streaming! 
 
 It also supports Audio/Video Remote Control Profile (AVRCP) together with A2DP.
 
-The Hands-Free Profile (HFP), Headset Profile (HSP) and stand alone AVRCP without A2DP are __not__ supported!
+The Hands-Free Profile (HFP), Headset Profile (HSP) and standalone AVRCP without A2DP are __not__ supported!
 
 ## I2S API / Dependencies
 
@@ -184,7 +184,7 @@ Similarly to the `avrc_metadata_callback`, ESP IDF v4+ supports selected `esp_av
 
 ### Support for AVRC Commands
 
-I have added the following AVRC commmands, that you can use to 'control' your A2DP Source:
+I have added the following AVRC commands, that you can use to 'control' your A2DP Source:
 
 - play();
 - pause();
@@ -228,11 +228,11 @@ void setup() {
 void loop() {}
 
 ```
-Instead of the ```set_data_callback callback``` method you can also use ```set_data_callback_in_frames``` which uses frames instead of bytes. In Arduio you can also provide a Stream (e.g a File) as data source or a callback which provides streams.
+Instead of the ```set_data_callback callback``` method you can also use ```set_data_callback_in_frames``` which uses frames instead of bytes. In Arduino you can also provide a Stream (e.g a File) as data source or a callback which provides streams.
 
-In the examples you can find an implentation that generates sound with the help of the sin() function.
+In the examples you can find an implementation that generates sound with the help of the sin() function.
 
-You can also inticate multiple alternative Bluetooth names. The system just connects to the first one which is available:
+You can also indicate multiple alternative Bluetooth names. The system just connects to the first one which is available:
 
 ```cpp
 void setup() {
@@ -266,7 +266,7 @@ Before you clone the project, please read the following information which can be
 
 ## Digital Sound Processing
 
-You can use this library stand alone, but it is part of my [audio-tools](https://github.com/pschatzmann/arduino-audio-tools) project. So you can easily enhance this functionality with sound effects, use filters or an equilizer, use alternative audio sinks or audio sources, do FFT etc. Here is a [simple example](https://github.com/pschatzmann/arduino-audio-tools/blob/main/examples/examples-communication/a2dp/basic-a2dp-fft/basic-a2dp-fft.ino) how you can analyse the audio data with FFT.
+You can use this library standalone, but it is part of my [audio-tools](https://github.com/pschatzmann/arduino-audio-tools) project. So you can easily enhance this functionality with sound effects, use filters or an equilizer, use alternative audio sinks or audio sources, do FFT etc. Here is a [simple example](https://github.com/pschatzmann/arduino-audio-tools/blob/main/examples/examples-communication/a2dp/basic-a2dp-fft/basic-a2dp-fft.ino) how you can analyse the audio data with FFT.
 
 ## Documentation
 
@@ -278,7 +278,7 @@ You can use this library stand alone, but it is part of my [audio-tools](https:/
 I spent a lot of time to provide a comprehensive and complete documentation.
 So please read the documentation first and check the issues and discussions before posting any new ones on Github.
 
-Open issues only for bugs and if it is not a bug, use a discussion: Provide enough information about 
+Open __issues only for bugs__ and if it is not a bug, use a discussion: Provide enough information about 
 - the selected scenario/sketch 
 - what exactly you are trying to do
 - your hardware

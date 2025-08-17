@@ -244,11 +244,12 @@ class A2DPLinearVolumeControl : public A2DPVolumeControl {
  */
 class A2DPNoVolumeControl : public A2DPVolumeControl {
  public:
-  /**
-   * @brief Override that does nothing - no audio data modification
-   * @param data Pointer to audio frame data (unused)
-   * @param frameCount Number of frames (unused)
-   */
+  A2DPNoVolumeControl(int32_t fixedVolume = 0x1000) {
+    is_volume_used = fixedVolume != 0x1000;
+    mono_downmix = false;
+    volumeFactor = fixedVolume;  // fixed volume
+    volumeFactorMax = 0x1000;  // no change
+  }
   void update_audio_data(Frame* data, uint16_t frameCount) override {}
 
   /**

@@ -222,6 +222,10 @@ const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#afa76a15aa8922301e72a745b540b040c">to_str</a> (<a class="el" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a> bda)</td></tr>
 <tr class="memdesc:afa76a15aa8922301e72a745b540b040c"><td class="mdescLeft">&#160;</td><td class="mdescRight">converts a esp_bd_addr_t to a string - the string is 18 characters long! <br /></td></tr>
 <tr class="separator:afa76a15aa8922301e72a745b540b040c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0f6a2da2e1f3837b2b79559037dda9a"><td class="memItemLeft" align="right" valign="top"><a id="ab0f6a2da2e1f3837b2b79559037dda9a"></a>
+const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#ab0f6a2da2e1f3837b2b79559037dda9a">to_str</a> (esp_bt_gap_discovery_state_t state)</td></tr>
+<tr class="memdesc:ab0f6a2da2e1f3837b2b79559037dda9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">converts esp_bt_gap_discovery_state_t to a string <br /></td></tr>
+<tr class="separator:ab0f6a2da2e1f3837b2b79559037dda9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -371,6 +375,9 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>event_stack_size</b> =
 <tr class="memitem:ad383ee1fca4929326b02b671aa03ee44"><td class="memItemLeft" align="right" valign="top"><a id="ad383ee1fca4929326b02b671aa03ee44"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_autoreconnect_allowed</b> = false</td></tr>
 <tr class="separator:ad383ee1fca4929326b02b671aa03ee44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93e5236f986e9191ed0a4b12cdf71c67"><td class="memItemLeft" align="right" valign="top"><a id="a93e5236f986e9191ed0a4b12cdf71c67"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_bluedroid_initialized</b> = false</td></tr>
+<tr class="separator:a93e5236f986e9191ed0a4b12cdf71c67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a44c96686a0e2d7da22805a1c9fb7ab85"><td class="memItemLeft" align="right" valign="top"><a id="a44c96686a0e2d7da22805a1c9fb7ab85"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_start_disabled</b> = false</td></tr>
 <tr class="separator:a44c96686a0e2d7da22805a1c9fb7ab85"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -390,6 +397,9 @@ const char *&#160;</td><td class="memItemRight" valign="bottom"><b>m_a2d_audio_s
 <tr class="separator:a8614127c04ef9b9ef6d0c9fa2f33d1ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a44aeeb4214776fea1bca6ecf2e8e8dc2"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><b>m_avrc_playback_state_str</b> [5]</td></tr>
 <tr class="separator:a44aeeb4214776fea1bca6ecf2e8e8dc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c31ef85bd2a907104d3a1abdfeb2fb2"><td class="memItemLeft" align="right" valign="top"><a id="a4c31ef85bd2a907104d3a1abdfeb2fb2"></a>
+const char *&#160;</td><td class="memItemRight" valign="bottom"><b>m_esp_bt_gap_discovery_state_t</b> [2] = {&quot;Stopped&quot;, &quot;Started&quot;}</td></tr>
+<tr class="separator:a4c31ef85bd2a907104d3a1abdfeb2fb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a83cff3bdeb407a6c19618ba208438604"><td class="memItemLeft" align="right" valign="top"><a id="a83cff3bdeb407a6c19618ba208438604"></a>
 <a class="el" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>peer_bd_addr</b></td></tr>
 <tr class="separator:a83cff3bdeb407a6c19618ba208438604"><td class="memSeparator" colspan="2">&#160;</td></tr>

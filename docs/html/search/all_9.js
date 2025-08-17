@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['next_100',['next',['../class_bluetooth_a2_d_p_sink.html#a296fb7aaf8d8e78991d9d505353de94f',1,'BluetoothA2DPSink']]]
+  ['mono_5fdownmix_104',['mono_downmix',['../class_a2_d_p_volume_control.html#a8b449f76c7c931cf590732a3d73acaea',1,'A2DPVolumeControl']]]
 ];

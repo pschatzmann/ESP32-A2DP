@@ -72,9 +72,9 @@ $(function() {
 <p>Unfortunately this example did not make me happy so I decided to convert it into a simple <b>Arduino Library</b> that is very easy to use from an Arduino Software IDE.</p>
 <h1><a class="anchor" id="autotoc_md1"></a>
 Supported Bluetooth Protocols</h1>
-<p>As the name of this libariy implies, it supports the A2DP <a href="https://en.wikipedia.org/wiki/List_of_Bluetooth_profiles">Bluetooth protocol</a> which only provides audio streaming!</p>
+<p>As the name of this library implies, it supports the A2DP <a href="https://en.wikipedia.org/wiki/List_of_Bluetooth_profiles">Bluetooth protocol</a> which only provides audio streaming!</p>
 <p>It also supports Audio/Video Remote Control Profile (AVRCP) together with A2DP.</p>
-<p>The Hands-Free Profile (HFP), Headset Profile (HSP) and stand alone AVRCP without A2DP are <b>not</b> supported!</p>
+<p>The Hands-Free Profile (HFP), Headset Profile (HSP) and standalone AVRCP without A2DP are <b>not</b> supported!</p>
 <h1><a class="anchor" id="autotoc_md2"></a>
 I2S API / Dependencies</h1>
 <p>Espressif is retiring the legacy I2S API: So with Arduino v3.0.0 (IDF v5) <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki/Legacy-I2S-API">my old I2S integration</a> will not be available any more. The legacy syntax is still working as long as you don't upgrade. <br  />
@@ -205,7 +205,7 @@ Support for Notifications</h2>
 <p>Similarly to the <code>avrc_metadata_callback</code>, ESP IDF v4+ supports selected <code>esp_avrc_rn_param_t</code> callbacks like <code>set_avrc_rn_playstatus_callback</code>, <code>set_avrc_rn_play_pos_callback</code> and <code>set_avrc_rn_track_change_callback</code> which can be used to obtain <code>esp_avrc_playback_stat_t playback</code> playback status,<code>uint32_t play_pos</code> playback position and <code>uint8_t elm_id</code> track change flag respectively. See the playing_status_callbacks example for more details.</p>
 <h2><a class="anchor" id="autotoc_md11"></a>
 Support for AVRC Commands</h2>
-<p>I have added the following AVRC commmands, that you can use to 'control' your A2DP Source:</p>
+<p>I have added the following AVRC commands, that you can use to 'control' your A2DP Source:</p>
 <ul>
 <li>play();</li>
 <li>pause();</li>
@@ -231,8 +231,7 @@ Sending Data from a A2DS Data Source with a Callback</h2>
 <div class="line"><span class="comment">// callback </span></div>
 <div class="line">int32_t get_sound_data(uint8 *data, int32_t byteCount) {</div>
 <div class="line">    <span class="comment">// generate your sound data </span></div>
-<div class="line">    <span class="comment">// return the effective length (in frames) of the generated sound  (which usually is identical with the requested len)</span></div>
-<div class="line">    <span class="comment">// 1 frame is 2 channels * 2 bytes = 4 bytes</span></div>
+<div class="line">    <span class="comment">// return the effective length in bytes</span></div>
 <div class="line">    <span class="keywordflow">return</span> byteCount;</div>
 <div class="line">}</div>
 <div class="line"> </div>
@@ -245,9 +244,9 @@ Sending Data from a A2DS Data Source with a Callback</h2>
 <div class="ttc" id="aclass_bluetooth_a2_d_p_source_html"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html">BluetoothA2DPSource</a></div><div class="ttdoc">A2DP Bluetooth Source.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSource.h:71</div></div>
 <div class="ttc" id="aclass_bluetooth_a2_d_p_source_html_a98c1eb3ad55af189fd3f1ddeac8f3636"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html#a98c1eb3ad55af189fd3f1ddeac8f3636">BluetoothA2DPSource::start</a></div><div class="ttdeci">virtual void start()</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSource.h:125</div></div>
 <div class="ttc" id="aclass_bluetooth_a2_d_p_source_html_a9eb67e480675059a96014f2c1b84b0c3"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html#a9eb67e480675059a96014f2c1b84b0c3">BluetoothA2DPSource::set_data_callback</a></div><div class="ttdeci">virtual void set_data_callback(int32_t(cb)(uint8_t *data, int32_t len))</div><div class="ttdoc">Defines the data callback.</div><div class="ttdef"><b>Definition:</b> BluetoothA2DPSource.h:103</div></div>
-</div><!-- fragment --><p> Instead of the <code>set_data_callback callback</code> method you can also use <code>set_data_callback_in_frames</code> which uses frames instead of bytes. In Arduio you can also provide a Stream (e.g a File) as data source or a callback which provides streams.</p>
-<p>In the examples you can find an implentation that generates sound with the help of the sin() function.</p>
-<p>You can also inticate multiple alternative Bluetooth names. The system just connects to the first one which is available:</p>
+</div><!-- fragment --><p> Instead of the <code>set_data_callback callback</code> method you can also use <code>set_data_callback_in_frames</code> which uses frames instead of bytes. In Arduino you can also provide a Stream (e.g a File) as data source or a callback which provides streams.</p>
+<p>In the examples you can find an implementation that generates sound with the help of the sin() function.</p>
+<p>You can also indicate multiple alternative Bluetooth names. The system just connects to the first one which is available:</p>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> setup() {</div>
 <div class="line">  <span class="keyword">static</span> std::vector&lt;char*&gt; bt_names = {<span class="stringliteral">&quot;MyMusic&quot;</span>,<span class="stringliteral">&quot;RadioPlayer&quot;</span>,<span class="stringliteral">&quot;MusicPlayer&quot;</span>};</div>
 <div class="line">  a2dp_source.<a class="code" href="class_bluetooth_a2_d_p_source.html#a9eb67e480675059a96014f2c1b84b0c3">set_data_callback</a>(get_sound_data)</div>
@@ -270,7 +269,7 @@ Architecture / Dependencies</h1>
 <p>Before you clone the project, please read the following information which can be found in the <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki/Design-Overview">Wiki</a>.</p>
 <h1><a class="anchor" id="autotoc_md16"></a>
 Digital Sound Processing</h1>
-<p>You can use this library stand alone, but it is part of my <a href="https://github.com/pschatzmann/arduino-audio-tools">audio-tools</a> project. So you can easily enhance this functionality with sound effects, use filters or an equilizer, use alternative audio sinks or audio sources, do FFT etc. Here is a <a href="https://github.com/pschatzmann/arduino-audio-tools/blob/main/examples/examples-communication/a2dp/basic-a2dp-fft/basic-a2dp-fft.ino">simple example</a> how you can analyse the audio data with FFT.</p>
+<p>You can use this library standalone, but it is part of my <a href="https://github.com/pschatzmann/arduino-audio-tools">audio-tools</a> project. So you can easily enhance this functionality with sound effects, use filters or an equilizer, use alternative audio sinks or audio sources, do FFT etc. Here is a <a href="https://github.com/pschatzmann/arduino-audio-tools/blob/main/examples/examples-communication/a2dp/basic-a2dp-fft/basic-a2dp-fft.ino">simple example</a> how you can analyse the audio data with FFT.</p>
 <h1><a class="anchor" id="autotoc_md17"></a>
 Documentation</h1>
 <ul>
@@ -280,7 +279,7 @@ Documentation</h1>
 <h1><a class="anchor" id="autotoc_md18"></a>
 Support</h1>
 <p>I spent a lot of time to provide a comprehensive and complete documentation. So please read the documentation first and check the issues and discussions before posting any new ones on Github.</p>
-<p>Open issues only for bugs and if it is not a bug, use a discussion: Provide enough information about</p><ul>
+<p>Open <b>issues only for bugs</b> and if it is not a bug, use a discussion: Provide enough information about</p><ul>
 <li>the selected scenario/sketch</li>
 <li>what exactly you are trying to do</li>
 <li>your hardware</li>

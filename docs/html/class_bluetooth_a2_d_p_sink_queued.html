@@ -313,6 +313,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>set_i2s_ticks</b> (in
 <tr class="memitem:a34572ba2c2948062eb2776290d4701b7"><td class="memItemLeft" align="right" valign="top"><a id="a34572ba2c2948062eb2776290d4701b7"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set_i2s_write_size_upto</b> (size_t size)</td></tr>
 <tr class="separator:a34572ba2c2948062eb2776290d4701b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f17ba75f933e793d9f3234b80c15663"><td class="memItemLeft" align="right" valign="top"><a id="a3f17ba75f933e793d9f3234b80c15663"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a3f17ba75f933e793d9f3234b80c15663">set_max_write_delay_ms</a> (int delay)</td></tr>
+<tr class="memdesc:a3f17ba75f933e793d9f3234b80c15663"><td class="mdescLeft">&#160;</td><td class="mdescRight">defines a small delay after each write: default is 0 ms <br /></td></tr>
+<tr class="separator:a3f17ba75f933e793d9f3234b80c15663"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8fd3753f3d12e85840c21ad631fe78bb"><td class="memItemLeft" align="right" valign="top"><a id="a8fd3753f3d12e85840c21ad631fe78bb"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a8fd3753f3d12e85840c21ad631fe78bb">set_max_write_size</a> (int size)</td></tr>
+<tr class="memdesc:a8fd3753f3d12e85840c21ad631fe78bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">defines the max write size: default is A2DP_I2S_MAX_WRITE_SIZE <br /></td></tr>
+<tr class="separator:a8fd3753f3d12e85840c21ad631fe78bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a624040cce89a4a2f66495f57db6c1457"><td class="memItemLeft" align="right" valign="top"><a id="a624040cce89a4a2f66495f57db6c1457"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a624040cce89a4a2f66495f57db6c1457">set_mono_downmix</a> (bool enabled)</td></tr>
 <tr class="memdesc:a624040cce89a4a2f66495f57db6c1457"><td class="mdescLeft">&#160;</td><td class="mdescRight">mix stereo into single mono signal <br /></td></tr>
@@ -417,6 +425,10 @@ const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#afa76a15aa8922301e72a745b540b040c">to_str</a> (<a class="el" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a> bda)</td></tr>
 <tr class="memdesc:afa76a15aa8922301e72a745b540b040c"><td class="mdescLeft">&#160;</td><td class="mdescRight">converts a esp_bd_addr_t to a string - the string is 18 characters long! <br /></td></tr>
 <tr class="separator:afa76a15aa8922301e72a745b540b040c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0f6a2da2e1f3837b2b79559037dda9a"><td class="memItemLeft" align="right" valign="top"><a id="ab0f6a2da2e1f3837b2b79559037dda9a"></a>
+const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#ab0f6a2da2e1f3837b2b79559037dda9a">to_str</a> (esp_bt_gap_discovery_state_t state)</td></tr>
+<tr class="memdesc:ab0f6a2da2e1f3837b2b79559037dda9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">converts esp_bt_gap_discovery_state_t to a string <br /></td></tr>
+<tr class="separator:ab0f6a2da2e1f3837b2b79559037dda9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3b43ee67031c300d07638f9c969fa4ef"><td class="memItemLeft" align="right" valign="top"><a id="a3b43ee67031c300d07638f9c969fa4ef"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a3b43ee67031c300d07638f9c969fa4ef">update_rssi</a> ()</td></tr>
 <tr class="memdesc:a3b43ee67031c300d07638f9c969fa4ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Requests an update of the rssi delta value. <br /></td></tr>
@@ -723,6 +735,9 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><b>i2s_write_size_upto
 <tr class="memitem:ad383ee1fca4929326b02b671aa03ee44"><td class="memItemLeft" align="right" valign="top"><a id="ad383ee1fca4929326b02b671aa03ee44"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_autoreconnect_allowed</b> = false</td></tr>
 <tr class="separator:ad383ee1fca4929326b02b671aa03ee44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93e5236f986e9191ed0a4b12cdf71c67"><td class="memItemLeft" align="right" valign="top"><a id="a93e5236f986e9191ed0a4b12cdf71c67"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_bluedroid_initialized</b> = false</td></tr>
+<tr class="separator:a93e5236f986e9191ed0a4b12cdf71c67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2a73abd7cf332f32dfb1d8ff1cc5d59e"><td class="memItemLeft" align="right" valign="top"><a id="a2a73abd7cf332f32dfb1d8ff1cc5d59e"></a>
 volatile bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_i2s_active</b> = false</td></tr>
 <tr class="separator:a2a73abd7cf332f32dfb1d8ff1cc5d59e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -757,12 +772,21 @@ const char *&#160;</td><td class="memItemRight" valign="bottom"><b>m_a2d_audio_s
 <tr class="separator:a8614127c04ef9b9ef6d0c9fa2f33d1ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a44aeeb4214776fea1bca6ecf2e8e8dc2"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><b>m_avrc_playback_state_str</b> [5]</td></tr>
 <tr class="separator:a44aeeb4214776fea1bca6ecf2e8e8dc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c31ef85bd2a907104d3a1abdfeb2fb2"><td class="memItemLeft" align="right" valign="top"><a id="a4c31ef85bd2a907104d3a1abdfeb2fb2"></a>
+const char *&#160;</td><td class="memItemRight" valign="bottom"><b>m_esp_bt_gap_discovery_state_t</b> [2] = {&quot;Stopped&quot;, &quot;Started&quot;}</td></tr>
+<tr class="separator:a4c31ef85bd2a907104d3a1abdfeb2fb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad558d5c64a96982632b63103197d6927"><td class="memItemLeft" align="right" valign="top"><a id="ad558d5c64a96982632b63103197d6927"></a>
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_pkt_cnt</b> = 0</td></tr>
 <tr class="separator:ad558d5c64a96982632b63103197d6927"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af4d9a208a3f1a9eeb469dd3cbf9015d3"><td class="memItemLeft" align="right" valign="top"><a id="af4d9a208a3f1a9eeb469dd3cbf9015d3"></a>
 uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_sample_rate</b> = 44100</td></tr>
 <tr class="separator:af4d9a208a3f1a9eeb469dd3cbf9015d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90e7ca22358765ed5b8632fd3c1b91af"><td class="memItemLeft" align="right" valign="top"><a id="a90e7ca22358765ed5b8632fd3c1b91af"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>max_write_delay_ms</b> = A2DP_I2S_MAX_WRITE_DELAY_MS</td></tr>
+<tr class="separator:a90e7ca22358765ed5b8632fd3c1b91af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a555d8dba5b6534cbe72bb3d73c02296c"><td class="memItemLeft" align="right" valign="top"><a id="a555d8dba5b6534cbe72bb3d73c02296c"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>max_write_size</b> = A2DP_I2S_MAX_WRITE_SIZE</td></tr>
+<tr class="separator:a555d8dba5b6534cbe72bb3d73c02296c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a640bbc2b3b6e98bb8b0dcb8eec3700cd"><td class="memItemLeft" align="right" valign="top"><a id="a640bbc2b3b6e98bb8b0dcb8eec3700cd"></a>
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>notif_interval_s</b> = 10</td></tr>
 <tr class="separator:a640bbc2b3b6e98bb8b0dcb8eec3700cd"><td class="memSeparator" colspan="2">&#160;</td></tr>

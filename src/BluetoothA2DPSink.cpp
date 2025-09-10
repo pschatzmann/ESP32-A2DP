@@ -1308,8 +1308,9 @@ void BluetoothA2DPSink::app_rc_tg_callback(esp_avrc_tg_cb_event_t event,
     case ESP_AVRC_TG_REGISTER_NOTIFICATION_EVT:
     case ESP_AVRC_TG_SET_PLAYER_APP_VALUE_EVT: 
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 5, 0)
-    case ESP_AVRC_TG_PROF_STATE_EVT: {
+    case ESP_AVRC_TG_PROF_STATE_EVT: 
 #endif
+    {
       app_work_dispatch(ccall_av_hdl_avrc_tg_evt, event, param,
                         sizeof(esp_avrc_tg_cb_param_t));
       break;

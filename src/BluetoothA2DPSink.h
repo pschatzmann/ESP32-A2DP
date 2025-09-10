@@ -38,9 +38,15 @@ extern "C" void ccall_i2s_task_handler(void *arg);
 extern "C" void ccall_audio_data_callback(const uint8_t *data, uint32_t len);
 extern "C" void ccall_av_hdl_a2d_evt(uint16_t event, void *p_param);
 extern "C" void ccall_av_hdl_avrc_evt(uint16_t event, void *p_param);
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 5, 0)
+extern "C" void ccall_audio_encoded_callback(esp_a2d_conn_hdl_t conn_hdl, esp_a2d_audio_buff_t *audio_buf);
+#endif
 
-// defines the mechanism to confirm a pin request
+/// defines the mechanism to confirm a pin request
 enum PinCodeRequest { Undefined, Confirm, Reply };
+
+/// Supported codec selection for SEP registration (some may not be fully implemented in IDF)
+enum A2DPCodec { A2DP_CODEC_SBC, A2DP_CODEC_M12, A2DP_CODEC_AAC, A2DP_CODEC_ATRAC };
 
 // provide global ref for callbacks
 class BluetoothA2DPSink;
@@ -65,6 +71,9 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   friend void ccall_av_hdl_a2d_evt(uint16_t event, void *p_param);
   /// avrc event handler
   friend void ccall_av_hdl_avrc_evt(uint16_t event, void *p_param);
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 5, 0)
+  friend void ccall_audio_encoded_callback(esp_a2d_conn_hdl_t conn_hdl, esp_a2d_audio_buff_t *audio_buf);
+#endif
 
  public:
   /// Default Constructor:  output via callback or Legacy I2S
@@ -163,6 +172,13 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   /// Determine the actual audio type
   virtual esp_a2d_mct_t get_audio_type();
 
+  #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 5, 0)
+  /// DRAFT: select codec AND set encoded frame callback in one call.
+  /// If encoded_cb is not nullptr it registers the encoded frame reader.
+  /// Returns result of internal registration 
+  bool set_codec(A2DPCodec codec, void (*encoded_cb)(const uint8_t *data, size_t len) = nullptr);
+  #endif
+
   /// Define a callback method which provides connection state of AVRC service
   virtual void set_avrc_connection_state_callback(void (*callback)(bool)) {
     this->avrc_connection_state_callback = callback;
@@ -206,6 +222,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   /// provides access to the data
   virtual void set_stream_reader(void (*callBack)(const uint8_t *, uint32_t),
                                  bool i2s_output = true);
+
 
   /// Define a callback that is called before the volume changes: this callback
   /// provides access to the data
@@ -267,6 +284,9 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
 
   /// Provides the actually set data rate (in samples per second)
   virtual uint16_t sample_rate() { return m_sample_rate; }
+
+  /// Provides the actually set number of channels (1=mono,2=stereo)
+  virtual uint16_t channels() { return m_channels; }
 
   /// We need to confirm a new seesion by calling confirm_pin_code()
   virtual void activate_pin_code(bool active);
@@ -364,6 +384,8 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   // activate output via BluetoothA2DPOutput
   bool is_output = true;
   uint16_t m_sample_rate = 44100;  // set default rate
+  // number of PCM channels negotiated (1=mono,2=stereo). Default 2.
+  uint8_t m_channels = 2;
   uint32_t m_pkt_cnt = 0;
   // esp_a2d_audio_state_t m_audio_state = ESP_A2D_AUDIO_STATE_STOPPED;
   esp_a2d_mct_t audio_type;
@@ -387,6 +409,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   void (*bt_connected)() = nullptr;
   void (*data_received)() = nullptr;
   void (*stream_reader)(const uint8_t *, uint32_t) = nullptr;
+  void (*encoded_stream_reader)(const uint8_t *, size_t) = nullptr;
   void (*raw_stream_reader)(const uint8_t *, uint32_t) = nullptr;
   void (*avrc_connection_state_callback)(bool connected) = nullptr;
   void (*avrc_metadata_callback)(uint8_t, const uint8_t *) = nullptr;
@@ -415,6 +438,13 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap = {0};
   char remote_name[ESP_BT_GAP_MAX_BDNAME_LEN + 1];
 #endif
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 5, 0)
+  A2DPCodec desired_codec = A2DP_CODEC_SBC;
+  bool codec_sep_registered = false;
+#endif
+
+
+
   void app_gap_callback(esp_bt_gap_cb_event_t event,
                         esp_bt_gap_cb_param_t *param) override;
   void app_rc_ct_callback(esp_avrc_ct_cb_event_t event,
@@ -504,4 +534,5 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   virtual void set_i2s_active(bool active);
 
   virtual bool isSource() { return false; }
+
 };

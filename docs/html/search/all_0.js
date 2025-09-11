@@ -1,11 +1,11 @@
 var searchData=
 [
   ['a_20simple_20arduino_20bluetooth_20music_20receiver_20and_20sender_20for_20the_20esp32_0',['A Simple Arduino Bluetooth Music Receiver and Sender for the ESP32',['../index.html',1,'']]],
-  ['a2dpdefaultvolumecontrol_1',['A2DPDefaultVolumeControl',['../class_a2_d_p_default_volume_control.html',1,'']]],
-  ['a2dplinearvolumecontrol_2',['A2DPLinearVolumeControl',['../class_a2_d_p_linear_volume_control.html',1,'']]],
-  ['a2dpnovolumecontrol_3',['A2DPNoVolumeControl',['../class_a2_d_p_no_volume_control.html',1,'']]],
-  ['a2dpsimpleexponentialvolumecontrol_4',['A2DPSimpleExponentialVolumeControl',['../class_a2_d_p_simple_exponential_volume_control.html',1,'']]],
-  ['a2dpvolumecontrol_5',['A2DPVolumeControl',['../class_a2_d_p_volume_control.html',1,'']]],
+  ['a2dpdefaultvolumecontrol_1',['A2DPDefaultVolumeControl',['../class_a2_d_p_default_volume_control.html',1,'A2DPDefaultVolumeControl'],['../class_a2_d_p_default_volume_control.html#ad222275ea48c27f39b2fbcc6dbab62b4',1,'A2DPDefaultVolumeControl::A2DPDefaultVolumeControl(int32_t limit)'],['../class_a2_d_p_default_volume_control.html#add521bd19ecace9dde147b63ae92f642',1,'A2DPDefaultVolumeControl::A2DPDefaultVolumeControl()=default']]],
+  ['a2dplinearvolumecontrol_2',['A2DPLinearVolumeControl',['../class_a2_d_p_linear_volume_control.html',1,'A2DPLinearVolumeControl'],['../class_a2_d_p_linear_volume_control.html#a784b8d5266fac3d7f359785334de9c88',1,'A2DPLinearVolumeControl::A2DPLinearVolumeControl()']]],
+  ['a2dpnovolumecontrol_3',['A2DPNoVolumeControl',['../class_a2_d_p_no_volume_control.html',1,'A2DPNoVolumeControl'],['../class_a2_d_p_no_volume_control.html#a6a6cb29be2611f9c409ff94e18cded7e',1,'A2DPNoVolumeControl::A2DPNoVolumeControl()']]],
+  ['a2dpsimpleexponentialvolumecontrol_4',['A2DPSimpleExponentialVolumeControl',['../class_a2_d_p_simple_exponential_volume_control.html',1,'A2DPSimpleExponentialVolumeControl'],['../class_a2_d_p_simple_exponential_volume_control.html#aec9a854d6fece1b84e767f6866ad01fc',1,'A2DPSimpleExponentialVolumeControl::A2DPSimpleExponentialVolumeControl(int32_t limit)'],['../class_a2_d_p_simple_exponential_volume_control.html#a74bde67a7f5a5cfca68a2490d1b2521a',1,'A2DPSimpleExponentialVolumeControl::A2DPSimpleExponentialVolumeControl()=default']]],
+  ['a2dpvolumecontrol_5',['A2DPVolumeControl',['../class_a2_d_p_volume_control.html#ab34c606f1df8c0c1bac5c3a54dc7bfd5',1,'A2DPVolumeControl::A2DPVolumeControl()'],['../class_a2_d_p_volume_control.html',1,'A2DPVolumeControl']]],
   ['activate_5fpin_5fcode_6',['activate_pin_code',['../class_bluetooth_a2_d_p_sink.html#a22d52952a8ac8c78a483a53c2006a387',1,'BluetoothA2DPSink']]],
   ['app_5fa2d_5fcallback_7',['app_a2d_callback',['../class_bluetooth_a2_d_p_common.html#a6aaac4480b57cbdbef5e07ca619eb330',1,'BluetoothA2DPCommon::app_a2d_callback()'],['../class_bluetooth_a2_d_p_sink.html#a9892ecf2f81b99d861f2767f7b705188',1,'BluetoothA2DPSink::app_a2d_callback()'],['../class_bluetooth_a2_d_p_source.html#aa44bdbc77afd851d305a5412e3cc92e1',1,'BluetoothA2DPSource::app_a2d_callback()']]],
   ['app_5fav_5fstate_8',['APP_AV_STATE',['../group__a2dp.html#gabf9f46a0805b93eedaeccb8e512ef7fa',1,'BluetoothA2DPSource.h']]],

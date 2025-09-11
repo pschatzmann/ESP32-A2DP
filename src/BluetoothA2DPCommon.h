@@ -283,7 +283,7 @@ class BluetoothA2DPCommon {
   void set_task_priority(UBaseType_t priority) { task_priority = priority; }
 
   /// Defines the core which is used to start the tasks (to process the events
-  /// and audio queue)
+  /// and audio queue): default is 1
   void set_task_core(BaseType_t core) { task_core = core; }
 
   /// Defines the queue size of the event task

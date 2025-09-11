@@ -71,7 +71,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Exponentional volume control.  
+<p>Exponential volume control.  
  <a href="class_a2_d_p_simple_exponential_volume_control.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_a2_d_p_volume_control_8h_source.html">A2DPVolumeControl.h</a>&gt;</code></p>
@@ -87,53 +87,392 @@ Inheritance diagram for A2DPSimpleExponentialVolumeControl:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a6af31a3ffaad03ffa06930bbb3d3d285"><td class="memItemLeft" align="right" valign="top"><a id="a6af31a3ffaad03ffa06930bbb3d3d285"></a>
-int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>get_volume_factor</b> ()</td></tr>
+<tr class="memitem:a74bde67a7f5a5cfca68a2490d1b2521a"><td class="memItemLeft" align="right" valign="top"><a id="a74bde67a7f5a5cfca68a2490d1b2521a"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a2_d_p_simple_exponential_volume_control.html#a74bde67a7f5a5cfca68a2490d1b2521a">A2DPSimpleExponentialVolumeControl</a> ()=default</td></tr>
+<tr class="memdesc:a74bde67a7f5a5cfca68a2490d1b2521a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
+<tr class="separator:a74bde67a7f5a5cfca68a2490d1b2521a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec9a854d6fece1b84e767f6866ad01fc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a2_d_p_simple_exponential_volume_control.html#aec9a854d6fece1b84e767f6866ad01fc">A2DPSimpleExponentialVolumeControl</a> (int32_t limit)</td></tr>
+<tr class="memdesc:aec9a854d6fece1b84e767f6866ad01fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor with custom volume factor clipping limit.  <a href="class_a2_d_p_simple_exponential_volume_control.html#aec9a854d6fece1b84e767f6866ad01fc">More...</a><br /></td></tr>
+<tr class="separator:aec9a854d6fece1b84e767f6866ad01fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6af31a3ffaad03ffa06930bbb3d3d285"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a2_d_p_volume_control.html#a6af31a3ffaad03ffa06930bbb3d3d285">get_volume_factor</a> ()</td></tr>
+<tr class="memdesc:a6af31a3ffaad03ffa06930bbb3d3d285"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the current volume factor.  <a href="class_a2_d_p_volume_control.html#a6af31a3ffaad03ffa06930bbb3d3d285">More...</a><br /></td></tr>
 <tr class="separator:a6af31a3ffaad03ffa06930bbb3d3d285"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae5ff3aa2b2b615e7eb01c8a8f164ef60"><td class="memItemLeft" align="right" valign="top"><a id="ae5ff3aa2b2b615e7eb01c8a8f164ef60"></a>
-int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>get_volume_factor_max</b> ()</td></tr>
+<tr class="memitem:ae5ff3aa2b2b615e7eb01c8a8f164ef60"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a2_d_p_volume_control.html#ae5ff3aa2b2b615e7eb01c8a8f164ef60">get_volume_factor_max</a> ()</td></tr>
+<tr class="memdesc:ae5ff3aa2b2b615e7eb01c8a8f164ef60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the maximum volume factor value.  <a href="class_a2_d_p_volume_control.html#ae5ff3aa2b2b615e7eb01c8a8f164ef60">More...</a><br /></td></tr>
 <tr class="separator:ae5ff3aa2b2b615e7eb01c8a8f164ef60"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abdb9256f6a30b6c716193af7fadeee9c"><td class="memItemLeft" align="right" valign="top"><a id="abdb9256f6a30b6c716193af7fadeee9c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_enabled</b> (bool enabled)</td></tr>
+<tr class="memitem:abdb9256f6a30b6c716193af7fadeee9c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a2_d_p_volume_control.html#abdb9256f6a30b6c716193af7fadeee9c">set_enabled</a> (bool enabled)</td></tr>
+<tr class="memdesc:abdb9256f6a30b6c716193af7fadeee9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables volume control.  <a href="class_a2_d_p_volume_control.html#abdb9256f6a30b6c716193af7fadeee9c">More...</a><br /></td></tr>
 <tr class="separator:abdb9256f6a30b6c716193af7fadeee9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a533745afd59e80e2549c9dfa80e05423"><td class="memItemLeft" align="right" valign="top"><a id="a533745afd59e80e2549c9dfa80e05423"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_mono_downmix</b> (bool enabled)</td></tr>
+<tr class="memitem:a533745afd59e80e2549c9dfa80e05423"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a2_d_p_volume_control.html#a533745afd59e80e2549c9dfa80e05423">set_mono_downmix</a> (bool enabled)</td></tr>
+<tr class="memdesc:a533745afd59e80e2549c9dfa80e05423"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables mono downmix.  <a href="class_a2_d_p_volume_control.html#a533745afd59e80e2549c9dfa80e05423">More...</a><br /></td></tr>
 <tr class="separator:a533745afd59e80e2549c9dfa80e05423"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6eb1add5a68fe554c6705cb9fad25545"><td class="memItemLeft" align="right" valign="top"><a id="a6eb1add5a68fe554c6705cb9fad25545"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>update_audio_data</b> (Frame *data, uint16_t frameCount)</td></tr>
+<tr class="memitem:a6eb1add5a68fe554c6705cb9fad25545"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a2_d_p_volume_control.html#a6eb1add5a68fe554c6705cb9fad25545">update_audio_data</a> (Frame *data, uint16_t frameCount)</td></tr>
+<tr class="memdesc:a6eb1add5a68fe554c6705cb9fad25545"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates audio data with volume control and optional mono downmix.  <a href="class_a2_d_p_volume_control.html#a6eb1add5a68fe554c6705cb9fad25545">More...</a><br /></td></tr>
 <tr class="separator:a6eb1add5a68fe554c6705cb9fad25545"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f23bd37f10a58fd03cebe5d9b180802"><td class="memItemLeft" align="right" valign="top"><a id="a8f23bd37f10a58fd03cebe5d9b180802"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>update_audio_data</b> (uint8_t *data, uint16_t byteCount)</td></tr>
+<tr class="memitem:a8f23bd37f10a58fd03cebe5d9b180802"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a2_d_p_volume_control.html#a8f23bd37f10a58fd03cebe5d9b180802">update_audio_data</a> (uint8_t *data, uint16_t byteCount)</td></tr>
+<tr class="memdesc:a8f23bd37f10a58fd03cebe5d9b180802"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates audio data with volume control and optional mono downmix.  <a href="class_a2_d_p_volume_control.html#a8f23bd37f10a58fd03cebe5d9b180802">More...</a><br /></td></tr>
 <tr class="separator:a8f23bd37f10a58fd03cebe5d9b180802"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a23700514ed3bb33151ea90033e8dcbea"><td class="memItemLeft" align="right" valign="top"><a id="a23700514ed3bb33151ea90033e8dcbea"></a>
-int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>clip</b> (int32_t value)</td></tr>
+<tr class="memitem:a23700514ed3bb33151ea90033e8dcbea"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a2_d_p_volume_control.html#a23700514ed3bb33151ea90033e8dcbea">clip</a> (int32_t value)</td></tr>
+<tr class="memdesc:a23700514ed3bb33151ea90033e8dcbea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clips audio sample value to prevent overflow.  <a href="class_a2_d_p_volume_control.html#a23700514ed3bb33151ea90033e8dcbea">More...</a><br /></td></tr>
 <tr class="separator:a23700514ed3bb33151ea90033e8dcbea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2d3c9b6e1737bea85096ddc58c6cf853"><td class="memItemLeft" align="right" valign="top"><a id="a2d3c9b6e1737bea85096ddc58c6cf853"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_volume</b> (uint8_t volume) override</td></tr>
+<tr class="memitem:a2d3c9b6e1737bea85096ddc58c6cf853"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a2_d_p_simple_exponential_volume_control.html#a2d3c9b6e1737bea85096ddc58c6cf853">set_volume</a> (uint8_t volume) override</td></tr>
+<tr class="memdesc:a2d3c9b6e1737bea85096ddc58c6cf853"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the volume using simple exponential calculation.  <a href="class_a2_d_p_simple_exponential_volume_control.html#a2d3c9b6e1737bea85096ddc58c6cf853">More...</a><br /></td></tr>
 <tr class="separator:a2d3c9b6e1737bea85096ddc58c6cf853"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:a7982efce1f1a1ab6c902900f8e0bb696"><td class="memItemLeft" align="right" valign="top"><a id="a7982efce1f1a1ab6c902900f8e0bb696"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_volume_used</b> = false</td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a2_d_p_volume_control.html#a7982efce1f1a1ab6c902900f8e0bb696">is_volume_used</a> = false</td></tr>
+<tr class="memdesc:a7982efce1f1a1ab6c902900f8e0bb696"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag indicating if volume control is enabled. <br /></td></tr>
 <tr class="separator:a7982efce1f1a1ab6c902900f8e0bb696"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b449f76c7c931cf590732a3d73acaea"><td class="memItemLeft" align="right" valign="top"><a id="a8b449f76c7c931cf590732a3d73acaea"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>mono_downmix</b> = false</td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a2_d_p_volume_control.html#a8b449f76c7c931cf590732a3d73acaea">mono_downmix</a> = false</td></tr>
+<tr class="memdesc:a8b449f76c7c931cf590732a3d73acaea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag indicating if mono downmix is enabled. <br /></td></tr>
 <tr class="separator:a8b449f76c7c931cf590732a3d73acaea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adc84ddb465e3fed9c0903a9f3e565be8"><td class="memItemLeft" align="right" valign="top"><a id="adc84ddb465e3fed9c0903a9f3e565be8"></a>
-int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>volumeFactor</b></td></tr>
+int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a2_d_p_volume_control.html#adc84ddb465e3fed9c0903a9f3e565be8">volumeFactor</a> = 1</td></tr>
+<tr class="memdesc:adc84ddb465e3fed9c0903a9f3e565be8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current volume factor. <br /></td></tr>
 <tr class="separator:adc84ddb465e3fed9c0903a9f3e565be8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8489e6a24ee9c9135ce42b7e4c686546"><td class="memItemLeft" align="right" valign="top"><a id="a8489e6a24ee9c9135ce42b7e4c686546"></a>
+int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a2_d_p_volume_control.html#a8489e6a24ee9c9135ce42b7e4c686546">volumeFactorClippingLimit</a> = 0xfff</td></tr>
+<tr class="memdesc:a8489e6a24ee9c9135ce42b7e4c686546"><td class="mdescLeft">&#160;</td><td class="mdescRight">Volume factor clipping limit (4095) <br /></td></tr>
+<tr class="separator:a8489e6a24ee9c9135ce42b7e4c686546"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adf01b0f44d8f482ed5119f088958595e"><td class="memItemLeft" align="right" valign="top"><a id="adf01b0f44d8f482ed5119f088958595e"></a>
-int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>volumeFactorMax</b></td></tr>
+int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a2_d_p_volume_control.html#adf01b0f44d8f482ed5119f088958595e">volumeFactorMax</a> = 0x1000</td></tr>
+<tr class="memdesc:adf01b0f44d8f482ed5119f088958595e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum volume factor (4096) <br /></td></tr>
 <tr class="separator:adf01b0f44d8f482ed5119f088958595e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Exponentional volume control. </p>
+<div class="textblock"><p>Exponential volume control. </p>
 <dl class="section author"><dt>Author</dt><dd>rbruelma </dd></dl>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+<dl class="section copyright"><dt>Copyright</dt><dd>Apache License Version 2 </dd></dl>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="aec9a854d6fece1b84e767f6866ad01fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aec9a854d6fece1b84e767f6866ad01fc">&#9670;&nbsp;</a></span>A2DPSimpleExponentialVolumeControl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">A2DPSimpleExponentialVolumeControl::A2DPSimpleExponentialVolumeControl </td>
+          <td>(</td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname"><em>limit</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructor with custom volume factor clipping limit. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">limit</td><td>Maximum volume factor limit (must be less than 4096) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a23700514ed3bb33151ea90033e8dcbea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a23700514ed3bb33151ea90033e8dcbea">&#9670;&nbsp;</a></span>clip()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t A2DPVolumeControl::clip </td>
+          <td>(</td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Clips audio sample value to prevent overflow. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>Input audio sample value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Clipped value within valid 16-bit range (-32768 to 32767) </dd></dl>
+
+</div>
+</div>
+<a id="a6af31a3ffaad03ffa06930bbb3d3d285"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6af31a3ffaad03ffa06930bbb3d3d285">&#9670;&nbsp;</a></span>get_volume_factor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t A2DPVolumeControl::get_volume_factor </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the current volume factor. </p>
+<dl class="section return"><dt>Returns</dt><dd>Volume factor in the range of 0 to 4096 </dd></dl>
+
+</div>
+</div>
+<a id="ae5ff3aa2b2b615e7eb01c8a8f164ef60"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae5ff3aa2b2b615e7eb01c8a8f164ef60">&#9670;&nbsp;</a></span>get_volume_factor_max()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t A2DPVolumeControl::get_volume_factor_max </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the maximum volume factor value. </p>
+<dl class="section return"><dt>Returns</dt><dd>Maximum factor value (4096) </dd></dl>
+
+</div>
+</div>
+<a id="abdb9256f6a30b6c716193af7fadeee9c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abdb9256f6a30b6c716193af7fadeee9c">&#9670;&nbsp;</a></span>set_enabled()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void A2DPVolumeControl::set_enabled </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enabled</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Enables or disables volume control. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">enabled</td><td>True to enable volume control, false to disable </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a533745afd59e80e2549c9dfa80e05423"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a533745afd59e80e2549c9dfa80e05423">&#9670;&nbsp;</a></span>set_mono_downmix()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void A2DPVolumeControl::set_mono_downmix </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enabled</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Enables or disables mono downmix. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">enabled</td><td>True to enable mono downmix, false to disable </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a2d3c9b6e1737bea85096ddc58c6cf853"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d3c9b6e1737bea85096ddc58c6cf853">&#9670;&nbsp;</a></span>set_volume()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void A2DPSimpleExponentialVolumeControl::set_volume </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>volume</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the volume using simple exponential calculation. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">volume</td><td>Volume level (0-127) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="class_a2_d_p_volume_control.html#a4a40e553f8c15a2cecb6f2f71fa0464c">A2DPVolumeControl</a>.</p>
+
+</div>
+</div>
+<a id="a6eb1add5a68fe554c6705cb9fad25545"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6eb1add5a68fe554c6705cb9fad25545">&#9670;&nbsp;</a></span>update_audio_data() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void A2DPVolumeControl::update_audio_data </td>
+          <td>(</td>
+          <td class="paramtype">Frame *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>frameCount</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Updates audio data with volume control and optional mono downmix. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>Pointer to audio frame data </td></tr>
+    <tr><td class="paramname">frameCount</td><td>Number of frames to process </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented in <a class="el" href="class_a2_d_p_no_volume_control.html#ab7e6d29791af0c5820679170838bc241">A2DPNoVolumeControl</a>.</p>
+
+</div>
+</div>
+<a id="a8f23bd37f10a58fd03cebe5d9b180802"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f23bd37f10a58fd03cebe5d9b180802">&#9670;&nbsp;</a></span>update_audio_data() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void A2DPVolumeControl::update_audio_data </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>byteCount</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Updates audio data with volume control and optional mono downmix. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>Pointer to raw audio data (uint8_t) </td></tr>
+    <tr><td class="paramname">byteCount</td><td>Number of bytes to process </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>src/<a class="el" href="_a2_d_p_volume_control_8h_source.html">A2DPVolumeControl.h</a></li>
 </ul>
 </div><!-- contents -->

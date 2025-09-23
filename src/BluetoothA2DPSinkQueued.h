@@ -2,6 +2,8 @@
 
 #include "BluetoothA2DPSink.h"
 
+#if IS_VALID_PLATFORM
+
 #define RINGBUF_HIGHEST_WATER_LEVEL (32 * 1024)
 #define RINGBUF_PREFETCH_PERCENT 65
 
@@ -98,3 +100,5 @@ class BluetoothA2DPSinkQueued : public BluetoothA2DPSink {
     return (bytes / 4 * 4);
   }
 };
+
+#endif // platform

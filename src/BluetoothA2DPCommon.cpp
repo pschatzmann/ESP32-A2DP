@@ -15,6 +15,9 @@
 
 #include "BluetoothA2DPCommon.h"
 
+#if IS_VALID_PLATFORM
+
+
 BluetoothA2DPCommon* actual_bluetooth_a2dp_common = nullptr;
 
 extern "C" void ccall_bt_app_task_handler(void* arg) {
@@ -596,3 +599,5 @@ unsigned long BluetoothA2DPCommon::get_millis() {
   return (unsigned long)(esp_timer_get_time() / 1000ULL);
 #endif
 }
+
+#endif // platform

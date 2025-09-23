@@ -22,22 +22,26 @@
  */
 
 #pragma once
+
+// Compile only for ESP32
+#ifdef ARDUINO_ARCH_ESP32
+#  include "sdkconfig.h"
+#endif
+#if defined(CONFIG_IDF_TARGET_ESP32) 
+#  define IS_VALID_PLATFORM true
+#else
+#  error "Please read the Wiki about the supported Platforms!"
+#  define IS_VALID_PLATFORM false
+#endif
+
+// Continue only for ESP32
+#if IS_VALID_PLATFORM
+
 #include "config.h"
 // If you use #include "I2S.h" the i2s functionality is hidden in a namespace
 // this hack prevents any error messages
 #ifdef _I2S_H_INCLUDED
 using namespace esp_i2s;
-#endif
-// Compile only for ESP32
-#if defined(CONFIG_IDF_TARGET_ESP32C2) || \
-    defined(CONFIG_IDF_TARGET_ESP32C3) || \
-    defined(CONFIG_IDF_TARGET_ESP32C5) || \
-    defined(CONFIG_IDF_TARGET_ESP32C6) || \
-    defined(CONFIG_IDF_TARGET_ESP32S2) || \
-    defined(CONFIG_IDF_TARGET_ESP32S3) || \
-    defined(CONFIG_IDF_TARGET_ESP32H2) || \
-    defined(CONFIG_IDF_TARGET_ESP32P4) 
-#error "ESP32C3, ESP32S2, ESP32S3... do not support A2DP"
 #endif
 
 #include <math.h>
@@ -439,3 +443,5 @@ class BluetoothA2DPCommon {
 };
 
 extern BluetoothA2DPCommon *actual_bluetooth_a2dp_common;
+
+#endif // platform

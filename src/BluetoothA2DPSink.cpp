@@ -15,6 +15,8 @@
 
 #include "BluetoothA2DPSink.h"
 
+#if IS_VALID_PLATFORM
+
 // to support static callback functions
 BluetoothA2DPSink *actual_bluetooth_a2dp_sink;
 
@@ -1422,3 +1424,5 @@ void BluetoothA2DPSink::av_hdl_avrc_tg_evt(uint16_t event, void *p_param) {
 }
 
 #endif
+
+#endif // platform

@@ -1,6 +1,8 @@
 
 #include "BluetoothA2DPSinkQueued.h"
 
+#if IS_VALID_PLATFORM
+
 void BluetoothA2DPSinkQueued::bt_i2s_task_start_up(void) {
     ESP_LOGI(BT_APP_TAG, "ringbuffer data empty! mode changed: RINGBUFFER_MODE_PREFETCHING");
     ringbuffer_mode = RINGBUFFER_MODE_PREFETCHING;
@@ -135,3 +137,5 @@ size_t BluetoothA2DPSinkQueued::write_audio(const uint8_t *data, size_t size)
 
     return done ? size : 0;
 }
+
+#endif // platform

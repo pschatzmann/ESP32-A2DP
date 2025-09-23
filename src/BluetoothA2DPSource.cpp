@@ -16,6 +16,8 @@
 
 #include "BluetoothA2DPSource.h"
 
+#if IS_VALID_PLATFORM
+
 #define APP_RC_CT_TL_RN_VOLUME_CHANGE (1)
 #define BT_APP_HEART_BEAT_EVT (0xff00)
 
@@ -1101,3 +1103,5 @@ void BluetoothA2DPSource::av_hdl_avrc_tg_evt(uint16_t event, void *p_param) {
 }
 
 #endif
+
+#endif // platform

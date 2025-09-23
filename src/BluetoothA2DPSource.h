@@ -23,6 +23,8 @@
 
 #include "BluetoothA2DPCommon.h"
 
+#if IS_VALID_PLATFORM
+
 #ifdef ARDUINO
 #include "Stream.h"
 #endif
@@ -333,3 +335,6 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
 
 #endif
 };
+
+
+#endif // platform

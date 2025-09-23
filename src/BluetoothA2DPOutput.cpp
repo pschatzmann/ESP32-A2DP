@@ -1,5 +1,7 @@
 #include "BluetoothA2DPOutput.h"
 
+#if IS_VALID_PLATFORM
+
 BluetoothA2DPOutputLegacy::BluetoothA2DPOutputLegacy() {
 #if A2DP_LEGACY_I2S_SUPPORT
   // default i2s port is 0
@@ -259,3 +261,4 @@ void BluetoothA2DPOutputAudioTools::set_output_active(bool active) {
 #endif
 }
 
+#endif

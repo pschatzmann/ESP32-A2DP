@@ -15,6 +15,8 @@
 
 #pragma once
 #include "BluetoothA2DPCommon.h"
+#if IS_VALID_PLATFORM
+
 #include "BluetoothA2DPOutput.h"
 #include "freertos/ringbuf.h"
 
@@ -536,3 +538,5 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   virtual bool isSource() { return false; }
 
 };
+
+#endif // platform

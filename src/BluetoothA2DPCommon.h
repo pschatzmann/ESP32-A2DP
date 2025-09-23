@@ -30,7 +30,7 @@
 #if defined(CONFIG_IDF_TARGET_ESP32) 
 #  define IS_VALID_PLATFORM true
 #else
-#  error "Please read the Wiki about the supported Platforms!"
+#  error "Please read the ESP32-A2DP Wiki about the supported Platforms!"
 #  define IS_VALID_PLATFORM false
 #endif
 

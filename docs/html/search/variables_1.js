@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['esp_5favrc_5frn_5fplay_5fstatus_5fchange_348',['ESP_AVRC_RN_PLAY_STATUS_CHANGE',['../group__a2dp.html#gab981cf845089ef19df871466126b6f14',1,'external_lists.h']]],
-  ['event_349',['event',['../structbt__app__msg__t.html#a74f4561abb15d9ae98c3eefdd68de7c4',1,'bt_app_msg_t']]]
+  ['is_5fvolume_5fused_0',['is_volume_used',['../class_a2_d_p_volume_control.html#a7982efce1f1a1ab6c902900f8e0bb696',1,'A2DPVolumeControl']]]
 ];

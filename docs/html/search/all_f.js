@@ -1,5 +1,26 @@
 var searchData=
 [
-  ['update_5faudio_5fdata_182',['update_audio_data',['../class_a2_d_p_volume_control.html#a8f23bd37f10a58fd03cebe5d9b180802',1,'A2DPVolumeControl::update_audio_data(uint8_t *data, uint16_t byteCount)'],['../class_a2_d_p_volume_control.html#a6eb1add5a68fe554c6705cb9fad25545',1,'A2DPVolumeControl::update_audio_data(Frame *data, uint16_t frameCount)'],['../class_a2_d_p_no_volume_control.html#ab7e6d29791af0c5820679170838bc241',1,'A2DPNoVolumeControl::update_audio_data()']]],
-  ['update_5frssi_183',['update_rssi',['../class_bluetooth_a2_d_p_sink.html#a3b43ee67031c300d07638f9c969fa4ef',1,'BluetoothA2DPSink']]]
+  ['sender_0',['A2DP Source (Music Sender)',['../index.html#autotoc_md12',1,'']]],
+  ['sender_20for_20the_20esp32_1',['A Simple Arduino Bluetooth Music Receiver and Sender for the ESP32',['../index.html',1,'']]],
+  ['sending_20data_20from_20a_20a2ds_20data_20source_20with_20a_20callback_2',['Sending Data from a A2DS Data Source with a Callback',['../index.html#autotoc_md13',1,'']]],
+  ['set_5fenabled_3',['set_enabled',['../class_a2_d_p_volume_control.html#abdb9256f6a30b6c716193af7fadeee9c',1,'A2DPVolumeControl']]],
+  ['set_5fmono_5fdownmix_4',['set_mono_downmix',['../class_a2_d_p_volume_control.html#a533745afd59e80e2549c9dfa80e05423',1,'A2DPVolumeControl']]],
+  ['set_5foutput_5',['set_output',['../class_bluetooth_a2_d_p_output_audio_tools.html#adf9ef0cf6b3e6ef45b03109605c66ccd',1,'BluetoothA2DPOutputAudioTools::set_output()'],['../class_bluetooth_a2_d_p_output.html#a9cdbeeafa4778b4efcf7108ec8b9afae',1,'BluetoothA2DPOutput::set_output(audio_tools::AudioStream &amp;output)'],['../class_bluetooth_a2_d_p_output.html#a67fc2cf760ae2a48ac6bfa6ed235f8b8',1,'BluetoothA2DPOutput::set_output(audio_tools::AudioOutput &amp;output)'],['../class_bluetooth_a2_d_p_output_audio_tools.html#a7304b027857f382bfb1838b4b36df7f3',1,'BluetoothA2DPOutputAudioTools::set_output()'],['../class_bluetooth_a2_d_p_output.html#add4a1457f42f2e6ef8b905bcf4be10dc',1,'BluetoothA2DPOutput::set_output()'],['../class_bluetooth_a2_d_p_output_default.html#ad03aa92e57182e2a24eb3596fe5461ee',1,'BluetoothA2DPOutputDefault::set_output(Print &amp;output) override'],['../class_bluetooth_a2_d_p_output_default.html#a74df73b612e2c4b99956e367d9f69656',1,'BluetoothA2DPOutputDefault::set_output(audio_tools::AudioStream &amp;output) override'],['../class_bluetooth_a2_d_p_output_default.html#a69efd35a5b96a8c4ea45286ec02cb550',1,'BluetoothA2DPOutputDefault::set_output(audio_tools::AudioOutput &amp;output) override'],['../class_bluetooth_a2_d_p_output_print.html#aa9e40b46faaba5afdbbf6dbf403c627e',1,'BluetoothA2DPOutputPrint::set_output()'],['../class_bluetooth_a2_d_p_output_audio_tools.html#a3c360cc7bf000d4e8bc241007e34f7d9',1,'BluetoothA2DPOutputAudioTools::set_output()']]],
+  ['set_5fvolume_6',['set_volume',['../class_a2_d_p_volume_control.html#a4a40e553f8c15a2cecb6f2f71fa0464c',1,'A2DPVolumeControl::set_volume()'],['../class_a2_d_p_default_volume_control.html#ad4d0b24a939feda229bde29eb0c985e1',1,'A2DPDefaultVolumeControl::set_volume()'],['../class_a2_d_p_simple_exponential_volume_control.html#a2d3c9b6e1737bea85096ddc58c6cf853',1,'A2DPSimpleExponentialVolumeControl::set_volume()'],['../class_a2_d_p_linear_volume_control.html#aa923e78a96352519ddca28bc957a73e0',1,'A2DPLinearVolumeControl::set_volume()'],['../class_a2_d_p_no_volume_control.html#a5c88fdd55a147303b6dcc53b5378e18b',1,'A2DPNoVolumeControl::set_volume()']]],
+  ['show_20and_20tell_7',['Show and Tell',['../index.html#autotoc_md19',1,'']]],
+  ['simple_20arduino_20bluetooth_20music_20receiver_20and_20sender_20for_20the_20esp32_8',['A Simple Arduino Bluetooth Music Receiver and Sender for the ESP32',['../index.html',1,'']]],
+  ['simple_20i2s_20example_20a2ds_20sink_20using_20default_20pins_9',['A Simple I2S Example (A2DS Sink) using default Pins',['../index.html#autotoc_md4',1,'']]],
+  ['sink_20data_20stream_20with_20callbacks_10',['Accessing the Sink Data Stream with Callbacks',['../index.html#autotoc_md8',1,'']]],
+  ['sink_20music_20receiver_11',['A2DP Sink (Music Receiver)',['../index.html#autotoc_md3',1,'']]],
+  ['sink_20using_20default_20pins_12',['A Simple I2S Example (A2DS Sink) using default Pins',['../index.html#autotoc_md4',1,'']]],
+  ['sound_20processing_13',['Digital Sound Processing',['../index.html#autotoc_md16',1,'']]],
+  ['source_20music_20sender_14',['A2DP Source (Music Sender)',['../index.html#autotoc_md12',1,'']]],
+  ['source_20with_20a_20callback_15',['Sending Data from a A2DS Data Source with a Callback',['../index.html#autotoc_md13',1,'']]],
+  ['sponsor_20me_16',['Sponsor Me',['../index.html#autotoc_md22',1,'']]],
+  ['stream_20with_20callbacks_17',['Accessing the Sink Data Stream with Callbacks',['../index.html#autotoc_md8',1,'']]],
+  ['support_18',['Support',['../index.html#autotoc_md18',1,'']]],
+  ['support_20for_20avrc_20commands_19',['Support for AVRC Commands',['../index.html#autotoc_md11',1,'']]],
+  ['support_20for_20metadata_20',['Support for Metadata',['../index.html#autotoc_md9',1,'']]],
+  ['support_20for_20notifications_21',['Support for Notifications',['../index.html#autotoc_md10',1,'']]],
+  ['supported_20bluetooth_20protocols_22',['Supported Bluetooth Protocols',['../index.html#autotoc_md1',1,'']]]
 ];

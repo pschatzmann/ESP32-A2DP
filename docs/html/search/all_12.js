@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['_7ebluetootha2dpcommon_191',['~BluetoothA2DPCommon',['../class_bluetooth_a2_d_p_common.html#a4bbbd1a2c9c85004afaa7c6dbad45322',1,'BluetoothA2DPCommon']]],
-  ['_7ebluetootha2dpsink_192',['~BluetoothA2DPSink',['../class_bluetooth_a2_d_p_sink.html#a0f83dea1a97baeb360e4e1221c0aeaa9',1,'BluetoothA2DPSink']]],
-  ['_7ebluetootha2dpsource_193',['~BluetoothA2DPSource',['../class_bluetooth_a2_d_p_source.html#a417e7ef0049364c22c92a29e6c4b4ed1',1,'BluetoothA2DPSource']]]
+  ['volumefactor_0',['volumeFactor',['../class_a2_d_p_volume_control.html#adc84ddb465e3fed9c0903a9f3e565be8',1,'A2DPVolumeControl']]],
+  ['volumefactorclippinglimit_1',['volumeFactorClippingLimit',['../class_a2_d_p_volume_control.html#a8489e6a24ee9c9135ce42b7e4c686546',1,'A2DPVolumeControl']]],
+  ['volumefactormax_2',['volumeFactorMax',['../class_a2_d_p_volume_control.html#adf01b0f44d8f482ed5119f088958595e',1,'A2DPVolumeControl']]]
 ];

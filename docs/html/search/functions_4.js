@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['end_237',['end',['../class_bluetooth_a2_d_p_common.html#a76e329bf0587ebf41792871acc69188b',1,'BluetoothA2DPCommon::end()'],['../class_bluetooth_a2_d_p_sink.html#a5a91e49987a2e39c09fc6c2a64feaed6',1,'BluetoothA2DPSink::end()'],['../class_bluetooth_a2_d_p_source.html#aef98c427f8e590be0a4dfaa28a5cb4fd',1,'BluetoothA2DPSource::end()']]]
+  ['update_5faudio_5fdata_0',['update_audio_data',['../class_a2_d_p_volume_control.html#a8f23bd37f10a58fd03cebe5d9b180802',1,'A2DPVolumeControl::update_audio_data(uint8_t *data, uint16_t byteCount)'],['../class_a2_d_p_volume_control.html#a6eb1add5a68fe554c6705cb9fad25545',1,'A2DPVolumeControl::update_audio_data(Frame *data, uint16_t frameCount)'],['../class_a2_d_p_no_volume_control.html#ab7e6d29791af0c5820679170838bc241',1,'A2DPNoVolumeControl::update_audio_data()']]]
 ];

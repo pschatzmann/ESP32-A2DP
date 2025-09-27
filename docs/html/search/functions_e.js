@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['update_5faudio_5fdata_338',['update_audio_data',['../class_a2_d_p_volume_control.html#a8f23bd37f10a58fd03cebe5d9b180802',1,'A2DPVolumeControl::update_audio_data(uint8_t *data, uint16_t byteCount)'],['../class_a2_d_p_volume_control.html#a6eb1add5a68fe554c6705cb9fad25545',1,'A2DPVolumeControl::update_audio_data(Frame *data, uint16_t frameCount)'],['../class_a2_d_p_no_volume_control.html#ab7e6d29791af0c5820679170838bc241',1,'A2DPNoVolumeControl::update_audio_data()']]],
-  ['update_5frssi_339',['update_rssi',['../class_bluetooth_a2_d_p_sink.html#a3b43ee67031c300d07638f9c969fa4ef',1,'BluetoothA2DPSink']]]
+  ['update_5faudio_5fdata_0',['update_audio_data',['../class_a2_d_p_volume_control.html#a8f23bd37f10a58fd03cebe5d9b180802',1,'A2DPVolumeControl::update_audio_data(uint8_t *data, uint16_t byteCount)'],['../class_a2_d_p_volume_control.html#a6eb1add5a68fe554c6705cb9fad25545',1,'A2DPVolumeControl::update_audio_data(Frame *data, uint16_t frameCount)'],['../class_a2_d_p_no_volume_control.html#ab7e6d29791af0c5820679170838bc241',1,'A2DPNoVolumeControl::update_audio_data()']]],
+  ['update_5frssi_1',['update_rssi',['../class_bluetooth_a2_d_p_sink.html#a3b43ee67031c300d07638f9c969fa4ef',1,'BluetoothA2DPSink']]]
 ];

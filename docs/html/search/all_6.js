@@ -1,5 +1,20 @@
 var searchData=
 [
-  ['get_5fvolume_5ffactor_0',['get_volume_factor',['../class_a2_d_p_volume_control.html#a6af31a3ffaad03ffa06930bbb3d3d285',1,'A2DPVolumeControl']]],
-  ['get_5fvolume_5ffactor_5fmax_1',['get_volume_factor_max',['../class_a2_d_p_volume_control.html#ae5ff3aa2b2b615e7eb01c8a8f164ef60',1,'A2DPVolumeControl']]]
+  ['get_5faudio_5fdata_0',['get_audio_data',['../class_bluetooth_a2_d_p_source.html#a2c3a7aa140cf42a1f324e7669a65e5cc',1,'BluetoothA2DPSource']]],
+  ['get_5faudio_5fdata_5fvolume_1',['get_audio_data_volume',['../class_bluetooth_a2_d_p_source.html#a03d1c23eb8a98bccdd15970f9d35db8c',1,'BluetoothA2DPSource']]],
+  ['get_5faudio_5fstate_2',['get_audio_state',['../class_bluetooth_a2_d_p_common.html#a74eadbd69b5c7adf1b190c7e41b75b10',1,'BluetoothA2DPCommon']]],
+  ['get_5faudio_5ftype_3',['get_audio_type',['../class_bluetooth_a2_d_p_sink.html#a77600cb1e36b7814eb9b4126cdec62d4',1,'BluetoothA2DPSink']]],
+  ['get_5fconnected_5fsource_5fname_4',['get_connected_source_name',['../class_bluetooth_a2_d_p_sink.html#a2d277d15f94823eea70f80a327344939',1,'BluetoothA2DPSink']]],
+  ['get_5fconnection_5fstate_5',['get_connection_state',['../class_bluetooth_a2_d_p_common.html#a513b32676d8fc248bb481180f832ef97',1,'BluetoothA2DPCommon']]],
+  ['get_5fcurrent_5fpeer_5faddress_6',['get_current_peer_address',['../class_bluetooth_a2_d_p_sink.html#a84491fcf5f42ca5ac2f5dcff5a0d4508',1,'BluetoothA2DPSink']]],
+  ['get_5fdata_5fcb_7',['get_data_cb',['../class_bluetooth_a2_d_p_source.html#ac77d0c29cc27815f703469aa0083439e',1,'BluetoothA2DPSource']]],
+  ['get_5flast_5fpeer_5faddress_8',['get_last_peer_address',['../class_bluetooth_a2_d_p_common.html#acf924bb9f5e348c85e65879c337a4bde',1,'BluetoothA2DPCommon']]],
+  ['get_5flast_5frssi_9',['get_last_rssi',['../class_bluetooth_a2_d_p_sink.html#a5a770be98d977a8df916d8cc044b310c',1,'BluetoothA2DPSink']]],
+  ['get_5fmillis_10',['get_millis',['../class_bluetooth_a2_d_p_common.html#a688bfd727bfed94f255b63c16a6b1b3c',1,'BluetoothA2DPCommon']]],
+  ['get_5fname_11',['get_name',['../class_bluetooth_a2_d_p_common.html#a458bca4d65937c5e2de7bfeb0f454d88',1,'BluetoothA2DPCommon']]],
+  ['get_5foutput_12',['get_output',['../class_bluetooth_a2_d_p_sink.html#a96d6977e4bcefa1a14dc5596080dcb8c',1,'BluetoothA2DPSink']]],
+  ['get_5fpeer_5fname_13',['get_peer_name',['../class_bluetooth_a2_d_p_sink.html#a71249eb2c03b3f8ef1024ad1121ee4ba',1,'BluetoothA2DPSink']]],
+  ['get_5fvolume_14',['get_volume',['../class_bluetooth_a2_d_p_common.html#a0e570c2c2f9db40873286e0571f0d93a',1,'BluetoothA2DPCommon::get_volume()'],['../class_bluetooth_a2_d_p_sink.html#aca1119f20d2321fb950ae859000cce7b',1,'BluetoothA2DPSink::get_volume()']]],
+  ['get_5fvolume_5ffactor_15',['get_volume_factor',['../class_a2_d_p_volume_control.html#a6af31a3ffaad03ffa06930bbb3d3d285',1,'A2DPVolumeControl']]],
+  ['get_5fvolume_5ffactor_5fmax_16',['get_volume_factor_max',['../class_a2_d_p_volume_control.html#ae5ff3aa2b2b615e7eb01c8a8f164ef60',1,'A2DPVolumeControl']]]
 ];

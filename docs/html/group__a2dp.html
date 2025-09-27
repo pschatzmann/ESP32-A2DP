@@ -89,6 +89,15 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_output.html">BluetoothA2DPOutput</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract Output Class.  <a href="class_bluetooth_a2_d_p_output.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html">BluetoothA2DPSink</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A2DP Bluethooth Sink - We initialize and start the Bluetooth A2DP Sink. The example <a href="https://github.com/espressif/esp-idf/tree/master/examples/bluetooth/bluedroid/classic_bt/a2dp_sink">https://github.com/espressif/esp-idf/tree/master/examples/bluetooth/bluedroid/classic_bt/a2dp_sink</a> was refactered into a C++ class.  <a href="class_bluetooth_a2_d_p_sink.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink_queued.html">BluetoothA2DPSinkQueued</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="class_bluetooth_a2_d_p_sink_queued.html" title="The BluetoothA2DPSinkQueued is using a separate Task with an additinal Queue to write the I2S data....">BluetoothA2DPSinkQueued</a> is using a separate Task with an additinal Queue to write the I2S data. application.  <a href="class_bluetooth_a2_d_p_sink_queued.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_source.html">BluetoothA2DPSource</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A2DP Bluetooth Source.  <a href="class_bluetooth_a2_d_p_source.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -99,6 +108,19 @@ typedef uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>esp_bd_add
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
+<tr class="memitem:gabf9f46a0805b93eedaeccb8e512ef7fa" id="r_gabf9f46a0805b93eedaeccb8e512ef7fa"><td class="memItemLeft" align="right" valign="top"><a id="gabf9f46a0805b93eedaeccb8e512ef7fa" name="gabf9f46a0805b93eedaeccb8e512ef7fa"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__a2dp.html#gabf9f46a0805b93eedaeccb8e512ef7fa">APP_AV_STATE</a> { <br />
+&#160;&#160;<b>APP_AV_STATE_IDLE</b>
+, <b>APP_AV_STATE_DISCOVERING</b>
+, <b>APP_AV_STATE_DISCOVERED</b>
+, <b>APP_AV_STATE_UNCONNECTED</b>
+, <br />
+&#160;&#160;<b>APP_AV_STATE_CONNECTING</b>
+, <b>APP_AV_STATE_CONNECTED</b>
+, <b>APP_AV_STATE_DISCONNECTING</b>
+<br />
+ }</td></tr>
+<tr class="memdesc:gabf9f46a0805b93eedaeccb8e512ef7fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buetooth A2DP global state. <br /></td></tr>
+<tr class="separator:gabf9f46a0805b93eedaeccb8e512ef7fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga49adfa87b1ad7420b0075a0ac03cc194" id="r_ga49adfa87b1ad7420b0075a0ac03cc194"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__a2dp.html#ga49adfa87b1ad7420b0075a0ac03cc194">esp_a2d_audio_state_t</a> { <a class="el" href="group__a2dp.html#gga49adfa87b1ad7420b0075a0ac03cc194a4f131f965f55142fa9fb3557f88b8793">ESP_A2D_AUDIO_STATE_SUSPEND</a> = 0
 , <a class="el" href="group__a2dp.html#gga49adfa87b1ad7420b0075a0ac03cc194a1fb2443ca89d24271931c19e1554b088">ESP_A2D_AUDIO_STATE_STARTED</a>
 , <a class="el" href="group__a2dp.html#gga49adfa87b1ad7420b0075a0ac03cc194a2cac45c7b95065ed02420c5a632ab538">ESP_A2D_AUDIO_STATE_STOPPED</a> = ESP_A2D_AUDIO_STATE_SUSPEND
@@ -141,6 +163,12 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:ga9861ef3ac455a4b2875219d457073de4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bluetooth Controller mode.  <a href="group__a2dp.html#ga9861ef3ac455a4b2875219d457073de4">More...</a><br /></td></tr>
 <tr class="separator:ga9861ef3ac455a4b2875219d457073de4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga28a6ac1cbaf47c9d341da5391e2e72b3" id="r_ga28a6ac1cbaf47c9d341da5391e2e72b3"><td class="memItemLeft" align="right" valign="top"><a id="ga28a6ac1cbaf47c9d341da5391e2e72b3" name="ga28a6ac1cbaf47c9d341da5391e2e72b3"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__a2dp.html#ga28a6ac1cbaf47c9d341da5391e2e72b3">ReconnectStatus</a> { <b>NoReconnect</b>
+, <b>AutoReconnect</b>
+, <b>IsReconnecting</b>
+ }</td></tr>
+<tr class="memdesc:ga28a6ac1cbaf47c9d341da5391e2e72b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buetooth A2DP Reconnect Status. <br /></td></tr>
+<tr class="separator:ga28a6ac1cbaf47c9d341da5391e2e72b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>

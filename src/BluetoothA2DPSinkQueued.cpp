@@ -66,8 +66,10 @@ void BluetoothA2DPSinkQueued::i2s_task_handler(void *arg) {
         // receive data from ringbuffer and write it to I2S DMA transmit buffer 
         data = (uint8_t *)xRingbufferReceiveUpTo(s_ringbuf_i2s, &item_size, (TickType_t)pdMS_TO_TICKS(i2s_ticks), i2s_write_size_upto);
         if (item_size == 0) {
-            ESP_LOGI(BT_APP_TAG, "ringbuffer underflowed! mode changed: RINGBUFFER_MODE_PREFETCHING");
-            ringbuffer_mode = RINGBUFFER_MODE_PREFETCHING;
+            if (ringbuffer_mode != RINGBUFFER_MODE_PREFETCHING) {
+                ESP_LOGI(BT_APP_TAG, "ringbuffer underflowed! mode changed: RINGBUFFER_MODE_PREFETCHING");
+                ringbuffer_mode = RINGBUFFER_MODE_PREFETCHING;
+            }
             continue;
         } 
 

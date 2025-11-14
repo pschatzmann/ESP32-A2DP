@@ -85,7 +85,11 @@ BluetoothA2DPSink::~BluetoothA2DPSink() {
 void BluetoothA2DPSink::end(bool release_memory) {
   ESP_LOGI(BT_AV_TAG, "%s", __func__);
   // reconnect should not work after end
-  is_autoreconnect_allowed = false;
+  if (is_autoreconnect_allowed) {
+     is_autoreconnect_allowed = false;
+     if (release_memory) delay(3000); // give it some time to end
+  }
+
 
   BluetoothA2DPCommon::end(release_memory);
 

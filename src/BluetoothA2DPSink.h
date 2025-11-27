@@ -31,6 +31,10 @@
 #define BT_AV_TAG "BT_AV"
 #endif
 
+#if (A2DP_SPP_SUPPORT && ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0, 0))
+#include "esp_spp_api.h"
+#endif
+
 /* @brief event for handler "bt_av_hdl_stack_up */
 enum {
   BT_APP_EVT_STACK_UP = 0,
@@ -351,6 +355,14 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   /// Activates SSP (Serial protocol)
   void set_spp_active(bool flag) { spp_active = flag; }
 
+#if (A2DP_SPP_SUPPORT && ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0, 0))
+  /// Set SPP configuration (only before start) 
+  void set_spp_config(esp_spp_cfg_t cfg) {
+    spp_cfg = cfg;
+  }
+#endif
+
+
   /// Activate/Deactivate output e.g. to I2S
   void set_output_active(bool flag) { is_i2s_active = flag; }
 
@@ -393,8 +405,14 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   esp_a2d_mct_t audio_type;
   char pin_code_str[20] = {0};
   int connection_rety_count = 0;
+#if A2DP_SPP_SUPPORT
   bool spp_active = false;
+# if (ESP_IDF_VERSION < ESP_IDF_VERSION_VAL(5, 0, 0))
   esp_spp_mode_t esp_spp_mode = ESP_SPP_MODE_CB;
+# else 
+  esp_spp_cfg_t spp_cfg = BT_SPP_DEFAULT_CONFIG();
+# endif
+#endif
   _lock_t s_volume_lock;
   uint8_t s_volume = 0;
   bool s_volume_notify;
@@ -444,8 +462,6 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   A2DPCodec desired_codec = A2DP_CODEC_SBC;
   bool codec_sep_registered = false;
 #endif
-
-
 
   void app_gap_callback(esp_bt_gap_cb_event_t event,
                         esp_bt_gap_cb_param_t *param) override;

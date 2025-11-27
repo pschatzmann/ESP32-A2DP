@@ -332,14 +332,24 @@ int BluetoothA2DPSink::init_bluetooth() {
     return false;
   }
 
-#if A2DP_SPP_SUPPORT
+#if A2DP_SPP_SUPPORT  
+# if (ESP_IDF_VERSION < ESP_IDF_VERSION_VAL(5, 0, 0))
   if (spp_active) {
     if ((esp_spp_init(esp_spp_mode)) != ESP_OK) {
       ESP_LOGE(BT_AV_TAG, "esp_spp_init failed");
       return false;
     }
   }
+# else
+  if (spp_active) {
+    if ((esp_spp_enhanced_init(&spp_cfg)) != ESP_OK) {
+      ESP_LOGE(BT_AV_TAG, "esp_spp_init failed");
+      return false;
+    }
+  }
+# endif
 #endif
+
 
   return true;
 }

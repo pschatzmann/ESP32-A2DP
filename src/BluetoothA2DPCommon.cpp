@@ -483,7 +483,8 @@ void BluetoothA2DPCommon::app_task_handler(void* arg) {
 
   for (;;) {
     while (app_task_queue == nullptr) {
-      ESP_LOGW(BT_APP_TAG, "app_task_queue is null");
+      ESP_LOGW(BT_APP_TAG, "app_task_queue is null, creating");
+      app_task_queue = xQueueCreate(event_queue_size, sizeof(bt_app_msg_t));
       delay_ms(1000);
     }
 

@@ -337,24 +337,14 @@ int BluetoothA2DPSink::init_bluetooth() {
     return false;
   }
 
-#if A2DP_SPP_SUPPORT  
-# if (ESP_IDF_VERSION < ESP_IDF_VERSION_VAL(5, 0, 0))
+#if A2DP_SPP_SUPPORT
   if (spp_active) {
     if ((esp_spp_init(esp_spp_mode)) != ESP_OK) {
       ESP_LOGE(BT_AV_TAG, "esp_spp_init failed");
       return false;
     }
   }
-# else
-  if (spp_active) {
-    if ((esp_spp_enhanced_init(&spp_cfg)) != ESP_OK) {
-      ESP_LOGE(BT_AV_TAG, "esp_spp_init failed");
-      return false;
-    }
-  }
-# endif
 #endif
-
 
   return true;
 }
@@ -427,7 +417,10 @@ void BluetoothA2DPSink::app_gap_callback(esp_bt_gap_cb_event_t event,
       ESP_LOGI(BT_AV_TAG,
                "ESP_BT_GAP_CFM_REQ_EVT Please confirm the passkey: %d",
                param->cfm_req.num_val);
-      pin_code_int = param->key_notif.passkey;
+      // Auto-confirm SSP numeric comparison
+      esp_err_t res = esp_bt_gap_ssp_confirm_reply(peer_bd_addr, true);
+      ESP_LOGI(BT_AV_TAG, "ssp_confirm_reply: %d", res);
+      pin_code_int = param->cfm_req.num_val;
       pin_code_request = Confirm;
     } break;
 
@@ -441,6 +434,10 @@ void BluetoothA2DPSink::app_gap_callback(esp_bt_gap_cb_event_t event,
     case ESP_BT_GAP_KEY_REQ_EVT: {
       ESP_LOGI(BT_AV_TAG, "ESP_BT_GAP_KEY_REQ_EVT Please enter passkey!");
       pin_code_request = Reply;
+      // Reply with default 0000
+      esp_bt_pin_code_t pin = { '0', '0', '0', '0' };
+      esp_err_t res = esp_bt_gap_pin_reply(peer_bd_addr, true, 4, pin);
+      ESP_LOGI(BT_AV_TAG, "pin_reply: %d", res);
     } break;
 
     case ESP_BT_GAP_READ_RSSI_DELTA_EVT: {

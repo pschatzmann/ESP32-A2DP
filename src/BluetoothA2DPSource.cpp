@@ -110,15 +110,21 @@ void BluetoothA2DPSource::start(std::vector<const char *> names) {
     return;
   }
 
-  if (!is_bluedroid_initialized){
-    if (bluedroid_init() != ESP_OK) {
-      ESP_LOGE(BT_AV_TAG, "%s initialize bluedroid failed\n", __func__);
-      return;
+  if (!is_bluedroid_initialized) {
+    esp_bluedroid_status_t bt_state = esp_bluedroid_get_status();
+    if (bt_state == ESP_BLUEDROID_STATUS_UNINITIALIZED) {
+      if (bluedroid_init() != ESP_OK) {
+        ESP_LOGE(BT_AV_TAG, "%s initialize bluedroid failed\n", __func__);
+        return;
+      }
+      bt_state = esp_bluedroid_get_status();
     }
-
-    if (esp_bluedroid_enable() != ESP_OK) {
-      ESP_LOGE(BT_AV_TAG, "%s enable bluedroid failed\n", __func__);
-      return;
+    if (bt_state != ESP_BLUEDROID_STATUS_ENABLED) {
+      esp_err_t err = esp_bluedroid_enable();
+      if (err != ESP_OK && err != ESP_ERR_INVALID_STATE) {
+        ESP_LOGE(BT_AV_TAG, "%s enable bluedroid failed rc=%d\n", __func__, err);
+        return;
+      }
     }
     is_bluedroid_initialized = true;
   }

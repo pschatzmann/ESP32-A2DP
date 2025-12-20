@@ -345,7 +345,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   /// Defines the callback that is called when we get an new rssi value
   void set_rssi_callback(
       void (*callback)(esp_bt_gap_cb_param_t::read_rssi_delta_param &rssi)) {
-    rssi_callbak = callback;
+    rssi_callback = callback;
   }
 
   /// Defines the delay that is added to delay the startup when we automatically
@@ -448,7 +448,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   // RSSI support
   esp_bt_gap_cb_param_t::read_rssi_delta_param last_rssi_delta;
   bool rssi_active = false;
-  void (*rssi_callbak)(esp_bt_gap_cb_param_t::read_rssi_delta_param &rssi) =
+  void (*rssi_callback)(esp_bt_gap_cb_param_t::read_rssi_delta_param &rssi) =
       nullptr;
   int reconnect_delay = 1000;
   int max_write_size = A2DP_I2S_MAX_WRITE_SIZE;

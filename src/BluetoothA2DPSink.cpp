@@ -460,6 +460,9 @@ void BluetoothA2DPSink::app_gap_callback(esp_bt_gap_cb_event_t event,
                  param->read_rmt_name.rmt_name);
         memcpy(remote_name, param->read_rmt_name.rmt_name,
                ESP_BT_GAP_MAX_BDNAME_LEN);
+        if (peer_name_callback != nullptr) {
+          peer_name_callback(remote_name);
+        }
       }
     } break;
 

@@ -154,6 +154,20 @@ void BluetoothA2DPSource::end(bool release_memory) {
     xTimerDelete(s_tmr, portMAX_DELAY);
     s_tmr = nullptr;
   }
+  
+  // Properly deinitialize AVRC to allow reinitialization on next start()
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
+  if (is_passthru_active) {
+    ESP_LOGD(BT_APP_TAG, "Deinitializing AVRC TG");
+    esp_avrc_tg_deinit();
+  }
+#endif
+  ESP_LOGD(BT_APP_TAG, "Deinitializing AVRC CT");
+  esp_avrc_ct_deinit();
+  
+  // Reset the bluedroid initialization flag so it can be reinitialized
+  is_bluedroid_initialized = false;
+  
   // standard end
   BluetoothA2DPCommon::end(release_memory);
 }

@@ -358,14 +358,16 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   /// reconnect
   void set_reconnect_delay(int delay) { reconnect_delay = delay; }
 
+#if A2DP_SPP_SUPPORT
   /// Activates SSP (Serial protocol)
   void set_spp_active(bool flag) { spp_active = flag; }
 
-#if (A2DP_SPP_SUPPORT && ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0, 0))
-  /// Set SPP configuration (only before start) 
+#if (ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0, 0))
+  /// Set SPP configuration (only before start)
   void set_spp_config(esp_spp_cfg_t cfg) {
     spp_cfg = cfg;
   }
+#endif
 #endif
 
 

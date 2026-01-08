@@ -361,6 +361,9 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   /// Activates SSP (Serial protocol)
   void set_spp_active(bool flag) { spp_active = flag; }
 
+	// Allow another device to preempt the currently connected device
+  void set_allow_takeover(bool allow) { allow_takeover = allow; }
+
 #if (A2DP_SPP_SUPPORT && ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0, 0))
   /// Set SPP configuration (only before start) 
   void set_spp_config(esp_spp_cfg_t cfg) {
@@ -399,6 +402,9 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
  protected:
   BluetoothA2DPOutputDefault out_default;
   BluetoothA2DPOutput *out = &out_default;
+
+  esp_bd_addr_t pending_new_peer = {0, 0, 0, 0, 0, 0};
+  bool allow_takeover = false;
 
   volatile bool is_i2s_active = false;
   // activate output via BluetoothA2DPOutput

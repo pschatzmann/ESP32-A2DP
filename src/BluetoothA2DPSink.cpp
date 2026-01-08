@@ -472,6 +472,16 @@ void BluetoothA2DPSink::app_gap_callback(esp_bt_gap_cb_event_t event,
     } break;
 #endif
 
+    case ESP_BT_GAP_ACL_CONN_CMPL_STAT_EVT: {
+      ESP_LOGI(BT_AV_TAG, "ESP_BT_GAP_ACL_CONN_CMPL_STAT_EVT");
+      if(allow_takeover && is_connected()) {
+        memcpy(pending_new_peer, param->acl_conn_cmpl_stat.bda, ESP_BD_ADDR_LEN);
+        esp_a2d_disconnect(pending_new_peer);
+        disconnect();
+      }
+
+    } break;
+
     default: {
       ESP_LOGI(BT_AV_TAG, "event: %d", event);
       break;
@@ -745,7 +755,16 @@ void BluetoothA2DPSink::handle_connection_state(uint16_t event, void *p_param) {
         (*bt_dis_connected)();
       }
 
-      bt_i2s_task_shut_down();
+      // If you had a pending new peer, connect to it
+      if(allow_takeover && memcmp(pending_new_peer, "\0\0\0\0\0\0", ESP_BD_ADDR_LEN)) {
+        ESP_LOGI(BT_AV_TAG, "Connecting pending peer %s", to_str(pending_new_peer));
+        memcpy(last_connection, pending_new_peer, ESP_BD_ADDR_LEN);
+        memcpy(peer_bd_addr, last_connection, ESP_BD_ADDR_LEN);
+        memset(pending_new_peer, 0, ESP_BD_ADDR_LEN);
+        connection_rety_count = 0;
+        reconnect();
+        break;
+      } 
 
       // RECONNECTION MGMT
       // do not auto reconnect when disconnect was requested from device

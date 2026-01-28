@@ -214,6 +214,9 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
     is_passthru_active = (cb != nullptr);
   }
 
+  /// Cancels the discovery
+  virtual void cancel_discovery() { esp_bt_gap_cancel_discovery(); }
+
   /// Ends the processing and releases the resources
   void end(bool releaseMemory=false) override;
 

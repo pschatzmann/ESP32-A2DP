@@ -221,11 +221,19 @@ class BluetoothA2DPCommon {
 
   /// Sets the volume (range 0 - 127)
   virtual void set_volume(uint8_t volume) {
+    if (is_volume_used && volume_value == volume) {
+      return;
+    }   
     volume_value = std::min((int)volume, 0x7F);
     ESP_LOGI(BT_AV_TAG, "set_volume: %d", volume_value);
     volume_control()->set_volume(volume_value);
     volume_control()->set_enabled(true);
     is_volume_used = true;
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
+    if (isSource() && is_connected()){
+      esp_avrc_ct_send_set_absolute_volume_cmd(0, volume_value);
+    }
+#endif
   }
 
   /// Determines the actual volume

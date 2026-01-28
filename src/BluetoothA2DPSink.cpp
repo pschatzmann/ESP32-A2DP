@@ -218,26 +218,12 @@ esp_a2d_mct_t BluetoothA2DPSink::get_audio_type() { return audio_type; }
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 5, 0)
 
 bool BluetoothA2DPSink::set_codec(A2DPCodec codec,
-                                  void (*encoded_cb)(const uint8_t *data,
+                                  void (*encoded_cb)(const uint8_t* data,
                                                      size_t len)) {
   encoded_stream_reader = encoded_cb;
   ESP_LOGI(BT_AV_TAG, "set_codec() called with codec=%d", codec);
   is_output = false;
   desired_codec = codec;
-  ESP_LOGD(BT_AV_TAG, "set_codec: is_bluedroid_initialized=%d",
-           is_bluedroid_initialized);
-  if (!is_bluedroid_initialized) {
-    ESP_LOGD(BT_AV_TAG,
-             "set_codec: will register later (bluetooth not initialized)");
-    return true;  // will register later
-  }
-  ESP_LOGD(BT_AV_TAG, "set_codec: codec_sep_registered=%d",
-           codec_sep_registered);
-  if (codec_sep_registered) {
-    ESP_LOGD(BT_AV_TAG, "set_codec: SEP already registered");
-    return true;
-  }
-  esp_a2d_mcc_t mcc{};
   ESP_LOGD(BT_AV_TAG, "set_codec: preparing mcc struct");
   switch (codec) {
     case A2DP_CODEC_SBC:
@@ -247,7 +233,8 @@ bool BluetoothA2DPSink::set_codec(A2DPCodec codec,
       mcc.cie.sbc_info.ch_mode =
           ESP_A2D_SBC_CIE_CH_MODE_STEREO | ESP_A2D_SBC_CIE_CH_MODE_JOINT_STEREO;
       mcc.cie.sbc_info.block_len = ESP_A2D_SBC_CIE_BLOCK_LEN_16;
-      mcc.cie.sbc_info.alloc_mthd = ESP_A2D_SBC_CIE_ALLOC_MTHD_LOUDNESS;
+      mcc.cie.sbc_info.alloc_mthd =
+          ESP_A2D_SBC_CIE_ALLOC_MTHD_SNR | ESP_A2D_SBC_CIE_ALLOC_MTHD_LOUDNESS;
       mcc.cie.sbc_info.num_subbands = ESP_A2D_SBC_CIE_NUM_SUBBANDS_8;
       mcc.cie.sbc_info.min_bitpool = 2;
       mcc.cie.sbc_info.max_bitpool = 250;
@@ -262,34 +249,9 @@ bool BluetoothA2DPSink::set_codec(A2DPCodec codec,
       mcc.type = ESP_A2D_MCT_ATRAC;  // may not be supported
       break;
   }
-  ESP_LOGI(BT_AV_TAG,
-           "set_codec: calling esp_a2d_sink_register_stream_endpoint");
-  esp_err_t err = esp_a2d_sink_register_stream_endpoint(0, &mcc);
-  ESP_LOGD(BT_AV_TAG,
-           "set_codec: esp_a2d_sink_register_stream_endpoint returned %d", err);
-  if (err == ESP_OK) {
-    codec_sep_registered = true;
-    ESP_LOGI(BT_AV_TAG, "Registered SEP for codec type %d", mcc.type);
-    if (encoded_cb) {
-      ESP_LOGD(BT_AV_TAG, "set_codec: encoded_cb provided");
-      esp_err_t cb_err = esp_a2d_sink_register_audio_data_callback(
-          ccall_audio_encoded_callback);
-      ESP_LOGI(
-          BT_AV_TAG,
-          "set_codec: esp_a2d_sink_register_audio_data_callback returned %d",
-          cb_err);
-      if (cb_err != ESP_OK) {
-        ESP_LOGW(BT_AV_TAG, "Failed to register encoded audio callback");
-      }
-    }
-
-    return true;
-  } else {
-    ESP_LOGW(BT_AV_TAG, "Failed to register SEP codec %d err=%d", mcc.type,
-             err);
-    return false;
-  }
+  return true;
 }
+
 #endif
 
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
@@ -683,11 +645,14 @@ void BluetoothA2DPSink::handle_audio_state(uint16_t event, void *p_param) {
     audio_state_callback(a2d->audio_stat.state, audio_state_obj);
   }
 
-  if (ESP_A2D_AUDIO_STATE_STARTED == a2d->audio_stat.state) {
-    set_i2s_active(true);
-  } else if (ESP_A2D_AUDIO_STATE_REMOTE_SUSPEND == a2d->audio_stat.state ||
-             ESP_A2D_AUDIO_STATE_STOPPED == a2d->audio_stat.state) {
-    set_i2s_active(false);
+  // Update I2s only when decoded output
+  if (!is_encoded_output()) {
+    if (ESP_A2D_AUDIO_STATE_STARTED == a2d->audio_stat.state) {
+      set_i2s_active(true);
+    } else if (ESP_A2D_AUDIO_STATE_REMOTE_SUSPEND == a2d->audio_stat.state ||
+              ESP_A2D_AUDIO_STATE_STOPPED == a2d->audio_stat.state) {
+      set_i2s_active(false);
+    }
   }
 
   if (audio_state_callback_post != nullptr) {
@@ -1028,7 +993,7 @@ void BluetoothA2DPSink::av_hdl_avrc_evt(uint16_t event, void *p_param) {
   }
 }
 
-void BluetoothA2DPSink::av_hdl_stack_evt(uint16_t event, void *p_param) {
+void BluetoothA2DPSink::av_hdl_stack_evt(uint16_t event, void* p_param) {
   ESP_LOGD(BT_AV_TAG, "%s evt %d", __func__, event);
   esp_err_t result;
 
@@ -1072,24 +1037,55 @@ void BluetoothA2DPSink::av_hdl_stack_evt(uint16_t event, void *p_param) {
 
 #endif
 
-      /* initialize A2DP sink */
+      // initialize A2DP sink
       if (esp_a2d_register_callback(ccall_app_a2d_callback) != ESP_OK) {
         ESP_LOGE(BT_AV_TAG, "esp_a2d_register_callback");
       }
-      if (esp_a2d_sink_register_data_callback(ccall_audio_data_callback) !=
-          ESP_OK) {
-        ESP_LOGE(BT_AV_TAG, "esp_a2d_sink_register_data_callback");
+
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 5, 0)
+      // For encoded data: register stream endpoint BEFORE sink init
+      if (is_encoded_output()) {
+        ESP_LOGI(BT_AV_TAG,
+                 "stack_up: encoded_stream_reader=%p "
+                 "desired_codec=%d",
+                 (void*)encoded_stream_reader,
+                 (int)desired_codec);
+        // Register at index 1 (index 0 is reserved for default)
+        esp_err_t err = esp_a2d_sink_register_stream_endpoint(0, &mcc);
+        ESP_LOGI(BT_AV_TAG,
+                 "stack_up: esp_a2d_sink_register_stream_endpoint(1) returned %d",
+                 (int)err);
+        if (err == ESP_OK) {
+          esp_err_t cb_err = esp_a2d_sink_register_audio_data_callback(
+              ccall_audio_encoded_callback);
+          ESP_LOGI(BT_AV_TAG,
+                   "stack_up: esp_a2d_sink_register_audio_data_callback "
+                   "returned %d",
+                   (int)cb_err);
+          if (cb_err != ESP_OK) {
+            ESP_LOGE(BT_AV_TAG, "Failed to register encoded audio callback");
+          }
+        } else {
+          ESP_LOGE(BT_AV_TAG, "Failed to register SEP codec %d err=%d",
+                   mcc.type, err);
+        }
       }
+#endif
+
+
+      // For decoded data: register callback after sink init
+      if (!is_encoded_output()) {
+        ESP_LOGI(BT_AV_TAG, "stack_up: registering decoded data callback");
+        if (esp_a2d_sink_register_data_callback(ccall_audio_data_callback) !=
+            ESP_OK) {
+          ESP_LOGE(BT_AV_TAG, "esp_a2d_sink_register_data_callback");
+        }
+      }
+
+      // initialize A2DP sink
       if (esp_a2d_sink_init() != ESP_OK) {
         ESP_LOGE(BT_AV_TAG, "esp_a2d_sink_init");
       }
-
-#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 5, 0)
-      // Register only later when user sets a callback
-      if (!codec_sep_registered && encoded_stream_reader != nullptr) {
-        set_codec(desired_codec, encoded_stream_reader);
-      }
-#endif
 
       // start automatic reconnect if relevant and stack is up
       if (reconnect_status == AutoReconnect && has_last_connection()) {

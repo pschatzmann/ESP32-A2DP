@@ -35,6 +35,10 @@
 #include "esp_spp_api.h"
 #endif
 
+#ifndef ESP_A2D_SBC_CIE_ALLOC_MTHD_SNR
+#define ESP_A2D_SBC_CIE_ALLOC_MTHD_SNR (0x02)
+#endif
+
 /* @brief event for handler "bt_av_hdl_stack_up */
 enum {
   BT_APP_EVT_STACK_UP = 0,
@@ -470,7 +474,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
 #endif
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 5, 0)
   A2DPCodec desired_codec = A2DP_CODEC_SBC;
-  bool codec_sep_registered = false;
+  esp_a2d_mcc_t mcc{};
 #endif
 
   void app_gap_callback(esp_bt_gap_cb_event_t event,
@@ -562,6 +566,8 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   virtual void set_i2s_active(bool active);
 
   virtual bool isSource() { return false; }
+
+  bool is_encoded_output() { return encoded_stream_reader != nullptr; }
 
 };
 

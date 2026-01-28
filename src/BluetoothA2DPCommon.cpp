@@ -274,7 +274,7 @@ void BluetoothA2DPCommon::set_last_connection(esp_bd_addr_t bda) {
     return;
   }
   // update nvs only when autoreconnect is enabled
-  if (is_autoreconnect_allowed){
+  if (reconnect_status != NoReconnect) {
     write_address(last_bda_nvs_name(), bda);
   }
   // update last_connection variable

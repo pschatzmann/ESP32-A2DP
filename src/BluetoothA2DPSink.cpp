@@ -445,8 +445,8 @@ void BluetoothA2DPSink::app_gap_callback(esp_bt_gap_cb_event_t event,
 
     case ESP_BT_GAP_READ_RSSI_DELTA_EVT: {
       last_rssi_delta = param->read_rssi_delta;
-      if (rssi_callbak != nullptr) {
-        rssi_callbak(last_rssi_delta);
+      if (rssi_callback != nullptr) {
+        rssi_callback(last_rssi_delta);
       }
       break;
     }
@@ -460,6 +460,9 @@ void BluetoothA2DPSink::app_gap_callback(esp_bt_gap_cb_event_t event,
                  param->read_rmt_name.rmt_name);
         memcpy(remote_name, param->read_rmt_name.rmt_name,
                ESP_BT_GAP_MAX_BDNAME_LEN);
+        if (peer_name_callback != nullptr) {
+          peer_name_callback(remote_name);
+        }
       }
     } break;
 

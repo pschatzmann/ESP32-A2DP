@@ -371,6 +371,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>set_output</b> (Print
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set_output_active</b> (bool flag)</td></tr>
 <tr class="memdesc:a68d88c33b8ec218fe3bd45f61c39f754"><td class="mdescLeft">&#160;</td><td class="mdescRight">Activate/Deactivate output e.g. to I2S. <br /></td></tr>
 <tr class="separator:a68d88c33b8ec218fe3bd45f61c39f754"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8ad978f70c1ffaf4fa2bddc1a1e19c3" id="r_ae8ad978f70c1ffaf4fa2bddc1a1e19c3"><td class="memItemLeft" align="right" valign="top"><a id="ae8ad978f70c1ffaf4fa2bddc1a1e19c3" name="ae8ad978f70c1ffaf4fa2bddc1a1e19c3"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_peer_name_callback</b> (void(*callback)(char *peer_name))</td></tr>
+<tr class="memdesc:ae8ad978f70c1ffaf4fa2bddc1a1e19c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the callback that is called when we get the peer name. <br /></td></tr>
+<tr class="separator:ae8ad978f70c1ffaf4fa2bddc1a1e19c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a035b0e2534970acd2c35b65842374e51" id="r_a035b0e2534970acd2c35b65842374e51"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a035b0e2534970acd2c35b65842374e51">set_raw_stream_reader</a> (void(*callBack)(const uint8_t *, uint32_t))</td></tr>
 <tr class="separator:a035b0e2534970acd2c35b65842374e51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a96b4fabd27e7952fc3ea5edca3b95cbb" id="r_a96b4fabd27e7952fc3ea5edca3b95cbb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a96b4fabd27e7952fc3ea5edca3b95cbb">set_reconnect_delay</a> (int delay)</td></tr>
@@ -391,6 +395,10 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>set_sample_ra
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set_spp_active</b> (bool flag)</td></tr>
 <tr class="memdesc:abe6004e2b95d120d64c10cf947fefb55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Activates SSP (Serial protocol) <br /></td></tr>
 <tr class="separator:abe6004e2b95d120d64c10cf947fefb55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee7757c960c0e39bc4c14c1e569d98b0" id="r_aee7757c960c0e39bc4c14c1e569d98b0"><td class="memItemLeft" align="right" valign="top"><a id="aee7757c960c0e39bc4c14c1e569d98b0" name="aee7757c960c0e39bc4c14c1e569d98b0"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_spp_config</b> (esp_spp_cfg_t cfg)</td></tr>
+<tr class="memdesc:aee7757c960c0e39bc4c14c1e569d98b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set SPP configuration (only before start) <br /></td></tr>
+<tr class="separator:aee7757c960c0e39bc4c14c1e569d98b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4f94426ff4899c437d31623e013cf7a5" id="r_a4f94426ff4899c437d31623e013cf7a5"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a4f94426ff4899c437d31623e013cf7a5">set_stream_reader</a> (void(*callBack)(const uint8_t *, uint32_t), bool i2s_output=true)</td></tr>
 <tr class="separator:a4f94426ff4899c437d31623e013cf7a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a14d982730e2b9ea772fe9ede1563ed22" id="r_a14d982730e2b9ea772fe9ede1563ed22"><td class="memItemLeft" align="right" valign="top"><a id="a14d982730e2b9ea772fe9ede1563ed22" name="a14d982730e2b9ea772fe9ede1563ed22"></a>
@@ -713,9 +721,6 @@ A2DPCodec&#160;</td><td class="memItemRight" valign="bottom"><b>desired_codec</b
 <tr class="memitem:a27b34e1f5594694fbcef9912226eeef1" id="r_a27b34e1f5594694fbcef9912226eeef1"><td class="memItemLeft" align="right" valign="top"><a id="a27b34e1f5594694fbcef9912226eeef1" name="a27b34e1f5594694fbcef9912226eeef1"></a>
 void(*&#160;</td><td class="memItemRight" valign="bottom"><b>encoded_stream_reader</b> )(const uint8_t *, size_t) = nullptr</td></tr>
 <tr class="separator:a27b34e1f5594694fbcef9912226eeef1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aafad89f653fffa69c9bdee68b37f3f48" id="r_aafad89f653fffa69c9bdee68b37f3f48"><td class="memItemLeft" align="right" valign="top"><a id="aafad89f653fffa69c9bdee68b37f3f48" name="aafad89f653fffa69c9bdee68b37f3f48"></a>
-esp_spp_mode_t&#160;</td><td class="memItemRight" valign="bottom"><b>esp_spp_mode</b> = ESP_SPP_MODE_CB</td></tr>
-<tr class="separator:aafad89f653fffa69c9bdee68b37f3f48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae6737dd3e78e2f979815615b143fcfda" id="r_ae6737dd3e78e2f979815615b143fcfda"><td class="memItemLeft" align="right" valign="top"><a id="ae6737dd3e78e2f979815615b143fcfda" name="ae6737dd3e78e2f979815615b143fcfda"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>event_queue_size</b> = 20</td></tr>
 <tr class="separator:ae6737dd3e78e2f979815615b143fcfda"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -807,6 +812,8 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>notif_interval_s<
 <tr class="memitem:a83cff3bdeb407a6c19618ba208438604" id="r_a83cff3bdeb407a6c19618ba208438604"><td class="memItemLeft" align="right" valign="top"><a id="a83cff3bdeb407a6c19618ba208438604" name="a83cff3bdeb407a6c19618ba208438604"></a>
 <a class="el" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>peer_bd_addr</b></td></tr>
 <tr class="separator:a83cff3bdeb407a6c19618ba208438604"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04b80e181782f804a8f47188c2a2c09d" id="r_a04b80e181782f804a8f47188c2a2c09d"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a04b80e181782f804a8f47188c2a2c09d">peer_name_callback</a> )(char *peer_name)</td></tr>
+<tr class="separator:a04b80e181782f804a8f47188c2a2c09d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae0b0afc8460617c2d2b23abf048fc6f0" id="r_ae0b0afc8460617c2d2b23abf048fc6f0"><td class="memItemLeft" align="right" valign="top"><a id="ae0b0afc8460617c2d2b23abf048fc6f0" name="ae0b0afc8460617c2d2b23abf048fc6f0"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>pin_code_int</b> = 0</td></tr>
 <tr class="separator:ae0b0afc8460617c2d2b23abf048fc6f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -840,8 +847,8 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>ringbuffer_prefetch_pe
 <tr class="memitem:a7746332ebc078d642b043bfd8be7e6b6" id="r_a7746332ebc078d642b043bfd8be7e6b6"><td class="memItemLeft" align="right" valign="top"><a id="a7746332ebc078d642b043bfd8be7e6b6" name="a7746332ebc078d642b043bfd8be7e6b6"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>rssi_active</b> = false</td></tr>
 <tr class="separator:a7746332ebc078d642b043bfd8be7e6b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a281e8176841885f19fc0ee9f3a0f119b" id="r_a281e8176841885f19fc0ee9f3a0f119b"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a281e8176841885f19fc0ee9f3a0f119b">rssi_callbak</a> )(esp_bt_gap_cb_param_t::read_rssi_delta_param &amp;rssi)</td></tr>
-<tr class="separator:a281e8176841885f19fc0ee9f3a0f119b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc79e0bba106680cc5b8468bc7547ca1" id="r_afc79e0bba106680cc5b8468bc7547ca1"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#afc79e0bba106680cc5b8468bc7547ca1">rssi_callback</a> )(esp_bt_gap_cb_param_t::read_rssi_delta_param &amp;rssi)</td></tr>
+<tr class="separator:afc79e0bba106680cc5b8468bc7547ca1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad0f5f42d8ee5ebd9cf79c91eb0d9918c" id="r_ad0f5f42d8ee5ebd9cf79c91eb0d9918c"><td class="memItemLeft" align="right" valign="top"><a id="ad0f5f42d8ee5ebd9cf79c91eb0d9918c" name="ad0f5f42d8ee5ebd9cf79c91eb0d9918c"></a>
 esp_avrc_rn_evt_cap_mask_t&#160;</td><td class="memItemRight" valign="bottom"><b>s_avrc_peer_rn_cap</b> = {0}</td></tr>
 <tr class="separator:ad0f5f42d8ee5ebd9cf79c91eb0d9918c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -869,6 +876,9 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><b>sample_rate_callbac
 <tr class="memitem:a6af94c47c9c4a11c526bc47750faae52" id="r_a6af94c47c9c4a11c526bc47750faae52"><td class="memItemLeft" align="right" valign="top"><a id="a6af94c47c9c4a11c526bc47750faae52" name="a6af94c47c9c4a11c526bc47750faae52"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>spp_active</b> = false</td></tr>
 <tr class="separator:a6af94c47c9c4a11c526bc47750faae52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd4fdf04557f96d579f460917f9b38e4" id="r_afd4fdf04557f96d579f460917f9b38e4"><td class="memItemLeft" align="right" valign="top"><a id="afd4fdf04557f96d579f460917f9b38e4" name="afd4fdf04557f96d579f460917f9b38e4"></a>
+esp_spp_cfg_t&#160;</td><td class="memItemRight" valign="bottom"><b>spp_cfg</b> = BT_SPP_DEFAULT_CONFIG()</td></tr>
+<tr class="separator:afd4fdf04557f96d579f460917f9b38e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adc8411ed83cf8a4b2a972b46eb84b7a8" id="r_adc8411ed83cf8a4b2a972b46eb84b7a8"><td class="memItemLeft" align="right" valign="top"><a id="adc8411ed83cf8a4b2a972b46eb84b7a8" name="adc8411ed83cf8a4b2a972b46eb84b7a8"></a>
 void(*&#160;</td><td class="memItemRight" valign="bottom"><b>stream_reader</b> )(const uint8_t *, uint32_t) = nullptr</td></tr>
 <tr class="separator:adc8411ed83cf8a4b2a972b46eb84b7a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -2411,8 +2421,8 @@ false </dd></dl>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="a281e8176841885f19fc0ee9f3a0f119b" name="a281e8176841885f19fc0ee9f3a0f119b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a281e8176841885f19fc0ee9f3a0f119b">&#9670;&#160;</a></span>rssi_callbak</h2>
+<a id="a04b80e181782f804a8f47188c2a2c09d" name="a04b80e181782f804a8f47188c2a2c09d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04b80e181782f804a8f47188c2a2c09d">&#9670;&#160;</a></span>peer_name_callback</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2421,7 +2431,31 @@ false </dd></dl>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void(* BluetoothA2DPSink::rssi_callbak) (esp_bt_gap_cb_param_t::read_rssi_delta_param &amp;rssi)</td>
+          <td class="memname">void(* BluetoothA2DPSink::peer_name_callback) (char *peer_name)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">=</div>
+<div class="line">      <span class="keyword">nullptr</span></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="afc79e0bba106680cc5b8468bc7547ca1" name="afc79e0bba106680cc5b8468bc7547ca1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc79e0bba106680cc5b8468bc7547ca1">&#9670;&#160;</a></span>rssi_callback</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void(* BluetoothA2DPSink::rssi_callback) (esp_bt_gap_cb_param_t::read_rssi_delta_param &amp;rssi)</td>
         </tr>
       </table>
   </td>

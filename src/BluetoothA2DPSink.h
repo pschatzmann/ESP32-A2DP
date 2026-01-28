@@ -345,21 +345,29 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   /// Defines the callback that is called when we get an new rssi value
   void set_rssi_callback(
       void (*callback)(esp_bt_gap_cb_param_t::read_rssi_delta_param &rssi)) {
-    rssi_callbak = callback;
+    rssi_callback = callback;
+  }
+
+  /// Defines the callback that is called when we get the peer name
+  void set_peer_name_callback(
+      void (*callback)(char *peer_name)) {
+    peer_name_callback = callback;
   }
 
   /// Defines the delay that is added to delay the startup when we automatically
   /// reconnect
   void set_reconnect_delay(int delay) { reconnect_delay = delay; }
 
+#if A2DP_SPP_SUPPORT
   /// Activates SSP (Serial protocol)
   void set_spp_active(bool flag) { spp_active = flag; }
 
-#if (A2DP_SPP_SUPPORT && ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0, 0))
-  /// Set SPP configuration (only before start) 
+#if (ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0, 0))
+  /// Set SPP configuration (only before start)
   void set_spp_config(esp_spp_cfg_t cfg) {
     spp_cfg = cfg;
   }
+#endif
 #endif
 
 
@@ -448,7 +456,9 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   // RSSI support
   esp_bt_gap_cb_param_t::read_rssi_delta_param last_rssi_delta;
   bool rssi_active = false;
-  void (*rssi_callbak)(esp_bt_gap_cb_param_t::read_rssi_delta_param &rssi) =
+  void (*rssi_callback)(esp_bt_gap_cb_param_t::read_rssi_delta_param &rssi) =
+      nullptr;
+  void (*peer_name_callback)(char *peer_name) =
       nullptr;
   int reconnect_delay = 1000;
   int max_write_size = A2DP_I2S_MAX_WRITE_SIZE;

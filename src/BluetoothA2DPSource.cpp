@@ -1053,7 +1053,8 @@ void BluetoothA2DPSource::av_hdl_avrc_tg_evt(uint16_t event, void *p_param) {
                                              &psth_set) != ESP_OK) {
           ESP_LOGE(BT_AV_TAG, "esp_avrc_tg_set_psth_cmd_filter");
         }
-        ESP_LOGI(BT_AV_TAG, "Set passthru capabilities: 0x%0x", psth_set);
+        ESP_LOGI(BT_AV_TAG, "Set passthru capabilities: 0x%0x 0x%0x 0x%0x 0x%0x 0x%0x 0x%0x 0x%0x 0x%0x",
+           psth_set.bits[0], psth_set.bits[1], psth_set.bits[2], psth_set.bits[3], psth_set.bits[4], psth_set.bits[5], psth_set.bits[6], psth_set.bits[7]);
       }
       break;
     }

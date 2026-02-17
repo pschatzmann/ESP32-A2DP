@@ -400,7 +400,23 @@ const char* BluetoothA2DPCommon::to_str(esp_bd_addr_t bda) {
  */
 bool BluetoothA2DPCommon::bt_start() {
 #ifdef ARDUINO
-  return btStart();
+  auto mde = BT_MODE_CLASSIC_BT;
+  switch(bt_mode) {
+    case ESP_BT_MODE_CLASSIC_BT:
+      mde = BT_MODE_CLASSIC_BT;
+      break;
+    case ESP_BT_MODE_BLE:
+      mde = BT_MODE_BLE;
+      break;
+    case ESP_BT_MODE_BTDM:
+      mde = BT_MODE_BTDM;
+      break;
+    default:
+      mde = BT_MODE_BTDM;
+      ESP_LOGE(BT_APP_TAG, "Unsupported Bluetooth Mode: %d - using %d", bt_mode, mde);
+      break;
+  }
+  return btStartMode(BT_MODE_BTDM);
 #else
   esp_bt_controller_config_t cfg = BT_CONTROLLER_INIT_CONFIG_DEFAULT();
   // esp_bt_controller_enable(MODE) This mode must be equal as the mode in “cfg”

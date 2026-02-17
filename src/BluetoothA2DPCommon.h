@@ -78,7 +78,7 @@ using namespace esp_i2s;
 #include "nvs.h"
 #include "nvs_flash.h"
 
-// Memory maanagement
+// Memory management ESP32 Core 3.3.7 and later: 
 // https://github.com/espressif/arduino-esp32/issues/12371
 #if __has_include("esp32-hal-bt-mem.h") 
 #include "esp32-hal-bt-mem.h" 

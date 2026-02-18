@@ -416,7 +416,7 @@ bool BluetoothA2DPCommon::bt_start() {
       ESP_LOGE(BT_APP_TAG, "Unsupported Bluetooth Mode: %d - using %d", bt_mode, mde);
       break;
   }
-  return btStartMode(BT_MODE_BTDM);
+  return btStartMode(mde);
 #else
   esp_bt_controller_config_t cfg = BT_CONTROLLER_INIT_CONFIG_DEFAULT();
   // esp_bt_controller_enable(MODE) This mode must be equal as the mode in “cfg”

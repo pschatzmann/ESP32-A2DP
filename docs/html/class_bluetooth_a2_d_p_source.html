@@ -103,10 +103,18 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>~BluetoothA2DPSource</b> ()</td></tr>
 <tr class="memdesc:a417e7ef0049364c22c92a29e6c4b4ed1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
 <tr class="separator:a417e7ef0049364c22c92a29e6c4b4ed1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a227a1baa4009f3d5a68a41f7cec689bd" id="r_a227a1baa4009f3d5a68a41f7cec689bd"><td class="memItemLeft" align="right" valign="top"><a id="a227a1baa4009f3d5a68a41f7cec689bd" name="a227a1baa4009f3d5a68a41f7cec689bd"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>cancel_discovery</b> ()</td></tr>
+<tr class="memdesc:a227a1baa4009f3d5a68a41f7cec689bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cancels the discovery. <br /></td></tr>
+<tr class="separator:a227a1baa4009f3d5a68a41f7cec689bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a962cc9aef396b06c7eb6f56462a743ac" id="r_a962cc9aef396b06c7eb6f56462a743ac"><td class="memItemLeft" align="right" valign="top"><a id="a962cc9aef396b06c7eb6f56462a743ac" name="a962cc9aef396b06c7eb6f56462a743ac"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>clean_last_connection</b> ()</td></tr>
 <tr class="memdesc:a962cc9aef396b06c7eb6f56462a743ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">clean last connection (delete) <br /></td></tr>
 <tr class="separator:a962cc9aef396b06c7eb6f56462a743ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c4a19b95aa3a7beda31f3e0f424f054" id="r_a9c4a19b95aa3a7beda31f3e0f424f054"><td class="memItemLeft" align="right" valign="top"><a id="a9c4a19b95aa3a7beda31f3e0f424f054" name="a9c4a19b95aa3a7beda31f3e0f424f054"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>clear_references</b> ()</td></tr>
+<tr class="memdesc:a9c4a19b95aa3a7beda31f3e0f424f054"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear all references. <br /></td></tr>
+<tr class="separator:a9c4a19b95aa3a7beda31f3e0f424f054"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a788d81fe538021f912d737de72ed6be6" id="r_a788d81fe538021f912d737de72ed6be6"><td class="memItemLeft" align="right" valign="top"><a id="a788d81fe538021f912d737de72ed6be6" name="a788d81fe538021f912d737de72ed6be6"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>connect_to</b> (<a class="el" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a> peer)</td></tr>
 <tr class="memdesc:a788d81fe538021f912d737de72ed6be6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connnects to the indicated address. <br /></td></tr>
@@ -144,6 +152,10 @@ unsigned long&#160;</td><td class="memItemRight" valign="bottom"><b>get_millis</
 virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><b>get_name</b> ()</td></tr>
 <tr class="memdesc:a458bca4d65937c5e2de7bfeb0f454d88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides the actual SSID name. <br /></td></tr>
 <tr class="separator:a458bca4d65937c5e2de7bfeb0f454d88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82de23303003652caba588b86f946407" id="r_a82de23303003652caba588b86f946407"><td class="memItemLeft" align="right" valign="top"><a id="a82de23303003652caba588b86f946407" name="a82de23303003652caba588b86f946407"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><b>get_reference</b> (int type=0)</td></tr>
+<tr class="memdesc:a82de23303003652caba588b86f946407"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the reference to an object (e.g. to use in the callbacks) <br /></td></tr>
+<tr class="separator:a82de23303003652caba588b86f946407"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0e570c2c2f9db40873286e0571f0d93a" id="r_a0e570c2c2f9db40873286e0571f0d93a"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a0e570c2c2f9db40873286e0571f0d93a">get_volume</a> ()</td></tr>
 <tr class="memdesc:a0e570c2c2f9db40873286e0571f0d93a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines the actual volume.  <br /></td></tr>
 <tr class="separator:a0e570c2c2f9db40873286e0571f0d93a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -234,6 +246,10 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>set_local_nam
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set_pin_code</b> (const char *pin_code, esp_bt_pin_type_t pin_type)</td></tr>
 <tr class="memdesc:a098d9fdb6cfe044406025e89725c449d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the pin code. If nothing is defined we use "1234". <br /></td></tr>
 <tr class="separator:a098d9fdb6cfe044406025e89725c449d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94bb9305b2333d892f781d8df564b6ec" id="r_a94bb9305b2333d892f781d8df564b6ec"><td class="memItemLeft" align="right" valign="top"><a id="a94bb9305b2333d892f781d8df564b6ec" name="a94bb9305b2333d892f781d8df564b6ec"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_refernce</b> (void *ref, int type=0)</td></tr>
+<tr class="memdesc:a94bb9305b2333d892f781d8df564b6ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store a reference to an object (e.g. to use in the callbacks) <br /></td></tr>
+<tr class="separator:a94bb9305b2333d892f781d8df564b6ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5efcc4c32c6ec8ce7eac2c1acb59f27c" id="r_a5efcc4c32c6ec8ce7eac2c1acb59f27c"><td class="memItemLeft" align="right" valign="top"><a id="a5efcc4c32c6ec8ce7eac2c1acb59f27c" name="a5efcc4c32c6ec8ce7eac2c1acb59f27c"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>set_reset_ble</b> (bool doInit)</td></tr>
 <tr class="memdesc:a5efcc4c32c6ec8ce7eac2c1acb59f27c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines if the BLE should be reset on start. <br /></td></tr>
@@ -590,6 +606,9 @@ esp_bt_pin_type_t&#160;</td><td class="memItemRight" valign="bottom"><b>pin_type
 <tr class="memitem:aa350c922076ae8584f26d1693edc0ba8" id="r_aa350c922076ae8584f26d1693edc0ba8"><td class="memItemLeft" align="right" valign="top"><a id="aa350c922076ae8584f26d1693edc0ba8" name="aa350c922076ae8584f26d1693edc0ba8"></a>
 unsigned long&#160;</td><td class="memItemRight" valign="bottom"><b>reconnect_timout</b> = 0</td></tr>
 <tr class="separator:aa350c922076ae8584f26d1693edc0ba8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa14729d5ae4be01e1f5cd821945b6ad1" id="r_aa14729d5ae4be01e1f5cd821945b6ad1"><td class="memItemLeft" align="right" valign="top"><a id="aa14729d5ae4be01e1f5cd821945b6ad1" name="aa14729d5ae4be01e1f5cd821945b6ad1"></a>
+std::map&lt; int, void * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>references</b></td></tr>
+<tr class="separator:aa14729d5ae4be01e1f5cd821945b6ad1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeeca78610802e0628899e6d7e773095f" id="r_aeeca78610802e0628899e6d7e773095f"><td class="memItemLeft" align="right" valign="top"><a id="aeeca78610802e0628899e6d7e773095f" name="aeeca78610802e0628899e6d7e773095f"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>reset_ble</b> = false</td></tr>
 <tr class="separator:aeeca78610802e0628899e6d7e773095f"><td class="memSeparator" colspan="2">&#160;</td></tr>

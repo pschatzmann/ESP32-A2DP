@@ -77,6 +77,7 @@ using namespace esp_i2s;
 #include "esp_timer.h"
 #include "nvs.h"
 #include "nvs_flash.h"
+#include "map"
 
 // Memory management ESP32 Core 3.3.7 and later: 
 // https://github.com/espressif/arduino-esp32/issues/12371
@@ -356,6 +357,15 @@ class BluetoothA2DPCommon {
     avrc_rn_events = events;
   }
 
+  ///  Store a reference to an object (e.g. to use in the callbacks)
+  void set_refernce(void* ref, int type = 0);
+  ///  Get the reference to an object (e.g. to use in the callbacks) 
+  void* get_reference(int type = 0);
+  /// @brief Clear all references
+  void clear_references() {
+    references.clear();
+  }
+
  protected:
   const char *bt_name = {0};
   esp_bd_addr_t peer_bd_addr;
@@ -402,6 +412,7 @@ class BluetoothA2DPCommon {
 
   QueueHandle_t app_task_queue = nullptr;
   TaskHandle_t app_task_handle = nullptr;
+  std::map<int, void*> references;
 
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 2, 1)
   esp_bluedroid_config_t bluedroid_config{.ssp_en = true};

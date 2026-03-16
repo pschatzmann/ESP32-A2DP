@@ -17,7 +17,6 @@
 
 #if IS_VALID_PLATFORM
 
-
 BluetoothA2DPCommon* actual_bluetooth_a2dp_common = nullptr;
 
 extern "C" void ccall_bt_app_task_handler(void* arg) {
@@ -140,7 +139,7 @@ void BluetoothA2DPCommon::end(bool release_memory) {
 
   // Disconnect and wait
   int limit = A2DP_DISCONNECT_LIMIT;
-  if (is_connected()){
+  if (is_connected()) {
     disconnect();
     while (get_connection_state() != ESP_A2D_CONNECTION_STATE_DISCONNECTED) {
       delay_ms(100);
@@ -223,7 +222,7 @@ void BluetoothA2DPCommon::end(bool release_memory) {
 
     esp_bluedroid_deinit();
     is_bluedroid_initialized = false;
-    
+
     log_free_heap();
     is_start_disabled = true;
   }
@@ -256,7 +255,7 @@ bool BluetoothA2DPCommon::has_last_connection() {
 void BluetoothA2DPCommon::get_last_connection() {
   ESP_LOGD(BT_AV_TAG, "%s", __func__);
 
-  if (is_autoreconnect_allowed){
+  if (is_autoreconnect_allowed) {
     esp_bd_addr_t bda;
     if (read_address(last_bda_nvs_name(), bda)) {
       memcpy(last_connection, bda, ESP_BD_ADDR_LEN);
@@ -387,8 +386,8 @@ const char* BluetoothA2DPCommon::to_str(esp_bd_addr_t bda) {
   return (const char*)bda_str;
 }
 
-  /// converts esp_bt_gap_discovery_state_t to a string
-  const char* BluetoothA2DPCommon::to_str(esp_bt_gap_discovery_state_t state) {
+/// converts esp_bt_gap_discovery_state_t to a string
+const char* BluetoothA2DPCommon::to_str(esp_bt_gap_discovery_state_t state) {
   return m_esp_bt_gap_discovery_state_t[state];
 }
 
@@ -400,27 +399,28 @@ const char* BluetoothA2DPCommon::to_str(esp_bd_addr_t bda) {
  */
 bool BluetoothA2DPCommon::bt_start() {
 #ifdef ARDUINO
-#  if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0, 0) 
-    auto mde = BT_MODE_CLASSIC_BT;
-    switch(bt_mode) {
-      case ESP_BT_MODE_CLASSIC_BT:
-        mde = BT_MODE_CLASSIC_BT;
-        break;
-      case ESP_BT_MODE_BLE:
-        mde = BT_MODE_BLE;
-        break;
-      case ESP_BT_MODE_BTDM:
-        mde = BT_MODE_BTDM;
-        break;
-      default:
-        mde = BT_MODE_BTDM;
-        ESP_LOGE(BT_APP_TAG, "Unsupported Bluetooth Mode: %d - using %d", bt_mode, mde);
-        break;
-    }
-    return btStartMode(mde);
-#  else
-    return btStart();
-#  endif
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0, 0)
+  auto mde = BT_MODE_CLASSIC_BT;
+  switch (bt_mode) {
+    case ESP_BT_MODE_CLASSIC_BT:
+      mde = BT_MODE_CLASSIC_BT;
+      break;
+    case ESP_BT_MODE_BLE:
+      mde = BT_MODE_BLE;
+      break;
+    case ESP_BT_MODE_BTDM:
+      mde = BT_MODE_BTDM;
+      break;
+    default:
+      mde = BT_MODE_BTDM;
+      ESP_LOGE(BT_APP_TAG, "Unsupported Bluetooth Mode: %d - using %d", bt_mode,
+               mde);
+      break;
+  }
+  return btStartMode(mde);
+#else
+  return btStart();
+#endif
 #else
   esp_bt_controller_config_t cfg = BT_CONTROLLER_INIT_CONFIG_DEFAULT();
   // esp_bt_controller_enable(MODE) This mode must be equal as the mode in “cfg”
@@ -470,7 +470,7 @@ esp_err_t BluetoothA2DPCommon::bluedroid_init() {
 
 void BluetoothA2DPCommon::app_task_start_up() {
   ESP_LOGD(BT_AV_TAG, "%s", __func__);
-  if (app_task_queue == nullptr){
+  if (app_task_queue == nullptr) {
     app_task_queue = xQueueCreate(event_queue_size, sizeof(bt_app_msg_t));
   }
 
@@ -620,4 +620,19 @@ unsigned long BluetoothA2DPCommon::get_millis() {
 #endif
 }
 
-#endif // platform
+void BluetoothA2DPCommon::set_refernce(void* ref, int type) {
+  if (ref == nullptr) {
+    references.erase(type);
+    return;
+  }
+  references[type] = ref;
+}
+
+void* BluetoothA2DPCommon::get_reference(int type) {
+  auto it = references.find(type);
+  if (it == references.end()) {
+    return nullptr;
+  }
+  return it->second;
+}
+#endif  // platform

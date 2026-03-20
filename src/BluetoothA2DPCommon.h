@@ -358,7 +358,7 @@ class BluetoothA2DPCommon {
   }
 
   ///  Store a reference to an object (e.g. to use in the callbacks)
-  void set_refernce(void* ref, int type = 0);
+  void set_reference(void* ref, int type = 0);
   ///  Get the reference to an object (e.g. to use in the callbacks) 
   void* get_reference(int type = 0);
   /// @brief Clear all references

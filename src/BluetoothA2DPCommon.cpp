@@ -620,7 +620,7 @@ unsigned long BluetoothA2DPCommon::get_millis() {
 #endif
 }
 
-void BluetoothA2DPCommon::set_refernce(void* ref, int type) {
+void BluetoothA2DPCommon::set_reference(void* ref, int type) {
   if (ref == nullptr) {
     references.erase(type);
     return;

@@ -110,17 +110,20 @@ void BluetoothA2DPSource::start(std::vector<const char *> names) {
     return;
   }
 
-  if (!is_bluedroid_initialized){
+  esp_bluedroid_status_t bluedroid_state = esp_bluedroid_get_status();
+
+  if (bluedroid_state == ESP_BLUEDROID_STATUS_UNINITIALIZED) {
     if (bluedroid_init() != ESP_OK) {
       ESP_LOGE(BT_AV_TAG, "%s initialize bluedroid failed\n", __func__);
       return;
     }
+  }
 
+  if (bluedroid_state == ESP_BLUEDROID_STATUS_INITIALIZED) {
     if (esp_bluedroid_enable() != ESP_OK) {
       ESP_LOGE(BT_AV_TAG, "%s enable bluedroid failed\n", __func__);
       return;
     }
-    is_bluedroid_initialized = true;
   }
 
   if (ssp_enabled) {
@@ -164,9 +167,6 @@ void BluetoothA2DPSource::end(bool release_memory) {
 #endif
   ESP_LOGD(BT_APP_TAG, "Deinitializing AVRC CT");
   esp_avrc_ct_deinit();
-  
-  // Reset the bluedroid initialization flag so it can be reinitialized
-  is_bluedroid_initialized = false;
   
   // standard end
   BluetoothA2DPCommon::end(release_memory);

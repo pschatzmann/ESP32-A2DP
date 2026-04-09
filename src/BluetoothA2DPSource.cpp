@@ -880,6 +880,9 @@ void BluetoothA2DPSource::app_rc_ct_callback(esp_avrc_ct_cb_event_t event,
     case ESP_AVRC_CT_GET_RN_CAPABILITIES_RSP_EVT:
     case ESP_AVRC_CT_SET_ABSOLUTE_VOLUME_RSP_EVT:
 #endif
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 4, 3)
+    case ESP_AVRC_CT_PROF_STATE_EVT:
+#endif
     {
       bt_app_work_dispatch(ccall_bt_av_hdl_avrc_ct_evt, event, param,
                            sizeof(esp_avrc_ct_cb_param_t), nullptr);
@@ -1016,6 +1019,12 @@ void BluetoothA2DPSource::bt_av_hdl_avrc_ct_evt(uint16_t event, void *p_param) {
       ESP_LOGI(BT_RC_CT_TAG, "Set absolute volume response: volume %d",
                rc->set_volume_rsp.volume);
       set_volume(rc->set_volume_rsp.volume);
+      break;
+    }
+#endif
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 4, 3)
+    case ESP_AVRC_CT_PROF_STATE_EVT: {
+      ESP_LOGI(BT_RC_CT_TAG, "AVRC profile state changed: %d", rc->avrc_ct_init_stat.state);
       break;
     }
 #endif

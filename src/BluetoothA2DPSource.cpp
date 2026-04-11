@@ -454,6 +454,10 @@ void BluetoothA2DPSource::app_gap_callback(esp_bt_gap_cb_event_t event,
 
     case ESP_BT_GAP_ACL_DISCONN_CMPL_STAT_EVT:
       ESP_LOGI(BT_AV_TAG, "ESP_BT_GAP_ACL_DISCONN_CMPL_STAT_EVT");
+      connection_state = ESP_A2D_CONNECTION_STATE_DISCONNECTED;
+      if (connection_state_callback != nullptr) {
+        connection_state_callback(connection_state, connection_state_obj);
+      }
       break;
 
     case ESP_BT_GAP_MODE_CHG_EVT:

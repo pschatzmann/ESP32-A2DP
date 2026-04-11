@@ -111,12 +111,15 @@ void BluetoothA2DPSource::start(std::vector<const char *> names) {
   }
 
   esp_bluedroid_status_t bluedroid_state = esp_bluedroid_get_status();
+  ESP_LOGI(BT_AV_TAG, "Bluedroid status: %d", bluedroid_state);
 
   if (bluedroid_state == ESP_BLUEDROID_STATUS_UNINITIALIZED) {
     if (bluedroid_init() != ESP_OK) {
       ESP_LOGE(BT_AV_TAG, "%s initialize bluedroid failed\n", __func__);
       return;
     }
+    bluedroid_state = esp_bluedroid_get_status();
+    ESP_LOGI(BT_AV_TAG, "Bluedroid status: %d", bluedroid_state);
   }
 
   if (bluedroid_state == ESP_BLUEDROID_STATUS_INITIALIZED) {

@@ -26,6 +26,7 @@ ResampleStream resample(out);
 BluetoothA2DPSink a2dp_sink(resample);
 
 void setup() {
+  Serial.begin(115200);
   // setup i2s with 48000
   auto cfg = out.defaultConfig();
   cfg.copyFrom(to_info);

@@ -38,6 +38,7 @@ void avrc_metadata_callback(uint8_t id, const uint8_t *text) {
 }
 
 void setup() {
+  Serial.begin(115200);
   // start a2dp in ESP_BT_MODE_BTDM mode
   a2dp_sink.set_default_bt_mode(ESP_BT_MODE_BTDM);
   a2dp_sink.set_avrc_metadata_callback(avrc_metadata_callback);

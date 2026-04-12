@@ -23,9 +23,7 @@ bool connected = true;
 
 void setup() {
   Serial.begin(115200);
-  //a2dp_sink.set_auto_reconnect(false);
   a2dp_sink.start("MyMusic");  
-
 }
 
 

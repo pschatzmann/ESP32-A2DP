@@ -86,15 +86,17 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
   /// activate Secure Simple Pairing
   virtual void set_ssp_enabled(bool active) { this->ssp_enabled = active; }
 
-  /// activate / deactivate the automatic reconnection to the last address (per
-  /// default this is on)
-  virtual void set_auto_reconnect(bool active) {
+  /// activate / deactivate the automatic reconnection to the last address (per default this is on)
+  /// If active is true, will retry up to max_retries times before falling back to scanning
+  virtual void set_auto_reconnect(bool active, int max_retries = AUTOCONNECT_TRY_NUM) {
     this->reconnect_status = active ? AutoReconnect : NoReconnect;
+    this->max_reconnect_retries = max_retries;
+    this->reconnect_retries = max_reconnect_retries;
   }
 
-  /// automatically tries to reconnect to the indicated address
-  virtual void set_auto_reconnect(esp_bd_addr_t addr) {
-    set_auto_reconnect(true);
+  /// automatically tries to reconnect to the indicated address, with retry count
+  virtual void set_auto_reconnect(esp_bd_addr_t addr, int max_retries = 3) {
+    set_auto_reconnect(true, max_retries);
     memcpy(last_connection, addr, ESP_BD_ADDR_LEN);
   }
 
@@ -153,6 +155,7 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
 
   /// Obsolete: use the start w/o callback and set the callback separately
   virtual void start(std::vector<const char *> names,
+    // Prevent auto-reconnect after willful disconnect
                      music_data_frames_cb_t callback) {
     set_data_callback_in_frames(callback);
     start(names);
@@ -261,6 +264,9 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
   void (*passthru_command_callback)(uint8_t, bool) = nullptr;
   bool is_passthru_active = false;
   bool is_end = false;
+  // Retry logic for auto reconnect
+  int reconnect_retries = 0;
+  int max_reconnect_retries = 0;
 
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
   esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap;
@@ -326,6 +332,8 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
 
   /// converts a APP_AV_STATE_ENUM to a string
   const char *to_state_str(int state) { return APP_AV_STATE_STR[state]; }
+  /// Retry logic for auto reconnect. Returns true if a reconnect attempt was made, false if fallback to scan
+  bool handle_reconnect_logic();
 
   void set_scan_mode_connectable_default() override {
     set_scan_mode_connectable(false);

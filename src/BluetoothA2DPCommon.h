@@ -421,7 +421,7 @@ class BluetoothA2DPCommon {
   virtual void init_nvs();
   virtual esp_err_t esp_a2d_connect(esp_bd_addr_t peer) = 0;
   virtual const char *last_bda_nvs_name() = 0;
-  virtual void get_last_connection();
+  virtual bool get_last_connection();
   virtual void set_last_connection(esp_bd_addr_t bda);
   virtual bool has_last_connection();
   virtual bool read_address(const char *name, esp_bd_addr_t &bda);

@@ -158,12 +158,14 @@ void BluetoothA2DPSink::start(const char *name) {
   if (is_autoreconnect_allowed) {
     // reconnect management
     // grab last connnectiom, even if we dont use it now for auto reconnect
-    get_last_connection();
-
-    memcpy(peer_bd_addr, last_connection, ESP_BD_ADDR_LEN);
-
-    // trigger timeout
-    delay_ms(reconnect_delay);
+    if (get_last_connection()) {
+      memcpy(peer_bd_addr, last_connection, ESP_BD_ADDR_LEN);
+      // trigger timeout
+      delay_ms(reconnect_delay);
+    } else {
+      ESP_LOGI(BT_APP_TAG, "No last connection found, disabling auto reconnect");
+      is_autoreconnect_allowed = false;
+    }
   }
 
   // setup i2s

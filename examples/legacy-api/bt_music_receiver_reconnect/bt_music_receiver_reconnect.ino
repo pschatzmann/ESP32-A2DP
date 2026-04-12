@@ -23,7 +23,9 @@ bool connected = true;
 
 void setup() {
   Serial.begin(115200);
-  a2dp_sink.set_auto_reconnect(true);
+  // Please read the Wiki for more details about auto reconnect and how to use it!
+  int retry_count = 5;
+  a2dp_sink.set_auto_reconnect(true, retry_count);
   a2dp_sink.start("MyMusic");  
 
 }

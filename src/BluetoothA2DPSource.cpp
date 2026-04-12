@@ -1,4 +1,3 @@
-
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -75,6 +74,7 @@ BluetoothA2DPSource::BluetoothA2DPSource() {
   s_intv_cnt = 0;
   s_connecting_heatbeat_count = 0;
   s_pkt_cnt = 0;
+
 }
 
 BluetoothA2DPSource::~BluetoothA2DPSource() { end(); }
@@ -92,12 +92,16 @@ void BluetoothA2DPSource::start(std::vector<const char *> names) {
   this->bt_names = names;
   is_end = false;
   is_autoreconnect_allowed = (reconnect_status == AutoReconnect);
+  reconnect_retries = max_reconnect_retries;
 
   init_nvs();
   if (is_autoreconnect_allowed) {
     // get last connection if not available
     if (!has_last_connection()) {
-      get_last_connection();
+      if (!get_last_connection()){
+        ESP_LOGI(BT_APP_TAG, "No last connection found, disabling auto reconnect");
+        is_autoreconnect_allowed = false;
+      }
     }
   }
 
@@ -212,7 +216,7 @@ void BluetoothA2DPSource::reset_last_connection() {
   [[maybe_unused]] const char *bda_str = to_str(last_connection);
   ESP_LOGD(BT_APP_TAG, "last connection %s, ", bda_str);
   if (has_last_connection()) {
-    // the device might not have noticed that we are diconnected
+    // the device might not have noticed that we are disconnected
     disconnect();
     delay_ms(2000);
   }
@@ -591,6 +595,11 @@ void BluetoothA2DPSource::process_user_state_callbacks(uint16_t event,
       if (connection_state_callback != nullptr) {
         connection_state_callback(a2d->conn_stat.state, connection_state_obj);
       }
+
+      // reset reconnect status on successful connection
+      if (connection_state == ESP_A2D_CONNECTION_STATE_CONNECTED) {
+        reconnect_retries = max_reconnect_retries;
+      }
       break;
 
     case ESP_A2D_AUDIO_STATE_EVT:
@@ -638,25 +647,31 @@ void BluetoothA2DPSource::bt_app_av_sm_hdlr(uint16_t event, void *param) {
 void BluetoothA2DPSource::bt_app_av_state_unconnected_hdlr(uint16_t event,
                                                            void *param) {
   ESP_LOGD(BT_AV_TAG, "%s evt %d", __func__, event);
-  // esp_a2d_cb_param_t *a2d = nullptr;
-  /* handle the events of intrest in unconnected state */
   switch (event) {
-    case ESP_A2D_CONNECTION_STATE_EVT:
+    case ESP_A2D_CONNECTION_STATE_EVT: {
+      esp_a2d_cb_param_t *a2d = (esp_a2d_cb_param_t *)(param);
+      if (a2d && a2d->conn_stat.state == ESP_A2D_CONNECTION_STATE_DISCONNECTED) {
+        // Retry reconnect logic if enabled
+        if (handle_reconnect_logic()) {
+          ESP_LOGI(BT_AV_TAG, "Retrying reconnect to last address");
+          return;
+        }
+        ESP_LOGI(BT_AV_TAG, "Reconnect retries exhausted, fallback to scanning");
+      }
+      break;
+    }
     case ESP_A2D_AUDIO_STATE_EVT:
     case ESP_A2D_AUDIO_CFG_EVT:
     case ESP_A2D_MEDIA_CTRL_ACK_EVT:
       ESP_LOGW(BT_AV_TAG, "Events unprocessed: %d", event);
-
       break;
     case BT_APP_HEART_BEAT_EVT: {
-      // prevent reconnect after disconnect()
-      if (is_target_status_active) {
-        if (esp_a2d_connect(peer_bd_addr) != ESP_OK) {
-          ESP_LOGE(BT_AV_TAG, "esp_a2d_connect failed");
-        };
-        s_a2d_state = APP_AV_STATE_CONNECTING;
-        s_connecting_heatbeat_count = 0;
+      // Use the same retry/fallback logic as disconnect event
+      if (handle_reconnect_logic()) {
+        ESP_LOGI(BT_AV_TAG, "Heartbeat: retrying reconnect to last address");
+        return;
       }
+      ESP_LOGI(BT_AV_TAG, "Heartbeat: reconnect retries exhausted, fallback to scanning");
       break;
     }
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 3, 0)
@@ -674,6 +689,28 @@ void BluetoothA2DPSource::bt_app_av_state_unconnected_hdlr(uint16_t event,
     }
   }
 }
+
+bool BluetoothA2DPSource::handle_reconnect_logic() {
+  if (!is_autoreconnect_allowed){
+    ESP_LOGI(BT_AV_TAG, "Auto-reconnect disabled, not attempting to reconnect");
+    return false;
+  }
+  if (reconnect_status == AutoReconnect && reconnect_retries > 0) {
+    ESP_LOGI(BT_AV_TAG, "Attempting auto-reconnect, retries left: %d", reconnect_retries);
+    reconnect_retries--;
+    connect_to(last_connection);
+    return true;
+  } else if (reconnect_status == AutoReconnect) {
+    ESP_LOGI(BT_AV_TAG, "Auto-reconnect retries exhausted, starting device discovery");
+    reconnect_status = NoReconnect;
+    reconnect_retries = max_reconnect_retries;
+    s_a2d_state = APP_AV_STATE_DISCOVERING;
+    esp_bt_gap_start_discovery(ESP_BT_INQ_MODE_GENERAL_INQUIRY, 10, 0);
+    return false;
+  }
+  return false;
+}
+
 
 void BluetoothA2DPSource::bt_app_av_state_connecting_hdlr(uint16_t event,
                                                           void *param) {

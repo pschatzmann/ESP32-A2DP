@@ -252,16 +252,19 @@ bool BluetoothA2DPCommon::has_last_connection() {
   return result != 0;
 }
 
-void BluetoothA2DPCommon::get_last_connection() {
+bool BluetoothA2DPCommon::get_last_connection() {
   ESP_LOGD(BT_AV_TAG, "%s", __func__);
+  bool result = false;
 
   if (is_autoreconnect_allowed) {
     esp_bd_addr_t bda;
     if (read_address(last_bda_nvs_name(), bda)) {
       memcpy(last_connection, bda, ESP_BD_ADDR_LEN);
+      result = true;
     }
   }
   ESP_LOGD(BT_AV_TAG, "=> %s", to_str(last_connection));
+  return result;
 }
 
 void BluetoothA2DPCommon::set_last_connection(esp_bd_addr_t bda) {

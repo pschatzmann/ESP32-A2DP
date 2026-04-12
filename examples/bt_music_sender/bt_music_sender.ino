@@ -49,9 +49,7 @@ int32_t get_data_frames(Frame *frame, int32_t frame_count) {
 
 void setup() {
   Serial.begin(115200);
-  // Please read the Wiki for more details about auto reconnect and how to use it!
-  int retry_count = 2;
-  a2dp_source.set_auto_reconnect(false, retry_count);
+  
   a2dp_source.set_data_callback_in_frames(get_data_frames);
   a2dp_source.set_volume(30);
   a2dp_source.start("LEXON MINO L");  

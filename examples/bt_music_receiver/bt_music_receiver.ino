@@ -20,6 +20,9 @@
 // bck = 14
 // ws = 15
 // data_out = 22
+// 
+// Some useres reported issues with pin 22: For changing pins see
+// https://github.com/pschatzmann/arduino-audio-tools/wiki/External-DAC
 
 #include "AudioTools.h"
 #include "BluetoothA2DPSink.h"

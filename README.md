@@ -42,6 +42,7 @@ I2SStream i2s;
 BluetoothA2DPSink a2dp_sink(i2s);
 
 void setup() {
+    Serial.begin(115200);
     a2dp_sink.start("MyMusic");
 }
 
@@ -68,6 +69,7 @@ I2SStream i2s;
 BluetoothA2DPSink a2dp_sink(i2s);
 
 void setup() {
+    Serial.begin(115200);
     auto cfg = i2s.defaultConfig();
     cfg.pin_bck = 14;
     cfg.pin_ws = 15;
@@ -97,6 +99,8 @@ I2SClass i2s;
 BluetoothA2DPSink a2dp_sink(i2s);
 
 void setup() {
+    Serial.begin(115200);
+
     i2s.setPins(I2S_SCK, I2S_WS, I2S_SDOUT);
     if (!i2s.begin(I2S_MODE_STD, 44100, I2S_DATA_BIT_WIDTH_16BIT, I2S_SLOT_MODE_STEREO, I2S_STD_SLOT_BOTH)) {
       Serial.println("Failed to initialize I2S!");

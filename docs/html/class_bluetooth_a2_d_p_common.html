@@ -89,9 +89,9 @@ Inheritance diagram for BluetoothA2DPCommon:</div>
  <div class="center">
   <img src="class_bluetooth_a2_d_p_common.png" usemap="#BluetoothA2DPCommon_map" alt=""/>
   <map id="BluetoothA2DPCommon_map" name="BluetoothA2DPCommon_map">
-<area href="class_bluetooth_a2_d_p_sink.html" title="A2DP Bluethooth Sink - We initialize and start the Bluetooth A2DP Sink. The example https://github...." alt="BluetoothA2DPSink" shape="rect" coords="0,56,166,80"/>
-<area href="class_bluetooth_a2_d_p_source.html" title="A2DP Bluetooth Source." alt="BluetoothA2DPSource" shape="rect" coords="176,56,342,80"/>
-<area href="class_bluetooth_a2_d_p_sink_queued.html" title="The BluetoothA2DPSinkQueued is using a separate Task with an additinal Queue to write the I2S data...." alt="BluetoothA2DPSinkQueued" shape="rect" coords="0,112,166,136"/>
+<area href="class_bluetooth_a2_d_p_sink.html" title="BluetoothA2DPSink implements a robust, extensible A2DP Bluetooth audio sink for ESP32." alt="BluetoothA2DPSink" shape="rect" coords="0,56,166,80"/>
+<area href="class_bluetooth_a2_d_p_source.html" title="BluetoothA2DPSource implements a flexible, extensible A2DP Bluetooth audio source for ESP32." alt="BluetoothA2DPSource" shape="rect" coords="176,56,342,80"/>
+<area href="class_bluetooth_a2_d_p_sink_queued.html" title="BluetoothA2DPSinkQueued provides an A2DP sink implementation with a queued, task-based I2S output to ..." alt="BluetoothA2DPSinkQueued" shape="rect" coords="0,112,166,136"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -206,10 +206,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>set_event_stack_size<
 <tr class="memitem:aa79cff78c075c9273ea2b5c03f052fcd" id="r_aa79cff78c075c9273ea2b5c03f052fcd"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#aa79cff78c075c9273ea2b5c03f052fcd">set_on_connection_state_changed</a> (void(*callBack)(<a class="el" href="group__a2dp.html#ga52caa2d1e1c9d880c9651d52ff78a590">esp_a2d_connection_state_t</a> state, void *), void *obj=nullptr)</td></tr>
 <tr class="memdesc:aa79cff78c075c9273ea2b5c03f052fcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the callback that is called when the connection state is changed.  <br /></td></tr>
 <tr class="separator:aa79cff78c075c9273ea2b5c03f052fcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a94bb9305b2333d892f781d8df564b6ec" id="r_a94bb9305b2333d892f781d8df564b6ec"><td class="memItemLeft" align="right" valign="top"><a id="a94bb9305b2333d892f781d8df564b6ec" name="a94bb9305b2333d892f781d8df564b6ec"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_refernce</b> (void *ref, int type=0)</td></tr>
-<tr class="memdesc:a94bb9305b2333d892f781d8df564b6ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store a reference to an object (e.g. to use in the callbacks) <br /></td></tr>
-<tr class="separator:a94bb9305b2333d892f781d8df564b6ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cc05cdbd74cc64d5f20508a716764a9" id="r_a2cc05cdbd74cc64d5f20508a716764a9"><td class="memItemLeft" align="right" valign="top"><a id="a2cc05cdbd74cc64d5f20508a716764a9" name="a2cc05cdbd74cc64d5f20508a716764a9"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_reference</b> (void *ref, int type=0)</td></tr>
+<tr class="memdesc:a2cc05cdbd74cc64d5f20508a716764a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store a reference to an object (e.g. to use in the callbacks) <br /></td></tr>
+<tr class="separator:a2cc05cdbd74cc64d5f20508a716764a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a694940fad2a2d498875cfbdf52eea58b" id="r_a694940fad2a2d498875cfbdf52eea58b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a694940fad2a2d498875cfbdf52eea58b">set_task_core</a> (BaseType_t core)</td></tr>
 <tr class="separator:a694940fad2a2d498875cfbdf52eea58b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a68f9e168839f0faeb72705ccabbb6b7a" id="r_a68f9e168839f0faeb72705ccabbb6b7a"><td class="memItemLeft" align="right" valign="top"><a id="a68f9e168839f0faeb72705ccabbb6b7a" name="a68f9e168839f0faeb72705ccabbb6b7a"></a>
@@ -290,9 +290,9 @@ virtual esp_err_t&#160;</td><td class="memItemRight" valign="bottom"><b>esp_a2d_
 <tr class="memitem:ab6102d32773dfbad3c67b5361396a2ab" id="r_ab6102d32773dfbad3c67b5361396a2ab"><td class="memItemLeft" align="right" valign="top"><a id="ab6102d32773dfbad3c67b5361396a2ab" name="ab6102d32773dfbad3c67b5361396a2ab"></a>
 virtual esp_err_t&#160;</td><td class="memItemRight" valign="bottom"><b>esp_a2d_disconnect</b> (<a class="el" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a> remote_bda)=0</td></tr>
 <tr class="separator:ab6102d32773dfbad3c67b5361396a2ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3771c6d300c7709f2b76ab8847574cf4" id="r_a3771c6d300c7709f2b76ab8847574cf4"><td class="memItemLeft" align="right" valign="top"><a id="a3771c6d300c7709f2b76ab8847574cf4" name="a3771c6d300c7709f2b76ab8847574cf4"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>get_last_connection</b> ()</td></tr>
-<tr class="separator:a3771c6d300c7709f2b76ab8847574cf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a957149a4e98382ae0a0c87b8f4e0672d" id="r_a957149a4e98382ae0a0c87b8f4e0672d"><td class="memItemLeft" align="right" valign="top"><a id="a957149a4e98382ae0a0c87b8f4e0672d" name="a957149a4e98382ae0a0c87b8f4e0672d"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>get_last_connection</b> ()</td></tr>
+<tr class="separator:a957149a4e98382ae0a0c87b8f4e0672d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4f98f07ba4cf5962a7cdda50317b3112" id="r_a4f98f07ba4cf5962a7cdda50317b3112"><td class="memItemLeft" align="right" valign="top"><a id="a4f98f07ba4cf5962a7cdda50317b3112" name="a4f98f07ba4cf5962a7cdda50317b3112"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>has_last_connection</b> ()</td></tr>
 <tr class="separator:a4f98f07ba4cf5962a7cdda50317b3112"><td class="memSeparator" colspan="2">&#160;</td></tr>

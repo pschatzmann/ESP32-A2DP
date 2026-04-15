@@ -17,8 +17,36 @@ enum A2DPRingBufferMode : char {
 };
 
 /**
- * @brief The BluetoothA2DPSinkQueued is using a separate Task with an additinal
- * Queue to write the I2S data. application.
+ * @brief BluetoothA2DPSinkQueued provides an A2DP sink implementation with a
+ * queued, task-based I2S output to address the volume delay and jitter issues
+ * observed in the standard BluetoothA2DPSink implementation, especially under
+ * high load or with certain Bluetooth sources.
+ *
+ * This class extends BluetoothA2DPSink by introducing a dedicated FreeRTOS task
+ * and a ring buffer for handling audio data. Incoming audio data is buffered in
+ * the ring buffer and then written to the I2S interface by the background task.
+ * This design helps decouple Bluetooth and I2S timing, improving robustness
+ * against jitter and allowing for prefetching and flow control.
+ *
+ * The ring buffer operates in different modes, controlled by the enum
+ * ::A2DPRingBufferMode:
+ *   - RINGBUFFER_MODE_PROCESSING: Buffering and playback are active (normal
+ * operation).
+ *   - RINGBUFFER_MODE_PREFETCHING: Buffering is active, playback waits until a
+ * prefetch threshold is reached.
+ *   - RINGBUFFER_MODE_DROPPING: Incoming audio is dropped (e.g., buffer
+ * overflow or underrun recovery).
+ *
+ * The mode can be inspected or extended for advanced flow control and
+ * diagnostics.
+ *
+ * Key features:
+ *   - Separate I2S task for audio output
+ *   - Configurable ring buffer size and prefetch threshold
+ *   - Adjustable I2S task priority and stack size
+ *   - Support for Arduino Print and AudioTools output
+ *
+ * @see A2DPRingBufferMode
  * @ingroup a2dp
  * @author Phil Schatzmann
  * @copyright Apache License Version 2
@@ -29,12 +57,12 @@ class BluetoothA2DPSinkQueued : public BluetoothA2DPSink {
 
 #if A2DP_I2S_AUDIOTOOLS
   /// Output AudioOutput using AudioTools library
-  BluetoothA2DPSinkQueued(audio_tools::AudioOutput &output) {
+  BluetoothA2DPSinkQueued(audio_tools::AudioOutput& output) {
     actual_bluetooth_a2dp_sink = this;
     out->set_output(output);
   }
   /// Output AudioStream using AudioTools library
-  BluetoothA2DPSinkQueued(audio_tools::AudioStream &output) {
+  BluetoothA2DPSinkQueued(audio_tools::AudioStream& output) {
     actual_bluetooth_a2dp_sink = this;
     out->set_output(output);
   }
@@ -42,7 +70,7 @@ class BluetoothA2DPSinkQueued : public BluetoothA2DPSink {
 
 #ifdef ARDUINO
   /// Output to Arduino Print
-  BluetoothA2DPSinkQueued(Print &output) {
+  BluetoothA2DPSinkQueued(Print& output) {
     actual_bluetooth_a2dp_sink = this;
     out->set_output(output);
   }
@@ -70,7 +98,7 @@ class BluetoothA2DPSinkQueued : public BluetoothA2DPSink {
 
  protected:
   TaskHandle_t s_bt_i2s_task_handle = nullptr; /* handle of I2S task */
-  RingbufHandle_t s_ringbuf_i2s = nullptr;    /* handle of ringbuffer for I2S */
+  RingbufHandle_t s_ringbuf_i2s = nullptr; /* handle of ringbuffer for I2S */
   SemaphoreHandle_t s_i2s_write_semaphore = nullptr;
   // I2S task
   int i2s_stack_size = 2048;
@@ -84,8 +112,8 @@ class BluetoothA2DPSinkQueued : public BluetoothA2DPSink {
 
   void bt_i2s_task_start_up(void) override;
   void bt_i2s_task_shut_down(void) override;
-  void i2s_task_handler(void *arg) override;
-  size_t write_audio(const uint8_t *data, size_t size) override;
+  void i2s_task_handler(void* arg) override;
+  size_t write_audio(const uint8_t* data, size_t size) override;
 
   void set_i2s_active(bool active) override {
     BluetoothA2DPSink::set_i2s_active(active);
@@ -101,4 +129,4 @@ class BluetoothA2DPSinkQueued : public BluetoothA2DPSink {
   }
 };
 
-#endif // platform
+#endif  // platform

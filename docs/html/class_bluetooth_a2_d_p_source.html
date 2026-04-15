@@ -79,7 +79,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>A2DP Bluetooth Source.  
+<p><a class="el" href="class_bluetooth_a2_d_p_source.html" title="BluetoothA2DPSource implements a flexible, extensible A2DP Bluetooth audio source for ESP32.">BluetoothA2DPSource</a> implements a flexible, extensible A2DP Bluetooth audio source for ESP32.  
  <a href="class_bluetooth_a2_d_p_source.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_bluetooth_a2_d_p_source_8h_source.html">BluetoothA2DPSource.h</a>&gt;</code></p>
@@ -173,12 +173,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>log_free_heap</b> ()<
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>reconnect</b> ()</td></tr>
 <tr class="memdesc:ac795a023f85438355a1b00644f2b040f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reconnects to the last device. <br /></td></tr>
 <tr class="separator:ac795a023f85438355a1b00644f2b040f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a65ac6f2b0777c97874ee358119de3790" id="r_a65ac6f2b0777c97874ee358119de3790"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_source.html#a65ac6f2b0777c97874ee358119de3790">set_auto_reconnect</a> (bool active)</td></tr>
-<tr class="separator:a65ac6f2b0777c97874ee358119de3790"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab94a0596fd595994f3ae4d2d6d2e5a5b" id="r_ab94a0596fd595994f3ae4d2d6d2e5a5b"><td class="memItemLeft" align="right" valign="top"><a id="ab94a0596fd595994f3ae4d2d6d2e5a5b" name="ab94a0596fd595994f3ae4d2d6d2e5a5b"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>set_auto_reconnect</b> (<a class="el" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a> addr)</td></tr>
-<tr class="memdesc:ab94a0596fd595994f3ae4d2d6d2e5a5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">automatically tries to reconnect to the indicated address <br /></td></tr>
-<tr class="separator:ab94a0596fd595994f3ae4d2d6d2e5a5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a537d576b12d1158eb0681a6195b258de" id="r_a537d576b12d1158eb0681a6195b258de"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a537d576b12d1158eb0681a6195b258de">set_auto_reconnect</a> (bool active)</td></tr>
+<tr class="separator:a537d576b12d1158eb0681a6195b258de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac806421e64cc34093287d80610570667" id="r_ac806421e64cc34093287d80610570667"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_source.html#ac806421e64cc34093287d80610570667">set_auto_reconnect</a> (bool active, int max_retries=AUTOCONNECT_TRY_NUM)</td></tr>
+<tr class="separator:ac806421e64cc34093287d80610570667"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d3f1d6671ece72896faea77fffc5261" id="r_a1d3f1d6671ece72896faea77fffc5261"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_source.html#a1d3f1d6671ece72896faea77fffc5261">set_auto_reconnect</a> (<a class="el" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a> addr, int max_retries=3)</td></tr>
+<tr class="separator:a1d3f1d6671ece72896faea77fffc5261"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a72999af828301ef39f1f388fd7356b3b" id="r_a72999af828301ef39f1f388fd7356b3b"><td class="memItemLeft" align="right" valign="top"><a id="a72999af828301ef39f1f388fd7356b3b" name="a72999af828301ef39f1f388fd7356b3b"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>set_avrc_passthru_command_callback</b> (void(*cb)(uint8_t key, bool isReleased))</td></tr>
 <tr class="memdesc:a72999af828301ef39f1f388fd7356b3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define the handler fur button presses on the remote bluetooth speaker. <br /></td></tr>
@@ -246,10 +246,10 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>set_local_nam
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set_pin_code</b> (const char *pin_code, esp_bt_pin_type_t pin_type)</td></tr>
 <tr class="memdesc:a098d9fdb6cfe044406025e89725c449d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the pin code. If nothing is defined we use "1234". <br /></td></tr>
 <tr class="separator:a098d9fdb6cfe044406025e89725c449d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a94bb9305b2333d892f781d8df564b6ec" id="r_a94bb9305b2333d892f781d8df564b6ec"><td class="memItemLeft" align="right" valign="top"><a id="a94bb9305b2333d892f781d8df564b6ec" name="a94bb9305b2333d892f781d8df564b6ec"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_refernce</b> (void *ref, int type=0)</td></tr>
-<tr class="memdesc:a94bb9305b2333d892f781d8df564b6ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store a reference to an object (e.g. to use in the callbacks) <br /></td></tr>
-<tr class="separator:a94bb9305b2333d892f781d8df564b6ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cc05cdbd74cc64d5f20508a716764a9" id="r_a2cc05cdbd74cc64d5f20508a716764a9"><td class="memItemLeft" align="right" valign="top"><a id="a2cc05cdbd74cc64d5f20508a716764a9" name="a2cc05cdbd74cc64d5f20508a716764a9"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_reference</b> (void *ref, int type=0)</td></tr>
+<tr class="memdesc:a2cc05cdbd74cc64d5f20508a716764a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store a reference to an object (e.g. to use in the callbacks) <br /></td></tr>
+<tr class="separator:a2cc05cdbd74cc64d5f20508a716764a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5efcc4c32c6ec8ce7eac2c1acb59f27c" id="r_a5efcc4c32c6ec8ce7eac2c1acb59f27c"><td class="memItemLeft" align="right" valign="top"><a id="a5efcc4c32c6ec8ce7eac2c1acb59f27c" name="a5efcc4c32c6ec8ce7eac2c1acb59f27c"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>set_reset_ble</b> (bool doInit)</td></tr>
 <tr class="memdesc:a5efcc4c32c6ec8ce7eac2c1acb59f27c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines if the BLE should be reset on start. <br /></td></tr>
@@ -418,12 +418,14 @@ virtual int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>get_audio_
 virtual int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>get_audio_data_volume</b> (uint8_t *data, int32_t len)</td></tr>
 <tr class="memdesc:a03d1c23eb8a98bccdd15970f9d35db8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">provides the audio after applying the volume <br /></td></tr>
 <tr class="separator:a03d1c23eb8a98bccdd15970f9d35db8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3771c6d300c7709f2b76ab8847574cf4" id="r_a3771c6d300c7709f2b76ab8847574cf4"><td class="memItemLeft" align="right" valign="top"><a id="a3771c6d300c7709f2b76ab8847574cf4" name="a3771c6d300c7709f2b76ab8847574cf4"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>get_last_connection</b> ()</td></tr>
-<tr class="separator:a3771c6d300c7709f2b76ab8847574cf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a957149a4e98382ae0a0c87b8f4e0672d" id="r_a957149a4e98382ae0a0c87b8f4e0672d"><td class="memItemLeft" align="right" valign="top"><a id="a957149a4e98382ae0a0c87b8f4e0672d" name="a957149a4e98382ae0a0c87b8f4e0672d"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>get_last_connection</b> ()</td></tr>
+<tr class="separator:a957149a4e98382ae0a0c87b8f4e0672d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a166ad62ed68cf5d827d9670f5d70f026" id="r_a166ad62ed68cf5d827d9670f5d70f026"><td class="memItemLeft" align="right" valign="top"><a id="a166ad62ed68cf5d827d9670f5d70f026" name="a166ad62ed68cf5d827d9670f5d70f026"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>get_name_from_eir</b> (uint8_t *eir, uint8_t *bdname, uint8_t *bdname_len)</td></tr>
 <tr class="separator:a166ad62ed68cf5d827d9670f5d70f026"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac58b5d577cba3d7e3ac909547819b64c" id="r_ac58b5d577cba3d7e3ac909547819b64c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_source.html#ac58b5d577cba3d7e3ac909547819b64c">handle_reconnect_logic</a> ()</td></tr>
+<tr class="separator:ac58b5d577cba3d7e3ac909547819b64c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4f98f07ba4cf5962a7cdda50317b3112" id="r_a4f98f07ba4cf5962a7cdda50317b3112"><td class="memItemLeft" align="right" valign="top"><a id="a4f98f07ba4cf5962a7cdda50317b3112" name="a4f98f07ba4cf5962a7cdda50317b3112"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>has_last_connection</b> ()</td></tr>
 <tr class="separator:a4f98f07ba4cf5962a7cdda50317b3112"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -501,9 +503,9 @@ esp_bluedroid_config_t&#160;</td><td class="memItemRight" valign="bottom"><b>blu
 <tr class="memitem:a6e53210a1eeea015457cfc94df7883e1" id="r_a6e53210a1eeea015457cfc94df7883e1"><td class="memItemLeft" align="right" valign="top"><a id="a6e53210a1eeea015457cfc94df7883e1" name="a6e53210a1eeea015457cfc94df7883e1"></a>
 const char *&#160;</td><td class="memItemRight" valign="bottom"><b>bt_name</b> = {0}</td></tr>
 <tr class="separator:a6e53210a1eeea015457cfc94df7883e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d60044f24d48abc4dfbc5494ffb9767" id="r_a9d60044f24d48abc4dfbc5494ffb9767"><td class="memItemLeft" align="right" valign="top"><a id="a9d60044f24d48abc4dfbc5494ffb9767" name="a9d60044f24d48abc4dfbc5494ffb9767"></a>
+<tr class="memitem:a5e6134502e7b189074516cac8ad84000" id="r_a5e6134502e7b189074516cac8ad84000"><td class="memItemLeft" align="right" valign="top"><a id="a5e6134502e7b189074516cac8ad84000" name="a5e6134502e7b189074516cac8ad84000"></a>
 std::vector&lt; const char * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>bt_names</b></td></tr>
-<tr class="separator:a9d60044f24d48abc4dfbc5494ffb9767"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a5e6134502e7b189074516cac8ad84000"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac11aaa770b2754858223a4bcdae83b5b" id="r_ac11aaa770b2754858223a4bcdae83b5b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__a2dp.html#ga52caa2d1e1c9d880c9651d52ff78a590">esp_a2d_connection_state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#ac11aaa770b2754858223a4bcdae83b5b">connection_state</a></td></tr>
 <tr class="separator:ac11aaa770b2754858223a4bcdae83b5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aefac3515fd23a006c95a754c7ad9ee28" id="r_aefac3515fd23a006c95a754c7ad9ee28"><td class="memItemLeft" align="right" valign="top"><a id="aefac3515fd23a006c95a754c7ad9ee28" name="aefac3515fd23a006c95a754c7ad9ee28"></a>
@@ -582,6 +584,9 @@ const char *&#160;</td><td class="memItemRight" valign="bottom"><b>m_a2d_audio_s
 <tr class="memitem:a4c31ef85bd2a907104d3a1abdfeb2fb2" id="r_a4c31ef85bd2a907104d3a1abdfeb2fb2"><td class="memItemLeft" align="right" valign="top"><a id="a4c31ef85bd2a907104d3a1abdfeb2fb2" name="a4c31ef85bd2a907104d3a1abdfeb2fb2"></a>
 const char *&#160;</td><td class="memItemRight" valign="bottom"><b>m_esp_bt_gap_discovery_state_t</b> [2] = {&quot;Stopped&quot;, &quot;Started&quot;}</td></tr>
 <tr class="separator:a4c31ef85bd2a907104d3a1abdfeb2fb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac65c952dcbfe704e369234710d9356fe" id="r_ac65c952dcbfe704e369234710d9356fe"><td class="memItemLeft" align="right" valign="top"><a id="ac65c952dcbfe704e369234710d9356fe" name="ac65c952dcbfe704e369234710d9356fe"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>max_reconnect_retries</b> = 0</td></tr>
+<tr class="separator:ac65c952dcbfe704e369234710d9356fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c4e9df57c7e74f736e440de61ec1662" id="r_a6c4e9df57c7e74f736e440de61ec1662"><td class="memItemLeft" align="right" valign="top"><a id="a6c4e9df57c7e74f736e440de61ec1662" name="a6c4e9df57c7e74f736e440de61ec1662"></a>
 Stream *&#160;</td><td class="memItemRight" valign="bottom"><b>p_stream</b> = nullptr</td></tr>
 <tr class="separator:a6c4e9df57c7e74f736e440de61ec1662"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -600,6 +605,9 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>pin_code_len</b><
 <tr class="memitem:a8be5c6322c55159a608c559ccadefaca" id="r_a8be5c6322c55159a608c559ccadefaca"><td class="memItemLeft" align="right" valign="top"><a id="a8be5c6322c55159a608c559ccadefaca" name="a8be5c6322c55159a608c559ccadefaca"></a>
 esp_bt_pin_type_t&#160;</td><td class="memItemRight" valign="bottom"><b>pin_type</b></td></tr>
 <tr class="separator:a8be5c6322c55159a608c559ccadefaca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9cf6e25a71aa28082899af5ea5566ed4" id="r_a9cf6e25a71aa28082899af5ea5566ed4"><td class="memItemLeft" align="right" valign="top"><a id="a9cf6e25a71aa28082899af5ea5566ed4" name="a9cf6e25a71aa28082899af5ea5566ed4"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>reconnect_retries</b> = 0</td></tr>
+<tr class="separator:a9cf6e25a71aa28082899af5ea5566ed4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0e0c2fae7d742947d47bae41a690a712" id="r_a0e0c2fae7d742947d47bae41a690a712"><td class="memItemLeft" align="right" valign="top"><a id="a0e0c2fae7d742947d47bae41a690a712" name="a0e0c2fae7d742947d47bae41a690a712"></a>
 <a class="el" href="group__a2dp.html#ga28a6ac1cbaf47c9d341da5391e2e72b3">ReconnectStatus</a>&#160;</td><td class="memItemRight" valign="bottom"><b>reconnect_status</b> = NoReconnect</td></tr>
 <tr class="separator:a0e0c2fae7d742947d47bae41a690a712"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -675,7 +683,22 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>ccall_bt_av_hdl_avrc_
 <tr class="separator:a93123a41154cd9cc64753f5430b9f045"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A2DP Bluetooth Source. </p>
+<div class="textblock"><p><a class="el" href="class_bluetooth_a2_d_p_source.html" title="BluetoothA2DPSource implements a flexible, extensible A2DP Bluetooth audio source for ESP32.">BluetoothA2DPSource</a> implements a flexible, extensible A2DP Bluetooth audio source for ESP32. </p>
+<p>This class provides a modern C++ interface for streaming audio from the ESP32 to Bluetooth A2DP sink devices (e.g., speakers, headphones).</p>
+<p>Key features:</p><ul>
+<li>Handles Bluetooth A2DP source initialization, pairing, and connection management</li>
+<li>Supports multiple audio data sources: callback, Arduino Stream, AudioTools, or custom providers</li>
+<li>Automatic reconnection logic with configurable retry count and fallback to device scanning</li>
+<li>Device discovery and filtering by name or custom callback</li>
+<li>AVRCP (remote control) support for passthrough commands and volume control</li>
+<li>Secure Simple Pairing (SSP) and legacy PIN code support</li>
+<li>Extensible for custom event handling, output, and platform integration</li>
+</ul>
+<p>Usage:</p><ul>
+<li>Instantiate <a class="el" href="class_bluetooth_a2_d_p_source.html" title="BluetoothA2DPSource implements a flexible, extensible A2DP Bluetooth audio source for ESP32.">BluetoothA2DPSource</a> and call <a class="el" href="class_bluetooth_a2_d_p_source.html#a98c1eb3ad55af189fd3f1ddeac8f3636">start()</a> with a device name or list</li>
+<li>Optionally configure callbacks, reconnection, and pairing behavior</li>
+<li>Use provided methods to send audio data, control playback, and manage connections</li>
+</ul>
 <dl class="section author"><dt>Author</dt><dd>Phil Schatzmann </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Apache License Version 2 </dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
@@ -1130,6 +1153,32 @@ false </dd></dl>
 
 </div>
 </div>
+<a id="ac58b5d577cba3d7e3ac909547819b64c" name="ac58b5d577cba3d7e3ac909547819b64c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac58b5d577cba3d7e3ac909547819b64c">&#9670;&#160;</a></span>handle_reconnect_logic()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool BluetoothA2DPSource::handle_reconnect_logic </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Retry logic for auto reconnect. Returns true if a reconnect attempt was made, false if fallback to scan </p>
+
+</div>
+</div>
 <a id="af29d19e53e3585446fc294a3213a06af" name="af29d19e53e3585446fc294a3213a06af"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af29d19e53e3585446fc294a3213a06af">&#9670;&#160;</a></span>is_discovery_active()</h2>
 
@@ -1237,8 +1286,35 @@ false </dd></dl>
 
 </div>
 </div>
-<a id="a65ac6f2b0777c97874ee358119de3790" name="a65ac6f2b0777c97874ee358119de3790"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a65ac6f2b0777c97874ee358119de3790">&#9670;&#160;</a></span>set_auto_reconnect()</h2>
+<a id="a537d576b12d1158eb0681a6195b258de" name="a537d576b12d1158eb0681a6195b258de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a537d576b12d1158eb0681a6195b258de">&#9670;&#160;</a></span>set_auto_reconnect() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void BluetoothA2DPCommon::set_auto_reconnect </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>active</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>activate / deactivate the automatic reconnection to the last address (per default this is on) </p>
+
+</div>
+</div>
+<a id="ac806421e64cc34093287d80610570667" name="ac806421e64cc34093287d80610570667"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac806421e64cc34093287d80610570667">&#9670;&#160;</a></span>set_auto_reconnect() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1250,8 +1326,18 @@ false </dd></dl>
           <td class="memname">virtual void BluetoothA2DPSource::set_auto_reconnect </td>
           <td>(</td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>active</em></td><td>)</td>
+          <td class="paramname"><em>active</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>max_retries</em> = <code>AUTOCONNECT_TRY_NUM</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -1260,7 +1346,44 @@ false </dd></dl>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>activate / deactivate the automatic reconnection to the last address (per default this is on) </p>
+<p>activate / deactivate the automatic reconnection to the last address (per default this is on) If active is true, will retry up to max_retries times before falling back to scanning </p>
+
+</div>
+</div>
+<a id="a1d3f1d6671ece72896faea77fffc5261" name="a1d3f1d6671ece72896faea77fffc5261"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d3f1d6671ece72896faea77fffc5261">&#9670;&#160;</a></span>set_auto_reconnect() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void BluetoothA2DPSource::set_auto_reconnect </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a>&#160;</td>
+          <td class="paramname"><em>addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>max_retries</em> = <code>3</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>automatically tries to reconnect to the indicated address, with retry count </p>
 
 </div>
 </div>

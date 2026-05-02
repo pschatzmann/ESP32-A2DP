@@ -221,7 +221,7 @@ class BluetoothA2DPCommon {
   /// Closes the connection and stops A2DP
   virtual void end(bool releaseMemory = false);
 
-  /// Checks if A2DP is connected
+  /// Checks if A2DP is connected using the connection state received from the speaker
   virtual bool is_connected() {
     return connection_state == ESP_A2D_CONNECTION_STATE_CONNECTED;
   }

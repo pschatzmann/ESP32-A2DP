@@ -101,6 +101,7 @@ A Simple I2S Example (A2DS Sink) using default Pins</h2>
 <div class="line"><a class="code hl_class" href="class_bluetooth_a2_d_p_sink.html">BluetoothA2DPSink</a> a2dp_sink(i2s);</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> setup() {</div>
+<div class="line">    Serial.begin(115200);</div>
 <div class="line">    a2dp_sink.start(<span class="stringliteral">&quot;MyMusic&quot;</span>);</div>
 <div class="line">}</div>
 <div class="line"> </div>
@@ -124,6 +125,7 @@ Defining Pins</h2>
 <div class="line"><a class="code hl_class" href="class_bluetooth_a2_d_p_sink.html">BluetoothA2DPSink</a> a2dp_sink(i2s);</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> setup() {</div>
+<div class="line">    Serial.begin(115200);</div>
 <div class="line">    <span class="keyword">auto</span> cfg = i2s.defaultConfig();</div>
 <div class="line">    cfg.pin_bck = 14;</div>
 <div class="line">    cfg.pin_ws = 15;</div>
@@ -149,6 +151,8 @@ Output Using the ESP32 I2S API</h2>
 <div class="line"><a class="code hl_class" href="class_bluetooth_a2_d_p_sink.html">BluetoothA2DPSink</a> a2dp_sink(i2s);</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> setup() {</div>
+<div class="line">    Serial.begin(115200);</div>
+<div class="line"> </div>
 <div class="line">    i2s.setPins(I2S_SCK, I2S_WS, I2S_SDOUT);</div>
 <div class="line">    <span class="keywordflow">if</span> (!i2s.begin(I2S_MODE_STD, 44100, I2S_DATA_BIT_WIDTH_16BIT, I2S_SLOT_MODE_STEREO, I2S_STD_SLOT_BOTH)) {</div>
 <div class="line">      Serial.println(<span class="stringliteral">&quot;Failed to initialize I2S!&quot;</span>);</div>
@@ -169,6 +173,7 @@ Output to the Internal DAC</h2>
 <div class="line"><a class="code hl_class" href="class_bluetooth_a2_d_p_sink.html">BluetoothA2DPSink</a> a2dp_sink(out);</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> setup() {</div>
+<div class="line">    Serial.begin(115200);</div>
 <div class="line">    a2dp_sink.start(<span class="stringliteral">&quot;MyMusic&quot;</span>);</div>
 <div class="line">}</div>
 <div class="line"> </div>

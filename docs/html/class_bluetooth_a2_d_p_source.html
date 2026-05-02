@@ -140,6 +140,10 @@ virtual <a class="el" href="group__a2dp.html#ga49adfa87b1ad7420b0075a0ac03cc194"
 virtual <a class="el" href="group__a2dp.html#ga52caa2d1e1c9d880c9651d52ff78a590">esp_a2d_connection_state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_connection_state</b> ()</td></tr>
 <tr class="memdesc:a513b32676d8fc248bb481180f832ef97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine the connection state. <br /></td></tr>
 <tr class="separator:a513b32676d8fc248bb481180f832ef97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58d17095218abaf18a7a2d53211b545f" id="r_a58d17095218abaf18a7a2d53211b545f"><td class="memItemLeft" align="right" valign="top"><a id="a58d17095218abaf18a7a2d53211b545f" name="a58d17095218abaf18a7a2d53211b545f"></a>
+unsigned long&#160;</td><td class="memItemRight" valign="bottom"><b>get_last_heart_beat</b> ()</td></tr>
+<tr class="memdesc:a58d17095218abaf18a7a2d53211b545f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the time of the last heart beat. <br /></td></tr>
+<tr class="separator:a58d17095218abaf18a7a2d53211b545f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acf924bb9f5e348c85e65879c337a4bde" id="r_acf924bb9f5e348c85e65879c337a4bde"><td class="memItemLeft" align="right" valign="top"><a id="acf924bb9f5e348c85e65879c337a4bde" name="acf924bb9f5e348c85e65879c337a4bde"></a>
 virtual <a class="el" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>get_last_peer_address</b> ()</td></tr>
 <tr class="memdesc:acf924bb9f5e348c85e65879c337a4bde"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides the address of the last device. <br /></td></tr>
@@ -159,6 +163,10 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><b>get_reference</b> (
 <tr class="memitem:a0e570c2c2f9db40873286e0571f0d93a" id="r_a0e570c2c2f9db40873286e0571f0d93a"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_common.html#a0e570c2c2f9db40873286e0571f0d93a">get_volume</a> ()</td></tr>
 <tr class="memdesc:a0e570c2c2f9db40873286e0571f0d93a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines the actual volume.  <br /></td></tr>
 <tr class="separator:a0e570c2c2f9db40873286e0571f0d93a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada54f6a38e1dc51c44700de766a2a59c" id="r_ada54f6a38e1dc51c44700de766a2a59c"><td class="memItemLeft" align="right" valign="top"><a id="ada54f6a38e1dc51c44700de766a2a59c" name="ada54f6a38e1dc51c44700de766a2a59c"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_active</b> (unsigned long timeout=10000)</td></tr>
+<tr class="memdesc:ada54f6a38e1dc51c44700de766a2a59c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the target speaker is still active by checking the time of the last heart beat. <br /></td></tr>
+<tr class="separator:ada54f6a38e1dc51c44700de766a2a59c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5e76412770515732e3f54275decf02f0" id="r_a5e76412770515732e3f54275decf02f0"><td class="memItemLeft" align="right" valign="top"><a id="a5e76412770515732e3f54275decf02f0" name="a5e76412770515732e3f54275decf02f0"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_connected</b> ()</td></tr>
 <tr class="memdesc:a5e76412770515732e3f54275decf02f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if A2DP is connected. <br /></td></tr>
@@ -574,6 +582,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_volume_used</b> = 
 <tr class="memitem:add25164fa6c099827e04db70d7ab0f62" id="r_add25164fa6c099827e04db70d7ab0f62"><td class="memItemLeft" align="right" valign="top"><a id="add25164fa6c099827e04db70d7ab0f62" name="add25164fa6c099827e04db70d7ab0f62"></a>
 <a class="el" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>last_connection</b> = {0, 0, 0, 0, 0, 0}</td></tr>
 <tr class="separator:add25164fa6c099827e04db70d7ab0f62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f5f614e4f05bfa2527f00ebacaa6d55" id="r_a8f5f614e4f05bfa2527f00ebacaa6d55"><td class="memItemLeft" align="right" valign="top"><a id="a8f5f614e4f05bfa2527f00ebacaa6d55" name="a8f5f614e4f05bfa2527f00ebacaa6d55"></a>
+unsigned long&#160;</td><td class="memItemRight" valign="bottom"><b>last_heart_beat</b> = 0</td></tr>
+<tr class="separator:a8f5f614e4f05bfa2527f00ebacaa6d55"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a25feb62133e76e60a1808a303713c973" id="r_a25feb62133e76e60a1808a303713c973"><td class="memItemLeft" align="right" valign="top"><a id="a25feb62133e76e60a1808a303713c973" name="a25feb62133e76e60a1808a303713c973"></a>
 const char *&#160;</td><td class="memItemRight" valign="bottom"><b>m_a2d_audio_state_str</b> [4] = {&quot;Suspended&quot;, &quot;Started&quot;, &quot;Suspended&quot;, &quot;Suspended&quot;}</td></tr>
 <tr class="separator:a25feb62133e76e60a1808a303713c973"><td class="memSeparator" colspan="2">&#160;</td></tr>

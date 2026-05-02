@@ -258,7 +258,7 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
   /// Gets the time of the last heart beat
   unsigned long get_last_heart_beat() { return last_heart_beat; }
 
-  /// Check if the target speaker is still active
+  /// Check if the target speaker is still active by checking the time of the last heart beat
   bool is_active(unsigned long timeout = 10000);
 
  protected:

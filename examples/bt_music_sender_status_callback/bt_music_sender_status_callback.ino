@@ -53,7 +53,7 @@ void setup() {
   a2dp_source.set_on_connection_state_changed(connection_state_changed);
   a2dp_source.set_data_callback_in_frames(get_data_frames);
   a2dp_source.set_volume(30);
-  a2dp_source.start("LEXON MINO L") 
+  a2dp_source.start("LEXON MINO L"); 
 }
 
 void loop() {

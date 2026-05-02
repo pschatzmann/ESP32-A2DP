@@ -255,6 +255,12 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
   /// Ends the processing and releases the resources
   void end(bool releaseMemory = false) override;
 
+  /// Gets the time of the last heart beat
+  unsigned long get_last_heart_beat() { return last_heart_beat; }
+
+  /// Check if the target speaker is still active
+  bool is_active(unsigned long timeout = 10000);
+
  protected:
   /// callback for data
   int32_t (*get_data_cb)(uint8_t* data, int32_t len) = nullptr;
@@ -296,6 +302,7 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
   // Retry logic for auto reconnect
   int reconnect_retries = 0;
   int max_reconnect_retries = 0;
+  unsigned long last_heart_beat = 0;
 
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
   esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap;

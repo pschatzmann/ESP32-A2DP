@@ -79,6 +79,11 @@ BluetoothA2DPSource::BluetoothA2DPSource() {
 
 BluetoothA2DPSource::~BluetoothA2DPSource() { end(); }
 
+bool BluetoothA2DPSource::is_active(unsigned long timeout) {
+  if (last_heart_beat == 0) return false;
+  return millis() - last_heart_beat < timeout;
+}
+
 void BluetoothA2DPSource::set_pin_code(const char *pin_code,
                                        esp_bt_pin_type_t pin_type) {
   ESP_LOGD(BT_APP_TAG, "%s, ", __func__);
@@ -93,6 +98,7 @@ void BluetoothA2DPSource::start(std::vector<const char *> names) {
   is_end = false;
   is_autoreconnect_allowed = (reconnect_status == AutoReconnect);
   reconnect_retries = max_reconnect_retries;
+  last_heart_beat = 0;
 
   init_nvs();
   if (is_autoreconnect_allowed) {
@@ -634,6 +640,7 @@ void BluetoothA2DPSource::bt_app_av_sm_hdlr(uint16_t event, void *param) {
       break;
     case APP_AV_STATE_CONNECTED:
       bt_app_av_state_connected_hdlr(event, param);
+      last_heart_beat = millis();
       break;
     case APP_AV_STATE_DISCONNECTING:
       bt_app_av_state_disconnecting_hdlr(event, param);
@@ -790,11 +797,18 @@ void BluetoothA2DPSource::bt_app_av_state_connected_hdlr(uint16_t event,
       break;
     }
     case ESP_A2D_AUDIO_CFG_EVT:
-      // not suppposed to occur for A2DP source
+      ESP_LOGI(BT_AV_TAG, "ESP_A2D_AUDIO_CFG_EVT");
       break;
-    case ESP_A2D_MEDIA_CTRL_ACK_EVT:
-    case BT_APP_HEART_BEAT_EVT: {
+
+    case ESP_A2D_MEDIA_CTRL_ACK_EVT: {
       bt_app_av_media_proc(event, param);
+      break;
+    }
+    case BT_APP_HEART_BEAT_EVT: {
+      if (s_media_state == APP_AV_MEDIA_STATE_IDLE) {
+        ESP_LOGI(BT_AV_TAG, "a2dp media ready checking ...");
+        esp_a2d_media_ctrl(ESP_A2D_MEDIA_CTRL_CHECK_SRC_RDY);
+      }
       break;
     }
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 3, 0)
@@ -855,10 +869,7 @@ void BluetoothA2DPSource::bt_app_av_media_proc(uint16_t event, void *param) {
   esp_a2d_cb_param_t *a2d = nullptr;
   switch (s_media_state) {
     case APP_AV_MEDIA_STATE_IDLE: {
-      if (event == BT_APP_HEART_BEAT_EVT) {
-        ESP_LOGI(BT_AV_TAG, "a2dp media ready checking ...");
-        esp_a2d_media_ctrl(ESP_A2D_MEDIA_CTRL_CHECK_SRC_RDY);
-      } else if (event == ESP_A2D_MEDIA_CTRL_ACK_EVT) {
+      if (event == ESP_A2D_MEDIA_CTRL_ACK_EVT) {
         a2d = (esp_a2d_cb_param_t *)(param);
         if (a2d->media_ctrl_stat.cmd == ESP_A2D_MEDIA_CTRL_CHECK_SRC_RDY &&
             a2d->media_ctrl_stat.status == ESP_A2D_MEDIA_CTRL_ACK_SUCCESS) {
@@ -869,6 +880,7 @@ void BluetoothA2DPSource::bt_app_av_media_proc(uint16_t event, void *param) {
       }
       break;
     }
+    
     case APP_AV_MEDIA_STATE_STARTING: {
       if (event == ESP_A2D_MEDIA_CTRL_ACK_EVT) {
         a2d = (esp_a2d_cb_param_t *)(param);

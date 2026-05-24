@@ -81,7 +81,7 @@ BluetoothA2DPSource::~BluetoothA2DPSource() { end(); }
 
 bool BluetoothA2DPSource::is_active(unsigned long timeout) {
   if (last_heart_beat == 0) return false;
-  return millis() - last_heart_beat < timeout;
+  return get_millis() - last_heart_beat < timeout;
 }
 
 void BluetoothA2DPSource::set_pin_code(const char *pin_code,
@@ -640,7 +640,7 @@ void BluetoothA2DPSource::bt_app_av_sm_hdlr(uint16_t event, void *param) {
       break;
     case APP_AV_STATE_CONNECTED:
       bt_app_av_state_connected_hdlr(event, param);
-      last_heart_beat = millis();
+      last_heart_beat = get_millis();
       break;
     case APP_AV_STATE_DISCONNECTING:
       bt_app_av_state_disconnecting_hdlr(event, param);

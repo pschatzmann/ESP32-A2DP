@@ -29,6 +29,8 @@
 #endif
 #if defined(CONFIG_IDF_TARGET_ESP32) 
 #  define IS_VALID_PLATFORM true
+#elif defined(CONFIG_IDF_TARGET_ESP32S31)
+#  define IS_VALID_PLATFORM true
 #else
 #  error "Please read the ESP32-A2DP Wiki about the supported Platforms!"
 #  define IS_VALID_PLATFORM false

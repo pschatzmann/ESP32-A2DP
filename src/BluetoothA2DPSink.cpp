@@ -651,9 +651,13 @@ void BluetoothA2DPSink::handle_audio_state(uint16_t event, void *p_param) {
   if (!is_encoded_output()) {
     if (ESP_A2D_AUDIO_STATE_STARTED == a2d->audio_stat.state) {
       set_i2s_active(true);
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(6, 0, 0)
+    } else if (ESP_A2D_AUDIO_STATE_SUSPEND == a2d->audio_stat.state) {
+#else
     } else if (ESP_A2D_AUDIO_STATE_REMOTE_SUSPEND == a2d->audio_stat.state ||
-              ESP_A2D_AUDIO_STATE_STOPPED == a2d->audio_stat.state) {
-      set_i2s_active(false);
+              ESP_A2D_AUDIO_STATE_SUSPEND == a2d->audio_stat.state) {
+#endif
+       set_i2s_active(false);
     }
   }
 

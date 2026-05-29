@@ -396,7 +396,7 @@ class BluetoothA2DPCommon {
   const char *m_avrc_playback_state_str[5] = {"stopped", "playing", "paused",
                                               "forward seek", "reverse seek"};
   const char *m_esp_bt_gap_discovery_state_t[2] = {"Stopped", "Started"};
-  esp_a2d_audio_state_t audio_state = ESP_A2D_AUDIO_STATE_STOPPED;
+  esp_a2d_audio_state_t audio_state = ESP_A2D_AUDIO_STATE_SUSPEND;
   esp_a2d_connection_state_t connection_state =
       ESP_A2D_CONNECTION_STATE_DISCONNECTED;
   UBaseType_t task_priority = configMAX_PRIORITIES - 10;

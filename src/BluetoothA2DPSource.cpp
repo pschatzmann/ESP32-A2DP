@@ -906,7 +906,7 @@ void BluetoothA2DPSource::bt_app_av_media_proc(uint16_t event, void *param) {
     case APP_AV_MEDIA_STATE_STOPPING: {
       if (event == ESP_A2D_MEDIA_CTRL_ACK_EVT) {
         a2d = (esp_a2d_cb_param_t *)(param);
-        if (a2d->media_ctrl_stat.cmd == ESP_A2D_MEDIA_CTRL_STOP &&
+        if (a2d->media_ctrl_stat.cmd == ESP_A2D_MEDIA_CTRL_SUSPEND &&
             a2d->media_ctrl_stat.status == ESP_A2D_MEDIA_CTRL_ACK_SUCCESS) {
           ESP_LOGI(BT_AV_TAG,
                    "a2dp media stopped successfully, disconnecting...");
@@ -915,7 +915,7 @@ void BluetoothA2DPSource::bt_app_av_media_proc(uint16_t event, void *param) {
           s_a2d_state = APP_AV_STATE_DISCONNECTING;
         } else {
           ESP_LOGI(BT_AV_TAG, "a2dp media stopping...");
-          esp_a2d_media_ctrl(ESP_A2D_MEDIA_CTRL_STOP);
+          esp_a2d_media_ctrl(ESP_A2D_MEDIA_CTRL_SUSPEND);
         }
       }
       break;

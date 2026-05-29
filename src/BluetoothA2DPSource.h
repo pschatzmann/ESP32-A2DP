@@ -361,7 +361,7 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
   esp_err_t esp_a2d_disconnect(esp_bd_addr_t peer) override {
     ESP_LOGI(BT_AV_TAG, "==> a2dp esp_a2d_source_disconnect from: %s",
              to_str(peer));
-    esp_a2d_media_ctrl(ESP_A2D_MEDIA_CTRL_STOP);
+    esp_a2d_media_ctrl(ESP_A2D_MEDIA_CTRL_SUSPEND);
     return esp_a2d_source_disconnect(peer);
   }
 

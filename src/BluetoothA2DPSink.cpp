@@ -657,7 +657,8 @@ void BluetoothA2DPSink::handle_audio_state(uint16_t event, void *p_param) {
     } else if (ESP_A2D_AUDIO_STATE_REMOTE_SUSPEND == a2d->audio_stat.state ||
               ESP_A2D_AUDIO_STATE_SUSPEND == a2d->audio_stat.state) {
 #endif
-       set_i2s_active(false);
+       // deactivate only when is_output_active_by_state is true
+       if (is_output_active_by_state) set_i2s_active(false);
     }
   }
 

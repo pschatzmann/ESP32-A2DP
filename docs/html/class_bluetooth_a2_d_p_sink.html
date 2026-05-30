@@ -369,6 +369,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>set_output</b> (Print
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set_output_active</b> (bool flag)</td></tr>
 <tr class="memdesc:a68d88c33b8ec218fe3bd45f61c39f754"><td class="mdescLeft">&#160;</td><td class="mdescRight">Activate/Deactivate output e.g. to I2S. <br /></td></tr>
 <tr class="separator:a68d88c33b8ec218fe3bd45f61c39f754"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affd8344ef9283708a67d99bd7b47dc02" id="r_affd8344ef9283708a67d99bd7b47dc02"><td class="memItemLeft" align="right" valign="top"><a id="affd8344ef9283708a67d99bd7b47dc02" name="affd8344ef9283708a67d99bd7b47dc02"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_output_active_by_state</b> (bool active)</td></tr>
+<tr class="memdesc:affd8344ef9283708a67d99bd7b47dc02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Automatically deactivates output when state is suspended. <br /></td></tr>
+<tr class="separator:affd8344ef9283708a67d99bd7b47dc02"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8ad978f70c1ffaf4fa2bddc1a1e19c3" id="r_ae8ad978f70c1ffaf4fa2bddc1a1e19c3"><td class="memItemLeft" align="right" valign="top"><a id="ae8ad978f70c1ffaf4fa2bddc1a1e19c3" name="ae8ad978f70c1ffaf4fa2bddc1a1e19c3"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set_peer_name_callback</b> (void(*callback)(char *peer_name))</td></tr>
 <tr class="memdesc:ae8ad978f70c1ffaf4fa2bddc1a1e19c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the callback that is called when we get the peer name. <br /></td></tr>
@@ -629,7 +633,7 @@ TaskHandle_t&#160;</td><td class="memItemRight" valign="bottom"><b>app_task_hand
 QueueHandle_t&#160;</td><td class="memItemRight" valign="bottom"><b>app_task_queue</b> = nullptr</td></tr>
 <tr class="separator:a8d1d8b85c5a1ac1822496e7742fc4ed6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d557628ca4cdb883fa005df2f494f32" id="r_a1d557628ca4cdb883fa005df2f494f32"><td class="memItemLeft" align="right" valign="top"><a id="a1d557628ca4cdb883fa005df2f494f32" name="a1d557628ca4cdb883fa005df2f494f32"></a>
-<a class="el" href="group__a2dp.html#ga49adfa87b1ad7420b0075a0ac03cc194">esp_a2d_audio_state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>audio_state</b> = <a class="el" href="group__a2dp.html#gga49adfa87b1ad7420b0075a0ac03cc194a2cac45c7b95065ed02420c5a632ab538">ESP_A2D_AUDIO_STATE_STOPPED</a></td></tr>
+<a class="el" href="group__a2dp.html#ga49adfa87b1ad7420b0075a0ac03cc194">esp_a2d_audio_state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>audio_state</b> = <a class="el" href="group__a2dp.html#gga49adfa87b1ad7420b0075a0ac03cc194a4f131f965f55142fa9fb3557f88b8793">ESP_A2D_AUDIO_STATE_SUSPEND</a></td></tr>
 <tr class="separator:a1d557628ca4cdb883fa005df2f494f32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa227651f633af4d364515a7691d68782" id="r_aa227651f633af4d364515a7691d68782"><td class="memItemLeft" align="right" valign="top"><a id="aa227651f633af4d364515a7691d68782" name="aa227651f633af4d364515a7691d68782"></a>
 void(*&#160;</td><td class="memItemRight" valign="bottom"><b>audio_state_callback</b> )(<a class="el" href="group__a2dp.html#ga49adfa87b1ad7420b0075a0ac03cc194">esp_a2d_audio_state_t</a> state, void *obj) = nullptr</td></tr>
@@ -739,6 +743,9 @@ volatile bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_i2s_activ
 <tr class="memitem:a87fa51e0d2c40d8e5496d7815cc3e981" id="r_a87fa51e0d2c40d8e5496d7815cc3e981"><td class="memItemLeft" align="right" valign="top"><a id="a87fa51e0d2c40d8e5496d7815cc3e981" name="a87fa51e0d2c40d8e5496d7815cc3e981"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_output</b> = true</td></tr>
 <tr class="separator:a87fa51e0d2c40d8e5496d7815cc3e981"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec1c51b8a112c16376f533a0bcf25679" id="r_aec1c51b8a112c16376f533a0bcf25679"><td class="memItemLeft" align="right" valign="top"><a id="aec1c51b8a112c16376f533a0bcf25679" name="aec1c51b8a112c16376f533a0bcf25679"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_output_active_by_state</b> = true</td></tr>
+<tr class="separator:aec1c51b8a112c16376f533a0bcf25679"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6283bcc3f4609807f746d06ccbfa4fac" id="r_a6283bcc3f4609807f746d06ccbfa4fac"><td class="memItemLeft" align="right" valign="top"><a id="a6283bcc3f4609807f746d06ccbfa4fac" name="a6283bcc3f4609807f746d06ccbfa4fac"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_pin_code_active</b> = false</td></tr>
 <tr class="separator:a6283bcc3f4609807f746d06ccbfa4fac"><td class="memSeparator" colspan="2">&#160;</td></tr>

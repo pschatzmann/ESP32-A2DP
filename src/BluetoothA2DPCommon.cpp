@@ -429,7 +429,7 @@ bool BluetoothA2DPCommon::bt_start() {
   esp_bt_controller_config_t cfg = BT_CONTROLLER_INIT_CONFIG_DEFAULT();
   // esp_bt_controller_enable(MODE) This mode must be equal as the mode in “cfg”
   // of esp_bt_controller_init().
-#if ESP_IDF_VERSION < ESP_IDF_VERSION_VAL(5, 1, 0)
+#if ESP_IDF_VERSION < ESP_IDF_VERSION_VAL(6, 1, 0)
   cfg.mode = bt_mode;
   if (cfg.mode == ESP_BT_MODE_CLASSIC_BT) {
     ESP_LOGI(BT_APP_TAG, "mode is ESP_BT_MODE_CLASSIC_BT");

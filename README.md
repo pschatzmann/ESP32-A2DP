@@ -223,7 +223,7 @@ When you start the BluetoothA2DPSource, you need to pass the Bluetooth name that
 BluetoothA2DPSource a2dp_source;
 
 // callback 
-int32_t get_sound_data(uint8 *data, int32_t byteCount) {
+int32_t get_sound_data(uint8_t *data, int32_t byteCount) {
     // generate your sound data 
     // return the effective length in bytes
     return byteCount;

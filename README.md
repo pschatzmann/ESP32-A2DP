@@ -230,7 +230,7 @@ int32_t get_sound_data(uint8_t *data, int32_t byteCount) {
 }
 
 void setup() {
-  a2dp_source.set_data_callback(get_sound_data)
+  a2dp_source.set_data_callback(get_sound_data);
   a2dp_source.start("MyMusic");  
 }
 

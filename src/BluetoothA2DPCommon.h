@@ -60,11 +60,6 @@ using namespace esp_i2s;
 #include "freertos/queue.h"
 #include "freertos/task.h"
 #include "freertos/timers.h"
-#if ESP_IDF_VERSION < ESP_IDF_VERSION_VAL(5, 2, 0)
-#include "freertos/xtensa_api.h"
-#else
-#include "xtensa_api.h"
-#endif
 #include "A2DPVolumeControl.h"
 #include "esp_a2dp_api.h"
 #include "esp_avrc_api.h"
@@ -78,6 +73,15 @@ using namespace esp_i2s;
 #include "nvs.h"
 #include "nvs_flash.h"
 #include "map"
+
+// xtensa only valid for ESP32
+#if defined(CONFIG_IDF_TARGET_ESP32) 
+#  if ESP_IDF_VERSION < ESP_IDF_VERSION_VAL(5, 2, 0)
+#    include "freertos/xtensa_api.h"
+#  else
+#  include "xtensa_api.h"
+#  endif
+#endif
 
 // Memory management ESP32 Core 3.3.7 and later: 
 // https://github.com/espressif/arduino-esp32/issues/12371

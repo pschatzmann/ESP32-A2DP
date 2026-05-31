@@ -66,6 +66,7 @@ void ccall_av_hdl_avrc_tg_evt(uint16_t event, void* param) {
 
 BluetoothA2DPCommon::BluetoothA2DPCommon() {
   actual_bluetooth_a2dp_common = this;
+  bluedroid_config.ssp_en = true;
 }
 
 esp_a2d_audio_state_t BluetoothA2DPCommon::get_audio_state() {

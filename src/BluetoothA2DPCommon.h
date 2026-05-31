@@ -24,9 +24,7 @@
 #pragma once
 
 // Compile only for ESP32
-#ifdef ARDUINO_ARCH_ESP32
-#  include "sdkconfig.h"
-#endif
+#include "sdkconfig.h"
 #if defined(CONFIG_IDF_TARGET_ESP32) 
 #  define IS_VALID_PLATFORM true
 #elif defined(CONFIG_IDF_TARGET_ESP32S31)
@@ -417,7 +415,7 @@ class BluetoothA2DPCommon {
   std::map<int, void*> references;
 
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 2, 1)
-  esp_bluedroid_config_t bluedroid_config{.ssp_en = true};
+  esp_bluedroid_config_t bluedroid_config{};
 #endif
 
   virtual void init_nvs();

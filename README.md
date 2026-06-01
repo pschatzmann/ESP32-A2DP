@@ -245,7 +245,7 @@ You can also indicate multiple alternative Bluetooth names. The system just conn
 
 ```cpp
 void setup() {
-  static std::vector<char*> bt_names = {"MyMusic","RadioPlayer","MusicPlayer"};
+  static std::vector<const char*> bt_names = {"MyMusic","RadioPlayer","MusicPlayer"};
   a2dp_source.set_data_callback(get_sound_data)
   a2dp_source.start(bt_names); 
 } 

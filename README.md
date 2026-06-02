@@ -1,4 +1,4 @@
-# A Simple ESP32 Bluetooth Audio Library
+# A Simple ESP32 Bluetooth A2DP Audio Library
 
 [![Arduino Library](https://img.shields.io/badge/Arduino-Library-blue.svg)](https://www.arduino.cc/reference/en/libraries/)
 [![IDF Component](https://img.shields.io/badge/IDF-Component-blue.svg)](https://github.com/pschatzmann/ESP32-A2DP)

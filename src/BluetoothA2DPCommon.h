@@ -125,6 +125,11 @@ using namespace esp_i2s;
 #define esp_bt_gap_set_device_name esp_bt_dev_set_device_name
 #endif
 
+// Support for older IDF versions
+#if ESP_IDF_VERSION < ESP_IDF_VERSION_VAL(5, 2, 0)      
+#define ESP_A2D_AUDIO_STATE_SUSPEND  ESP_A2D_AUDIO_STATE_REMOTE_SUSPEND
+#endif
+
 #define A2DP_DEPRECATED __attribute__((deprecated))
 
 #define BT_APP_SIG_WORK_DISPATCH (0x01)

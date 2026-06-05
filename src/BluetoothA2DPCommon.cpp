@@ -66,7 +66,9 @@ void ccall_av_hdl_avrc_tg_evt(uint16_t event, void* param) {
 
 BluetoothA2DPCommon::BluetoothA2DPCommon() {
   actual_bluetooth_a2dp_common = this;
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 2, 1)
   bluedroid_config.ssp_en = true;
+#endif
 }
 
 esp_a2d_audio_state_t BluetoothA2DPCommon::get_audio_state() {
@@ -467,7 +469,7 @@ bool BluetoothA2DPCommon::bt_start() {
 
 esp_err_t BluetoothA2DPCommon::bluedroid_init() {
   if (is_bluedroid_initialized) return ESP_OK;
-#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 2, 1)
+#if ESP_IDF_VERSION > ESP_IDF_VERSION_VAL(5, 2, 1)
   return esp_bluedroid_init_with_cfg(&bluedroid_config);
 #else
   return esp_bluedroid_init();

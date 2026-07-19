@@ -88,8 +88,15 @@ void BluetoothA2DPSource::set_pin_code(const char *pin_code,
                                        esp_bt_pin_type_t pin_type) {
   ESP_LOGD(BT_APP_TAG, "%s, ", __func__);
   this->pin_type = pin_type;
-  this->pin_code_len = strlen(pin_code);
-  strcpy((char *)this->pin_code, pin_code);
+  size_t len = strlen(pin_code);
+  if (len >= sizeof(this->pin_code)) {
+    ESP_LOGE(BT_APP_TAG, "pin code is too long - truncating to %d characters",
+             (int)sizeof(this->pin_code) - 1);
+    len = sizeof(this->pin_code) - 1;
+  }
+  memcpy(this->pin_code, pin_code, len);
+  this->pin_code[len] = 0;
+  this->pin_code_len = len;
 }
 
 void BluetoothA2DPSource::start(std::vector<const char *> names) {

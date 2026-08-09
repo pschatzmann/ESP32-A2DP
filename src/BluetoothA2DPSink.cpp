@@ -109,7 +109,7 @@ void BluetoothA2DPSink::end(bool release_memory) {
   if (is_autoreconnect_allowed) {
      is_autoreconnect_allowed = false;
      // https://github.com/pschatzmann/ESP32-A2DP/issues/750
-     if (release_memory && !avrc_connection_state) delay(2100); // give it some time to end
+     if (release_memory && !avrc_connection_state) delay_ms(2100); // give it some time to end
   }
 
 

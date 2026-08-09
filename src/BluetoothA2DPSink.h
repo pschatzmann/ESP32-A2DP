@@ -332,6 +332,9 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   /// Provides the actually set number of channels (1=mono,2=stereo)
   virtual uint16_t channels() { return m_channels; }
 
+  /// Set the callback called when there is a PIN request / confirmation
+  virtual void set_on_pin_code_request(void (*callBack)(int));
+
   /// We need to confirm a new seesion by calling confirm_pin_code()
   virtual void activate_pin_code(bool active);
 
@@ -473,6 +476,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   void (*bt_volumechange)(int) = nullptr;
   void (*bt_dis_connected)() = nullptr;
   void (*bt_connected)() = nullptr;
+  void (*pin_code_request_callback)(int) = nullptr;
   void (*data_received)() = nullptr;
   void (*stream_reader)(const uint8_t*, uint32_t) = nullptr;
   void (*raw_stream_reader)(const uint8_t*, uint32_t) = nullptr;

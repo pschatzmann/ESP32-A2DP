@@ -453,6 +453,9 @@ void BluetoothA2DPSink::app_gap_callback(esp_bt_gap_cb_event_t event,
                param->cfm_req.num_val);
       pin_code_int = param->key_notif.passkey;
       pin_code_request = Confirm;
+      if (pin_code_request_callback != nullptr) {
+        pin_code_request_callback(pin_code_int);
+      }
     } break;
 
     case ESP_BT_GAP_KEY_NOTIF_EVT: {
@@ -460,11 +463,17 @@ void BluetoothA2DPSink::app_gap_callback(esp_bt_gap_cb_event_t event,
                param->key_notif.passkey);
       pin_code_int = param->key_notif.passkey;
       pin_code_request = Reply;
+      if (pin_code_request_callback != nullptr) {
+        pin_code_request_callback(pin_code_int);
+      }
     } break;
 
     case ESP_BT_GAP_KEY_REQ_EVT: {
       ESP_LOGI(BT_AV_TAG, "ESP_BT_GAP_KEY_REQ_EVT Please enter passkey!");
       pin_code_request = Reply;
+      if (pin_code_request_callback != nullptr) {
+        pin_code_request_callback(0);
+      }
     } break;
 
     case ESP_BT_GAP_READ_RSSI_DELTA_EVT: {
@@ -1369,6 +1378,10 @@ void BluetoothA2DPSink::set_volume(uint8_t volume) {
 int BluetoothA2DPSink::get_volume() {
   // ESP_LOGI(BT_AV_TAG, "get_volume %d", s_volume);
   return s_volume;
+}
+
+void BluetoothA2DPSink::set_on_pin_code_request(void (*callBack)(int)) {
+  this->pin_code_request_callback = callBack;
 }
 
 void BluetoothA2DPSink::activate_pin_code(bool active) {

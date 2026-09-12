@@ -611,9 +611,15 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   virtual void register_managed_decoder_seps();
   /// creates the raw queue + decode task, called on ESP_A2D_AUDIO_STATE_STARTED
   virtual void managed_decode_start();
-  /// suspends the decode task, drains the raw queue and closes the decoder,
-  /// called on ESP_A2D_AUDIO_STATE_SUSPEND / disconnect
+  /// suspends the decode task and drains the raw queue, leaving the decoder
+  /// open - called on ESP_A2D_AUDIO_STATE_SUSPEND; A2DP frames are
+  /// self-contained so the decoder can safely keep its state across a pause,
+  /// and many sources never resend AUDIO_CFG_EVT on resume, so closing here
+  /// would leave the decoder unable to reopen itself
   virtual void managed_decode_flush();
+  /// flushes (see managed_decode_flush()) and additionally closes the
+  /// decoder, called on disconnect
+  virtual void managed_decode_close();
   /// task loop: pulls raw encoded buffers off codec_raw_queue and decodes them
   virtual void managed_decode_task_handler(void* arg);
 #endif

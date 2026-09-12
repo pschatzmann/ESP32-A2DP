@@ -294,12 +294,16 @@ void BluetoothA2DPSink::managed_decode_flush() {
       esp_a2d_audio_buff_free(audio_buf);
     }
   }
-  // close the decoder while the task is still suspended, so it can't be
-  // concurrently mid-process() on the decoder being closed
-  audio_decoder.close();
   if (codec_decode_task_handle != nullptr) {
     vTaskResume(codec_decode_task_handle);
   }
+}
+
+void BluetoothA2DPSink::managed_decode_close() {
+  // suspend the task and drain the queue first, so it can't be concurrently
+  // mid-process() on the decoder being closed
+  managed_decode_flush();
+  audio_decoder.close();
 }
 
 void BluetoothA2DPSink::managed_decode_task_handler(void *arg) {
@@ -846,7 +850,7 @@ void BluetoothA2DPSink::handle_connection_state(uint16_t event, void *p_param) {
       pin_code_request = Undefined;
 
 #if A2DP_MANAGED_DECODER_SUPPORTED
-      if (use_managed_decoder()) managed_decode_flush();
+      if (use_managed_decoder()) managed_decode_close();
 #endif
 
       // call callback

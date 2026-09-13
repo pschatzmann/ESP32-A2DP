@@ -790,6 +790,38 @@ void BluetoothA2DPSink::handle_audio_state(uint16_t event, void *p_param) {
 #endif
     set_i2s_active(true);
   } else if (ESP_A2D_AUDIO_STATE_SUSPEND == a2d->audio_stat.state) {
+#if A2DP_MANAGED_DECODER_SUPPORTED
+    // suspend the decode task *before* touching the output below: it runs
+    // on its own task (potentially on the other core) and keeps calling
+    // out->write() as long as it's not suspended, which can otherwise race
+    // with write_silence()/set_i2s_active(false) below and corrupt the I2S
+    // driver's internal spinlock state (observed as a
+    // "spinlock_acquire ... lock->count == 0" assertion on repeated
+    // pause/resume). managed_decode_flush() resumes it again once drained.
+    //
+    // vTaskSuspend() on a task currently running on the *other* core only
+    // requests a yield (via an inter-core interrupt) and returns
+    // immediately - it does not wait for that core to actually stop
+    // executing it. So we poll xTaskGetCurrentTaskHandleForCore() until the
+    // task is confirmed off both cores before proceeding, exactly like
+    // ESP-IDF's own xTaskCreateWithCaps()/vTaskDeleteWithCaps() do for the
+    // same reason (see idf_additions.c: prvTaskDeleteWithCaps()).
+    if (use_managed_decoder() && codec_decode_task_handle != nullptr) {
+      vTaskSuspend(codec_decode_task_handle);
+      for (;;) {
+        bool still_on_core = false;
+        for (BaseType_t core = 0; core < configNUMBER_OF_CORES; core++) {
+          if (xTaskGetCurrentTaskHandleForCore(core) ==
+              codec_decode_task_handle) {
+            still_on_core = true;
+            break;
+          }
+        }
+        if (!still_on_core) break;
+        taskYIELD();
+      }
+    }
+#endif
     // flush silence through DMA before deactivating to avoid a noise pop
     if (is_output && is_i2s_active) out->write_silence(2 * 1024);
     // deactivate only when is_output_active_by_state is true

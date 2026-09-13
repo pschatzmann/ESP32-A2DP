@@ -445,7 +445,7 @@ class BluetoothA2DPSink : public BluetoothA2DPCommon {
   volatile bool is_i2s_active = false;
   // activate output via BluetoothA2DPOutput
   bool is_output = true;
-  bool is_output_active_by_state = true;
+  bool is_output_active_by_state = false;
   uint16_t m_sample_rate = 44100;  // set default rate
   // number of PCM channels negotiated (1=mono,2=stereo). Default 2.
   uint8_t m_channels = 2;

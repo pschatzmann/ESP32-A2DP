@@ -430,14 +430,18 @@ bool BluetoothA2DPCommon::bt_start() {
 #else
   esp_bt_controller_config_t cfg = BT_CONTROLLER_INIT_CONFIG_DEFAULT();
   // esp_bt_controller_enable(MODE) This mode must be equal as the mode in “cfg”
-  // of esp_bt_controller_init().
-#if ESP_IDF_VERSION < ESP_IDF_VERSION_VAL(6, 1, 0)
+  // of esp_bt_controller_init(): esp_bt_controller_enable() on esp32 rejects
+  // with ESP_ERR_INVALID_ARG whenever the requested mode isn't exactly what
+  // the controller was initialized with (see btdm_controller_get_mode() check
+  // in esp_bt_controller_enable(), components/bt/controller/esp32/bt.c). This
+  // sync must run on every IDF version - cfg.mode otherwise defaults to
+  // whatever BTDM_CTRL_MODE_* is selected in sdkconfig/menuconfig, which
+  // won't generally match bt_mode (defaults to ESP_BT_MODE_CLASSIC_BT here).
   cfg.mode = bt_mode;
   if (cfg.mode == ESP_BT_MODE_CLASSIC_BT) {
     ESP_LOGI(BT_APP_TAG, "mode is ESP_BT_MODE_CLASSIC_BT");
     esp_bt_controller_mem_release(ESP_BT_MODE_BLE);
   }
-#endif
 
   if (esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_ENABLED) {
     return true;

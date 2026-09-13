@@ -243,7 +243,7 @@ esp_a2d_mct_t BluetoothA2DPSink::get_audio_type() { return audio_type; }
 void BluetoothA2DPSink::register_managed_decoder_seps() {
   uint8_t seid = 0;
   for (A2DPDecoder *dec : audio_decoder.all_decoders()) {
-    esp_a2d_mcc_t mcc = {0};
+    esp_a2d_mcc_t mcc = {};
     dec->build_capability(mcc);
     esp_err_t err = esp_a2d_sink_register_stream_endpoint(seid, &mcc);
     ESP_LOGI(BT_AV_TAG,

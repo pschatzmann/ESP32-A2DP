@@ -24,20 +24,14 @@
 #pragma once
 
 // Compile only for ESP32
-#include "sdkconfig.h"
-#if defined(CONFIG_IDF_TARGET_ESP32) 
-#  define IS_VALID_PLATFORM true
-#elif defined(CONFIG_IDF_TARGET_ESP32S31)
-#  define IS_VALID_PLATFORM true
-#else
+#include "config.h"
+#if !IS_VALID_PLATFORM
 #  error "Please read the ESP32-A2DP Wiki about the supported Platforms!"
-#  define IS_VALID_PLATFORM false
 #endif
 
 // Continue only for ESP32
 #if IS_VALID_PLATFORM
 
-#include "config.h"
 // If you use #include "I2S.h" the i2s functionality is hidden in a namespace
 // this hack prevents any error messages
 #ifdef _I2S_H_INCLUDED

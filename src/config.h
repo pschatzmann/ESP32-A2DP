@@ -2,6 +2,17 @@
 
 #include "esp_idf_version.h"
 
+// Only the original ESP32 has the classic Bluetooth (BR/EDR) controller
+// that A2DP relies on - ESP32-S2/S3/C3/... only support BLE.
+#include "sdkconfig.h"
+#if defined(CONFIG_IDF_TARGET_ESP32)
+#  define IS_VALID_PLATFORM true
+#elif defined(CONFIG_IDF_TARGET_ESP32S31)
+#  define IS_VALID_PLATFORM true
+#else
+#  define IS_VALID_PLATFORM false
+#endif
+
 #ifndef AUTOCONNECT_TRY_NUM
 #  define AUTOCONNECT_TRY_NUM 1000
 #endif
@@ -34,7 +45,7 @@
 // (see A2DPDecoderAAC) - that is a runtime concern (reported via
 // ESP_A2D_SEP_REG_STATE_EVT), not a compile-time one.
 #ifndef A2DP_MANAGED_DECODER_SUPPORTED
-#  define A2DP_MANAGED_DECODER_SUPPORTED (ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 5, 0) && A2DP_I2S_AUDIOTOOLS)
+#  define A2DP_MANAGED_DECODER_SUPPORTED (IS_VALID_PLATFORM && ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 5, 0) && A2DP_I2S_AUDIOTOOLS)
 #endif
 
 // Maximum write size

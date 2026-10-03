@@ -43,6 +43,7 @@
  * reject this registration (see the ESP_A2D_SEP_REG_STATE_EVT log). This
  * class still works on older IDF versions; it just won't get negotiated.
  *
+ * @ingroup a2dp
  * @author Phil Schatzmann
  * @copyright Apache License Version 2
  */

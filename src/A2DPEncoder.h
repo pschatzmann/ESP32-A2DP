@@ -27,6 +27,7 @@
 /**
  * @brief Receives the encoded frames produced by an A2DPEncoder (implemented
  * by A2DPAudioEncoder, which packs them into A2DP media packets).
+ * @ingroup a2dp
  */
 class A2DPFrameSink {
  public:
@@ -50,6 +51,7 @@ class A2DPFrameSink {
  * with set_sample_rate() (default 44100). The sample rate is the only one
  * advertised to the sink. If the sink negotiates mono, the PCM is downmixed
  * before it is encoded.
+ * @ingroup a2dp
  * @author Phil Schatzmann
  * @copyright Apache License Version 2
  */
@@ -180,6 +182,7 @@ class A2DPEncoder {
  * whichever one matches the codec negotiated with the connected sink and
  * packs the encoded frames into A2DP media packets that are sent with
  * esp_a2d_source_audio_data_send().
+ * @ingroup a2dp
  * @author Phil Schatzmann
  * @copyright Apache License Version 2
  */

@@ -75,7 +75,7 @@ $(function() {
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="class_a2_d_p_encoder-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">A2DPEncoder Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div></div>
+  <div class="headertitle"><div class="title">A2DPEncoder Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span><div class="ingroups"><a class="el" href="group__a2dp.html">ESP32 A2DP</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -175,7 +175,8 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>sample_rate_cfg</b> = 
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base class for a single A2DP codec's encode support: pairs an A2DP codec type and its SEP capability advertisement with an audio_tools::AudioEncoder that performs the actual encoding. Provide one concrete subclass per codec (see <a class="el" href="class_a2_d_p_encoder_s_b_c.html" title="SBC encode support for the managed A2DP encoder framework: wraps an audio_tools::SBCEncoder (codec-sb...">A2DPEncoderSBC</a>, <a class="el" href="class_a2_d_p_encoder_a_a_c.html" title="AAC-LC encode support for the managed A2DP encoder framework: wraps any audio_tools::AudioEncoder tha...">A2DPEncoderAAC</a>) and register instances via <a class="el" href="class_bluetooth_a2_d_p_source.html#a8463d4cdf9ccdcb75180551868f181d9">BluetoothA2DPSource::add_encoder()</a> - stream endpoint registration is driven entirely by what gets registered here. </p>
-<p>The PCM which is provided by the data callbacks of the source is always 16 bit stereo (as in the legacy source API) at the sample rate defined with <a class="el" href="class_a2_d_p_encoder.html#acd4b3ca105ce547225e43fee55d87d2e">set_sample_rate()</a> (default 44100). The sample rate is the only one advertised to the sink. If the sink negotiates mono, the PCM is downmixed before it is encoded. </p><dl class="section author"><dt>Author</dt><dd>Phil Schatzmann </dd></dl>
+<p>The PCM which is provided by the data callbacks of the source is always 16 bit stereo (as in the legacy source API) at the sample rate defined with <a class="el" href="class_a2_d_p_encoder.html#acd4b3ca105ce547225e43fee55d87d2e">set_sample_rate()</a> (default 44100). The sample rate is the only one advertised to the sink. If the sink negotiates mono, the PCM is downmixed before it is encoded.</p>
+<dl class="section author"><dt>Author</dt><dd>Phil Schatzmann </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Apache License Version 2 </dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="af92ed43c2fbe121b97fcff580dfaaf74" name="af92ed43c2fbe121b97fcff580dfaaf74"></a>

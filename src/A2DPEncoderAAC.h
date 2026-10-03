@@ -36,6 +36,7 @@
  * underlying Bluedroid stack on ESP-IDF >= 6.1 (with
  * CONFIG_BT_A2DP_CODEC_AAC_ENABLED=y).
  *
+ * @ingroup a2dp
  * @author Phil Schatzmann
  * @copyright Apache License Version 2
  */

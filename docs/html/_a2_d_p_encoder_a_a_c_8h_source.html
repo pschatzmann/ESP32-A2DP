@@ -101,174 +101,174 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#if A2DP_MANAGED_ENCODER_SUPPORTED</span></div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="foldopen" id="foldopen00042" data-start="{" data-end="};">
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="class_a2_d_p_encoder_a_a_c.html">   42</a></span><span class="keyword">class </span><a class="code hl_class" href="class_a2_d_p_encoder_a_a_c.html">A2DPEncoderAAC</a> : <span class="keyword">public</span> <a class="code hl_class" href="class_a2_d_p_encoder.html">A2DPEncoder</a> {</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> <span class="keyword">public</span>:</div>
-<div class="foldopen" id="foldopen00046" data-start="{" data-end="}">
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="class_a2_d_p_encoder_a_a_c.html#ae26318d8db4dcfb0b90b20a2b0d7bb8a">   46</a></span>  <a class="code hl_function" href="class_a2_d_p_encoder_a_a_c.html#ae26318d8db4dcfb0b90b20a2b0d7bb8a">A2DPEncoderAAC</a>(audio_tools::AudioEncoder&amp; encoder, uint32_t bitrate = 256000)</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>      : <a class="code hl_class" href="class_a2_d_p_encoder.html">A2DPEncoder</a>(encoder), bitrate(bitrate) {}</div>
+<div class="foldopen" id="foldopen00043" data-start="{" data-end="};">
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="class_a2_d_p_encoder_a_a_c.html">   43</a></span><span class="keyword">class </span><a class="code hl_class" href="class_a2_d_p_encoder_a_a_c.html">A2DPEncoderAAC</a> : <span class="keyword">public</span> <a class="code hl_class" href="class_a2_d_p_encoder.html">A2DPEncoder</a> {</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> <span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00047" data-start="{" data-end="}">
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="class_a2_d_p_encoder_a_a_c.html#ae26318d8db4dcfb0b90b20a2b0d7bb8a">   47</a></span>  <a class="code hl_function" href="class_a2_d_p_encoder_a_a_c.html#ae26318d8db4dcfb0b90b20a2b0d7bb8a">A2DPEncoderAAC</a>(audio_tools::AudioEncoder&amp; encoder, uint32_t bitrate = 256000)</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>      : <a class="code hl_class" href="class_a2_d_p_encoder.html">A2DPEncoder</a>(encoder), bitrate(bitrate) {}</div>
 </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="class_a2_d_p_encoder_a_a_c.html#a2140ec26d8712e82040f551d782a6547">   49</a></span>  esp_a2d_mct_t <a class="code hl_function" href="class_a2_d_p_encoder_a_a_c.html#a2140ec26d8712e82040f551d782a6547">codec_type</a>()<span class="keyword"> override </span>{ <span class="keywordflow">return</span> ESP_A2D_MCT_M24; }</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="class_a2_d_p_encoder_a_a_c.html#a6ecfe10a3917096c82e70c619cabd535">   51</a></span>  <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code hl_function" href="class_a2_d_p_encoder_a_a_c.html#a6ecfe10a3917096c82e70c619cabd535">mime</a>()<span class="keyword"> override </span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;audio/aac&quot;</span>; }</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="class_a2_d_p_encoder_a_a_c.html#a56123c6add561b23efddd39a53b1c862">   53</a></span>  uint32_t <a class="code hl_function" href="class_a2_d_p_encoder_a_a_c.html#a56123c6add561b23efddd39a53b1c862">samples_per_frame</a>()<span class="keyword"> override </span>{ <span class="keywordflow">return</span> 1024; }</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
-<div class="foldopen" id="foldopen00055" data-start="{" data-end="}">
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno"><a class="line" href="class_a2_d_p_encoder_a_a_c.html#a3a0979a6fe77b3290bcf0466d6410271">   55</a></span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="class_a2_d_p_encoder_a_a_c.html#a3a0979a6fe77b3290bcf0466d6410271">begin</a>(<span class="keyword">const</span> esp_a2d_mcc_t&amp; mcc)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    buffer.clear();</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    mode = Undefined;</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="class_a2_d_p_encoder.html#af92ed43c2fbe121b97fcff580dfaaf74">A2DPEncoder::begin</a>(mcc);</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>  }</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="class_a2_d_p_encoder_a_a_c.html#a2140ec26d8712e82040f551d782a6547">   50</a></span>  esp_a2d_mct_t <a class="code hl_function" href="class_a2_d_p_encoder_a_a_c.html#a2140ec26d8712e82040f551d782a6547">codec_type</a>()<span class="keyword"> override </span>{ <span class="keywordflow">return</span> ESP_A2D_MCT_M24; }</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="class_a2_d_p_encoder_a_a_c.html#a6ecfe10a3917096c82e70c619cabd535">   52</a></span>  <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code hl_function" href="class_a2_d_p_encoder_a_a_c.html#a6ecfe10a3917096c82e70c619cabd535">mime</a>()<span class="keyword"> override </span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;audio/aac&quot;</span>; }</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="class_a2_d_p_encoder_a_a_c.html#a56123c6add561b23efddd39a53b1c862">   54</a></span>  uint32_t <a class="code hl_function" href="class_a2_d_p_encoder_a_a_c.html#a56123c6add561b23efddd39a53b1c862">samples_per_frame</a>()<span class="keyword"> override </span>{ <span class="keywordflow">return</span> 1024; }</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="foldopen" id="foldopen00056" data-start="{" data-end="}">
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="class_a2_d_p_encoder_a_a_c.html#a3a0979a6fe77b3290bcf0466d6410271">   56</a></span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="class_a2_d_p_encoder_a_a_c.html#a3a0979a6fe77b3290bcf0466d6410271">begin</a>(<span class="keyword">const</span> esp_a2d_mcc_t&amp; mcc)<span class="keyword"> override </span>{</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    buffer.clear();</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    mode = Undefined;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="class_a2_d_p_encoder.html#af92ed43c2fbe121b97fcff580dfaaf74">A2DPEncoder::begin</a>(mcc);</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>  }</div>
 </div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
-<div class="foldopen" id="foldopen00061" data-start="{" data-end="}">
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="class_a2_d_p_encoder_a_a_c.html#a50ccddfd2445c6eae44e3019ab48a43f">   61</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="class_a2_d_p_encoder_a_a_c.html#a50ccddfd2445c6eae44e3019ab48a43f">build_capability</a>(esp_a2d_mcc_t&amp; mcc)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    mcc.type = ESP_A2D_MCT_M24;</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="preprocessor">#ifdef ESP_A2D_M24_CIE_OBJ_TYPE_2_AAC_LC</span></div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    mcc.cie.m24_info.drc = ESP_A2D_M24_CIE_DRC_NS;</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    mcc.cie.m24_info.obj_type =</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        ESP_A2D_M24_CIE_OBJ_TYPE_2_AAC_LC | ESP_A2D_M24_CIE_OBJ_TYPE_4_AAC_LC;</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <span class="comment">// we only advertise the sample rate of the provided PCM</span></div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    mcc.cie.m24_info.samp_freq1 = 0;</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    mcc.cie.m24_info.samp_freq2 = 0;</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    <span class="keywordflow">switch</span> (input_sample_rate) {</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>      <span class="keywordflow">case</span> 8000:</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        mcc.cie.m24_info.samp_freq1 = ESP_A2D_M24_CIE_SF1_8K;</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>      <span class="keywordflow">case</span> 11025:</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        mcc.cie.m24_info.samp_freq1 = ESP_A2D_M24_CIE_SF1_11K;</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>      <span class="keywordflow">case</span> 12000:</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        mcc.cie.m24_info.samp_freq1 = ESP_A2D_M24_CIE_SF1_12K;</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>      <span class="keywordflow">case</span> 16000:</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        mcc.cie.m24_info.samp_freq1 = ESP_A2D_M24_CIE_SF1_16K;</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>      <span class="keywordflow">case</span> 22050:</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        mcc.cie.m24_info.samp_freq1 = ESP_A2D_M24_CIE_SF1_22K;</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>      <span class="keywordflow">case</span> 24000:</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        mcc.cie.m24_info.samp_freq1 = ESP_A2D_M24_CIE_SF1_24K;</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>      <span class="keywordflow">case</span> 32000:</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>        mcc.cie.m24_info.samp_freq1 = ESP_A2D_M24_CIE_SF1_32K;</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>      <span class="keywordflow">case</span> 48000:</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        mcc.cie.m24_info.samp_freq2 = ESP_A2D_M24_CIE_SF2_48K;</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>      <span class="keywordflow">default</span>:</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        <span class="keywordflow">if</span> (input_sample_rate != 44100) {</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>          ESP_LOGE(<span class="stringliteral">&quot;A2DPEncoderAAC&quot;</span>,</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>                   <span class="stringliteral">&quot;unsupported sample rate %d - advertising 44100&quot;</span>,</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>                   input_sample_rate);</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        }</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        mcc.cie.m24_info.samp_freq1 = ESP_A2D_M24_CIE_SF1_44K;</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    }</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    mcc.cie.m24_info.ch = ESP_A2D_M24_CIE_CH_1 | ESP_A2D_M24_CIE_CH_2;</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    mcc.cie.m24_info.vbr = ESP_A2D_M24_CIE_VBR_NS;</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    mcc.cie.m24_info.br1 = (bitrate &gt;&gt; 16) &amp; ESP_A2D_M24_CIE_BR1_MSK;</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    mcc.cie.m24_info.br2 = (bitrate &gt;&gt; 8) &amp; ESP_A2D_M24_CIE_BR2_MSK;</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    mcc.cie.m24_info.br3 = bitrate &amp; ESP_A2D_M24_CIE_BR3_MSK;</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span><span class="preprocessor">#else</span></div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    <span class="comment">// ESP-IDF &lt; 6.1: the named bit constants aren&#39;t defined yet, and AAC</span></div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    <span class="comment">// stream endpoints are not supported anyway</span></div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>    ESP_LOGW(<span class="stringliteral">&quot;A2DPEncoderAAC&quot;</span>, <span class="stringliteral">&quot;AAC requires ESP-IDF &gt;= 6.1&quot;</span>);</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>  }</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
+<div class="foldopen" id="foldopen00062" data-start="{" data-end="}">
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="class_a2_d_p_encoder_a_a_c.html#a50ccddfd2445c6eae44e3019ab48a43f">   62</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="class_a2_d_p_encoder_a_a_c.html#a50ccddfd2445c6eae44e3019ab48a43f">build_capability</a>(esp_a2d_mcc_t&amp; mcc)<span class="keyword"> override </span>{</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    mcc.type = ESP_A2D_MCT_M24;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="preprocessor">#ifdef ESP_A2D_M24_CIE_OBJ_TYPE_2_AAC_LC</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    mcc.cie.m24_info.drc = ESP_A2D_M24_CIE_DRC_NS;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    mcc.cie.m24_info.obj_type =</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        ESP_A2D_M24_CIE_OBJ_TYPE_2_AAC_LC | ESP_A2D_M24_CIE_OBJ_TYPE_4_AAC_LC;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <span class="comment">// we only advertise the sample rate of the provided PCM</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    mcc.cie.m24_info.samp_freq1 = 0;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    mcc.cie.m24_info.samp_freq2 = 0;</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    <span class="keywordflow">switch</span> (input_sample_rate) {</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>      <span class="keywordflow">case</span> 8000:</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        mcc.cie.m24_info.samp_freq1 = ESP_A2D_M24_CIE_SF1_8K;</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>      <span class="keywordflow">case</span> 11025:</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        mcc.cie.m24_info.samp_freq1 = ESP_A2D_M24_CIE_SF1_11K;</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>      <span class="keywordflow">case</span> 12000:</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        mcc.cie.m24_info.samp_freq1 = ESP_A2D_M24_CIE_SF1_12K;</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>      <span class="keywordflow">case</span> 16000:</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        mcc.cie.m24_info.samp_freq1 = ESP_A2D_M24_CIE_SF1_16K;</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>      <span class="keywordflow">case</span> 22050:</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        mcc.cie.m24_info.samp_freq1 = ESP_A2D_M24_CIE_SF1_22K;</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>      <span class="keywordflow">case</span> 24000:</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        mcc.cie.m24_info.samp_freq1 = ESP_A2D_M24_CIE_SF1_24K;</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>      <span class="keywordflow">case</span> 32000:</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        mcc.cie.m24_info.samp_freq1 = ESP_A2D_M24_CIE_SF1_32K;</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>        <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>      <span class="keywordflow">case</span> 48000:</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        mcc.cie.m24_info.samp_freq2 = ESP_A2D_M24_CIE_SF2_48K;</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>      <span class="keywordflow">default</span>:</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        <span class="keywordflow">if</span> (input_sample_rate != 44100) {</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>          ESP_LOGE(<span class="stringliteral">&quot;A2DPEncoderAAC&quot;</span>,</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>                   <span class="stringliteral">&quot;unsupported sample rate %d - advertising 44100&quot;</span>,</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>                   input_sample_rate);</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        }</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        mcc.cie.m24_info.samp_freq1 = ESP_A2D_M24_CIE_SF1_44K;</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    }</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    mcc.cie.m24_info.ch = ESP_A2D_M24_CIE_CH_1 | ESP_A2D_M24_CIE_CH_2;</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    mcc.cie.m24_info.vbr = ESP_A2D_M24_CIE_VBR_NS;</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    mcc.cie.m24_info.br1 = (bitrate &gt;&gt; 16) &amp; ESP_A2D_M24_CIE_BR1_MSK;</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    mcc.cie.m24_info.br2 = (bitrate &gt;&gt; 8) &amp; ESP_A2D_M24_CIE_BR2_MSK;</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>    mcc.cie.m24_info.br3 = bitrate &amp; ESP_A2D_M24_CIE_BR3_MSK;</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    <span class="comment">// ESP-IDF &lt; 6.1: the named bit constants aren&#39;t defined yet, and AAC</span></div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>    <span class="comment">// stream endpoints are not supported anyway</span></div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    ESP_LOGW(<span class="stringliteral">&quot;A2DPEncoderAAC&quot;</span>, <span class="stringliteral">&quot;AAC requires ESP-IDF &gt;= 6.1&quot;</span>);</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>  }</div>
 </div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> </div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> <span class="keyword">protected</span>:</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>  <span class="keyword">enum</span> Mode { Undefined, ADTS, Raw };</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>  <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> kAdtsMinHeaderSize = 7;</div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>  uint32_t bitrate;</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>  Mode mode = Undefined;</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>  std::vector&lt;uint8_t&gt; buffer;</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
-<div class="foldopen" id="foldopen00125" data-start="{" data-end="}">
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno"><a class="line" href="class_a2_d_p_encoder_a_a_c.html#a239cd038fa31168c6dd41df7c0ee04c3">  125</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="class_a2_d_p_encoder_a_a_c.html#a239cd038fa31168c6dd41df7c0ee04c3">parse_audio_info</a>(<span class="keyword">const</span> esp_a2d_mcc_t&amp; mcc)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span><span class="preprocessor">#ifdef ESP_A2D_M24_CIE_OBJ_TYPE_2_AAC_LC</span></div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    <span class="keyword">const</span> <span class="keyword">auto</span>&amp; m24 = mcc.cie.m24_info;</div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    <span class="keywordflow">if</span> (m24.samp_freq2 &amp; ESP_A2D_M24_CIE_SF2_48K) {</div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>      sample_rate_cfg = 48000;</div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (m24.samp_freq1 &amp; ESP_A2D_M24_CIE_SF1_44K) {</div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>      sample_rate_cfg = 44100;</div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (m24.samp_freq1 &amp; ESP_A2D_M24_CIE_SF1_32K) {</div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>      sample_rate_cfg = 32000;</div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (m24.samp_freq1 &amp; ESP_A2D_M24_CIE_SF1_24K) {</div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>      sample_rate_cfg = 24000;</div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (m24.samp_freq1 &amp; ESP_A2D_M24_CIE_SF1_22K) {</div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>      sample_rate_cfg = 22050;</div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (m24.samp_freq1 &amp; ESP_A2D_M24_CIE_SF1_16K) {</div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>      sample_rate_cfg = 16000;</div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (m24.samp_freq1 &amp; ESP_A2D_M24_CIE_SF1_12K) {</div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>      sample_rate_cfg = 12000;</div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (m24.samp_freq1 &amp; ESP_A2D_M24_CIE_SF1_11K) {</div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>      sample_rate_cfg = 11025;</div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (m24.samp_freq1 &amp; ESP_A2D_M24_CIE_SF1_8K) {</div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>      sample_rate_cfg = 8000;</div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    }</div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    channels_cfg = (m24.ch &amp; ESP_A2D_M24_CIE_CH_2) ? 2 : 1;</div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>  }</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> <span class="keyword">protected</span>:</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>  <span class="keyword">enum</span> Mode { Undefined, ADTS, Raw };</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>  <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> kAdtsMinHeaderSize = 7;</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>  uint32_t bitrate;</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>  Mode mode = Undefined;</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>  std::vector&lt;uint8_t&gt; buffer;</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
+<div class="foldopen" id="foldopen00126" data-start="{" data-end="}">
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno"><a class="line" href="class_a2_d_p_encoder_a_a_c.html#a239cd038fa31168c6dd41df7c0ee04c3">  126</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="class_a2_d_p_encoder_a_a_c.html#a239cd038fa31168c6dd41df7c0ee04c3">parse_audio_info</a>(<span class="keyword">const</span> esp_a2d_mcc_t&amp; mcc)<span class="keyword"> override </span>{</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span><span class="preprocessor">#ifdef ESP_A2D_M24_CIE_OBJ_TYPE_2_AAC_LC</span></div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    <span class="keyword">const</span> <span class="keyword">auto</span>&amp; m24 = mcc.cie.m24_info;</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>    <span class="keywordflow">if</span> (m24.samp_freq2 &amp; ESP_A2D_M24_CIE_SF2_48K) {</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>      sample_rate_cfg = 48000;</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (m24.samp_freq1 &amp; ESP_A2D_M24_CIE_SF1_44K) {</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>      sample_rate_cfg = 44100;</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (m24.samp_freq1 &amp; ESP_A2D_M24_CIE_SF1_32K) {</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>      sample_rate_cfg = 32000;</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (m24.samp_freq1 &amp; ESP_A2D_M24_CIE_SF1_24K) {</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>      sample_rate_cfg = 24000;</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (m24.samp_freq1 &amp; ESP_A2D_M24_CIE_SF1_22K) {</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>      sample_rate_cfg = 22050;</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (m24.samp_freq1 &amp; ESP_A2D_M24_CIE_SF1_16K) {</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>      sample_rate_cfg = 16000;</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (m24.samp_freq1 &amp; ESP_A2D_M24_CIE_SF1_12K) {</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>      sample_rate_cfg = 12000;</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (m24.samp_freq1 &amp; ESP_A2D_M24_CIE_SF1_11K) {</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>      sample_rate_cfg = 11025;</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (m24.samp_freq1 &amp; ESP_A2D_M24_CIE_SF1_8K) {</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>      sample_rate_cfg = 8000;</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    }</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>    channels_cfg = (m24.ch &amp; ESP_A2D_M24_CIE_CH_2) ? 2 : 1;</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>  }</div>
 </div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span> </div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>  <span class="keyword">static</span> <span class="keywordtype">bool</span> is_adts_sync(<span class="keyword">const</span> uint8_t* data) {</div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>    <span class="keywordflow">return</span> data[0] == 0xFF &amp;&amp; (data[1] &amp; 0xF6) == 0xF0;</div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>  }</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> </div>
-<div class="foldopen" id="foldopen00156" data-start="{" data-end="}">
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno"><a class="line" href="class_a2_d_p_encoder_a_a_c.html#a23cb69fa6ad147542b6c2f8a7d0cb9f1">  156</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="class_a2_d_p_encoder_a_a_c.html#a23cb69fa6ad147542b6c2f8a7d0cb9f1">write_encoded</a>(<span class="keyword">const</span> uint8_t* data, <span class="keywordtype">size_t</span> len)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>    <span class="keywordflow">if</span> (len == 0) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>    <span class="keywordflow">if</span> (mode == Undefined) {</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>      mode = (len &gt;= 2 &amp;&amp; is_adts_sync(data)) ? ADTS : Raw;</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>    }</div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>    <span class="keywordflow">if</span> (mode == Raw) {</div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>      <a class="code hl_function" href="class_a2_d_p_encoder.html#abcd2d0edfdd06b6d16019f7da3addeab">A2DPEncoder::write_encoded</a>(data, len);</div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>      <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>    }</div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span> </div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>    buffer.insert(buffer.end(), data, data + len);</div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>    <span class="keywordtype">size_t</span> pos = 0;</div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>    <span class="keywordflow">while</span> (buffer.size() - pos &gt;= kAdtsMinHeaderSize) {</div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>      <span class="keyword">const</span> uint8_t* hdr = buffer.data() + pos;</div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>      <span class="keywordflow">if</span> (!is_adts_sync(hdr)) {</div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>        <span class="comment">// resync</span></div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>        pos++;</div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>        <span class="keywordflow">continue</span>;</div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>      }</div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>      <span class="keywordtype">size_t</span> header_size = (hdr[1] &amp; 0x01) ? 7 : 9;  <span class="comment">// protection_absent</span></div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>      <span class="keywordtype">size_t</span> frame_len = ((hdr[3] &amp; 0x03) &lt;&lt; 11) | (hdr[4] &lt;&lt; 3) |</div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>                         ((hdr[5] &gt;&gt; 5) &amp; 0x07);</div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>      <span class="keywordflow">if</span> (frame_len &lt;= header_size) {</div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>        pos++;</div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>        <span class="keywordflow">continue</span>;</div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>      }</div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>      <span class="keywordflow">if</span> (buffer.size() - pos &lt; frame_len) <span class="keywordflow">break</span>;  <span class="comment">// incomplete frame</span></div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>      <a class="code hl_function" href="class_a2_d_p_encoder.html#abcd2d0edfdd06b6d16019f7da3addeab">A2DPEncoder::write_encoded</a>(hdr + header_size, frame_len - header_size);</div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>      pos += frame_len;</div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>    }</div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>    buffer.erase(buffer.begin(), buffer.begin() + pos);</div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>  }</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span> </div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>  <span class="keyword">static</span> <span class="keywordtype">bool</span> is_adts_sync(<span class="keyword">const</span> uint8_t* data) {</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    <span class="keywordflow">return</span> data[0] == 0xFF &amp;&amp; (data[1] &amp; 0xF6) == 0xF0;</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>  }</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span> </div>
+<div class="foldopen" id="foldopen00157" data-start="{" data-end="}">
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno"><a class="line" href="class_a2_d_p_encoder_a_a_c.html#a23cb69fa6ad147542b6c2f8a7d0cb9f1">  157</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="class_a2_d_p_encoder_a_a_c.html#a23cb69fa6ad147542b6c2f8a7d0cb9f1">write_encoded</a>(<span class="keyword">const</span> uint8_t* data, <span class="keywordtype">size_t</span> len)<span class="keyword"> override </span>{</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>    <span class="keywordflow">if</span> (len == 0) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>    <span class="keywordflow">if</span> (mode == Undefined) {</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>      mode = (len &gt;= 2 &amp;&amp; is_adts_sync(data)) ? ADTS : Raw;</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>    }</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>    <span class="keywordflow">if</span> (mode == Raw) {</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>      <a class="code hl_function" href="class_a2_d_p_encoder.html#abcd2d0edfdd06b6d16019f7da3addeab">A2DPEncoder::write_encoded</a>(data, len);</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>      <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>    }</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span> </div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>    buffer.insert(buffer.end(), data, data + len);</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>    <span class="keywordtype">size_t</span> pos = 0;</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>    <span class="keywordflow">while</span> (buffer.size() - pos &gt;= kAdtsMinHeaderSize) {</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>      <span class="keyword">const</span> uint8_t* hdr = buffer.data() + pos;</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>      <span class="keywordflow">if</span> (!is_adts_sync(hdr)) {</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>        <span class="comment">// resync</span></div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>        pos++;</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>        <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>      }</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>      <span class="keywordtype">size_t</span> header_size = (hdr[1] &amp; 0x01) ? 7 : 9;  <span class="comment">// protection_absent</span></div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>      <span class="keywordtype">size_t</span> frame_len = ((hdr[3] &amp; 0x03) &lt;&lt; 11) | (hdr[4] &lt;&lt; 3) |</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>                         ((hdr[5] &gt;&gt; 5) &amp; 0x07);</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>      <span class="keywordflow">if</span> (frame_len &lt;= header_size) {</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>        pos++;</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>        <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>      }</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>      <span class="keywordflow">if</span> (buffer.size() - pos &lt; frame_len) <span class="keywordflow">break</span>;  <span class="comment">// incomplete frame</span></div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>      <a class="code hl_function" href="class_a2_d_p_encoder.html#abcd2d0edfdd06b6d16019f7da3addeab">A2DPEncoder::write_encoded</a>(hdr + header_size, frame_len - header_size);</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>      pos += frame_len;</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>    }</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>    buffer.erase(buffer.begin(), buffer.begin() + pos);</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>  }</div>
 </div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>};</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>};</div>
 </div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span> </div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span><span class="preprocessor">#endif  </span><span class="comment">// A2DP_MANAGED_ENCODER_SUPPORTED</span></div>
-<div class="ttc" id="aclass_a2_d_p_encoder_a_a_c_html"><div class="ttname"><a href="class_a2_d_p_encoder_a_a_c.html">A2DPEncoderAAC</a></div><div class="ttdoc">AAC-LC encode support for the managed A2DP encoder framework: wraps any audio_tools::AudioEncoder tha...</div><div class="ttdef"><b>Definition</b> A2DPEncoderAAC.h:42</div></div>
-<div class="ttc" id="aclass_a2_d_p_encoder_a_a_c_html_a2140ec26d8712e82040f551d782a6547"><div class="ttname"><a href="class_a2_d_p_encoder_a_a_c.html#a2140ec26d8712e82040f551d782a6547">A2DPEncoderAAC::codec_type</a></div><div class="ttdeci">esp_a2d_mct_t codec_type() override</div><div class="ttdoc">A2DP codec type this encoder handles (e.g. ESP_A2D_MCT_SBC)</div><div class="ttdef"><b>Definition</b> A2DPEncoderAAC.h:49</div></div>
-<div class="ttc" id="aclass_a2_d_p_encoder_a_a_c_html_a239cd038fa31168c6dd41df7c0ee04c3"><div class="ttname"><a href="class_a2_d_p_encoder_a_a_c.html#a239cd038fa31168c6dd41df7c0ee04c3">A2DPEncoderAAC::parse_audio_info</a></div><div class="ttdeci">void parse_audio_info(const esp_a2d_mcc_t &amp;mcc) override</div><div class="ttdef"><b>Definition</b> A2DPEncoderAAC.h:125</div></div>
-<div class="ttc" id="aclass_a2_d_p_encoder_a_a_c_html_a23cb69fa6ad147542b6c2f8a7d0cb9f1"><div class="ttname"><a href="class_a2_d_p_encoder_a_a_c.html#a23cb69fa6ad147542b6c2f8a7d0cb9f1">A2DPEncoderAAC::write_encoded</a></div><div class="ttdeci">void write_encoded(const uint8_t *data, size_t len) override</div><div class="ttdoc">removes the ADTS headers and forwards the raw access units</div><div class="ttdef"><b>Definition</b> A2DPEncoderAAC.h:156</div></div>
-<div class="ttc" id="aclass_a2_d_p_encoder_a_a_c_html_a3a0979a6fe77b3290bcf0466d6410271"><div class="ttname"><a href="class_a2_d_p_encoder_a_a_c.html#a3a0979a6fe77b3290bcf0466d6410271">A2DPEncoderAAC::begin</a></div><div class="ttdeci">bool begin(const esp_a2d_mcc_t &amp;mcc) override</div><div class="ttdef"><b>Definition</b> A2DPEncoderAAC.h:55</div></div>
-<div class="ttc" id="aclass_a2_d_p_encoder_a_a_c_html_a50ccddfd2445c6eae44e3019ab48a43f"><div class="ttname"><a href="class_a2_d_p_encoder_a_a_c.html#a50ccddfd2445c6eae44e3019ab48a43f">A2DPEncoderAAC::build_capability</a></div><div class="ttdeci">void build_capability(esp_a2d_mcc_t &amp;mcc) override</div><div class="ttdoc">Fills in the SEP capability advertised for this codec at registration.</div><div class="ttdef"><b>Definition</b> A2DPEncoderAAC.h:61</div></div>
-<div class="ttc" id="aclass_a2_d_p_encoder_a_a_c_html_a56123c6add561b23efddd39a53b1c862"><div class="ttname"><a href="class_a2_d_p_encoder_a_a_c.html#a56123c6add561b23efddd39a53b1c862">A2DPEncoderAAC::samples_per_frame</a></div><div class="ttdeci">uint32_t samples_per_frame() override</div><div class="ttdef"><b>Definition</b> A2DPEncoderAAC.h:53</div></div>
-<div class="ttc" id="aclass_a2_d_p_encoder_a_a_c_html_a6ecfe10a3917096c82e70c619cabd535"><div class="ttname"><a href="class_a2_d_p_encoder_a_a_c.html#a6ecfe10a3917096c82e70c619cabd535">A2DPEncoderAAC::mime</a></div><div class="ttdeci">const char * mime() override</div><div class="ttdoc">MIME type of the codec this encoder produces (e.g. &quot;audio/sbc&quot;)</div><div class="ttdef"><b>Definition</b> A2DPEncoderAAC.h:51</div></div>
-<div class="ttc" id="aclass_a2_d_p_encoder_a_a_c_html_ae26318d8db4dcfb0b90b20a2b0d7bb8a"><div class="ttname"><a href="class_a2_d_p_encoder_a_a_c.html#ae26318d8db4dcfb0b90b20a2b0d7bb8a">A2DPEncoderAAC::A2DPEncoderAAC</a></div><div class="ttdeci">A2DPEncoderAAC(audio_tools::AudioEncoder &amp;encoder, uint32_t bitrate=256000)</div><div class="ttdef"><b>Definition</b> A2DPEncoderAAC.h:46</div></div>
-<div class="ttc" id="aclass_a2_d_p_encoder_html"><div class="ttname"><a href="class_a2_d_p_encoder.html">A2DPEncoder</a></div><div class="ttdoc">Base class for a single A2DP codec's encode support: pairs an A2DP codec type and its SEP capability ...</div><div class="ttdef"><b>Definition</b> A2DPEncoder.h:56</div></div>
-<div class="ttc" id="aclass_a2_d_p_encoder_html_abcd2d0edfdd06b6d16019f7da3addeab"><div class="ttname"><a href="class_a2_d_p_encoder.html#abcd2d0edfdd06b6d16019f7da3addeab">A2DPEncoder::write_encoded</a></div><div class="ttdeci">virtual void write_encoded(const uint8_t *data, size_t len)</div><div class="ttdef"><b>Definition</b> A2DPEncoder.h:171</div></div>
-<div class="ttc" id="aclass_a2_d_p_encoder_html_af92ed43c2fbe121b97fcff580dfaaf74"><div class="ttname"><a href="class_a2_d_p_encoder.html#af92ed43c2fbe121b97fcff580dfaaf74">A2DPEncoder::begin</a></div><div class="ttdeci">virtual bool begin(const esp_a2d_mcc_t &amp;mcc)</div><div class="ttdef"><b>Definition</b> A2DPEncoder.h:89</div></div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span> </div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span><span class="preprocessor">#endif  </span><span class="comment">// A2DP_MANAGED_ENCODER_SUPPORTED</span></div>
+<div class="ttc" id="aclass_a2_d_p_encoder_a_a_c_html"><div class="ttname"><a href="class_a2_d_p_encoder_a_a_c.html">A2DPEncoderAAC</a></div><div class="ttdoc">AAC-LC encode support for the managed A2DP encoder framework: wraps any audio_tools::AudioEncoder tha...</div><div class="ttdef"><b>Definition</b> A2DPEncoderAAC.h:43</div></div>
+<div class="ttc" id="aclass_a2_d_p_encoder_a_a_c_html_a2140ec26d8712e82040f551d782a6547"><div class="ttname"><a href="class_a2_d_p_encoder_a_a_c.html#a2140ec26d8712e82040f551d782a6547">A2DPEncoderAAC::codec_type</a></div><div class="ttdeci">esp_a2d_mct_t codec_type() override</div><div class="ttdoc">A2DP codec type this encoder handles (e.g. ESP_A2D_MCT_SBC)</div><div class="ttdef"><b>Definition</b> A2DPEncoderAAC.h:50</div></div>
+<div class="ttc" id="aclass_a2_d_p_encoder_a_a_c_html_a239cd038fa31168c6dd41df7c0ee04c3"><div class="ttname"><a href="class_a2_d_p_encoder_a_a_c.html#a239cd038fa31168c6dd41df7c0ee04c3">A2DPEncoderAAC::parse_audio_info</a></div><div class="ttdeci">void parse_audio_info(const esp_a2d_mcc_t &amp;mcc) override</div><div class="ttdef"><b>Definition</b> A2DPEncoderAAC.h:126</div></div>
+<div class="ttc" id="aclass_a2_d_p_encoder_a_a_c_html_a23cb69fa6ad147542b6c2f8a7d0cb9f1"><div class="ttname"><a href="class_a2_d_p_encoder_a_a_c.html#a23cb69fa6ad147542b6c2f8a7d0cb9f1">A2DPEncoderAAC::write_encoded</a></div><div class="ttdeci">void write_encoded(const uint8_t *data, size_t len) override</div><div class="ttdoc">removes the ADTS headers and forwards the raw access units</div><div class="ttdef"><b>Definition</b> A2DPEncoderAAC.h:157</div></div>
+<div class="ttc" id="aclass_a2_d_p_encoder_a_a_c_html_a3a0979a6fe77b3290bcf0466d6410271"><div class="ttname"><a href="class_a2_d_p_encoder_a_a_c.html#a3a0979a6fe77b3290bcf0466d6410271">A2DPEncoderAAC::begin</a></div><div class="ttdeci">bool begin(const esp_a2d_mcc_t &amp;mcc) override</div><div class="ttdef"><b>Definition</b> A2DPEncoderAAC.h:56</div></div>
+<div class="ttc" id="aclass_a2_d_p_encoder_a_a_c_html_a50ccddfd2445c6eae44e3019ab48a43f"><div class="ttname"><a href="class_a2_d_p_encoder_a_a_c.html#a50ccddfd2445c6eae44e3019ab48a43f">A2DPEncoderAAC::build_capability</a></div><div class="ttdeci">void build_capability(esp_a2d_mcc_t &amp;mcc) override</div><div class="ttdoc">Fills in the SEP capability advertised for this codec at registration.</div><div class="ttdef"><b>Definition</b> A2DPEncoderAAC.h:62</div></div>
+<div class="ttc" id="aclass_a2_d_p_encoder_a_a_c_html_a56123c6add561b23efddd39a53b1c862"><div class="ttname"><a href="class_a2_d_p_encoder_a_a_c.html#a56123c6add561b23efddd39a53b1c862">A2DPEncoderAAC::samples_per_frame</a></div><div class="ttdeci">uint32_t samples_per_frame() override</div><div class="ttdef"><b>Definition</b> A2DPEncoderAAC.h:54</div></div>
+<div class="ttc" id="aclass_a2_d_p_encoder_a_a_c_html_a6ecfe10a3917096c82e70c619cabd535"><div class="ttname"><a href="class_a2_d_p_encoder_a_a_c.html#a6ecfe10a3917096c82e70c619cabd535">A2DPEncoderAAC::mime</a></div><div class="ttdeci">const char * mime() override</div><div class="ttdoc">MIME type of the codec this encoder produces (e.g. &quot;audio/sbc&quot;)</div><div class="ttdef"><b>Definition</b> A2DPEncoderAAC.h:52</div></div>
+<div class="ttc" id="aclass_a2_d_p_encoder_a_a_c_html_ae26318d8db4dcfb0b90b20a2b0d7bb8a"><div class="ttname"><a href="class_a2_d_p_encoder_a_a_c.html#ae26318d8db4dcfb0b90b20a2b0d7bb8a">A2DPEncoderAAC::A2DPEncoderAAC</a></div><div class="ttdeci">A2DPEncoderAAC(audio_tools::AudioEncoder &amp;encoder, uint32_t bitrate=256000)</div><div class="ttdef"><b>Definition</b> A2DPEncoderAAC.h:47</div></div>
+<div class="ttc" id="aclass_a2_d_p_encoder_html"><div class="ttname"><a href="class_a2_d_p_encoder.html">A2DPEncoder</a></div><div class="ttdoc">Base class for a single A2DP codec's encode support: pairs an A2DP codec type and its SEP capability ...</div><div class="ttdef"><b>Definition</b> A2DPEncoder.h:58</div></div>
+<div class="ttc" id="aclass_a2_d_p_encoder_html_abcd2d0edfdd06b6d16019f7da3addeab"><div class="ttname"><a href="class_a2_d_p_encoder.html#abcd2d0edfdd06b6d16019f7da3addeab">A2DPEncoder::write_encoded</a></div><div class="ttdeci">virtual void write_encoded(const uint8_t *data, size_t len)</div><div class="ttdef"><b>Definition</b> A2DPEncoder.h:173</div></div>
+<div class="ttc" id="aclass_a2_d_p_encoder_html_af92ed43c2fbe121b97fcff580dfaaf74"><div class="ttname"><a href="class_a2_d_p_encoder.html#af92ed43c2fbe121b97fcff580dfaaf74">A2DPEncoder::begin</a></div><div class="ttdeci">virtual bool begin(const esp_a2d_mcc_t &amp;mcc)</div><div class="ttdef"><b>Definition</b> A2DPEncoder.h:91</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

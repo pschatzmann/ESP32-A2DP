@@ -205,12 +205,6 @@ I have added the following AVRC commands, that you can use to 'control' your A2D
 - rewind();
 
 
-### AAC / Codec Support
-
-By default the sink negotiates SBC. To also support AAC (or other codecs), register [audio-tools](https://pschatzmann.github.io/arduino-audio-tools) decoders via `add_decoder()`: each one gets its own stream endpoint, and its codec is decoded into PCM automatically, through the same output pipeline as SBC. `A2DPDecoderSBC`/`A2DPDecoderAAC` wrap any `audio_tools::AudioDecoder` you give them, so you can swap in another implementation (e.g. `AACDecoderFDK`) - just include its codec header yourself. See `A2DPDecoder.h` to add support for another codec, and the `bt_music_receiver_codec` example for a full sketch.
-
-Note: registering a non-SBC stream endpoint requires ESP-IDF >= 6.1 (earlier versions only support SBC there); on older IDF the source falls back to SBC, visible via the `ESP_A2D_SEP_REG_STATE_EVT` log.
-
 ## A2DP Source (Music Sender)
 
 This can be used to feed e.g. your Bluetooth Speaker with your audio data.
@@ -288,6 +282,7 @@ You can use this library standalone, but it is part of my [audio-tools](https://
 
 - The [class documentation can be found here](https://pschatzmann.github.io/ESP32-A2DP/html/group__a2dp.html)
 - You can also find further information in the [Wiki](https://github.com/pschatzmann/ESP32-A2DP/wiki)
+- AAC and other codecs via [custom decoders and encoders](https://github.com/pschatzmann/ESP32-A2DP/wiki/Custom-Codecs)
 
 ## Support
 

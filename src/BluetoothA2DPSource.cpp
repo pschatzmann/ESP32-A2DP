@@ -17,6 +17,10 @@
 
 #if IS_VALID_PLATFORM
 
+#if A2DP_MANAGED_ENCODER_SUPPORTED
+#include "esp_timer.h"
+#endif
+
 #define APP_RC_CT_TL_RN_VOLUME_CHANGE (1)
 #define BT_APP_HEART_BEAT_EVT (0xff00)
 
@@ -57,6 +61,13 @@ extern "C" int32_t ccall_bt_app_a2d_data_cb(uint8_t *data, int32_t len) {
   return 0;
 }
 
+#if A2DP_MANAGED_ENCODER_SUPPORTED
+extern "C" void ccall_managed_encode_task_handler(void *arg) {
+  if (actual_bluetooth_a2dp_source)
+    actual_bluetooth_a2dp_source->managed_encode_task_handler(arg);
+}
+#endif
+
 BluetoothA2DPSource::BluetoothA2DPSource() {
   ESP_LOGD(BT_APP_TAG, "%s, ", __func__);
   actual_bluetooth_a2dp_source = this;
@@ -77,7 +88,15 @@ BluetoothA2DPSource::BluetoothA2DPSource() {
 
 }
 
-BluetoothA2DPSource::~BluetoothA2DPSource() { end(); }
+BluetoothA2DPSource::~BluetoothA2DPSource() {
+  end();
+#if A2DP_MANAGED_ENCODER_SUPPORTED
+  if (encode_mutex != nullptr && encode_task_handle == nullptr) {
+    vSemaphoreDelete(encode_mutex);
+    encode_mutex = nullptr;
+  }
+#endif
+}
 
 bool BluetoothA2DPSource::is_active(unsigned long timeout) {
   if (last_heart_beat == 0) return false;
@@ -187,6 +206,10 @@ void BluetoothA2DPSource::end(bool release_memory) {
 #endif
   ESP_LOGD(BT_APP_TAG, "Deinitializing AVRC CT");
   esp_avrc_ct_deinit();
+
+#if A2DP_MANAGED_ENCODER_SUPPORTED
+  managed_encode_end();
+#endif
   
   // standard end
   BluetoothA2DPCommon::end(release_memory);
@@ -545,7 +568,20 @@ void BluetoothA2DPSource::av_hdl_stack_evt(uint16_t event, void *p_param) {
 
       esp_a2d_source_init();
       esp_a2d_register_callback(&ccall_app_a2d_callback);
-      esp_a2d_source_register_data_callback(&ccall_bt_app_a2d_data_cb);
+#if A2DP_MANAGED_ENCODER_SUPPORTED
+      // the managed encoder sends the encoded data itself (the stream
+      // endpoints are registered on ESP_A2D_PROF_STATE_EVT)
+      if (!use_managed_encoder())
+#endif
+      {
+#ifdef CONFIG_BT_A2DP_USE_EXTERNAL_CODEC
+        ESP_LOGW(BT_AV_TAG,
+                 "CONFIG_BT_A2DP_USE_EXTERNAL_CODEC is active: the data "
+                 "callback is not supported - register an encoder with "
+                 "add_encoder()");
+#endif
+        esp_a2d_source_register_data_callback(&ccall_bt_app_a2d_data_cb);
+      }
 
       /* Avoid the state error of s_a2d_state caused by the connection initiated
        * by the peer device. */
@@ -581,6 +617,16 @@ void BluetoothA2DPSource::av_hdl_stack_evt(uint16_t event, void *p_param) {
 
 void BluetoothA2DPSource::app_a2d_callback(esp_a2d_cb_event_t event,
                                         esp_a2d_cb_param_t *param) {
+#if A2DP_MANAGED_ENCODER_SUPPORTED
+  // stream endpoints must be registered after the A2DP profile has been
+  // initialized and before a connection is established: we do this here
+  // directly in the BTC task, because the app task is still blocked in the
+  // stack up handler, which starts the connection
+  if (event == ESP_A2D_PROF_STATE_EVT && use_managed_encoder() &&
+      param->a2d_prof_stat.init_state == ESP_A2D_INIT_SUCCESS) {
+    register_managed_encoder_seps();
+  }
+#endif
   bt_app_work_dispatch(ccall_bt_app_av_sm_hdlr, event, param,
                        sizeof(esp_a2d_cb_param_t), nullptr);
 }
@@ -633,6 +679,9 @@ void BluetoothA2DPSource::bt_app_av_sm_hdlr(uint16_t event, void *param) {
   ESP_LOGI(BT_AV_TAG, "%s state %s, evt 0x%x", __func__,
            to_state_str(s_a2d_state), event);
   process_user_state_callbacks(event, param);
+#if A2DP_MANAGED_ENCODER_SUPPORTED
+  if (use_managed_encoder()) process_managed_encoder_events(event, param);
+#endif
 
   /* select handler according to different states */
   switch (s_a2d_state) {
@@ -1189,5 +1238,224 @@ void BluetoothA2DPSource::av_hdl_avrc_tg_evt(uint16_t event, void *p_param) {
 }
 
 #endif
+
+#if A2DP_MANAGED_ENCODER_SUPPORTED
+
+bool BluetoothA2DPSource::add_encoder(A2DPEncoder &encoder) {
+#ifndef CONFIG_BT_A2DP_USE_EXTERNAL_CODEC
+  (void)encoder;
+  ESP_LOGE(BT_AV_TAG,
+           "add_encoder: requires CONFIG_BT_A2DP_USE_EXTERNAL_CODEC=y - "
+           "using the internal SBC encoder");
+  return false;
+#else
+  if (encode_mutex == nullptr) {
+    encode_mutex = xSemaphoreCreateMutex();
+    if (encode_mutex == nullptr) {
+      ESP_LOGE(BT_AV_TAG, "add_encoder: mutex create failed");
+      return false;
+    }
+  }
+  return audio_encoder.add_encoder(encoder);
+#endif
+}
+
+void BluetoothA2DPSource::register_managed_encoder_seps() {
+  uint8_t seid = 0;
+  for (A2DPEncoder *enc : audio_encoder.all_encoders()) {
+    esp_a2d_mcc_t mcc = {};
+    enc->build_capability(mcc);
+    esp_err_t err = esp_a2d_source_register_stream_endpoint(seid, &mcc);
+    ESP_LOGI(BT_AV_TAG,
+             "register_stream_endpoint(codec type %d, seid %d) = %d",
+             (int)enc->codec_type(), (int)seid, (int)err);
+    seid++;
+  }
+}
+
+void BluetoothA2DPSource::handle_sep_reg_state(uint16_t event, void *p_param) {
+  esp_a2d_cb_param_t *a2d = (esp_a2d_cb_param_t *)(p_param);
+  uint8_t seid = a2d->a2d_sep_reg_stat.seid;
+  switch (a2d->a2d_sep_reg_stat.reg_state) {
+    case ESP_A2D_SEP_REG_SUCCESS:
+      ESP_LOGI(BT_AV_TAG, "SEP registration for seid %d succeeded", seid);
+      break;
+    case ESP_A2D_SEP_REG_UNSUPPORTED:
+      ESP_LOGE(BT_AV_TAG,
+               "SEP registration for seid %d failed: codec type not "
+               "supported by this ESP-IDF version (AAC SEP registration "
+               "requires ESP-IDF >= 6.1)",
+               seid);
+      break;
+    case ESP_A2D_SEP_REG_INVALID_STATE:
+      ESP_LOGE(BT_AV_TAG,
+               "SEP registration for seid %d failed: invalid state", seid);
+      break;
+    case ESP_A2D_SEP_REG_FAIL:
+    default:
+      ESP_LOGE(BT_AV_TAG, "SEP registration for seid %d failed", seid);
+      break;
+  }
+}
+
+void BluetoothA2DPSource::process_managed_encoder_events(uint16_t event,
+                                                         void *param) {
+  esp_a2d_cb_param_t *a2d = (esp_a2d_cb_param_t *)(param);
+  switch (event) {
+    case ESP_A2D_CONNECTION_STATE_EVT:
+      if (a2d->conn_stat.state == ESP_A2D_CONNECTION_STATE_CONNECTED) {
+        ESP_LOGI(BT_AV_TAG, "managed encoder: audio mtu %d",
+                 (int)a2d->conn_stat.audio_mtu);
+        xSemaphoreTake(encode_mutex, portMAX_DELAY);
+        audio_encoder.set_connection_handle(a2d->conn_stat.conn_hdl);
+        audio_encoder.set_mtu(a2d->conn_stat.audio_mtu);
+        xSemaphoreGive(encode_mutex);
+      } else if (a2d->conn_stat.state ==
+                 ESP_A2D_CONNECTION_STATE_DISCONNECTED) {
+        is_encode_streaming = false;
+        xSemaphoreTake(encode_mutex, portMAX_DELAY);
+        audio_encoder.close();
+        xSemaphoreGive(encode_mutex);
+      }
+      break;
+
+    case ESP_A2D_AUDIO_CFG_EVT:
+      // selects and opens the encoder registered for the negotiated codec
+      ESP_LOGI(BT_AV_TAG, "managed encoder: codec type %d",
+               (int)a2d->audio_cfg.mcc.type);
+      xSemaphoreTake(encode_mutex, portMAX_DELAY);
+      audio_encoder.set_connection_handle(a2d->audio_cfg.conn_hdl);
+      audio_encoder.apply_mcc(&a2d->audio_cfg.mcc);
+      xSemaphoreGive(encode_mutex);
+      break;
+
+    case ESP_A2D_AUDIO_STATE_EVT:
+      if (a2d->audio_stat.state == ESP_A2D_AUDIO_STATE_STARTED) {
+        xSemaphoreTake(encode_mutex, portMAX_DELAY);
+        audio_encoder.reset();
+        xSemaphoreGive(encode_mutex);
+        managed_encode_start();
+        is_encode_streaming = true;
+        TaskHandle_t handle = encode_task_handle;
+        if (handle != nullptr) xTaskNotifyGive(handle);
+      } else {
+        is_encode_streaming = false;
+        xSemaphoreTake(encode_mutex, portMAX_DELAY);
+        audio_encoder.reset();
+        xSemaphoreGive(encode_mutex);
+      }
+      break;
+
+    case ESP_A2D_SEP_REG_STATE_EVT:
+      handle_sep_reg_state(event, param);
+      break;
+
+    default:
+      break;
+  }
+}
+
+void BluetoothA2DPSource::managed_encode_start() {
+  if (encode_task_handle != nullptr) return;  // already started
+  if (encode_pcm_buffer == nullptr) {
+    encode_pcm_buffer = (uint8_t *)malloc(A2DP_MANAGED_ENCODE_CHUNK_SIZE);
+    if (encode_pcm_buffer == nullptr) {
+      ESP_LOGE(BT_AV_TAG, "managed_encode_start: buffer alloc failed");
+      return;
+    }
+  }
+  is_encode_task_exit = false;
+  if (xTaskCreate(ccall_managed_encode_task_handler, "a2dp_managed_enc",
+                  A2DP_MANAGED_ENCODE_TASK_STACK, nullptr,
+                  A2DP_MANAGED_ENCODE_TASK_PRIO,
+                  &encode_task_handle) != pdPASS) {
+    encode_task_handle = nullptr;
+    ESP_LOGE(BT_AV_TAG, "managed_encode_start: encode task create failed");
+    return;
+  }
+  ESP_LOGI(BT_AV_TAG, "managed_encode_start: started");
+}
+
+void BluetoothA2DPSource::managed_encode_end() {
+  is_encode_streaming = false;
+  TaskHandle_t handle = encode_task_handle;
+  if (handle != nullptr) {
+    // the task terminates itself, so that it is not killed in the middle of
+    // a data callback
+    is_encode_task_exit = true;
+    xTaskNotifyGive(handle);
+    for (int j = 0; j < 200 && encode_task_handle != nullptr; j++) {
+      delay_ms(10);
+    }
+    if (encode_task_handle != nullptr) {
+      ESP_LOGE(BT_AV_TAG, "managed_encode_end: encode task did not stop");
+      return;
+    }
+  }
+  if (encode_mutex != nullptr) {
+    xSemaphoreTake(encode_mutex, portMAX_DELAY);
+    audio_encoder.close();
+    xSemaphoreGive(encode_mutex);
+  }
+  if (encode_pcm_buffer != nullptr) {
+    free(encode_pcm_buffer);
+    encode_pcm_buffer = nullptr;
+  }
+}
+
+void BluetoothA2DPSource::managed_encode_task_handler(void *arg) {
+  // the PCM is always 16 bit stereo
+  const int32_t chunk = A2DP_MANAGED_ENCODE_CHUNK_SIZE & ~3;
+  int64_t start_us = 0;
+  uint64_t pcm_bytes = 0;
+
+  while (!is_encode_task_exit) {
+    if (!is_encode_streaming || !audio_encoder.is_active()) {
+      start_us = 0;
+      ulTaskNotifyTake(pdTRUE, pdMS_TO_TICKS(100));
+      continue;
+    }
+
+    // pace the PCM in real time: the stack only queues a limited number of
+    // packets
+    int64_t byte_rate = (int64_t)audio_encoder.sample_rate() * 4;
+    int64_t now = esp_timer_get_time();
+    if (start_us == 0) {
+      start_us = now;
+      pcm_bytes = 0;
+    }
+    int64_t due_us = start_us + (int64_t)(pcm_bytes * 1000000 / byte_rate);
+    int64_t ahead_us = due_us - now - (int64_t)A2DP_MANAGED_ENCODE_LEAD_MS * 1000;
+    if (ahead_us > 0) {
+      TickType_t ticks = pdMS_TO_TICKS(ahead_us / 1000);
+      vTaskDelay(ticks > 0 ? ticks : 1);
+      continue;
+    }
+    if (now - due_us > (int64_t)A2DP_MANAGED_ENCODE_MAX_LAG_MS * 1000) {
+      // we are too late: restart the pacing instead of sending a burst
+      start_us = now;
+      pcm_bytes = 0;
+    }
+
+    int32_t len = get_audio_data_volume(encode_pcm_buffer, chunk);
+    if (len <= 0) {
+      // no data: keep the stream going with silence
+      memset(encode_pcm_buffer, 0, chunk);
+      len = chunk;
+    }
+    len &= ~3;
+    if (len > 0) {
+      xSemaphoreTake(encode_mutex, portMAX_DELAY);
+      if (is_encode_streaming) audio_encoder.process(encode_pcm_buffer, len);
+      xSemaphoreGive(encode_mutex);
+      pcm_bytes += len;
+    }
+  }
+
+  encode_task_handle = nullptr;
+  vTaskDelete(nullptr);
+}
+
+#endif  // A2DP_MANAGED_ENCODER_SUPPORTED
 
 #endif // platform

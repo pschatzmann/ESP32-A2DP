@@ -22,6 +22,7 @@
 #include <vector>
 
 #include "BluetoothA2DPCommon.h"
+#include "A2DPEncoder.h"
 
 #if IS_VALID_PLATFORM
 
@@ -44,6 +45,9 @@ extern "C" void ccall_a2d_app_heart_beat(TIMER_ARG_TYPE arg);
 extern "C" void ccall_bt_app_av_sm_hdlr(uint16_t event, void* param);
 extern "C" void ccall_bt_av_hdl_avrc_ct_evt(uint16_t event, void* param);
 extern "C" int32_t ccall_bt_app_a2d_data_cb(uint8_t* data, int32_t len);
+#if A2DP_MANAGED_ENCODER_SUPPORTED
+extern "C" void ccall_managed_encode_task_handler(void* arg);
+#endif
 
 /**
  * @brief Buetooth A2DP global state
@@ -82,6 +86,7 @@ static const char* APP_AV_STATE_STR[] = {
  * control
  *   - Secure Simple Pairing (SSP) and legacy PIN code support
  *   - Extensible for custom event handling, output, and platform integration
+ *   - Optional managed multi-codec encoding via add_encoder() (ESP-IDF 5.5+)
  *
  * Usage:
  *   - Instantiate BluetoothA2DPSource and call start() with a device name or
@@ -101,6 +106,9 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
   friend void ccall_bt_app_av_sm_hdlr(uint16_t event, void* param);
   friend void ccall_bt_av_hdl_avrc_ct_evt(uint16_t event, void* param);
   friend int32_t ccall_bt_app_a2d_data_cb(uint8_t* data, int32_t len);
+#if A2DP_MANAGED_ENCODER_SUPPORTED
+  friend void ccall_managed_encode_task_handler(void* arg);
+#endif
 
  public:
   /// Constructor
@@ -261,6 +269,27 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
   /// Check if the target speaker is still active by checking the time of the last heart beat
   bool is_active(unsigned long timeout = 10000);
 
+#if A2DP_MANAGED_ENCODER_SUPPORTED
+  /// Registers an encoder (e.g. A2DPEncoderSBC, A2DPEncoderAAC) that encodes
+  /// the PCM provided by the data callbacks with the codec negotiated with
+  /// the sink. Call before start(). Each added encoder registers its own
+  /// stream endpoint. If no encoder is added, the legacy data path with the
+  /// internal ESP-IDF SBC encoder is used. Requires
+  /// CONFIG_BT_A2DP_USE_EXTERNAL_CODEC=y. Returns false if an encoder for
+  /// that codec type is already registered or the external codec support is
+  /// not enabled.
+  bool add_encoder(A2DPEncoder& encoder);
+
+  /// MIME type of the currently active encoder (e.g. "audio/sbc",
+  /// "audio/aac"), or "" if none is active
+  const char* mime() { return audio_encoder.mime(); }
+
+  /// Negotiated sample rate/channels of the active encoder
+  audio_tools::AudioInfo get_audio_info() {
+    return audio_encoder.get_audio_info();
+  }
+#endif
+
  protected:
   /// callback for data
   int32_t (*get_data_cb)(uint8_t* data, int32_t len) = nullptr;
@@ -308,6 +337,31 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
   esp_avrc_rn_evt_cap_mask_t s_avrc_peer_rn_cap;
 #endif
 
+#if A2DP_MANAGED_ENCODER_SUPPORTED
+  // registers a stream endpoint per encoder added via add_encoder() and
+  // sends the encoded audio with esp_a2d_source_audio_data_send()
+  A2DPAudioEncoder audio_encoder;
+  TaskHandle_t encode_task_handle = nullptr;
+  SemaphoreHandle_t encode_mutex = nullptr;
+  volatile bool is_encode_streaming = false;
+  volatile bool is_encode_task_exit = false;
+  uint8_t* encode_pcm_buffer = nullptr;
+
+  /// true if at least one encoder has been registered via add_encoder()
+  bool use_managed_encoder() { return audio_encoder.has_encoders(); }
+  /// registers one stream endpoint per encoder added via add_encoder()
+  virtual void register_managed_encoder_seps();
+  /// handles the a2dp events which are relevant for the encoder
+  virtual void process_managed_encoder_events(uint16_t event, void* param);
+  /// starts the encode task (if not already running)
+  virtual void managed_encode_start();
+  /// stops the encode task and closes the encoder
+  virtual void managed_encode_end();
+  /// task loop: reads PCM from the data callbacks, encodes and sends it
+  /// paced in real time
+  virtual void managed_encode_task_handler(void* arg);
+#endif
+
   void app_gap_callback(esp_bt_gap_cb_event_t event,
                         esp_bt_gap_cb_param_t* param) override;
   void app_rc_ct_callback(esp_avrc_ct_cb_event_t event,
@@ -315,6 +369,10 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
   void app_a2d_callback(esp_a2d_cb_event_t event,
                         esp_a2d_cb_param_t* param) override;
   void av_hdl_stack_evt(uint16_t event, void* p_param) override;
+#if A2DP_MANAGED_ENCODER_SUPPORTED
+  /// logs the result of the stream endpoint registration
+  virtual void handle_sep_reg_state(uint16_t event, void* p_param);
+#endif
 
   /// provides the audio data to be sent
   virtual int32_t get_audio_data(uint8_t* data, int32_t len);

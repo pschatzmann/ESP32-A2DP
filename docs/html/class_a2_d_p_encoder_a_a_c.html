@@ -121,12 +121,20 @@ audio_tools::AudioInfo&#160;</td><td class="memItemRight" valign="bottom"><b>get
 <tr class="memitem:a6ecfe10a3917096c82e70c619cabd535" id="r_a6ecfe10a3917096c82e70c619cabd535"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a2_d_p_encoder_a_a_c.html#a6ecfe10a3917096c82e70c619cabd535">mime</a> () override</td></tr>
 <tr class="memdesc:a6ecfe10a3917096c82e70c619cabd535"><td class="mdescLeft">&#160;</td><td class="mdescRight">MIME type of the codec this encoder produces (e.g. "audio/sbc")  <br /></td></tr>
 <tr class="separator:a6ecfe10a3917096c82e70c619cabd535"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab71f07aa37286568b9f9ad8732850a41" id="r_ab71f07aa37286568b9f9ad8732850a41"><td class="memItemLeft" align="right" valign="top"><a id="ab71f07aa37286568b9f9ad8732850a41" name="ab71f07aa37286568b9f9ad8732850a41"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>negotiated_bitrate</b> ()</td></tr>
+<tr class="memdesc:ab71f07aa37286568b9f9ad8732850a41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bitrate (in bps) negotiated with the sink (0 if unknown) <br /></td></tr>
+<tr class="separator:ab71f07aa37286568b9f9ad8732850a41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aedc467eae684991dbe3bb1c0cd87f84a" id="r_aedc467eae684991dbe3bb1c0cd87f84a"><td class="memItemLeft" align="right" valign="top">virtual uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a2_d_p_encoder.html#aedc467eae684991dbe3bb1c0cd87f84a">payload_header_size</a> ()</td></tr>
+<tr class="separator:aedc467eae684991dbe3bb1c0cd87f84a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af0956be0e40e52c3496f524d290a81fb" id="r_af0956be0e40e52c3496f524d290a81fb"><td class="memItemLeft" align="right" valign="top"><a id="af0956be0e40e52c3496f524d290a81fb" name="af0956be0e40e52c3496f524d290a81fb"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>sample_rate</b> ()</td></tr>
 <tr class="memdesc:af0956be0e40e52c3496f524d290a81fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sample rate of the PCM provided by the data callbacks. <br /></td></tr>
 <tr class="separator:af0956be0e40e52c3496f524d290a81fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a56123c6add561b23efddd39a53b1c862" id="r_a56123c6add561b23efddd39a53b1c862"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a2_d_p_encoder_a_a_c.html#a56123c6add561b23efddd39a53b1c862">samples_per_frame</a> () override</td></tr>
 <tr class="separator:a56123c6add561b23efddd39a53b1c862"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fda81a97d30213195f86b0152fbe5fb" id="r_a1fda81a97d30213195f86b0152fbe5fb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a2_d_p_encoder_a_a_c.html#a1fda81a97d30213195f86b0152fbe5fb">set_bitrate_callback</a> (void(*callback)(uint32_t bitrate))</td></tr>
+<tr class="separator:a1fda81a97d30213195f86b0152fbe5fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad39ae31e2639309d82b82404f4d7622e" id="r_ad39ae31e2639309d82b82404f4d7622e"><td class="memItemLeft" align="right" valign="top"><a id="ad39ae31e2639309d82b82404f4d7622e" name="ad39ae31e2639309d82b82404f4d7622e"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set_frame_sink</b> (<a class="el" href="class_a2_d_p_frame_sink.html">A2DPFrameSink</a> *sink)</td></tr>
 <tr class="memdesc:ad39ae31e2639309d82b82404f4d7622e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the target of the encoded frames. <br /></td></tr>
@@ -146,9 +154,9 @@ Protected Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a5aa4f45bb8208b183342932208ff9ed0" id="r_a5aa4f45bb8208b183342932208ff9ed0"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a2_d_p_encoder.html#a5aa4f45bb8208b183342932208ff9ed0">configure</a> (const esp_a2d_mcc_t &amp;mcc)</td></tr>
-<tr class="memdesc:a5aa4f45bb8208b183342932208ff9ed0"><td class="mdescLeft">&#160;</td><td class="mdescRight">optional codec specific configuration of the wrapped encoder  <br /></td></tr>
-<tr class="separator:a5aa4f45bb8208b183342932208ff9ed0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a413af4ffe7c4f081b4b08ff8fb58ecb7" id="r_a413af4ffe7c4f081b4b08ff8fb58ecb7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a2_d_p_encoder_a_a_c.html#a413af4ffe7c4f081b4b08ff8fb58ecb7">configure</a> (const esp_a2d_mcc_t &amp;mcc) override</td></tr>
+<tr class="memdesc:a413af4ffe7c4f081b4b08ff8fb58ecb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">provides the negotiated bitrate to the bitrate callback  <br /></td></tr>
+<tr class="separator:a413af4ffe7c4f081b4b08ff8fb58ecb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a239cd038fa31168c6dd41df7c0ee04c3" id="r_a239cd038fa31168c6dd41df7c0ee04c3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a2_d_p_encoder_a_a_c.html#a239cd038fa31168c6dd41df7c0ee04c3">parse_audio_info</a> (const esp_a2d_mcc_t &amp;mcc) override</td></tr>
 <tr class="separator:a239cd038fa31168c6dd41df7c0ee04c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a23cb69fa6ad147542b6c2f8a7d0cb9f1" id="r_a23cb69fa6ad147542b6c2f8a7d0cb9f1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a2_d_p_encoder_a_a_c.html#a23cb69fa6ad147542b6c2f8a7d0cb9f1">write_encoded</a> (const uint8_t *data, size_t len) override</td></tr>
@@ -166,6 +174,12 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:aaeda348f798722d53619f511cad921f0" id="r_aaeda348f798722d53619f511cad921f0"><td class="memItemLeft" align="right" valign="top"><a id="aaeda348f798722d53619f511cad921f0" name="aaeda348f798722d53619f511cad921f0"></a>
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>bitrate</b></td></tr>
 <tr class="separator:aaeda348f798722d53619f511cad921f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a938f7c7e1d7287322490bccf77fac552" id="r_a938f7c7e1d7287322490bccf77fac552"><td class="memItemLeft" align="right" valign="top"><a id="a938f7c7e1d7287322490bccf77fac552" name="a938f7c7e1d7287322490bccf77fac552"></a>
+void(*&#160;</td><td class="memItemRight" valign="bottom"><b>bitrate_callback</b> )(uint32_t bitrate) = nullptr</td></tr>
+<tr class="separator:a938f7c7e1d7287322490bccf77fac552"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a843344fdf55afa438763e44b8723015f" id="r_a843344fdf55afa438763e44b8723015f"><td class="memItemLeft" align="right" valign="top"><a id="a843344fdf55afa438763e44b8723015f" name="a843344fdf55afa438763e44b8723015f"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>bitrate_negotiated</b> = 0</td></tr>
+<tr class="separator:a843344fdf55afa438763e44b8723015f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5ca83844289a78a77e272043f58082de" id="r_a5ca83844289a78a77e272043f58082de"><td class="memItemLeft" align="right" valign="top"><a id="a5ca83844289a78a77e272043f58082de" name="a5ca83844289a78a77e272043f58082de"></a>
 std::vector&lt; uint8_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>buffer</b></td></tr>
 <tr class="separator:a5ca83844289a78a77e272043f58082de"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -200,6 +214,7 @@ static const size_t&#160;</td><td class="memItemRight" valign="bottom"><b>kAdtsM
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>AAC-LC encode support for the managed A2DP encoder framework: wraps any audio_tools::AudioEncoder that produces AAC-LC - e.g. audio_tools::AACEncoderFDK (codec-fdk-aac) or AACEncoderVO (codec-vo-aacenc) - and advertises the AAC SEP capability. Construct and configure (e.g. bitrate) your encoder of choice, include its codec header yourself, and register an <a class="el" href="class_a2_d_p_encoder_a_a_c.html" title="AAC-LC encode support for the managed A2DP encoder framework: wraps any audio_tools::AudioEncoder tha...">A2DPEncoderAAC</a> wrapping it via <a class="el" href="class_bluetooth_a2_d_p_source.html#a8463d4cdf9ccdcb75180551868f181d9">BluetoothA2DPSource::add_encoder()</a>. </p>
 <p>The stack expects raw AAC access units (it adds the LATM framing itself), so if the wrapped encoder produces ADTS, the ADTS headers are removed. Output that does not start with an ADTS sync word is treated as one raw access unit per write.</p>
+<p>The sink may negotiate a lower bitrate than the advertised one: register a callback with <a class="el" href="class_a2_d_p_encoder_a_a_c.html#a1fda81a97d30213195f86b0152fbe5fb">set_bitrate_callback()</a> to apply the negotiated bitrate to your encoder (e.g. with setBitrate()); it is called before the encoder is started.</p>
 <p>NOTE: registering a non-SBC stream endpoint is only supported by the underlying Bluedroid stack on ESP-IDF &gt;= 6.1 (with CONFIG_BT_A2DP_CODEC_AAC_ENABLED=y).</p>
 <dl class="section author"><dt>Author</dt><dd>Phil Schatzmann </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Apache License Version 2 </dd></dl>
@@ -330,8 +345,8 @@ static const size_t&#160;</td><td class="memItemRight" valign="bottom"><b>kAdtsM
 
 </div>
 </div>
-<a id="a5aa4f45bb8208b183342932208ff9ed0" name="a5aa4f45bb8208b183342932208ff9ed0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5aa4f45bb8208b183342932208ff9ed0">&#9670;&#160;</a></span>configure()</h2>
+<a id="a413af4ffe7c4f081b4b08ff8fb58ecb7" name="a413af4ffe7c4f081b4b08ff8fb58ecb7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a413af4ffe7c4f081b4b08ff8fb58ecb7">&#9670;&#160;</a></span>configure()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -340,7 +355,7 @@ static const size_t&#160;</td><td class="memItemRight" valign="bottom"><b>kAdtsM
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void A2DPEncoder::configure </td>
+          <td class="memname">void A2DPEncoderAAC::configure </td>
           <td>(</td>
           <td class="paramtype">const esp_a2d_mcc_t &amp;&#160;</td>
           <td class="paramname"><em>mcc</em></td><td>)</td>
@@ -349,14 +364,14 @@ static const size_t&#160;</td><td class="memItemRight" valign="bottom"><b>kAdtsM
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">virtual</span><span class="mlabel">inherited</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>optional codec specific configuration of the wrapped encoder </p>
+<p>provides the negotiated bitrate to the bitrate callback </p>
 
-<p>Reimplemented in <a class="el" href="class_a2_d_p_encoder_s_b_c.html#aadc0c12e5b492873cd32b503a067fb75">A2DPEncoderSBC</a>.</p>
+<p>Reimplemented from <a class="el" href="class_a2_d_p_encoder.html#a5aa4f45bb8208b183342932208ff9ed0">A2DPEncoder</a>.</p>
 
 </div>
 </div>
@@ -447,6 +462,34 @@ static const size_t&#160;</td><td class="memItemRight" valign="bottom"><b>kAdtsM
 
 </div>
 </div>
+<a id="aedc467eae684991dbe3bb1c0cd87f84a" name="aedc467eae684991dbe3bb1c0cd87f84a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aedc467eae684991dbe3bb1c0cd87f84a">&#9670;&#160;</a></span>payload_header_size()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual uint16_t A2DPEncoder::payload_header_size </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Bytes of the audio MTU that are needed by the media payload header which is added by the stack (e.g. SBC: 1 byte, AAC: LATM header) </p>
+
+<p>Reimplemented in <a class="el" href="class_a2_d_p_encoder_s_b_c.html#a1947527116f7085f89ccec54253898ae">A2DPEncoderSBC</a>.</p>
+
+</div>
+</div>
 <a id="a56123c6add561b23efddd39a53b1c862" name="a56123c6add561b23efddd39a53b1c862"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a56123c6add561b23efddd39a53b1c862">&#9670;&#160;</a></span>samples_per_frame()</h2>
 
@@ -472,6 +515,33 @@ static const size_t&#160;</td><td class="memItemRight" valign="bottom"><b>kAdtsM
 <p>Number of samples (per channel) covered by one encoded frame: used for the media packet timestamps </p>
 
 <p>Implements <a class="el" href="class_a2_d_p_encoder.html#af883b1ea1e9aae18c91826db4450c608">A2DPEncoder</a>.</p>
+
+</div>
+</div>
+<a id="a1fda81a97d30213195f86b0152fbe5fb" name="a1fda81a97d30213195f86b0152fbe5fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1fda81a97d30213195f86b0152fbe5fb">&#9670;&#160;</a></span>set_bitrate_callback()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void A2DPEncoderAAC::set_bitrate_callback </td>
+          <td>(</td>
+          <td class="paramtype">void(*)(uint32_t bitrate)&#160;</td>
+          <td class="paramname"><em>callback</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Defines a callback which is called with the negotiated bitrate (in bps) before the wrapped encoder is started, so that you can apply it to your encoder </p>
 
 </div>
 </div>

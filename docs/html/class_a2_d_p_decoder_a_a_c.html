@@ -116,6 +116,8 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>end</b> ()</t
 <tr class="memitem:a1bd682ef3545a23b2d1d357ec71acdcc" id="r_a1bd682ef3545a23b2d1d357ec71acdcc"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a2_d_p_decoder_a_a_c.html#a1bd682ef3545a23b2d1d357ec71acdcc">mime</a> () override</td></tr>
 <tr class="memdesc:a1bd682ef3545a23b2d1d357ec71acdcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">MIME type of the codec this decoder handles (e.g. "audio/sbc")  <br /></td></tr>
 <tr class="separator:a1bd682ef3545a23b2d1d357ec71acdcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae94e2cc6cf62ac16c9736337b01d8ece" id="r_ae94e2cc6cf62ac16c9736337b01d8ece"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a2_d_p_decoder_a_a_c.html#ae94e2cc6cf62ac16c9736337b01d8ece">set_he_aac</a> (bool active)</td></tr>
+<tr class="separator:ae94e2cc6cf62ac16c9736337b01d8ece"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa9ccc336d354f011949309f019a829b9" id="r_aa9ccc336d354f011949309f019a829b9"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a2_d_p_decoder_a_a_c.html#aa9ccc336d354f011949309f019a829b9">write</a> (const uint8_t *data, size_t len) override</td></tr>
 <tr class="separator:aa9ccc336d354f011949309f019a829b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -142,6 +144,9 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>channels</b> = 2</td><
 <tr class="memitem:af2c75866fd1c60c12c0b594738628735" id="r_af2c75866fd1c60c12c0b594738628735"><td class="memItemLeft" align="right" valign="top"><a id="af2c75866fd1c60c12c0b594738628735" name="af2c75866fd1c60c12c0b594738628735"></a>
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>freq_idx</b> = 4</td></tr>
 <tr class="separator:af2c75866fd1c60c12c0b594738628735"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2b4d1db24b834e54a3b5e92d3225ec1" id="r_aa2b4d1db24b834e54a3b5e92d3225ec1"><td class="memItemLeft" align="right" valign="top"><a id="aa2b4d1db24b834e54a3b5e92d3225ec1" name="aa2b4d1db24b834e54a3b5e92d3225ec1"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_he_aac</b> = false</td></tr>
+<tr class="separator:aa2b4d1db24b834e54a3b5e92d3225ec1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6a3f60eadc331e3ebf87820890b3ede3" id="r_a6a3f60eadc331e3ebf87820890b3ede3"><td class="memItemLeft" align="right" valign="top"><a id="a6a3f60eadc331e3ebf87820890b3ede3" name="a6a3f60eadc331e3ebf87820890b3ede3"></a>
 audio_tools::AudioDecoder *&#160;</td><td class="memItemRight" valign="bottom"><b>p_decoder</b></td></tr>
 <tr class="separator:a6a3f60eadc331e3ebf87820890b3ede3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -164,6 +169,7 @@ static const int&#160;</td><td class="memItemRight" valign="bottom"><b>kAdtsMaxF
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>AAC decode support for the managed A2DP decoder framework: wraps any audio_tools::AudioDecoder that decodes AAC - e.g. audio_tools::AACDecoderHelix (arduino-libhelix), AACDecoderFDK (arduino-fdk-aac) or AACDecoderFAAD (arduino-libfaad) - and advertises the AAC SEP capability. Construct your decoder of choice, include its codec header yourself (e.g. "AudioTools/AudioCodecs/CodecAACHelix.h"), and register an <a class="el" href="class_a2_d_p_decoder_a_a_c.html" title="AAC decode support for the managed A2DP decoder framework: wraps any audio_tools::AudioDecoder that d...">A2DPDecoderAAC</a> wrapping it via <a class="el" href="class_bluetooth_a2_d_p_sink.html#a0069f6a5a9b9430f719fc13f6182690c">BluetoothA2DPSink::add_decoder()</a>. </p>
 <p>A2DP delivers raw AAC access units (ISO/IEC 13818-7 / 14496-3 raw_data_block()) with no ADTS header, but most general-purpose AAC decoders (including audio_tools::AACDecoderHelix) expect ADTS framing to find their sync word - so this class synthesizes a 7-byte ADTS header (from the sample rate/channel count negotiated via SEP configuration) and prepends it to every frame before handing it to the wrapped decoder.</p>
+<p>By default only AAC-LC is advertised, because the synthesized ADTS header can only describe AAC-LC. Call set_he_aac(true) if the wrapped decoder detects HE-AAC (SBR/PS) implicitly from an AAC-LC labeled stream.</p>
 <p>NOTE: registering a non-SBC stream endpoint is only supported by the underlying Bluedroid stack on ESP-IDF &gt;= 6.1 - earlier versions document esp_a2d_sink_register_stream_endpoint() as SBC-only and are expected to reject this registration (see the ESP_A2D_SEP_REG_STATE_EVT log). This class still works on older IDF versions; it just won't get negotiated.</p>
 <dl class="section author"><dt>Author</dt><dd>Phil Schatzmann </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Apache License Version 2 </dd></dl>
@@ -362,6 +368,33 @@ static const int&#160;</td><td class="memItemRight" valign="bottom"><b>kAdtsMaxF
 <p>determines sample_rate/channels/freq_idx from the negotiated AAC capability (a single bit is set per field once negotiation completes) - needed to synthesize the ADTS header, since AAC's raw frames don't carry this info themselves </p>
 
 <p>Implements <a class="el" href="class_a2_d_p_decoder.html">A2DPDecoder</a>.</p>
+
+</div>
+</div>
+<a id="ae94e2cc6cf62ac16c9736337b01d8ece" name="ae94e2cc6cf62ac16c9736337b01d8ece"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae94e2cc6cf62ac16c9736337b01d8ece">&#9670;&#160;</a></span>set_he_aac()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void A2DPDecoderAAC::set_he_aac </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>active</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Also advertise HE-AAC and HE-AAC v2 (default: false). Call before <a class="el" href="class_bluetooth_a2_d_p_sink.html#af85e99324638d1c814e221ac4ba815dd" title="starts the I2S bluetooth sink with the inidicated name">BluetoothA2DPSink::start()</a>. </p>
 
 </div>
 </div>

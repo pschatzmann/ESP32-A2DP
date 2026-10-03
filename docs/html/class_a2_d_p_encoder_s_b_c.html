@@ -119,6 +119,9 @@ audio_tools::AudioInfo&#160;</td><td class="memItemRight" valign="bottom"><b>get
 <tr class="memitem:ad13f3fa5c603183db563859f205cc2be" id="r_ad13f3fa5c603183db563859f205cc2be"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a2_d_p_encoder_s_b_c.html#ad13f3fa5c603183db563859f205cc2be">mime</a> () override</td></tr>
 <tr class="memdesc:ad13f3fa5c603183db563859f205cc2be"><td class="mdescLeft">&#160;</td><td class="mdescRight">MIME type of the codec this encoder produces (e.g. "audio/sbc")  <br /></td></tr>
 <tr class="separator:ad13f3fa5c603183db563859f205cc2be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1947527116f7085f89ccec54253898ae" id="r_a1947527116f7085f89ccec54253898ae"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a2_d_p_encoder_s_b_c.html#a1947527116f7085f89ccec54253898ae">payload_header_size</a> () override</td></tr>
+<tr class="memdesc:a1947527116f7085f89ccec54253898ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">the stack adds a 1 byte SBC media payload header  <br /></td></tr>
+<tr class="separator:a1947527116f7085f89ccec54253898ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af0956be0e40e52c3496f524d290a81fb" id="r_af0956be0e40e52c3496f524d290a81fb"><td class="memItemLeft" align="right" valign="top"><a id="af0956be0e40e52c3496f524d290a81fb" name="af0956be0e40e52c3496f524d290a81fb"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>sample_rate</b> ()</td></tr>
 <tr class="memdesc:af0956be0e40e52c3496f524d290a81fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sample rate of the PCM provided by the data callbacks. <br /></td></tr>
@@ -428,6 +431,35 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>subbands</b> = 8</td><
 <p>determines sample_rate/channels from the negotiated SBC configuration (a single bit is set per field once negotiation completes) </p>
 
 <p>Implements <a class="el" href="class_a2_d_p_encoder.html#aeb1ce92a0e4c685e98d9e4846cec3372">A2DPEncoder</a>.</p>
+
+</div>
+</div>
+<a id="a1947527116f7085f89ccec54253898ae" name="a1947527116f7085f89ccec54253898ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1947527116f7085f89ccec54253898ae">&#9670;&#160;</a></span>payload_header_size()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t A2DPEncoderSBC::payload_header_size </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>the stack adds a 1 byte SBC media payload header </p>
+
+<p>Reimplemented from <a class="el" href="class_a2_d_p_encoder.html#aedc467eae684991dbe3bb1c0cd87f84a">A2DPEncoder</a>.</p>
 
 </div>
 </div>

@@ -468,10 +468,8 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>managed_encod
 <tr class="separator:a4db96089129da3fe2b1374ed948728ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abcb26f025bd595612aa7d380e3e633ab" id="r_abcb26f025bd595612aa7d380e3e633ab"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_source.html#abcb26f025bd595612aa7d380e3e633ab">managed_encode_task_handler</a> (void *arg)</td></tr>
 <tr class="separator:abcb26f025bd595612aa7d380e3e633ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a944205611f46b2b7d19dd8018bef9645" id="r_a944205611f46b2b7d19dd8018bef9645"><td class="memItemLeft" align="right" valign="top"><a id="a944205611f46b2b7d19dd8018bef9645" name="a944205611f46b2b7d19dd8018bef9645"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>process_managed_encoder_events</b> (uint16_t event, void *param)</td></tr>
-<tr class="memdesc:a944205611f46b2b7d19dd8018bef9645"><td class="mdescLeft">&#160;</td><td class="mdescRight">handles the a2dp events which are relevant for the encoder <br /></td></tr>
-<tr class="separator:a944205611f46b2b7d19dd8018bef9645"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc94f9be5e223bd2081ed366746f602d" id="r_adc94f9be5e223bd2081ed366746f602d"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_source.html#adc94f9be5e223bd2081ed366746f602d">process_managed_encoder_events</a> (uint16_t event, void *param)</td></tr>
+<tr class="separator:adc94f9be5e223bd2081ed366746f602d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3d189b51d912e0f7711d9d68cc9a2b82" id="r_a3d189b51d912e0f7711d9d68cc9a2b82"><td class="memItemLeft" align="right" valign="top"><a id="a3d189b51d912e0f7711d9d68cc9a2b82" name="a3d189b51d912e0f7711d9d68cc9a2b82"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>process_user_state_callbacks</b> (uint16_t event, void *param)</td></tr>
 <tr class="separator:a3d189b51d912e0f7711d9d68cc9a2b82"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1422,6 +1420,43 @@ false </dd></dl>
 </table>
 </div><div class="memdoc">
 <p>MIME type of the currently active encoder (e.g. "audio/sbc", "audio/aac"), or "" if none is active </p>
+
+</div>
+</div>
+<a id="adc94f9be5e223bd2081ed366746f602d" name="adc94f9be5e223bd2081ed366746f602d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc94f9be5e223bd2081ed366746f602d">&#9670;&#160;</a></span>process_managed_encoder_events()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool BluetoothA2DPSource::process_managed_encoder_events </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>event</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>param</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>handles the a2dp events which are relevant for the encoder: returns true if the event has been fully processed </p>
 
 </div>
 </div>

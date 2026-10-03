@@ -99,7 +99,12 @@ Before you clone the project, please read the following information which can be
 
 ## Digital Sound Processing
 
-You can use this library standalone, but it is part of my [audio-tools](https://github.com/pschatzmann/arduino-audio-tools) project. So you can easily enhance this functionality with sound effects, use filters or an equilizer, use alternative audio sinks or audio sources, do FFT etc. Here is a [simple example](https://github.com/pschatzmann/arduino-audio-tools/blob/main/examples/examples-communication/a2dp/basic-a2dp-fft/basic-a2dp-fft.ino) how you can analyse the audio data with FFT.
+This library is part of my [AudioTools](https://github.com/pschatzmann/arduino-audio-tools) project, so you can combine it with any AudioTools functionality:
+
+- __A2DP Sink__: process the received audio with an equalizer, filters or sound effects, analyse it with FFT, or send it to an alternative output.
+- __A2DP Source__: send audio from any AudioTools source, e.g. MP3 files, a microphone or a synthesizer.
+
+You can find many [examples in the AudioTools project](https://github.com/pschatzmann/arduino-audio-tools/tree/main/examples/examples-communication/a2dp).
 
 ## Documentation
 

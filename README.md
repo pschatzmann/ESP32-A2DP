@@ -83,20 +83,6 @@ Frame callbacks, Arduino Streams as data source and the selection of the target 
 
 This library uses the ESP32 logger that you can activate in Arduino in - Tools - Core Debug Log.
 
-## Architecture / Dependencies 
-
-The current code is purely dependent on the ESP-IDF (which is also provided by the Arduino ESP32 core). There are no other dependencies and this includes the Arduino API! 
-
-Therefore we support:
-
-- Arduino
-- [PlatformIO](https://github.com/pschatzmann/ESP32-A2DP/wiki/PlatformIO)
-- [Espressif IDF](https://github.com/pschatzmann/ESP32-A2DP/wiki/Espressif-IDF-as-a-Component)
-
-This restriction limits however the provided examples. 
-
-Before you clone the project, please read the following information which can be found in the [Wiki](https://github.com/pschatzmann/ESP32-A2DP/wiki/Design-Overview).
-
 ## Digital Sound Processing
 
 This library is part of my [AudioTools](https://github.com/pschatzmann/arduino-audio-tools) project, so you can combine it with any AudioTools functionality:
@@ -109,8 +95,9 @@ You can find many [examples in the AudioTools project](https://github.com/pschat
 ## Documentation
 
 - The [class documentation](https://pschatzmann.github.io/ESP32-A2DP/html/group__a2dp.html) can be found here
-- You can also find further information in the [Wiki](https://github.com/pschatzmann/ESP32-A2DP/wiki)
+- The [Design Overview](https://github.com/pschatzmann/ESP32-A2DP/wiki/Design-Overview) describes the architecture, the dependencies and the supported frameworks
 - The [Change History can be found in the Wiki](https://github.com/pschatzmann/ESP32-A2DP/wiki/Change-History)
+- You can also find further information in the [Wiki](https://github.com/pschatzmann/ESP32-A2DP/wiki)
 
 
 ## Support

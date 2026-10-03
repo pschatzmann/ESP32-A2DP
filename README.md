@@ -103,7 +103,7 @@ You can use this library standalone, but it is part of my [audio-tools](https://
 
 ## Documentation
 
-- The [class documentation can be found here](https://pschatzmann.github.io/ESP32-A2DP/html/group__a2dp.html)
+- The [class documentation](https://pschatzmann.github.io/ESP32-A2DP/html/group__a2dp.html) can be found here
 - You can also find further information in the [Wiki](https://github.com/pschatzmann/ESP32-A2DP/wiki)
 
 ## Support

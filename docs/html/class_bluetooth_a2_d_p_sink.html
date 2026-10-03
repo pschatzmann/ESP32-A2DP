@@ -123,6 +123,8 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~BluetoothA2DPSink
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>activate_pin_code</b> (bool active)</td></tr>
 <tr class="memdesc:a22d52952a8ac8c78a483a53c2006a387"><td class="mdescLeft">&#160;</td><td class="mdescRight">We need to confirm a new seesion by calling <a class="el" href="class_bluetooth_a2_d_p_sink.html#a5d4707195d0d6e79b65bef4ed48a57c2" title="confirms the connection request by returning the receivedn pin code">confirm_pin_code()</a> <br /></td></tr>
 <tr class="separator:a22d52952a8ac8c78a483a53c2006a387"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0069f6a5a9b9430f719fc13f6182690c" id="r_a0069f6a5a9b9430f719fc13f6182690c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a0069f6a5a9b9430f719fc13f6182690c">add_decoder</a> (<a class="el" href="class_a2_d_p_decoder.html">A2DPDecoder</a> &amp;decoder)</td></tr>
+<tr class="separator:a0069f6a5a9b9430f719fc13f6182690c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5684bf7c28b482e76ed5cc345782b9c2" id="r_a5684bf7c28b482e76ed5cc345782b9c2"><td class="memItemLeft" align="right" valign="top"><a id="a5684bf7c28b482e76ed5cc345782b9c2" name="a5684bf7c28b482e76ed5cc345782b9c2"></a>
 virtual uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>channels</b> ()</td></tr>
 <tr class="memdesc:a5684bf7c28b482e76ed5cc345782b9c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides the actually set number of channels (1=mono,2=stereo) <br /></td></tr>
@@ -232,6 +234,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_output_active</b> 
 void&#160;</td><td class="memItemRight" valign="bottom"><b>log_free_heap</b> ()</td></tr>
 <tr class="memdesc:a791432e5c800e75fb11b858071cff651"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs the free heap. <br /></td></tr>
 <tr class="separator:a791432e5c800e75fb11b858071cff651"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa82b50a119197082bbacb6ff6edb9f7" id="r_afa82b50a119197082bbacb6ff6edb9f7"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#afa82b50a119197082bbacb6ff6edb9f7">mime</a> ()</td></tr>
+<tr class="separator:afa82b50a119197082bbacb6ff6edb9f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a296fb7aaf8d8e78991d9d505353de94f" id="r_a296fb7aaf8d8e78991d9d505353de94f"><td class="memItemLeft" align="right" valign="top"><a id="a296fb7aaf8d8e78991d9d505353de94f" name="a296fb7aaf8d8e78991d9d505353de94f"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>next</b> ()</td></tr>
 <tr class="memdesc:a296fb7aaf8d8e78991d9d505353de94f"><td class="mdescLeft">&#160;</td><td class="mdescRight">AVRC next. <br /></td></tr>
@@ -300,8 +304,6 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>set_avrc_rn_v
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set_bluedroid_config_t</b> (esp_bluedroid_config_t cfg)</td></tr>
 <tr class="memdesc:a145c20271b53d4329e0e2c7fa36692b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the esp_bluedroid_config_t: Available from IDF 5.2.1. <br /></td></tr>
 <tr class="separator:a145c20271b53d4329e0e2c7fa36692b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef8a45bf1cf3be134f123d0a7e1dbe6c" id="r_aef8a45bf1cf3be134f123d0a7e1dbe6c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#aef8a45bf1cf3be134f123d0a7e1dbe6c">set_codec</a> (A2DPCodec codec, void(*encoded_cb)(const uint8_t *data, size_t len)=nullptr)</td></tr>
-<tr class="separator:aef8a45bf1cf3be134f123d0a7e1dbe6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b37f48a6b0bca33fb21b2a9ae9dab7c" id="r_a8b37f48a6b0bca33fb21b2a9ae9dab7c"><td class="memItemLeft" align="right" valign="top"><a id="a8b37f48a6b0bca33fb21b2a9ae9dab7c" name="a8b37f48a6b0bca33fb21b2a9ae9dab7c"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>set_connectable</b> (bool connectable)</td></tr>
 <tr class="memdesc:a8b37f48a6b0bca33fb21b2a9ae9dab7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bluetooth connectable. <br /></td></tr>
@@ -347,6 +349,10 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>set_mono_down
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>set_on_data_received</b> (void(*callBack)())</td></tr>
 <tr class="memdesc:af65219e635fadbbc90f4663b33abd3e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define callback which is called when we receive data. <br /></td></tr>
 <tr class="separator:af65219e635fadbbc90f4663b33abd3e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8d1b19e5e013da316a851338d284cab" id="r_ae8d1b19e5e013da316a851338d284cab"><td class="memItemLeft" align="right" valign="top"><a id="ae8d1b19e5e013da316a851338d284cab" name="ae8d1b19e5e013da316a851338d284cab"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>set_on_pin_code_request</b> (void(*callBack)(int))</td></tr>
+<tr class="memdesc:ae8d1b19e5e013da316a851338d284cab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the callback called when there is a PIN request / confirmation. <br /></td></tr>
+<tr class="separator:ae8d1b19e5e013da316a851338d284cab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac245103d3d5c47b0414c2de21c0d52a7" id="r_ac245103d3d5c47b0414c2de21c0d52a7"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#ac245103d3d5c47b0414c2de21c0d52a7">set_on_volumechange</a> (void(*callBack)(int))</td></tr>
 <tr class="separator:ac245103d3d5c47b0414c2de21c0d52a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5bdae239eb76ad435a7999362a8019fc" id="r_a5bdae239eb76ad435a7999362a8019fc"><td class="memItemLeft" align="right" valign="top"><a id="a5bdae239eb76ad435a7999362a8019fc" name="a5bdae239eb76ad435a7999362a8019fc"></a>
@@ -500,6 +506,8 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>app_work_disp
 <tr class="memitem:a69518d11bb3efb446cd49d5c08337327" id="r_a69518d11bb3efb446cd49d5c08337327"><td class="memItemLeft" align="right" valign="top"><a id="a69518d11bb3efb446cd49d5c08337327" name="a69518d11bb3efb446cd49d5c08337327"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>app_work_dispatched</b> (<a class="el" href="structbt__app__msg__t.html">bt_app_msg_t</a> *msg)</td></tr>
 <tr class="separator:a69518d11bb3efb446cd49d5c08337327"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a162b467d483e35ef1f206d3140513eeb" id="r_a162b467d483e35ef1f206d3140513eeb"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a162b467d483e35ef1f206d3140513eeb">apply_audio_info</a> (int <a class="el" href="class_bluetooth_a2_d_p_sink.html#a90cee550d061836992616161d4215355">sample_rate</a>, int <a class="el" href="class_bluetooth_a2_d_p_sink.html#a5684bf7c28b482e76ed5cc345782b9c2">channels</a>)</td></tr>
+<tr class="separator:a162b467d483e35ef1f206d3140513eeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2cf823459de7a757d94a4ced2f375a0c" id="r_a2cf823459de7a757d94a4ced2f375a0c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a2cf823459de7a757d94a4ced2f375a0c">audio_data_callback</a> (const uint8_t *data, uint32_t len)</td></tr>
 <tr class="separator:a2cf823459de7a757d94a4ced2f375a0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a46f8aeee188b3d201f1d7779876664ef" id="r_a46f8aeee188b3d201f1d7779876664ef"><td class="memItemLeft" align="right" valign="top"><a id="a46f8aeee188b3d201f1d7779876664ef" name="a46f8aeee188b3d201f1d7779876664ef"></a>
@@ -560,6 +568,9 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>handle_avrc_c
 <tr class="memitem:ad52be2adb0bf68e3a1484166c4502e3f" id="r_ad52be2adb0bf68e3a1484166c4502e3f"><td class="memItemLeft" align="right" valign="top"><a id="ad52be2adb0bf68e3a1484166c4502e3f" name="ad52be2adb0bf68e3a1484166c4502e3f"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>handle_connection_state</b> (uint16_t event, void *p_param)</td></tr>
 <tr class="separator:ad52be2adb0bf68e3a1484166c4502e3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44d9906f3272c13dd74959d0660c2997" id="r_a44d9906f3272c13dd74959d0660c2997"><td class="memItemLeft" align="right" valign="top"><a id="a44d9906f3272c13dd74959d0660c2997" name="a44d9906f3272c13dd74959d0660c2997"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>handle_sep_reg_state</b> (uint16_t event, void *p_param)</td></tr>
+<tr class="separator:a44d9906f3272c13dd74959d0660c2997"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4f98f07ba4cf5962a7cdda50317b3112" id="r_a4f98f07ba4cf5962a7cdda50317b3112"><td class="memItemLeft" align="right" valign="top"><a id="a4f98f07ba4cf5962a7cdda50317b3112" name="a4f98f07ba4cf5962a7cdda50317b3112"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>has_last_connection</b> ()</td></tr>
 <tr class="separator:a4f98f07ba4cf5962a7cdda50317b3112"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -579,9 +590,6 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>init_i2s</b> 
 <tr class="memitem:a51e9ff42c269979cb0e11f484e883fab" id="r_a51e9ff42c269979cb0e11f484e883fab"><td class="memItemLeft" align="right" valign="top"><a id="a51e9ff42c269979cb0e11f484e883fab" name="a51e9ff42c269979cb0e11f484e883fab"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>init_nvs</b> ()</td></tr>
 <tr class="separator:a51e9ff42c269979cb0e11f484e883fab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0a25a455b61e057abb45b71dd4138d1" id="r_aa0a25a455b61e057abb45b71dd4138d1"><td class="memItemLeft" align="right" valign="top"><a id="aa0a25a455b61e057abb45b71dd4138d1" name="aa0a25a455b61e057abb45b71dd4138d1"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_encoded_output</b> ()</td></tr>
-<tr class="separator:aa0a25a455b61e057abb45b71dd4138d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ef94c2b1e035eec0162d91d72132165" id="r_a0ef94c2b1e035eec0162d91d72132165"><td class="memItemLeft" align="right" valign="top"><a id="a0ef94c2b1e035eec0162d91d72132165" name="a0ef94c2b1e035eec0162d91d72132165"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_reconnect</b> (esp_a2d_disc_rsn_t type)</td></tr>
 <tr class="separator:a0ef94c2b1e035eec0162d91d72132165"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -589,9 +597,23 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_reconnect<
 <tr class="separator:a494fb5c610349dd467e7bc6bb34ee839"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7e42226f8d2bbb7284294b4e13cc0506" id="r_a7e42226f8d2bbb7284294b4e13cc0506"><td class="memItemLeft" align="right" valign="top">virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a7e42226f8d2bbb7284294b4e13cc0506">last_bda_nvs_name</a> ()</td></tr>
 <tr class="separator:a7e42226f8d2bbb7284294b4e13cc0506"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86f2085ce56cd18129cb60031f47b13e" id="r_a86f2085ce56cd18129cb60031f47b13e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a86f2085ce56cd18129cb60031f47b13e">managed_decode_close</a> ()</td></tr>
+<tr class="separator:a86f2085ce56cd18129cb60031f47b13e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d93a73b16fbd6fb22f6455dbb6f27bd" id="r_a5d93a73b16fbd6fb22f6455dbb6f27bd"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a5d93a73b16fbd6fb22f6455dbb6f27bd">managed_decode_flush</a> ()</td></tr>
+<tr class="separator:a5d93a73b16fbd6fb22f6455dbb6f27bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02921171eef1a9dd806b6f8bd8c267bb" id="r_a02921171eef1a9dd806b6f8bd8c267bb"><td class="memItemLeft" align="right" valign="top"><a id="a02921171eef1a9dd806b6f8bd8c267bb" name="a02921171eef1a9dd806b6f8bd8c267bb"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>managed_decode_start</b> ()</td></tr>
+<tr class="memdesc:a02921171eef1a9dd806b6f8bd8c267bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">creates the raw queue + decode task, called on ESP_A2D_AUDIO_STATE_STARTED <br /></td></tr>
+<tr class="separator:a02921171eef1a9dd806b6f8bd8c267bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d1110b6b44080664ce461f568809e33" id="r_a6d1110b6b44080664ce461f568809e33"><td class="memItemLeft" align="right" valign="top"><a id="a6d1110b6b44080664ce461f568809e33" name="a6d1110b6b44080664ce461f568809e33"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>managed_decode_task_handler</b> (void *arg)</td></tr>
+<tr class="memdesc:a6d1110b6b44080664ce461f568809e33"><td class="mdescLeft">&#160;</td><td class="mdescRight">task loop: pulls raw encoded buffers off codec_raw_queue and decodes them <br /></td></tr>
+<tr class="separator:a6d1110b6b44080664ce461f568809e33"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace4f3d087602a6db592df68ef8a2ded5" id="r_ace4f3d087602a6db592df68ef8a2ded5"><td class="memItemLeft" align="right" valign="top"><a id="ace4f3d087602a6db592df68ef8a2ded5" name="ace4f3d087602a6db592df68ef8a2ded5"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>read_address</b> (const char *name, <a class="el" href="group__a2dp.html#gae1f72542f04666cd97c26732366bf109">esp_bd_addr_t</a> &amp;bda)</td></tr>
 <tr class="separator:ace4f3d087602a6db592df68ef8a2ded5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b61023aa816c3bb1bfc5cbace94e07b" id="r_a7b61023aa816c3bb1bfc5cbace94e07b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#a7b61023aa816c3bb1bfc5cbace94e07b">register_managed_decoder_seps</a> ()</td></tr>
+<tr class="separator:a7b61023aa816c3bb1bfc5cbace94e07b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aac7011399650aaf55abe54e1deb2432c" id="r_aac7011399650aaf55abe54e1deb2432c"><td class="memItemLeft" align="right" valign="top"><a id="aac7011399650aaf55abe54e1deb2432c" name="aac7011399650aaf55abe54e1deb2432c"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>set_i2s_active</b> (bool active)</td></tr>
 <tr class="separator:aac7011399650aaf55abe54e1deb2432c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -604,6 +626,8 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>set_scan_mode
 <tr class="separator:af1e2f14ddbe9266b61f5e721095c3685"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af33d9cfbc588f0e978778614e6862a17" id="r_af33d9cfbc588f0e978778614e6862a17"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#af33d9cfbc588f0e978778614e6862a17">set_scan_mode_connectable_default</a> () override</td></tr>
 <tr class="separator:af33d9cfbc588f0e978778614e6862a17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9b04f28ba88f8fa7788cd518973f32e" id="r_ad9b04f28ba88f8fa7788cd518973f32e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#ad9b04f28ba88f8fa7788cd518973f32e">use_managed_decoder</a> ()</td></tr>
+<tr class="separator:ad9b04f28ba88f8fa7788cd518973f32e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8f1619be2457a0a9e359ff4fefe1dbf6" id="r_a8f1619be2457a0a9e359ff4fefe1dbf6"><td class="memItemLeft" align="right" valign="top"><a id="a8f1619be2457a0a9e359ff4fefe1dbf6" name="a8f1619be2457a0a9e359ff4fefe1dbf6"></a>
 virtual <a class="el" href="class_a2_d_p_volume_control.html">A2DPVolumeControl</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>volume_control</b> ()</td></tr>
 <tr class="memdesc:a8f1619be2457a0a9e359ff4fefe1dbf6"><td class="mdescLeft">&#160;</td><td class="mdescRight">provides access to the VolumeControl object <br /></td></tr>
@@ -632,6 +656,9 @@ TaskHandle_t&#160;</td><td class="memItemRight" valign="bottom"><b>app_task_hand
 <tr class="memitem:a8d1d8b85c5a1ac1822496e7742fc4ed6" id="r_a8d1d8b85c5a1ac1822496e7742fc4ed6"><td class="memItemLeft" align="right" valign="top"><a id="a8d1d8b85c5a1ac1822496e7742fc4ed6" name="a8d1d8b85c5a1ac1822496e7742fc4ed6"></a>
 QueueHandle_t&#160;</td><td class="memItemRight" valign="bottom"><b>app_task_queue</b> = nullptr</td></tr>
 <tr class="separator:a8d1d8b85c5a1ac1822496e7742fc4ed6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3942c00c5479745d89b0205d479b79d5" id="r_a3942c00c5479745d89b0205d479b79d5"><td class="memItemLeft" align="right" valign="top"><a id="a3942c00c5479745d89b0205d479b79d5" name="a3942c00c5479745d89b0205d479b79d5"></a>
+<a class="el" href="class_a2_d_p_audio_decoder.html">A2DPAudioDecoder</a>&#160;</td><td class="memItemRight" valign="bottom"><b>audio_decoder</b></td></tr>
+<tr class="separator:a3942c00c5479745d89b0205d479b79d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d557628ca4cdb883fa005df2f494f32" id="r_a1d557628ca4cdb883fa005df2f494f32"><td class="memItemLeft" align="right" valign="top"><a id="a1d557628ca4cdb883fa005df2f494f32" name="a1d557628ca4cdb883fa005df2f494f32"></a>
 <a class="el" href="group__a2dp.html#ga49adfa87b1ad7420b0075a0ac03cc194">esp_a2d_audio_state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>audio_state</b> = <a class="el" href="group__a2dp.html#gga49adfa87b1ad7420b0075a0ac03cc194a4f131f965f55142fa9fb3557f88b8793">ESP_A2D_AUDIO_STATE_SUSPEND</a></td></tr>
 <tr class="separator:a1d557628ca4cdb883fa005df2f494f32"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -676,7 +703,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><b>avrc_rn_track_chang
 void(*&#160;</td><td class="memItemRight" valign="bottom"><b>avrc_rn_volchg_complete_callback</b> )(int) = nullptr</td></tr>
 <tr class="separator:a6f59a9d98e48f0181c800125fca62050"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a729840e194330a64ffbccc52d853ac4a" id="r_a729840e194330a64ffbccc52d853ac4a"><td class="memItemLeft" align="right" valign="top"><a id="a729840e194330a64ffbccc52d853ac4a" name="a729840e194330a64ffbccc52d853ac4a"></a>
-esp_bluedroid_config_t&#160;</td><td class="memItemRight" valign="bottom"><b>bluedroid_config</b> {.ssp_en = true}</td></tr>
+esp_bluedroid_config_t&#160;</td><td class="memItemRight" valign="bottom"><b>bluedroid_config</b> {}</td></tr>
 <tr class="separator:a729840e194330a64ffbccc52d853ac4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a515acb1d23ccd8188067ee68c2539aff" id="r_a515acb1d23ccd8188067ee68c2539aff"><td class="memItemLeft" align="right" valign="top"><a id="a515acb1d23ccd8188067ee68c2539aff" name="a515acb1d23ccd8188067ee68c2539aff"></a>
 void(*&#160;</td><td class="memItemRight" valign="bottom"><b>bt_connected</b> )() = nullptr</td></tr>
@@ -693,6 +720,12 @@ const char *&#160;</td><td class="memItemRight" valign="bottom"><b>bt_name</b> =
 <tr class="memitem:a32e9c57e2ff3224b94dfdc69ea52ad60" id="r_a32e9c57e2ff3224b94dfdc69ea52ad60"><td class="memItemLeft" align="right" valign="top"><a id="a32e9c57e2ff3224b94dfdc69ea52ad60" name="a32e9c57e2ff3224b94dfdc69ea52ad60"></a>
 void(*&#160;</td><td class="memItemRight" valign="bottom"><b>bt_volumechange</b> )(int) = nullptr</td></tr>
 <tr class="separator:a32e9c57e2ff3224b94dfdc69ea52ad60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab725d9e0f99c7350da3e48364ed51757" id="r_ab725d9e0f99c7350da3e48364ed51757"><td class="memItemLeft" align="right" valign="top"><a id="ab725d9e0f99c7350da3e48364ed51757" name="ab725d9e0f99c7350da3e48364ed51757"></a>
+TaskHandle_t&#160;</td><td class="memItemRight" valign="bottom"><b>codec_decode_task_handle</b> = nullptr</td></tr>
+<tr class="separator:ab725d9e0f99c7350da3e48364ed51757"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fbd2d8170a149428d248b1f8a75b228" id="r_a0fbd2d8170a149428d248b1f8a75b228"><td class="memItemLeft" align="right" valign="top"><a id="a0fbd2d8170a149428d248b1f8a75b228" name="a0fbd2d8170a149428d248b1f8a75b228"></a>
+QueueHandle_t&#160;</td><td class="memItemRight" valign="bottom"><b>codec_raw_queue</b> = nullptr</td></tr>
+<tr class="separator:a0fbd2d8170a149428d248b1f8a75b228"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a24fb2e82758a45d60d820d8877153563" id="r_a24fb2e82758a45d60d820d8877153563"><td class="memItemLeft" align="right" valign="top"><a id="a24fb2e82758a45d60d820d8877153563" name="a24fb2e82758a45d60d820d8877153563"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>connection_rety_count</b> = 0</td></tr>
 <tr class="separator:a24fb2e82758a45d60d820d8877153563"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -716,15 +749,9 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>default_recon
 <tr class="memitem:af7d15ed8662f01083e09b8966ced8234" id="r_af7d15ed8662f01083e09b8966ced8234"><td class="memItemLeft" align="right" valign="top"><a id="af7d15ed8662f01083e09b8966ced8234" name="af7d15ed8662f01083e09b8966ced8234"></a>
 <a class="el" href="class_a2_d_p_default_volume_control.html">A2DPDefaultVolumeControl</a>&#160;</td><td class="memItemRight" valign="bottom"><b>default_volume_control</b></td></tr>
 <tr class="separator:af7d15ed8662f01083e09b8966ced8234"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2b5d66b9a3216ed3b04360e76969dcd6" id="r_a2b5d66b9a3216ed3b04360e76969dcd6"><td class="memItemLeft" align="right" valign="top"><a id="a2b5d66b9a3216ed3b04360e76969dcd6" name="a2b5d66b9a3216ed3b04360e76969dcd6"></a>
-A2DPCodec&#160;</td><td class="memItemRight" valign="bottom"><b>desired_codec</b> = A2DP_CODEC_SBC</td></tr>
-<tr class="separator:a2b5d66b9a3216ed3b04360e76969dcd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2ca23dacb41661dd91b202c0f7939f69" id="r_a2ca23dacb41661dd91b202c0f7939f69"><td class="memItemLeft" align="right" valign="top"><a id="a2ca23dacb41661dd91b202c0f7939f69" name="a2ca23dacb41661dd91b202c0f7939f69"></a>
 <a class="el" href="group__a2dp.html#ga6562796046744d7333ad2c64d2c8557d">esp_bt_discovery_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>discoverability</b> = <a class="el" href="group__a2dp.html#gga6562796046744d7333ad2c64d2c8557da4fa5e4d5a80a86974515a8a362989711">ESP_BT_GENERAL_DISCOVERABLE</a></td></tr>
 <tr class="separator:a2ca23dacb41661dd91b202c0f7939f69"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a27b34e1f5594694fbcef9912226eeef1" id="r_a27b34e1f5594694fbcef9912226eeef1"><td class="memItemLeft" align="right" valign="top"><a id="a27b34e1f5594694fbcef9912226eeef1" name="a27b34e1f5594694fbcef9912226eeef1"></a>
-void(*&#160;</td><td class="memItemRight" valign="bottom"><b>encoded_stream_reader</b> )(const uint8_t *, size_t) = nullptr</td></tr>
-<tr class="separator:a27b34e1f5594694fbcef9912226eeef1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae6737dd3e78e2f979815615b143fcfda" id="r_ae6737dd3e78e2f979815615b143fcfda"><td class="memItemLeft" align="right" valign="top"><a id="ae6737dd3e78e2f979815615b143fcfda" name="ae6737dd3e78e2f979815615b143fcfda"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>event_queue_size</b> = 20</td></tr>
 <tr class="separator:ae6737dd3e78e2f979815615b143fcfda"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -744,7 +771,7 @@ volatile bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_i2s_activ
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_output</b> = true</td></tr>
 <tr class="separator:a87fa51e0d2c40d8e5496d7815cc3e981"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aec1c51b8a112c16376f533a0bcf25679" id="r_aec1c51b8a112c16376f533a0bcf25679"><td class="memItemLeft" align="right" valign="top"><a id="aec1c51b8a112c16376f533a0bcf25679" name="aec1c51b8a112c16376f533a0bcf25679"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_output_active_by_state</b> = true</td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_output_active_by_state</b> = false</td></tr>
 <tr class="separator:aec1c51b8a112c16376f533a0bcf25679"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6283bcc3f4609807f746d06ccbfa4fac" id="r_a6283bcc3f4609807f746d06ccbfa4fac"><td class="memItemLeft" align="right" valign="top"><a id="a6283bcc3f4609807f746d06ccbfa4fac" name="a6283bcc3f4609807f746d06ccbfa4fac"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_pin_code_active</b> = false</td></tr>
@@ -789,9 +816,6 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>max_write_delay_ms</b>
 <tr class="memitem:a555d8dba5b6534cbe72bb3d73c02296c" id="r_a555d8dba5b6534cbe72bb3d73c02296c"><td class="memItemLeft" align="right" valign="top"><a id="a555d8dba5b6534cbe72bb3d73c02296c" name="a555d8dba5b6534cbe72bb3d73c02296c"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>max_write_size</b> = A2DP_I2S_MAX_WRITE_SIZE</td></tr>
 <tr class="separator:a555d8dba5b6534cbe72bb3d73c02296c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab47f93c6dda3515c6432309e13c0062e" id="r_ab47f93c6dda3515c6432309e13c0062e"><td class="memItemLeft" align="right" valign="top"><a id="ab47f93c6dda3515c6432309e13c0062e" name="ab47f93c6dda3515c6432309e13c0062e"></a>
-esp_a2d_mcc_t&#160;</td><td class="memItemRight" valign="bottom"><b>mcc</b> {}</td></tr>
-<tr class="separator:ab47f93c6dda3515c6432309e13c0062e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a640bbc2b3b6e98bb8b0dcb8eec3700cd" id="r_a640bbc2b3b6e98bb8b0dcb8eec3700cd"><td class="memItemLeft" align="right" valign="top"><a id="a640bbc2b3b6e98bb8b0dcb8eec3700cd" name="a640bbc2b3b6e98bb8b0dcb8eec3700cd"></a>
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>notif_interval_s</b> = 10</td></tr>
 <tr class="separator:a640bbc2b3b6e98bb8b0dcb8eec3700cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -813,6 +837,9 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pin_code_int</b> = 0</
 <tr class="memitem:a36f12322ad8e025fd100d395b687ed74" id="r_a36f12322ad8e025fd100d395b687ed74"><td class="memItemLeft" align="right" valign="top"><a id="a36f12322ad8e025fd100d395b687ed74" name="a36f12322ad8e025fd100d395b687ed74"></a>
 PinCodeRequest&#160;</td><td class="memItemRight" valign="bottom"><b>pin_code_request</b> = Undefined</td></tr>
 <tr class="separator:a36f12322ad8e025fd100d395b687ed74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a086c30bddfb254c94e87fbe1c5dfe207" id="r_a086c30bddfb254c94e87fbe1c5dfe207"><td class="memItemLeft" align="right" valign="top"><a id="a086c30bddfb254c94e87fbe1c5dfe207" name="a086c30bddfb254c94e87fbe1c5dfe207"></a>
+void(*&#160;</td><td class="memItemRight" valign="bottom"><b>pin_code_request_callback</b> )(int) = nullptr</td></tr>
+<tr class="separator:a086c30bddfb254c94e87fbe1c5dfe207"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0097f5adbcf09b2c857528afa568c53f" id="r_a0097f5adbcf09b2c857528afa568c53f"><td class="memItemLeft" align="right" valign="top"><a id="a0097f5adbcf09b2c857528afa568c53f" name="a0097f5adbcf09b2c857528afa568c53f"></a>
 char&#160;</td><td class="memItemRight" valign="bottom"><b>pin_code_str</b> [20] = {0}</td></tr>
 <tr class="separator:a0097f5adbcf09b2c857528afa568c53f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -884,13 +911,15 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>volume_value</b> =
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
 Friends</h2></td></tr>
+<tr class="memitem:aa3d1a21dc8a7973bc96c3108401752c7" id="r_aa3d1a21dc8a7973bc96c3108401752c7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_bluetooth_a2_d_p_sink.html#aa3d1a21dc8a7973bc96c3108401752c7">a2dp_decoder_audio_info_changed</a> (audio_tools::AudioInfo info)</td></tr>
+<tr class="separator:aa3d1a21dc8a7973bc96c3108401752c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac0e3ebab2d32e289ec52a08bcfa2e978" id="r_ac0e3ebab2d32e289ec52a08bcfa2e978"><td class="memItemLeft" align="right" valign="top"><a id="ac0e3ebab2d32e289ec52a08bcfa2e978" name="ac0e3ebab2d32e289ec52a08bcfa2e978"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>ccall_audio_data_callback</b> (const uint8_t *data, uint32_t len)</td></tr>
 <tr class="memdesc:ac0e3ebab2d32e289ec52a08bcfa2e978"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback for music stream. <br /></td></tr>
 <tr class="separator:ac0e3ebab2d32e289ec52a08bcfa2e978"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a78c259f8e03eec28227376c0864a8df2" id="r_a78c259f8e03eec28227376c0864a8df2"><td class="memItemLeft" align="right" valign="top"><a id="a78c259f8e03eec28227376c0864a8df2" name="a78c259f8e03eec28227376c0864a8df2"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>ccall_audio_encoded_callback</b> (esp_a2d_conn_hdl_t conn_hdl, esp_a2d_audio_buff_t *audio_buf)</td></tr>
-<tr class="separator:a78c259f8e03eec28227376c0864a8df2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80e14b905489ad240fb189c433eeb545" id="r_a80e14b905489ad240fb189c433eeb545"><td class="memItemLeft" align="right" valign="top"><a id="a80e14b905489ad240fb189c433eeb545" name="a80e14b905489ad240fb189c433eeb545"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ccall_audio_managed_decode_callback</b> (esp_a2d_conn_hdl_t conn_hdl, esp_a2d_audio_buff_t *audio_buf)</td></tr>
+<tr class="separator:a80e14b905489ad240fb189c433eeb545"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9ab56fe60162fa9c07bf0ab8f523bfbf" id="r_a9ab56fe60162fa9c07bf0ab8f523bfbf"><td class="memItemLeft" align="right" valign="top"><a id="a9ab56fe60162fa9c07bf0ab8f523bfbf" name="a9ab56fe60162fa9c07bf0ab8f523bfbf"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>ccall_av_hdl_a2d_evt</b> (uint16_t event, void *p_param)</td></tr>
 <tr class="memdesc:a9ab56fe60162fa9c07bf0ab8f523bfbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">a2dp event handler <br /></td></tr>
@@ -903,6 +932,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>ccall_av_hdl_avrc_evt
 void&#160;</td><td class="memItemRight" valign="bottom"><b>ccall_i2s_task_handler</b> (void *arg)</td></tr>
 <tr class="memdesc:ac18463dacb2427d3687ef8b930cb9a8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">task hander for i2s <br /></td></tr>
 <tr class="separator:ac18463dacb2427d3687ef8b930cb9a8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2377ea47a2608f57ac850f596a3b691f" id="r_a2377ea47a2608f57ac850f596a3b691f"><td class="memItemLeft" align="right" valign="top"><a id="a2377ea47a2608f57ac850f596a3b691f" name="a2377ea47a2608f57ac850f596a3b691f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ccall_managed_decode_task_handler</b> (void *arg)</td></tr>
+<tr class="separator:a2377ea47a2608f57ac850f596a3b691f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="class_bluetooth_a2_d_p_sink.html" title="BluetoothA2DPSink implements a robust, extensible A2DP Bluetooth audio sink for ESP32.">BluetoothA2DPSink</a> implements a robust, extensible A2DP Bluetooth audio sink for ESP32. </p>
@@ -914,7 +946,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>ccall_i2s_task_handle
 <li>Automatic reconnection logic with configurable retry count</li>
 <li>AVRCP (remote control) support for playback and volume commands</li>
 <li>RSSI (signal strength) reporting and peer device name retrieval</li>
-<li>Codec selection and encoded audio callback (ESP-IDF 5.5+)</li>
+<li>Optional managed multi-codec decoding via <a class="el" href="class_bluetooth_a2_d_p_sink.html#a0069f6a5a9b9430f719fc13f6182690c">add_decoder()</a> (ESP-IDF 5.5+)</li>
 <li>Mono downmix, channel swap, and sample rate/channel introspection</li>
 <li>Extensible for custom output, event handling, and platform integration</li>
 </ul>
@@ -948,6 +980,33 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>ccall_i2s_task_handle
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a0069f6a5a9b9430f719fc13f6182690c" name="a0069f6a5a9b9430f719fc13f6182690c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0069f6a5a9b9430f719fc13f6182690c">&#9670;&#160;</a></span>add_decoder()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool BluetoothA2DPSink::add_decoder </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_a2_d_p_decoder.html">A2DPDecoder</a> &amp;&#160;</td>
+          <td class="paramname"><em>decoder</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Registers a decoder (e.g. <a class="el" href="class_a2_d_p_decoder_s_b_c.html" title="SBC decode support for the managed A2DP decoder framework: wraps any audio_tools::AudioDecoder that d...">A2DPDecoderSBC</a>, <a class="el" href="class_a2_d_p_decoder_a_a_c.html" title="AAC decode support for the managed A2DP decoder framework: wraps any audio_tools::AudioDecoder that d...">A2DPDecoderAAC</a>) that decodes the still-encoded frames delivered by the stack into PCM, which is then forwarded through the normal decoded-output pipeline (volume, stream_reader, write_audio) exactly like the built-in SBC path. Each added decoder registers its own stream endpoint - which codecs actually get negotiated depends entirely on what you've registered here plus what the connected source and ESP-IDF version support. Returns false if a decoder for that codec type is already registered. </p>
+
+</div>
+</div>
 <a id="a9892ecf2f81b99d861f2767f7b705188" name="a9892ecf2f81b99d861f2767f7b705188"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9892ecf2f81b99d861f2767f7b705188">&#9670;&#160;</a></span>app_a2d_callback()</h2>
 
@@ -1101,6 +1160,43 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>ccall_i2s_task_handle
 </div><div class="memdoc">
 
 <p>Implements <a class="el" href="class_bluetooth_a2_d_p_common.html">BluetoothA2DPCommon</a>.</p>
+
+</div>
+</div>
+<a id="a162b467d483e35ef1f206d3140513eeb" name="a162b467d483e35ef1f206d3140513eeb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a162b467d483e35ef1f206d3140513eeb">&#9670;&#160;</a></span>apply_audio_info()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void BluetoothA2DPSink::apply_audio_info </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>sample_rate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>channels</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>updates m_sample_rate/m_channels, notifies sample_rate_callback and the output - shared by the legacy SBC-only path (handle_audio_cfg) and the managed decoder path (managed_decode_task_handler) </p>
 
 </div>
 </div>
@@ -1535,6 +1631,110 @@ false </dd></dl>
 
 </div>
 </div>
+<a id="a86f2085ce56cd18129cb60031f47b13e" name="a86f2085ce56cd18129cb60031f47b13e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86f2085ce56cd18129cb60031f47b13e">&#9670;&#160;</a></span>managed_decode_close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void BluetoothA2DPSink::managed_decode_close </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>flushes (see <a class="el" href="class_bluetooth_a2_d_p_sink.html#a5d93a73b16fbd6fb22f6455dbb6f27bd">managed_decode_flush()</a>) and additionally closes the decoder, called on disconnect </p>
+
+</div>
+</div>
+<a id="a5d93a73b16fbd6fb22f6455dbb6f27bd" name="a5d93a73b16fbd6fb22f6455dbb6f27bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d93a73b16fbd6fb22f6455dbb6f27bd">&#9670;&#160;</a></span>managed_decode_flush()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void BluetoothA2DPSink::managed_decode_flush </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>suspends the decode task and drains the raw queue, leaving the decoder open - called on ESP_A2D_AUDIO_STATE_SUSPEND; A2DP frames are self-contained so the decoder can safely keep its state across a pause, and many sources never resend AUDIO_CFG_EVT on resume, so closing here would leave the decoder unable to reopen itself </p>
+
+</div>
+</div>
+<a id="afa82b50a119197082bbacb6ff6edb9f7" name="afa82b50a119197082bbacb6ff6edb9f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa82b50a119197082bbacb6ff6edb9f7">&#9670;&#160;</a></span>mime()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * BluetoothA2DPSink::mime </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>MIME type of the currently selected/active decoder (e.g. "audio/sbc", "audio/aac"), or "" if none is active yet (e.g. before a source has connected and negotiated a codec) </p>
+
+</div>
+</div>
+<a id="a7b61023aa816c3bb1bfc5cbace94e07b" name="a7b61023aa816c3bb1bfc5cbace94e07b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b61023aa816c3bb1bfc5cbace94e07b">&#9670;&#160;</a></span>register_managed_decoder_seps()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void BluetoothA2DPSink::register_managed_decoder_seps </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>registers one stream endpoint per decoder added via <a class="el" href="class_bluetooth_a2_d_p_sink.html#a0069f6a5a9b9430f719fc13f6182690c">add_decoder()</a> and the raw-frame callback, called from av_hdl_stack_evt() when <a class="el" href="class_bluetooth_a2_d_p_sink.html#ad9b04f28ba88f8fa7788cd518973f32e">use_managed_decoder()</a> </p>
+
+</div>
+</div>
 <a id="a537d576b12d1158eb0681a6195b258de" name="a537d576b12d1158eb0681a6195b258de"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a537d576b12d1158eb0681a6195b258de">&#9670;&#160;</a></span>set_auto_reconnect() <span class="overload">[1/2]</span></h2>
 
@@ -1768,35 +1968,6 @@ false </dd></dl>
 </table>
 </div><div class="memdoc">
 <p>set the callback that the local volume change is notification is received and complete </p>
-
-</div>
-</div>
-<a id="aef8a45bf1cf3be134f123d0a7e1dbe6c" name="aef8a45bf1cf3be134f123d0a7e1dbe6c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aef8a45bf1cf3be134f123d0a7e1dbe6c">&#9670;&#160;</a></span>set_codec()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool BluetoothA2DPSink::set_codec </td>
-          <td>(</td>
-          <td class="paramtype">A2DPCodec&#160;</td>
-          <td class="paramname"><em>codec</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void(*)(const uint8_t *data, size_t len)&#160;</td>
-          <td class="paramname"><em>encoded_cb</em> = <code>nullptr</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>DRAFT: select codec AND set encoded frame callback in one call. If encoded_cb is not nullptr it registers the encoded frame reader. Returns result of internal registration </p>
 
 </div>
 </div>
@@ -2231,6 +2402,32 @@ false </dd></dl>
 
 </div>
 </div>
+<a id="ad9b04f28ba88f8fa7788cd518973f32e" name="ad9b04f28ba88f8fa7788cd518973f32e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad9b04f28ba88f8fa7788cd518973f32e">&#9670;&#160;</a></span>use_managed_decoder()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool BluetoothA2DPSink::use_managed_decoder </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>true when the managed decode path should be used instead of the legacy decoded-only path: requires at least one decoder to have been registered via <a class="el" href="class_bluetooth_a2_d_p_sink.html#a0069f6a5a9b9430f719fc13f6182690c">add_decoder()</a> </p>
+
+</div>
+</div>
 <a id="aa211fefd101a639938a20dc3478b48ae" name="aa211fefd101a639938a20dc3478b48ae"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa211fefd101a639938a20dc3478b48ae">&#9670;&#160;</a></span>write_audio()</h2>
 
@@ -2268,6 +2465,36 @@ false </dd></dl>
 <p>output audio data e.g. to i2s or to queue </p>
 
 <p>Reimplemented in <a class="el" href="class_bluetooth_a2_d_p_sink_queued.html#a1846088388d294f04469885b9bb560e4">BluetoothA2DPSinkQueued</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Friends And Related Symbol Documentation</h2>
+<a id="aa3d1a21dc8a7973bc96c3108401752c7" name="aa3d1a21dc8a7973bc96c3108401752c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa3d1a21dc8a7973bc96c3108401752c7">&#9670;&#160;</a></span>a2dp_decoder_audio_info_changed</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void a2dp_decoder_audio_info_changed </td>
+          <td>(</td>
+          <td class="paramtype">audio_tools::AudioInfo&#160;</td>
+          <td class="paramname"><em>info</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Forwards audio-info changes (sample rate/channels) reported by whichever <a class="el" href="class_a2_d_p_decoder.html" title="Base class for a single A2DP codec&#39;s decode support: pairs an A2DP codec type and its SEP capability ...">A2DPDecoder</a> is currently active into <a class="el" href="class_bluetooth_a2_d_p_sink.html#a162b467d483e35ef1f206d3140513eeb">BluetoothA2DPSink::apply_audio_info()</a></p><ul>
+<li>implemented in BluetoothA2DPSink.cpp (needs friend access to that protected method), declared here so <a class="el" href="class_a2_d_p_decoder.html" title="Base class for a single A2DP codec&#39;s decode support: pairs an A2DP codec type and its SEP capability ...">A2DPDecoder</a> can wire it up without depending on <a class="el" href="_bluetooth_a2_d_p_sink_8h_source.html">BluetoothA2DPSink.h</a>. </li>
+</ul>
 
 </div>
 </div>

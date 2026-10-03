@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Arduino A2DP: A Simple Arduino Bluetooth Music Receiver and Sender for the ESP32</title>
+<title>Arduino A2DP: A Simple ESP32 Bluetooth A2DP Audio Library</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -69,10 +69,10 @@ $(function() {
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">A Simple Arduino Bluetooth Music Receiver and Sender for the ESP32 </div></div>
+  <div class="headertitle"><div class="title">A Simple ESP32 Bluetooth A2DP Audio Library </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md__r_e_a_d_m_e"></a> <a href="https://www.arduino.cc/reference/en/libraries/"><img src="https://img.shields.io/badge/Arduino-Library-blue.svg" alt="Arduino Library" style="pointer-events: none;" class="inline"/></a> <a href="https://opensource.org/licenses/Apache-2.0"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License: Apache 2.0" style="pointer-events: none;" class="inline"/></a></p>
+<div class="textblock"><p><a class="anchor" id="md__r_e_a_d_m_e"></a> <a href="https://www.arduino.cc/reference/en/libraries/"><img src="https://img.shields.io/badge/Arduino-Library-blue.svg" alt="Arduino Library" style="pointer-events: none;" class="inline"/></a> <a href="https://github.com/pschatzmann/ESP32-A2DP"><img src="https://img.shields.io/badge/IDF-Component-blue.svg" alt="IDF Component" style="pointer-events: none;" class="inline"/></a> <a href="https://opensource.org/licenses/Apache-2.0"><img src="https://img.shields.io/badge/License-Apache%202.0-green.svg" alt="License: Apache 2.0" style="pointer-events: none;" class="inline"/></a></p>
 <p>The ESP32 is a microcontroller that provides an API for Bluetooth A2DP which can be used to receive sound data e.g. from your Mobile Phone and makes it available via a callback method. The output is a PCM data stream, decoded from SBC format. The documentation can be found <a href="https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/peripherals/i2s.html">here</a>.</p>
 <p><img src="https://pschatzmann.github.io/ESP32-A2DP/img/esp32.jpeg" alt="esp32" class="inline"/></p>
 <p>I2S is an electrical serial bus interface standard used for connecting digital audio devices together. It is used to communicate PCM audio data between integrated circuits in an electronic device.</p>
@@ -88,13 +88,10 @@ I2S API / Dependencies</h1>
 <p>Espressif is retiring the legacy I2S API: So with Arduino v3.0.0 (IDF v5) <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki/Legacy-I2S-API">my old I2S integration</a> will not be available any more. The legacy syntax is still working as long as you don't upgrade. <br  />
 </p>
 <p>In order to support a unique output API which is version independent, it is recommended to install and use the <a href="https://github.com/pschatzmann/arduino-audio-tools">AudioTools</a> library. So the documentation and all the examples have been updated to use this new approach.</p>
-<p>However you can also output to any other class which inherits from Arduino Print: e.g. the <a href="https://github.com/pschatzmann/ESP32-A2DP?tab=readme-ov-file#output-using-the-esp32-i2s-api">Arduino ESP32 I2SClass</a> or you can use the <a href="https://github.com/pschatzmann/ESP32-A2DP?tab=readme-ov-file#accessing-the-sink-data-stream-with-callbacks">data callback</a> described below.</p>
+<p>However you can also output to any other class which inherits from Arduino Print: e.g. the <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki/A2DP-Sink#output-using-the-esp32-i2s-api">Arduino ESP32 I2SClass</a> or you can use the <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki/A2DP-Sink#accessing-the-sink-data-stream-with-callbacks">data callback</a>.</p>
 <h1><a class="anchor" id="autotoc_md3"></a>
 A2DP Sink (Music Receiver)</h1>
-<p>This can be used e.g. to build your own Bluetooth Speaker.</p>
-<h2><a class="anchor" id="autotoc_md4"></a>
-A Simple I2S Example (A2DS Sink) using default Pins</h2>
-<p>Here is the simplest example which just uses the proper default settings:</p>
+<p>This can be used e.g. to build your own Bluetooth Speaker. Here is the simplest example which just uses the default settings:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;AudioTools.h&quot;</span></div>
 <div class="line"><span class="preprocessor">#include &quot;BluetoothA2DPSink.h&quot;</span></div>
 <div class="line"> </div>
@@ -102,174 +99,41 @@ A Simple I2S Example (A2DS Sink) using default Pins</h2>
 <div class="line"><a class="code hl_class" href="class_bluetooth_a2_d_p_sink.html">BluetoothA2DPSink</a> a2dp_sink(i2s);</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> setup() {</div>
-<div class="line">    Serial.begin(115200);</div>
 <div class="line">    a2dp_sink.start(<span class="stringliteral">&quot;MyMusic&quot;</span>);</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> loop() {</div>
 <div class="line">}</div>
-<div class="ttc" id="aclass_bluetooth_a2_d_p_sink_html"><div class="ttname"><a href="class_bluetooth_a2_d_p_sink.html">BluetoothA2DPSink</a></div><div class="ttdoc">BluetoothA2DPSink implements a robust, extensible A2DP Bluetooth audio sink for ESP32.</div><div class="ttdef"><b>Definition</b> BluetoothA2DPSink.h:106</div></div>
-</div><!-- fragment --><p> This creates a new Bluetooth device with the name “MyMusic” and the output will be sent to the following default I2S pins which need to be connected to an external DAC:</p>
-<ul>
-<li>bck_io_num = 14</li>
-<li>ws_io_num = 15</li>
-<li>data_out_num = 22</li>
-</ul>
-<p>Please note that these default pins have changed compared to the legacy API!</p>
-<h2><a class="anchor" id="autotoc_md5"></a>
-Defining Pins</h2>
-<p>You can define your own pins easily before the <code>start</code>.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;AudioTools.h&quot;</span></div>
-<div class="line"><span class="preprocessor">#include &quot;BluetoothA2DPSink.h&quot;</span></div>
-<div class="line"> </div>
-<div class="line">I2SStream i2s;</div>
-<div class="line"><a class="code hl_class" href="class_bluetooth_a2_d_p_sink.html">BluetoothA2DPSink</a> a2dp_sink(i2s);</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> setup() {</div>
-<div class="line">    Serial.begin(115200);</div>
-<div class="line">    <span class="keyword">auto</span> cfg = i2s.defaultConfig();</div>
-<div class="line">    cfg.pin_bck = 14;</div>
-<div class="line">    cfg.pin_ws = 15;</div>
-<div class="line">    cfg.pin_data = 22;</div>
-<div class="line">    i2s.begin(cfg);</div>
-<div class="line"> </div>
-<div class="line">    a2dp_sink.start(<span class="stringliteral">&quot;MyMusic&quot;</span>);</div>
-<div class="line">}</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> loop() {</div>
-<div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md6"></a>
-Output Using the ESP32 I2S API</h2>
-<p>You can also use the Arduino ESP32 I2S API: You do not need to install any additional library for this.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;ESP_I2S.h&quot;</span></div>
-<div class="line"><span class="preprocessor">#include &quot;BluetoothA2DPSink.h&quot;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">const</span> uint8_t I2S_SCK = 5;       <span class="comment">/* Audio data bit clock */</span></div>
-<div class="line"><span class="keyword">const</span> uint8_t I2S_WS = 25;       <span class="comment">/* Audio data left and right clock */</span></div>
-<div class="line"><span class="keyword">const</span> uint8_t I2S_SDOUT = 26;    <span class="comment">/* ESP32 audio data output (to speakers) */</span></div>
-<div class="line">I2SClass i2s;</div>
-<div class="line"> </div>
-<div class="line"><a class="code hl_class" href="class_bluetooth_a2_d_p_sink.html">BluetoothA2DPSink</a> a2dp_sink(i2s);</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> setup() {</div>
-<div class="line">    Serial.begin(115200);</div>
-<div class="line"> </div>
-<div class="line">    i2s.setPins(I2S_SCK, I2S_WS, I2S_SDOUT);</div>
-<div class="line">    <span class="keywordflow">if</span> (!i2s.begin(I2S_MODE_STD, 44100, I2S_DATA_BIT_WIDTH_16BIT, I2S_SLOT_MODE_STEREO, I2S_STD_SLOT_BOTH)) {</div>
-<div class="line">      Serial.println(<span class="stringliteral">&quot;Failed to initialize I2S!&quot;</span>);</div>
-<div class="line">      <span class="keywordflow">while</span> (1); <span class="comment">// do nothing</span></div>
-<div class="line">    }</div>
-<div class="line"> </div>
-<div class="line">    a2dp_sink.start(<span class="stringliteral">&quot;MyMusic&quot;</span>);</div>
-<div class="line">}</div>
-<div class="line"><span class="keywordtype">void</span> loop() {}</div>
-</div><!-- fragment --><p> Please note, that this API also depends on the installed version: The example above is for ESP32 &gt;= 3.0.0!</p>
-<h2><a class="anchor" id="autotoc_md7"></a>
-Output to the Internal DAC</h2>
-<p>You can also send the output directly to the internal DAC of the ESP32 by using the AnalogAudioStream from the AudioTools:</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;AudioTools.h&quot;</span></div>
-<div class="line"><span class="preprocessor">#include &quot;BluetoothA2DPSink.h&quot;</span></div>
-<div class="line"> </div>
-<div class="line">AnalogAudioStream out;</div>
-<div class="line"><a class="code hl_class" href="class_bluetooth_a2_d_p_sink.html">BluetoothA2DPSink</a> a2dp_sink(out);</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> setup() {</div>
-<div class="line">    Serial.begin(115200);</div>
-<div class="line">    a2dp_sink.start(<span class="stringliteral">&quot;MyMusic&quot;</span>);</div>
-<div class="line">}</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> loop() {</div>
-<div class="line">}</div>
-</div><!-- fragment --><p>The output goes now to the DAC pins GPIO25 (Channel 1) and GPIO26 (Channel 2).</p>
-<h2><a class="anchor" id="autotoc_md8"></a>
-Accessing the Sink Data Stream with Callbacks</h2>
-<p>You can be notified when a packet is received. The API is using PCM data normally formatted as 44.1kHz sampling rate, two-channel 16-bit sample data.</p>
-<div class="fragment"><div class="line"><span class="comment">// In the setup function:</span></div>
-<div class="line">a2dp_sink.set_on_data_received(data_received_callback);</div>
-<div class="line"> </div>
-<div class="line"> </div>
-<div class="line"><span class="comment">// Then somewhere in your sketch:</span></div>
-<div class="line"><span class="keywordtype">void</span> data_received_callback() {</div>
-<div class="line">  Serial.println(<span class="stringliteral">&quot;Data packet received&quot;</span>);</div>
-<div class="line">}</div>
-</div><!-- fragment --><p>Or you can access the packet:</p>
-<div class="fragment"><div class="line"><span class="comment">// In the setup function:</span></div>
-<div class="line">a2dp_sink.set_stream_reader(read_data_stream);</div>
-<div class="line"> </div>
-<div class="line"><span class="comment">// Then somewhere in your sketch:</span></div>
-<div class="line"><span class="keywordtype">void</span> read_data_stream(<span class="keyword">const</span> uint8_t *data, uint32_t length)</div>
-<div class="line">{</div>
-<div class="line">  int16_t *samples = (int16_t*) data;</div>
-<div class="line">  uint32_t sample_count = length/2;</div>
-<div class="line">  <span class="comment">// Do something with the data packet</span></div>
-<div class="line">}</div>
-</div><!-- fragment --><p> In the <code>a2dp_sink.set_stream_reader()</code> method you can provide an optional parameter that defines if you want the output to I2S to be active or deactive - So you can use this method to e.g. to switch off I2S just by calling <code>a2dp_sink.set_stream_reader(read_data_stream, false)</code></p>
-<h2><a class="anchor" id="autotoc_md9"></a>
-Support for Metadata</h2>
-<p>You can register a method which will be called when the system receives any AVRC metadata (<code>esp_avrc_md_attr_mask_t</code>). Here is an example </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> avrc_metadata_callback(uint8_t data1, <span class="keyword">const</span> uint8_t *data2) {</div>
-<div class="line">  Serial.printf(<span class="stringliteral">&quot;AVRC metadata rsp: attribute id 0x%x, %s\n&quot;</span>, data1, data2);</div>
-<div class="line">}</div>
-<div class="line">a2dp_sink.set_avrc_metadata_callback(avrc_metadata_callback);</div>
-<div class="line">a2dp_sink.start(<span class="stringliteral">&quot;BT&quot;</span>);</div>
-</div><!-- fragment --><p> By default you should get the most important information, however you can adjust this by calling the <code>set_avrc_metadata_attribute_mask</code> method e.g if you just need the title and playing time you can call: </p><div class="fragment"><div class="line">set_avrc_metadata_attribute_mask(ESP_AVRC_MD_ATTR_TITLE | ESP_AVRC_MD_ATTR_PLAYING_TIME);</div>
-</div><!-- fragment --><p> before you start the A2DP sink. Note that data2 is actually a char* string, so even though <code>ESP_AVRC_MD_ATTR_PLAYING_TIME</code> is documented as the milliseconds of media duration you'll need to parse it before doing math on it. See the metadata example for more.</p>
-<h2><a class="anchor" id="autotoc_md10"></a>
-Support for Notifications</h2>
-<p>Similarly to the <code>avrc_metadata_callback</code>, ESP IDF v4+ supports selected <code>esp_avrc_rn_param_t</code> callbacks like <code>set_avrc_rn_playstatus_callback</code>, <code>set_avrc_rn_play_pos_callback</code> and <code>set_avrc_rn_track_change_callback</code> which can be used to obtain <code>esp_avrc_playback_stat_t playback</code> playback status,<code>uint32_t play_pos</code> playback position and <code>uint8_t elm_id</code> track change flag respectively. See the playing_status_callbacks example for more details.</p>
-<h2><a class="anchor" id="autotoc_md11"></a>
-Support for AVRC Commands</h2>
-<p>I have added the following AVRC commands, that you can use to 'control' your A2DP Source:</p>
-<ul>
-<li>play();</li>
-<li>pause();</li>
-<li>stop();</li>
-<li>next();</li>
-<li>previous();</li>
-<li>fast_forward();</li>
-<li>rewind();</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md12"></a>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_sink_html"><div class="ttname"><a href="class_bluetooth_a2_d_p_sink.html">BluetoothA2DPSink</a></div><div class="ttdoc">BluetoothA2DPSink implements a robust, extensible A2DP Bluetooth audio sink for ESP32.</div><div class="ttdef"><b>Definition</b> BluetoothA2DPSink.h:99</div></div>
+</div><!-- fragment --><p> This creates a new Bluetooth device with the name “MyMusic” and the output is sent to the default I2S pins (BCK = 14, WS = 15, DATA = 22), which need to be connected to an external DAC.</p>
+<p>Defining your own pins, the output with the ESP32 I2S API or to the internal DAC, data callbacks, metadata and AVRC commands are described in the <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki/A2DP-Sink">A2DP Sink documentation</a>.</p>
+<h1><a class="anchor" id="autotoc_md4"></a>
 A2DP Source (Music Sender)</h1>
-<p>This can be used to feed e.g. your Bluetooth Speaker with your audio data.</p>
-<h2><a class="anchor" id="autotoc_md13"></a>
-Sending Data from a A2DS Data Source with a Callback</h2>
-<p>We can also generate sound and send it e.g. to a Bluetooth Speaker. <br  />
-</p>
-<p>The supported audio codec in ESP32 A2DP is SBC: The API is using PCM data normally formatted as 44.1kHz sampling rate, two-channel 16-bit sample data.</p>
-<p>When you start the <a class="el" href="class_bluetooth_a2_d_p_source.html" title="BluetoothA2DPSource implements a flexible, extensible A2DP Bluetooth audio source for ESP32.">BluetoothA2DPSource</a>, you need to pass the Bluetooth name that you want to connect to and a 'call back function' that provides the sound data:</p>
+<p>This can be used to feed e.g. your Bluetooth Speaker with your audio data: PCM data with 44.1kHz sampling rate, two channels and 16 bits per sample.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;BluetoothA2DPSource.h&quot;</span></div>
 <div class="line"> </div>
 <div class="line"><a class="code hl_class" href="class_bluetooth_a2_d_p_source.html">BluetoothA2DPSource</a> a2dp_source;</div>
 <div class="line"> </div>
-<div class="line"><span class="comment">// callback </span></div>
-<div class="line">int32_t get_sound_data(uint8 *data, int32_t byteCount) {</div>
-<div class="line">    <span class="comment">// generate your sound data </span></div>
+<div class="line">int32_t get_sound_data(uint8_t *data, int32_t byteCount) {</div>
+<div class="line">    <span class="comment">// generate your sound data</span></div>
 <div class="line">    <span class="comment">// return the effective length in bytes</span></div>
 <div class="line">    <span class="keywordflow">return</span> byteCount;</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> setup() {</div>
-<div class="line">  a2dp_source.<a class="code hl_function" href="class_bluetooth_a2_d_p_source.html#a9eb67e480675059a96014f2c1b84b0c3">set_data_callback</a>(get_sound_data)</div>
-<div class="line">  a2dp_source.<a class="code hl_function" href="class_bluetooth_a2_d_p_source.html#a98c1eb3ad55af189fd3f1ddeac8f3636">start</a>(<span class="stringliteral">&quot;MyMusic&quot;</span>);  </div>
+<div class="line">  a2dp_source.<a class="code hl_function" href="class_bluetooth_a2_d_p_source.html#a9eb67e480675059a96014f2c1b84b0c3">set_data_callback</a>(get_sound_data);</div>
+<div class="line">  a2dp_source.<a class="code hl_function" href="class_bluetooth_a2_d_p_source.html#a98c1eb3ad55af189fd3f1ddeac8f3636">start</a>(<span class="stringliteral">&quot;MyMusic&quot;</span>);</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> loop() {}</div>
-<div class="ttc" id="aclass_bluetooth_a2_d_p_source_html"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html">BluetoothA2DPSource</a></div><div class="ttdoc">BluetoothA2DPSource implements a flexible, extensible A2DP Bluetooth audio source for ESP32.</div><div class="ttdef"><b>Definition</b> BluetoothA2DPSource.h:99</div></div>
-<div class="ttc" id="aclass_bluetooth_a2_d_p_source_html_a98c1eb3ad55af189fd3f1ddeac8f3636"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html#a98c1eb3ad55af189fd3f1ddeac8f3636">BluetoothA2DPSource::start</a></div><div class="ttdeci">virtual void start()</div><div class="ttdef"><b>Definition</b> BluetoothA2DPSource.h:158</div></div>
-<div class="ttc" id="aclass_bluetooth_a2_d_p_source_html_a9eb67e480675059a96014f2c1b84b0c3"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html#a9eb67e480675059a96014f2c1b84b0c3">BluetoothA2DPSource::set_data_callback</a></div><div class="ttdeci">virtual void set_data_callback(int32_t(cb)(uint8_t *data, int32_t len))</div><div class="ttdoc">Defines the data callback.</div><div class="ttdef"><b>Definition</b> BluetoothA2DPSource.h:136</div></div>
-</div><!-- fragment --><p> Instead of the <code>set_data_callback callback</code> method you can also use <code>set_data_callback_in_frames</code> which uses frames instead of bytes. In Arduino you can also provide a Stream (e.g a File) as data source or a callback which provides streams.</p>
-<p>In the examples you can find an implementation that generates sound with the help of the sin() function.</p>
-<p>You can also indicate multiple alternative Bluetooth names. The system just connects to the first one which is available:</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> setup() {</div>
-<div class="line">  <span class="keyword">static</span> std::vector&lt;char*&gt; bt_names = {<span class="stringliteral">&quot;MyMusic&quot;</span>,<span class="stringliteral">&quot;RadioPlayer&quot;</span>,<span class="stringliteral">&quot;MusicPlayer&quot;</span>};</div>
-<div class="line">  a2dp_source.<a class="code hl_function" href="class_bluetooth_a2_d_p_source.html#a9eb67e480675059a96014f2c1b84b0c3">set_data_callback</a>(get_sound_data)</div>
-<div class="line">  a2dp_source.<a class="code hl_function" href="class_bluetooth_a2_d_p_source.html#a98c1eb3ad55af189fd3f1ddeac8f3636">start</a>(bt_names); </div>
-<div class="line">} </div>
-</div><!-- fragment --><p>Further information can be found in the <a href="https://pschatzmann.github.io/ESP32-A2DP/html/class_bluetooth_a2_d_p_source.html">related class documentation</a>!</p>
-<h1><a class="anchor" id="autotoc_md14"></a>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_source_html"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html">BluetoothA2DPSource</a></div><div class="ttdoc">BluetoothA2DPSource implements a flexible, extensible A2DP Bluetooth audio source for ESP32.</div><div class="ttdef"><b>Definition</b> BluetoothA2DPSource.h:104</div></div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_source_html_a98c1eb3ad55af189fd3f1ddeac8f3636"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html#a98c1eb3ad55af189fd3f1ddeac8f3636">BluetoothA2DPSource::start</a></div><div class="ttdeci">virtual void start()</div><div class="ttdef"><b>Definition</b> BluetoothA2DPSource.h:166</div></div>
+<div class="ttc" id="aclass_bluetooth_a2_d_p_source_html_a9eb67e480675059a96014f2c1b84b0c3"><div class="ttname"><a href="class_bluetooth_a2_d_p_source.html#a9eb67e480675059a96014f2c1b84b0c3">BluetoothA2DPSource::set_data_callback</a></div><div class="ttdeci">virtual void set_data_callback(int32_t(cb)(uint8_t *data, int32_t len))</div><div class="ttdoc">Defines the data callback.</div><div class="ttdef"><b>Definition</b> BluetoothA2DPSource.h:144</div></div>
+</div><!-- fragment --><p>Frame callbacks, Arduino Streams as data source and the selection of the target device are described in the <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki/A2DP-Source">A2DP Source documentation</a>.</p>
+<h1><a class="anchor" id="autotoc_md5"></a>
 Logging</h1>
 <p>This library uses the ESP32 logger that you can activate in Arduino in - Tools - Core Debug Log.</p>
-<h1><a class="anchor" id="autotoc_md15"></a>
+<h1><a class="anchor" id="autotoc_md6"></a>
 Architecture / Dependencies</h1>
 <p>The current code is purely dependent on the ESP-IDF (which is also provided by the Arduino ESP32 core). There are no other dependencies and this includes the Arduino API!</p>
 <p>Therefore we support:</p>
@@ -280,16 +144,16 @@ Architecture / Dependencies</h1>
 </ul>
 <p>This restriction limits however the provided examples.</p>
 <p>Before you clone the project, please read the following information which can be found in the <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki/Design-Overview">Wiki</a>.</p>
-<h1><a class="anchor" id="autotoc_md16"></a>
+<h1><a class="anchor" id="autotoc_md7"></a>
 Digital Sound Processing</h1>
 <p>You can use this library standalone, but it is part of my <a href="https://github.com/pschatzmann/arduino-audio-tools">audio-tools</a> project. So you can easily enhance this functionality with sound effects, use filters or an equilizer, use alternative audio sinks or audio sources, do FFT etc. Here is a <a href="https://github.com/pschatzmann/arduino-audio-tools/blob/main/examples/examples-communication/a2dp/basic-a2dp-fft/basic-a2dp-fft.ino">simple example</a> how you can analyse the audio data with FFT.</p>
-<h1><a class="anchor" id="autotoc_md17"></a>
+<h1><a class="anchor" id="autotoc_md8"></a>
 Documentation</h1>
 <ul>
 <li>The <a href="https://pschatzmann.github.io/ESP32-A2DP/html/group__a2dp.html">class documentation can be found here</a></li>
 <li>You can also find further information in the <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki">Wiki</a></li>
 </ul>
-<h1><a class="anchor" id="autotoc_md18"></a>
+<h1><a class="anchor" id="autotoc_md9"></a>
 Support</h1>
 <p>I spent a lot of time to provide a comprehensive and complete documentation. So please read the documentation first and check the issues and discussions before posting any new ones on Github.</p>
 <p>Open <b>issues only for bugs</b> and if it is not a bug, use a discussion: Provide enough information about</p><ul>
@@ -304,20 +168,20 @@ Support</h1>
 </ul>
 <p>to enable others to understand and reproduce your issue.</p>
 <p>Finally above all <b>don't</b> send me any e-mails or post questions on my personal website!</p>
-<h1><a class="anchor" id="autotoc_md19"></a>
+<h1><a class="anchor" id="autotoc_md10"></a>
 Show and Tell</h1>
 <p>Get some inspiration <a href="https://github.com/pschatzmann/ESP32-A2DP/discussions/categories/show-and-tell">from projects that were using this library</a> and share your projects with the community.</p>
-<h1><a class="anchor" id="autotoc_md20"></a>
+<h1><a class="anchor" id="autotoc_md11"></a>
 Installation</h1>
 <p>For Arduino you can download the library as zip and call include Library -&gt; zip library. Or you can git clone this project into the Arduino libraries folder e.g. with </p><div class="fragment"><div class="line">cd  ~/Documents/Arduino/libraries</div>
 <div class="line">git clone https://github.com/pschatzmann/ESP32-A2DP.git</div>
 <div class="line">git clone https://github.com/pschatzmann/arduino-audio-tools.git</div>
 </div><!-- fragment --><p> For the provided examples, you will need to install the <a href="https://github.com/pschatzmann/arduino-audio-tools">audio-tools library</a> as well.</p>
 <p>For other frameworks <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki">see the Wiki</a></p>
-<h1><a class="anchor" id="autotoc_md21"></a>
+<h1><a class="anchor" id="autotoc_md12"></a>
 Change History</h1>
 <p>The <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki/Change-History">Change History can be found in the Wiki</a></p>
-<h1><a class="anchor" id="autotoc_md22"></a>
+<h1><a class="anchor" id="autotoc_md13"></a>
 Sponsor Me</h1>
 <p>This software is totally free, but you can make me happy by rewarding me with a treat</p>
 <ul>

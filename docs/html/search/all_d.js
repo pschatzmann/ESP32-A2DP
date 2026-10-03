@@ -1,11 +1,11 @@
 var searchData=
 [
-  ['param_0',['param',['../structbt__app__msg__t.html#aae06d9a8a215b9ae4b5a3827f5e5e7a7',1,'bt_app_msg_t']]],
-  ['pause_1',['pause',['../class_bluetooth_a2_d_p_sink.html#aa6967e9329939596c62f16e8686cac13',1,'BluetoothA2DPSink']]],
-  ['pin_5fcode_2',['pin_code',['../class_bluetooth_a2_d_p_sink.html#a3719138f63afaeed06b63cc48ea79335',1,'BluetoothA2DPSink']]],
-  ['pins_3',['pins',['../index.html#autotoc_md4',1,'A Simple I2S Example (A2DS Sink) using default Pins'],['../index.html#autotoc_md5',1,'Defining Pins']]],
-  ['play_4',['play',['../class_bluetooth_a2_d_p_sink.html#aafd2afad1960db8ab73d7c6977aeb686',1,'BluetoothA2DPSink']]],
-  ['previous_5',['previous',['../class_bluetooth_a2_d_p_sink.html#a341024c18eabdb06c734c2242d5ba505',1,'BluetoothA2DPSink']]],
-  ['processing_6',['Digital Sound Processing',['../index.html#autotoc_md16',1,'']]],
-  ['protocols_7',['Supported Bluetooth Protocols',['../index.html#autotoc_md1',1,'']]]
+  ['receiver_0',['A2DP Sink (Music Receiver)',['../index.html#autotoc_md3',1,'']]],
+  ['reconnect_1',['reconnect',['../class_bluetooth_a2_d_p_common.html#ac795a023f85438355a1b00644f2b040f',1,'BluetoothA2DPCommon']]],
+  ['reconnectstatus_2',['ReconnectStatus',['../group__a2dp.html#ga28a6ac1cbaf47c9d341da5391e2e72b3',1,'BluetoothA2DPCommon.h']]],
+  ['register_5fmanaged_5fdecoder_5fseps_3',['register_managed_decoder_seps',['../class_bluetooth_a2_d_p_sink.html#a7b61023aa816c3bb1bfc5cbace94e07b',1,'BluetoothA2DPSink']]],
+  ['register_5fmanaged_5fencoder_5fseps_4',['register_managed_encoder_seps',['../class_bluetooth_a2_d_p_source.html#aa3082bb42be4ed072eb66ac80982d639',1,'BluetoothA2DPSource']]],
+  ['reset_5',['reset',['../class_a2_d_p_audio_encoder.html#ac485d0a8cd46c2d8e65ce525d5f41fde',1,'A2DPAudioEncoder']]],
+  ['reset_5flast_5fconnection_6',['reset_last_connection',['../class_bluetooth_a2_d_p_source.html#a190c59464f53e2d4c3f121afbb7a3c21',1,'BluetoothA2DPSource']]],
+  ['rewind_7',['rewind',['../class_bluetooth_a2_d_p_sink.html#a9ee01e6d11ee3c6c546a510029a23a12',1,'BluetoothA2DPSink']]]
 ];

@@ -98,7 +98,6 @@ $(function() {
 <code>#include &quot;freertos/queue.h&quot;</code><br />
 <code>#include &quot;freertos/task.h&quot;</code><br />
 <code>#include &quot;freertos/timers.h&quot;</code><br />
-<code>#include &quot;xtensa_api.h&quot;</code><br />
 <code>#include &quot;A2DPVolumeControl.h&quot;</code><br />
 <code>#include &quot;esp_a2dp_api.h&quot;</code><br />
 <code>#include &quot;esp_avrc_api.h&quot;</code><br />
@@ -112,6 +111,7 @@ $(function() {
 <code>#include &quot;nvs.h&quot;</code><br />
 <code>#include &quot;nvs_flash.h&quot;</code><br />
 <code>#include &quot;map&quot;</code><br />
+<code>#include &quot;xtensa_api.h&quot;</code><br />
 <code>#include &quot;esp_log.h&quot;</code><br />
 </div>
 <p><a href="_bluetooth_a2_d_p_common_8h_source.html">Go to the source code of this file.</a></p>
@@ -157,9 +157,6 @@ Macros</h2></td></tr>
 <tr class="memitem:aa87c1f9c93e7fd1b5cfaec76ff011afb" id="r_aa87c1f9c93e7fd1b5cfaec76ff011afb"><td class="memItemLeft" align="right" valign="top"><a id="aa87c1f9c93e7fd1b5cfaec76ff011afb" name="aa87c1f9c93e7fd1b5cfaec76ff011afb"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>BT_RC_CT_TAG</b>&#160;&#160;&#160;&quot;RCCT&quot;</td></tr>
 <tr class="separator:aa87c1f9c93e7fd1b5cfaec76ff011afb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad481f334d9e822be5ddc765a083d51c3" id="r_ad481f334d9e822be5ddc765a083d51c3"><td class="memItemLeft" align="right" valign="top"><a id="ad481f334d9e822be5ddc765a083d51c3" name="ad481f334d9e822be5ddc765a083d51c3"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>IS_VALID_PLATFORM</b>&#160;&#160;&#160;true</td></tr>
-<tr class="separator:ad481f334d9e822be5ddc765a083d51c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>

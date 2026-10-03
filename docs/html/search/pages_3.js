@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['for_20the_20esp32_0',['A Simple Arduino Bluetooth Music Receiver and Sender for the ESP32',['../index.html',1,'']]]
+  ['library_0',['A Simple ESP32 Bluetooth A2DP Audio Library',['../index.html',1,'']]]
 ];

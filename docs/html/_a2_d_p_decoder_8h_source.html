@@ -108,111 +108,111 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="keywordtype">void</span> a2dp_decoder_audio_info_changed(audio_tools::AudioInfo info);</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
-<div class="foldopen" id="foldopen00044" data-start="{" data-end="};">
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="class_a2_d_p_decoder.html">   44</a></span><span class="keyword">class </span><a class="code hl_class" href="class_a2_d_p_decoder.html">A2DPDecoder</a> {</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>  <a class="code hl_class" href="class_a2_d_p_decoder.html">A2DPDecoder</a>(audio_tools::AudioDecoder&amp; decoder) : p_decoder(&amp;decoder) {</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="comment">// decoded PCM bytes are forwarded into the sink&#39;s normal output</span></div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="comment">// pipeline (BluetoothA2DPSink::audio_data_callback(), via the</span></div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="comment">// ccall_audio_data_callback() trampoline) - so volume control, channel</span></div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="comment">// swap, stream_reader callbacks and write_audio() all keep working</span></div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="comment">// unchanged, regardless of which codec produced the PCM</span></div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    pcm_stream.setWriteCallback(write_pcm);</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    <span class="comment">// reacts immediately whenever the wrapped decoder reports a sample</span></div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    <span class="comment">// rate/channel change, instead of the sink having to poll for it</span></div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    pcm_stream.setAudioInfoCallback(a2dp_decoder_audio_info_changed);</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>  }</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>  <span class="keyword">virtual</span> <a class="code hl_class" href="class_a2_d_p_decoder.html">~A2DPDecoder</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="class_a2_d_p_decoder.html#a5c25bb64aaff198e6cd3bafba5afd337">   60</a></span>  <span class="keyword">virtual</span> esp_a2d_mct_t <a class="code hl_function" href="class_a2_d_p_decoder.html#a5c25bb64aaff198e6cd3bafba5afd337">codec_type</a>() = 0;</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="class_a2_d_p_decoder.html#ae1ddb7fe49eead36d05cbf84909358b9">   63</a></span>  <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code hl_function" href="class_a2_d_p_decoder.html#ae1ddb7fe49eead36d05cbf84909358b9">mime</a>() = 0;</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="class_a2_d_p_decoder.html#a26d8118b0f4eadc0bb8da9759ba6ca1b">   66</a></span>  <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_a2_d_p_decoder.html#a26d8118b0f4eadc0bb8da9759ba6ca1b">build_capability</a>(esp_a2d_mcc_t&amp; mcc) = 0;</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
-<div class="foldopen" id="foldopen00076" data-start="{" data-end="}">
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno"><a class="line" href="class_a2_d_p_decoder.html#a0fcf5d170e2bc4e2944b0ebf970a2a80">   76</a></span>  <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="class_a2_d_p_decoder.html#a0fcf5d170e2bc4e2944b0ebf970a2a80">begin</a>(<span class="keyword">const</span> esp_a2d_mcc_t&amp; mcc) {</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    parse_audio_info(mcc);</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    pcm_stream.setAudioInfo(</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        audio_tools::AudioInfo(sample_rate, channels, bits_per_sample));</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    p_decoder-&gt;setOutput(pcm_stream);</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    p_decoder-&gt;addNotifyAudioChange(pcm_stream);</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    <span class="keywordflow">return</span> p_decoder-&gt;begin();</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>  }</div>
+<div class="foldopen" id="foldopen00045" data-start="{" data-end="};">
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="class_a2_d_p_decoder.html">   45</a></span><span class="keyword">class </span><a class="code hl_class" href="class_a2_d_p_decoder.html">A2DPDecoder</a> {</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  <a class="code hl_class" href="class_a2_d_p_decoder.html">A2DPDecoder</a>(audio_tools::AudioDecoder&amp; decoder) : p_decoder(&amp;decoder) {</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="comment">// decoded PCM bytes are forwarded into the sink&#39;s normal output</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="comment">// pipeline (BluetoothA2DPSink::audio_data_callback(), via the</span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="comment">// ccall_audio_data_callback() trampoline) - so volume control, channel</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="comment">// swap, stream_reader callbacks and write_audio() all keep working</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="comment">// unchanged, regardless of which codec produced the PCM</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    pcm_stream.setWriteCallback(write_pcm);</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    <span class="comment">// reacts immediately whenever the wrapped decoder reports a sample</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <span class="comment">// rate/channel change, instead of the sink having to poll for it</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    pcm_stream.setAudioInfoCallback(a2dp_decoder_audio_info_changed);</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>  }</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>  <span class="keyword">virtual</span> <a class="code hl_class" href="class_a2_d_p_decoder.html">~A2DPDecoder</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="class_a2_d_p_decoder.html#a5c25bb64aaff198e6cd3bafba5afd337">   61</a></span>  <span class="keyword">virtual</span> esp_a2d_mct_t <a class="code hl_function" href="class_a2_d_p_decoder.html#a5c25bb64aaff198e6cd3bafba5afd337">codec_type</a>() = 0;</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="class_a2_d_p_decoder.html#ae1ddb7fe49eead36d05cbf84909358b9">   64</a></span>  <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code hl_function" href="class_a2_d_p_decoder.html#ae1ddb7fe49eead36d05cbf84909358b9">mime</a>() = 0;</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="class_a2_d_p_decoder.html#a26d8118b0f4eadc0bb8da9759ba6ca1b">   67</a></span>  <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_a2_d_p_decoder.html#a26d8118b0f4eadc0bb8da9759ba6ca1b">build_capability</a>(esp_a2d_mcc_t&amp; mcc) = 0;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="foldopen" id="foldopen00077" data-start="{" data-end="}">
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="class_a2_d_p_decoder.html#a0fcf5d170e2bc4e2944b0ebf970a2a80">   77</a></span>  <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="class_a2_d_p_decoder.html#a0fcf5d170e2bc4e2944b0ebf970a2a80">begin</a>(<span class="keyword">const</span> esp_a2d_mcc_t&amp; mcc) {</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    parse_audio_info(mcc);</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    pcm_stream.setAudioInfo(</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        audio_tools::AudioInfo(sample_rate, channels, bits_per_sample));</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    p_decoder-&gt;setOutput(pcm_stream);</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    p_decoder-&gt;addNotifyAudioChange(pcm_stream);</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    <span class="keywordflow">return</span> p_decoder-&gt;begin();</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>  }</div>
 </div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
-<div class="foldopen" id="foldopen00087" data-start="{" data-end="}">
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno"><a class="line" href="class_a2_d_p_decoder.html#a0fef5ecf8b0ce4372d6e9a9f260f56f6">   87</a></span>  <span class="keyword">virtual</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="class_a2_d_p_decoder.html#a0fef5ecf8b0ce4372d6e9a9f260f56f6">write</a>(<span class="keyword">const</span> uint8_t* data, <span class="keywordtype">size_t</span> len) {</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    <span class="keywordflow">return</span> p_decoder-&gt;write(data, len);</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>  }</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
+<div class="foldopen" id="foldopen00088" data-start="{" data-end="}">
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno"><a class="line" href="class_a2_d_p_decoder.html#a0fef5ecf8b0ce4372d6e9a9f260f56f6">   88</a></span>  <span class="keyword">virtual</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="class_a2_d_p_decoder.html#a0fef5ecf8b0ce4372d6e9a9f260f56f6">write</a>(<span class="keyword">const</span> uint8_t* data, <span class="keywordtype">size_t</span> len) {</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    <span class="keywordflow">return</span> p_decoder-&gt;write(data, len);</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>  }</div>
 </div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno"><a class="line" href="class_a2_d_p_decoder.html#a86e6de55afce9670afd7ccfc899f5d0e">   92</a></span>  <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_a2_d_p_decoder.html#a86e6de55afce9670afd7ccfc899f5d0e">end</a>() { p_decoder-&gt;end(); }</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno"><a class="line" href="class_a2_d_p_decoder.html#ab7a435a933311261084a7bf67cf94c91">   97</a></span>  audio_tools::AudioInfo <a class="code hl_function" href="class_a2_d_p_decoder.html#ab7a435a933311261084a7bf67cf94c91">get_audio_info</a>() { <span class="keywordflow">return</span> pcm_stream.audioInfo(); }</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> <span class="keyword">protected</span>:</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>  audio_tools::AudioDecoder* p_decoder;</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>  <span class="comment">// doubles as the PCM output target (setOutput) and the audio-info-change</span></div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>  <span class="comment">// notification target (addNotifyAudioChange): its write callback forwards</span></div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>  <span class="comment">// decoded PCM out, and audioInfo() reports back whatever the wrapped</span></div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>  <span class="comment">// decoder last reported via setAudioInfo()/notifyAudioChange()</span></div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>  audio_tools::CallbackStream pcm_stream;</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>  <span class="keywordtype">int</span> sample_rate = 44100;</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>  <span class="keywordtype">int</span> channels = 2;</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>  <span class="keywordtype">int</span> bits_per_sample = 16;</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>  <span class="keyword">virtual</span> <span class="keywordtype">void</span> parse_audio_info(<span class="keyword">const</span> esp_a2d_mcc_t&amp; mcc) = 0;</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>  <span class="keyword">static</span> <span class="keywordtype">size_t</span> write_pcm(<span class="keyword">const</span> uint8_t* data, <span class="keywordtype">size_t</span> len);</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>};</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno"><a class="line" href="class_a2_d_p_decoder.html#a86e6de55afce9670afd7ccfc899f5d0e">   93</a></span>  <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_a2_d_p_decoder.html#a86e6de55afce9670afd7ccfc899f5d0e">end</a>() { p_decoder-&gt;end(); }</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno"><a class="line" href="class_a2_d_p_decoder.html#ab7a435a933311261084a7bf67cf94c91">   98</a></span>  audio_tools::AudioInfo <a class="code hl_function" href="class_a2_d_p_decoder.html#ab7a435a933311261084a7bf67cf94c91">get_audio_info</a>() { <span class="keywordflow">return</span> pcm_stream.audioInfo(); }</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> <span class="keyword">protected</span>:</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>  audio_tools::AudioDecoder* p_decoder;</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>  <span class="comment">// doubles as the PCM output target (setOutput) and the audio-info-change</span></div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>  <span class="comment">// notification target (addNotifyAudioChange): its write callback forwards</span></div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>  <span class="comment">// decoded PCM out, and audioInfo() reports back whatever the wrapped</span></div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>  <span class="comment">// decoder last reported via setAudioInfo()/notifyAudioChange()</span></div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>  audio_tools::CallbackStream pcm_stream;</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>  <span class="keywordtype">int</span> sample_rate = 44100;</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>  <span class="keywordtype">int</span> channels = 2;</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>  <span class="keywordtype">int</span> bits_per_sample = 16;</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>  <span class="keyword">virtual</span> <span class="keywordtype">void</span> parse_audio_info(<span class="keyword">const</span> esp_a2d_mcc_t&amp; mcc) = 0;</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>  <span class="keyword">static</span> <span class="keywordtype">size_t</span> write_pcm(<span class="keyword">const</span> uint8_t* data, <span class="keywordtype">size_t</span> len);</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>};</div>
 </div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> </div>
-<div class="foldopen" id="foldopen00125" data-start="{" data-end="};">
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno"><a class="line" href="class_a2_d_p_audio_decoder.html">  125</a></span><span class="keyword">class </span><a class="code hl_class" href="class_a2_d_p_audio_decoder.html">A2DPAudioDecoder</a> {</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="class_a2_d_p_audio_decoder.html#a79dd7fee86cf0c572693f59e55a70226">add_decoder</a>(<a class="code hl_class" href="class_a2_d_p_decoder.html">A2DPDecoder</a>&amp; decoder);</div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span> </div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno"><a class="line" href="class_a2_d_p_audio_decoder.html#a5decc203915962e21a705eb57410536c">  132</a></span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="class_a2_d_p_audio_decoder.html#a5decc203915962e21a705eb57410536c">has_decoders</a>() { <span class="keywordflow">return</span> !decoders.empty(); }</div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> </div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno"><a class="line" href="class_a2_d_p_audio_decoder.html#a8c45386d9cbc089d2932a3fb85306a1a">  136</a></span>  std::vector&lt;A2DPDecoder*&gt;&amp; <a class="code hl_function" href="class_a2_d_p_audio_decoder.html#a8c45386d9cbc089d2932a3fb85306a1a">all_decoders</a>() { <span class="keywordflow">return</span> decoders; }</div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span> </div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="class_a2_d_p_audio_decoder.html#a193bae2d4cc25087b05450c193520e69">apply_mcc</a>(<span class="keyword">const</span> esp_a2d_mcc_t* mcc);</div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span> </div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="class_a2_d_p_audio_decoder.html#a920d535965402db7f3d45bf213b3ac2d">process</a>(<span class="keyword">const</span> uint8_t* data, <span class="keywordtype">size_t</span> len);</div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span> </div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="class_a2_d_p_audio_decoder.html#a225d27f6809fb6d55a4f1b68b1995108">close</a>();</div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span> </div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>  audio_tools::AudioInfo <a class="code hl_function" href="class_a2_d_p_audio_decoder.html#aedd742ffa5f7aa37b0447abfb008896a">get_audio_info</a>();</div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span> </div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno"><a class="line" href="class_a2_d_p_audio_decoder.html#a16974d9054fc1eff20c208e2f590c6ba">  154</a></span>  <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code hl_function" href="class_a2_d_p_audio_decoder.html#a16974d9054fc1eff20c208e2f590c6ba">mime</a>() { <span class="keywordflow">return</span> active != <span class="keyword">nullptr</span> ? active-&gt;<a class="code hl_function" href="class_a2_d_p_decoder.html#ae1ddb7fe49eead36d05cbf84909358b9">mime</a>() : <span class="stringliteral">&quot;&quot;</span>; }</div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span> </div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span> <span class="keyword">protected</span>:</div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>  std::vector&lt;A2DPDecoder*&gt; decoders;</div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>  <a class="code hl_class" href="class_a2_d_p_decoder.html">A2DPDecoder</a>* active = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span> </div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>  <a class="code hl_class" href="class_a2_d_p_decoder.html">A2DPDecoder</a>* find(esp_a2d_mct_t type);</div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>};</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
+<div class="foldopen" id="foldopen00126" data-start="{" data-end="};">
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno"><a class="line" href="class_a2_d_p_audio_decoder.html">  126</a></span><span class="keyword">class </span><a class="code hl_class" href="class_a2_d_p_audio_decoder.html">A2DPAudioDecoder</a> {</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="class_a2_d_p_audio_decoder.html#a79dd7fee86cf0c572693f59e55a70226">add_decoder</a>(<a class="code hl_class" href="class_a2_d_p_decoder.html">A2DPDecoder</a>&amp; decoder);</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> </div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno"><a class="line" href="class_a2_d_p_audio_decoder.html#a5decc203915962e21a705eb57410536c">  133</a></span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="class_a2_d_p_audio_decoder.html#a5decc203915962e21a705eb57410536c">has_decoders</a>() { <span class="keywordflow">return</span> !decoders.empty(); }</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span> </div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno"><a class="line" href="class_a2_d_p_audio_decoder.html#a8c45386d9cbc089d2932a3fb85306a1a">  137</a></span>  std::vector&lt;A2DPDecoder*&gt;&amp; <a class="code hl_function" href="class_a2_d_p_audio_decoder.html#a8c45386d9cbc089d2932a3fb85306a1a">all_decoders</a>() { <span class="keywordflow">return</span> decoders; }</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span> </div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="class_a2_d_p_audio_decoder.html#a193bae2d4cc25087b05450c193520e69">apply_mcc</a>(<span class="keyword">const</span> esp_a2d_mcc_t* mcc);</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span> </div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="class_a2_d_p_audio_decoder.html#a920d535965402db7f3d45bf213b3ac2d">process</a>(<span class="keyword">const</span> uint8_t* data, <span class="keywordtype">size_t</span> len);</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span> </div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="class_a2_d_p_audio_decoder.html#a225d27f6809fb6d55a4f1b68b1995108">close</a>();</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span> </div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>  audio_tools::AudioInfo <a class="code hl_function" href="class_a2_d_p_audio_decoder.html#aedd742ffa5f7aa37b0447abfb008896a">get_audio_info</a>();</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span> </div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno"><a class="line" href="class_a2_d_p_audio_decoder.html#a16974d9054fc1eff20c208e2f590c6ba">  155</a></span>  <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code hl_function" href="class_a2_d_p_audio_decoder.html#a16974d9054fc1eff20c208e2f590c6ba">mime</a>() { <span class="keywordflow">return</span> active != <span class="keyword">nullptr</span> ? active-&gt;<a class="code hl_function" href="class_a2_d_p_decoder.html#ae1ddb7fe49eead36d05cbf84909358b9">mime</a>() : <span class="stringliteral">&quot;&quot;</span>; }</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span> </div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span> <span class="keyword">protected</span>:</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>  std::vector&lt;A2DPDecoder*&gt; decoders;</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>  <a class="code hl_class" href="class_a2_d_p_decoder.html">A2DPDecoder</a>* active = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span> </div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>  <a class="code hl_class" href="class_a2_d_p_decoder.html">A2DPDecoder</a>* find(esp_a2d_mct_t type);</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>};</div>
 </div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span> </div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span><span class="preprocessor">#endif  </span><span class="comment">// A2DP_MANAGED_DECODER_SUPPORTED</span></div>
-<div class="ttc" id="aclass_a2_d_p_audio_decoder_html"><div class="ttname"><a href="class_a2_d_p_audio_decoder.html">A2DPAudioDecoder</a></div><div class="ttdoc">Manages the set of A2DPDecoder instances registered via BluetoothA2DPSink::add_decoder() and delegate...</div><div class="ttdef"><b>Definition</b> A2DPDecoder.h:125</div></div>
-<div class="ttc" id="aclass_a2_d_p_audio_decoder_html_a16974d9054fc1eff20c208e2f590c6ba"><div class="ttname"><a href="class_a2_d_p_audio_decoder.html#a16974d9054fc1eff20c208e2f590c6ba">A2DPAudioDecoder::mime</a></div><div class="ttdeci">const char * mime()</div><div class="ttdoc">MIME type of the currently active decoder (&quot;&quot; if none is active)</div><div class="ttdef"><b>Definition</b> A2DPDecoder.h:154</div></div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span> </div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span><span class="preprocessor">#endif  </span><span class="comment">// A2DP_MANAGED_DECODER_SUPPORTED</span></div>
+<div class="ttc" id="aclass_a2_d_p_audio_decoder_html"><div class="ttname"><a href="class_a2_d_p_audio_decoder.html">A2DPAudioDecoder</a></div><div class="ttdoc">Manages the set of A2DPDecoder instances registered via BluetoothA2DPSink::add_decoder() and delegate...</div><div class="ttdef"><b>Definition</b> A2DPDecoder.h:126</div></div>
+<div class="ttc" id="aclass_a2_d_p_audio_decoder_html_a16974d9054fc1eff20c208e2f590c6ba"><div class="ttname"><a href="class_a2_d_p_audio_decoder.html#a16974d9054fc1eff20c208e2f590c6ba">A2DPAudioDecoder::mime</a></div><div class="ttdeci">const char * mime()</div><div class="ttdoc">MIME type of the currently active decoder (&quot;&quot; if none is active)</div><div class="ttdef"><b>Definition</b> A2DPDecoder.h:155</div></div>
 <div class="ttc" id="aclass_a2_d_p_audio_decoder_html_a193bae2d4cc25087b05450c193520e69"><div class="ttname"><a href="class_a2_d_p_audio_decoder.html#a193bae2d4cc25087b05450c193520e69">A2DPAudioDecoder::apply_mcc</a></div><div class="ttdeci">bool apply_mcc(const esp_a2d_mcc_t *mcc)</div><div class="ttdef"><b>Definition</b> A2DPDecoder.cpp:46</div></div>
 <div class="ttc" id="aclass_a2_d_p_audio_decoder_html_a225d27f6809fb6d55a4f1b68b1995108"><div class="ttname"><a href="class_a2_d_p_audio_decoder.html#a225d27f6809fb6d55a4f1b68b1995108">A2DPAudioDecoder::close</a></div><div class="ttdeci">void close()</div><div class="ttdoc">Closes the currently active decoder (if any)</div><div class="ttdef"><b>Definition</b> A2DPDecoder.cpp:70</div></div>
-<div class="ttc" id="aclass_a2_d_p_audio_decoder_html_a5decc203915962e21a705eb57410536c"><div class="ttname"><a href="class_a2_d_p_audio_decoder.html#a5decc203915962e21a705eb57410536c">A2DPAudioDecoder::has_decoders</a></div><div class="ttdeci">bool has_decoders()</div><div class="ttdoc">True if at least one decoder has been registered.</div><div class="ttdef"><b>Definition</b> A2DPDecoder.h:132</div></div>
+<div class="ttc" id="aclass_a2_d_p_audio_decoder_html_a5decc203915962e21a705eb57410536c"><div class="ttname"><a href="class_a2_d_p_audio_decoder.html#a5decc203915962e21a705eb57410536c">A2DPAudioDecoder::has_decoders</a></div><div class="ttdeci">bool has_decoders()</div><div class="ttdoc">True if at least one decoder has been registered.</div><div class="ttdef"><b>Definition</b> A2DPDecoder.h:133</div></div>
 <div class="ttc" id="aclass_a2_d_p_audio_decoder_html_a79dd7fee86cf0c572693f59e55a70226"><div class="ttname"><a href="class_a2_d_p_audio_decoder.html#a79dd7fee86cf0c572693f59e55a70226">A2DPAudioDecoder::add_decoder</a></div><div class="ttdeci">bool add_decoder(A2DPDecoder &amp;decoder)</div><div class="ttdef"><b>Definition</b> A2DPDecoder.cpp:27</div></div>
-<div class="ttc" id="aclass_a2_d_p_audio_decoder_html_a8c45386d9cbc089d2932a3fb85306a1a"><div class="ttname"><a href="class_a2_d_p_audio_decoder.html#a8c45386d9cbc089d2932a3fb85306a1a">A2DPAudioDecoder::all_decoders</a></div><div class="ttdeci">std::vector&lt; A2DPDecoder * &gt; &amp; all_decoders()</div><div class="ttdef"><b>Definition</b> A2DPDecoder.h:136</div></div>
+<div class="ttc" id="aclass_a2_d_p_audio_decoder_html_a8c45386d9cbc089d2932a3fb85306a1a"><div class="ttname"><a href="class_a2_d_p_audio_decoder.html#a8c45386d9cbc089d2932a3fb85306a1a">A2DPAudioDecoder::all_decoders</a></div><div class="ttdeci">std::vector&lt; A2DPDecoder * &gt; &amp; all_decoders()</div><div class="ttdef"><b>Definition</b> A2DPDecoder.h:137</div></div>
 <div class="ttc" id="aclass_a2_d_p_audio_decoder_html_a920d535965402db7f3d45bf213b3ac2d"><div class="ttname"><a href="class_a2_d_p_audio_decoder.html#a920d535965402db7f3d45bf213b3ac2d">A2DPAudioDecoder::process</a></div><div class="ttdeci">void process(const uint8_t *data, size_t len)</div><div class="ttdef"><b>Definition</b> A2DPDecoder.cpp:66</div></div>
 <div class="ttc" id="aclass_a2_d_p_audio_decoder_html_aedd742ffa5f7aa37b0447abfb008896a"><div class="ttname"><a href="class_a2_d_p_audio_decoder.html#aedd742ffa5f7aa37b0447abfb008896a">A2DPAudioDecoder::get_audio_info</a></div><div class="ttdeci">audio_tools::AudioInfo get_audio_info()</div><div class="ttdef"><b>Definition</b> A2DPDecoder.cpp:77</div></div>
-<div class="ttc" id="aclass_a2_d_p_decoder_html"><div class="ttname"><a href="class_a2_d_p_decoder.html">A2DPDecoder</a></div><div class="ttdoc">Base class for a single A2DP codec's decode support: pairs an A2DP codec type and its SEP capability ...</div><div class="ttdef"><b>Definition</b> A2DPDecoder.h:44</div></div>
-<div class="ttc" id="aclass_a2_d_p_decoder_html_a0fcf5d170e2bc4e2944b0ebf970a2a80"><div class="ttname"><a href="class_a2_d_p_decoder.html#a0fcf5d170e2bc4e2944b0ebf970a2a80">A2DPDecoder::begin</a></div><div class="ttdeci">virtual bool begin(const esp_a2d_mcc_t &amp;mcc)</div><div class="ttdef"><b>Definition</b> A2DPDecoder.h:76</div></div>
-<div class="ttc" id="aclass_a2_d_p_decoder_html_a0fef5ecf8b0ce4372d6e9a9f260f56f6"><div class="ttname"><a href="class_a2_d_p_decoder.html#a0fef5ecf8b0ce4372d6e9a9f260f56f6">A2DPDecoder::write</a></div><div class="ttdeci">virtual size_t write(const uint8_t *data, size_t len)</div><div class="ttdef"><b>Definition</b> A2DPDecoder.h:87</div></div>
+<div class="ttc" id="aclass_a2_d_p_decoder_html"><div class="ttname"><a href="class_a2_d_p_decoder.html">A2DPDecoder</a></div><div class="ttdoc">Base class for a single A2DP codec's decode support: pairs an A2DP codec type and its SEP capability ...</div><div class="ttdef"><b>Definition</b> A2DPDecoder.h:45</div></div>
+<div class="ttc" id="aclass_a2_d_p_decoder_html_a0fcf5d170e2bc4e2944b0ebf970a2a80"><div class="ttname"><a href="class_a2_d_p_decoder.html#a0fcf5d170e2bc4e2944b0ebf970a2a80">A2DPDecoder::begin</a></div><div class="ttdeci">virtual bool begin(const esp_a2d_mcc_t &amp;mcc)</div><div class="ttdef"><b>Definition</b> A2DPDecoder.h:77</div></div>
+<div class="ttc" id="aclass_a2_d_p_decoder_html_a0fef5ecf8b0ce4372d6e9a9f260f56f6"><div class="ttname"><a href="class_a2_d_p_decoder.html#a0fef5ecf8b0ce4372d6e9a9f260f56f6">A2DPDecoder::write</a></div><div class="ttdeci">virtual size_t write(const uint8_t *data, size_t len)</div><div class="ttdef"><b>Definition</b> A2DPDecoder.h:88</div></div>
 <div class="ttc" id="aclass_a2_d_p_decoder_html_a26d8118b0f4eadc0bb8da9759ba6ca1b"><div class="ttname"><a href="class_a2_d_p_decoder.html#a26d8118b0f4eadc0bb8da9759ba6ca1b">A2DPDecoder::build_capability</a></div><div class="ttdeci">virtual void build_capability(esp_a2d_mcc_t &amp;mcc)=0</div><div class="ttdoc">Fills in the SEP capability advertised for this codec at registration.</div></div>
 <div class="ttc" id="aclass_a2_d_p_decoder_html_a5c25bb64aaff198e6cd3bafba5afd337"><div class="ttname"><a href="class_a2_d_p_decoder.html#a5c25bb64aaff198e6cd3bafba5afd337">A2DPDecoder::codec_type</a></div><div class="ttdeci">virtual esp_a2d_mct_t codec_type()=0</div><div class="ttdoc">A2DP codec type this decoder handles (e.g. ESP_A2D_MCT_SBC)</div></div>
-<div class="ttc" id="aclass_a2_d_p_decoder_html_a86e6de55afce9670afd7ccfc899f5d0e"><div class="ttname"><a href="class_a2_d_p_decoder.html#a86e6de55afce9670afd7ccfc899f5d0e">A2DPDecoder::end</a></div><div class="ttdeci">virtual void end()</div><div class="ttdoc">Closes the wrapped audio_tools decoder.</div><div class="ttdef"><b>Definition</b> A2DPDecoder.h:92</div></div>
-<div class="ttc" id="aclass_a2_d_p_decoder_html_ab7a435a933311261084a7bf67cf94c91"><div class="ttname"><a href="class_a2_d_p_decoder.html#ab7a435a933311261084a7bf67cf94c91">A2DPDecoder::get_audio_info</a></div><div class="ttdeci">audio_tools::AudioInfo get_audio_info()</div><div class="ttdef"><b>Definition</b> A2DPDecoder.h:97</div></div>
+<div class="ttc" id="aclass_a2_d_p_decoder_html_a86e6de55afce9670afd7ccfc899f5d0e"><div class="ttname"><a href="class_a2_d_p_decoder.html#a86e6de55afce9670afd7ccfc899f5d0e">A2DPDecoder::end</a></div><div class="ttdeci">virtual void end()</div><div class="ttdoc">Closes the wrapped audio_tools decoder.</div><div class="ttdef"><b>Definition</b> A2DPDecoder.h:93</div></div>
+<div class="ttc" id="aclass_a2_d_p_decoder_html_ab7a435a933311261084a7bf67cf94c91"><div class="ttname"><a href="class_a2_d_p_decoder.html#ab7a435a933311261084a7bf67cf94c91">A2DPDecoder::get_audio_info</a></div><div class="ttdeci">audio_tools::AudioInfo get_audio_info()</div><div class="ttdef"><b>Definition</b> A2DPDecoder.h:98</div></div>
 <div class="ttc" id="aclass_a2_d_p_decoder_html_ae1ddb7fe49eead36d05cbf84909358b9"><div class="ttname"><a href="class_a2_d_p_decoder.html#ae1ddb7fe49eead36d05cbf84909358b9">A2DPDecoder::mime</a></div><div class="ttdeci">virtual const char * mime()=0</div><div class="ttdoc">MIME type of the codec this decoder handles (e.g. &quot;audio/sbc&quot;)</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

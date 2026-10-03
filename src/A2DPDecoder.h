@@ -38,6 +38,7 @@ void a2dp_decoder_audio_info_changed(audio_tools::AudioInfo info);
  * register instances via BluetoothA2DPSink::add_decoder() - stream
  * endpoint registration is driven entirely by what gets registered here.
  * @ingroup codecs
+ * @ingroup a2dp
  * @author Phil Schatzmann
  * @copyright Apache License Version 2
  */

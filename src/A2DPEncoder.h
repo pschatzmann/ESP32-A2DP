@@ -52,6 +52,7 @@ class A2DPFrameSink {
  * advertised to the sink. If the sink negotiates mono, the PCM is downmixed
  * before it is encoded.
  * @ingroup codecs
+ * @ingroup a2dp
  * @author Phil Schatzmann
  * @copyright Apache License Version 2
  */

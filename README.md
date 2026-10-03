@@ -110,6 +110,8 @@ You can find many [examples in the AudioTools project](https://github.com/pschat
 
 - The [class documentation](https://pschatzmann.github.io/ESP32-A2DP/html/group__a2dp.html) can be found here
 - You can also find further information in the [Wiki](https://github.com/pschatzmann/ESP32-A2DP/wiki)
+- The [Change History can be found in the Wiki](https://github.com/pschatzmann/ESP32-A2DP/wiki/Change-History)
+
 
 ## Support
 
@@ -143,10 +145,6 @@ git clone https://github.com/pschatzmann/arduino-audio-tools.git
 For the provided examples, you will need to install the [audio-tools library](https://github.com/pschatzmann/arduino-audio-tools) as well. 
 
 For other frameworks [see the Wiki](https://github.com/pschatzmann/ESP32-A2DP/wiki)
-
-## Change History
-
-The [Change History can be found in the Wiki](https://github.com/pschatzmann/ESP32-A2DP/wiki/Change-History)
 
 
 ## Sponsor Me

@@ -37,6 +37,10 @@
  * (from the sample rate/channel count negotiated via SEP configuration)
  * and prepends it to every frame before handing it to the wrapped decoder.
  *
+ * By default only AAC-LC is advertised, because the synthesized ADTS header
+ * can only describe AAC-LC. Call set_he_aac(true) if the wrapped decoder
+ * detects HE-AAC (SBR/PS) implicitly from an AAC-LC labeled stream.
+ *
  * NOTE: registering a non-SBC stream endpoint is only supported by the
  * underlying Bluedroid stack on ESP-IDF >= 6.1 - earlier versions document
  * esp_a2d_sink_register_stream_endpoint() as SBC-only and are expected to
@@ -50,6 +54,10 @@
 class A2DPDecoderAAC : public A2DPDecoder {
  public:
   A2DPDecoderAAC(audio_tools::AudioDecoder& decoder) : A2DPDecoder(decoder) {}
+
+  /// Also advertise HE-AAC and HE-AAC v2 (default: false). Call before
+  /// BluetoothA2DPSink::start().
+  void set_he_aac(bool active) { is_he_aac = active; }
 
   esp_a2d_mct_t codec_type() override { return ESP_A2D_MCT_M24; }
 
@@ -77,9 +85,11 @@ class A2DPDecoderAAC : public A2DPDecoder {
     // this codec type) are only available starting with ESP-IDF >= 6.1
     mcc.cie.m24_info.drc = ESP_A2D_M24_CIE_DRC_NS;
     mcc.cie.m24_info.obj_type = ESP_A2D_M24_CIE_OBJ_TYPE_2_AAC_LC |
-                                 ESP_A2D_M24_CIE_OBJ_TYPE_4_AAC_LC |
-                                 ESP_A2D_M24_CIE_OBJ_TYPE_4_HE_AAC |
-                                 ESP_A2D_M24_CIE_OBJ_TYPE_4_HE_AAC_V2;
+                                 ESP_A2D_M24_CIE_OBJ_TYPE_4_AAC_LC;
+    if (is_he_aac) {
+      mcc.cie.m24_info.obj_type |= ESP_A2D_M24_CIE_OBJ_TYPE_4_HE_AAC |
+                                   ESP_A2D_M24_CIE_OBJ_TYPE_4_HE_AAC_V2;
+    }
     mcc.cie.m24_info.samp_freq1 = ESP_A2D_M24_CIE_SF1_8K | ESP_A2D_M24_CIE_SF1_11K |
                                    ESP_A2D_M24_CIE_SF1_12K | ESP_A2D_M24_CIE_SF1_16K |
                                    ESP_A2D_M24_CIE_SF1_22K | ESP_A2D_M24_CIE_SF1_24K |
@@ -104,6 +114,7 @@ class A2DPDecoderAAC : public A2DPDecoder {
   static const int kAdtsMaxFrameLen = 8191;  // 13-bit ADTS frame-length field
 
   uint8_t freq_idx = 4;  // index of 44100 in the table below
+  bool is_he_aac = false;
 
   /// determines sample_rate/channels/freq_idx from the negotiated AAC
   /// capability (a single bit is set per field once negotiation completes) -

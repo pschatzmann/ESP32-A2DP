@@ -32,6 +32,11 @@
  * Output that does not start with an ADTS sync word is treated as one raw
  * access unit per write.
  *
+ * The sink may negotiate a lower bitrate than the advertised one: register
+ * a callback with set_bitrate_callback() to apply the negotiated bitrate to
+ * your encoder (e.g. with setBitrate()); it is called before the encoder is
+ * started.
+ *
  * NOTE: registering a non-SBC stream endpoint is only supported by the
  * underlying Bluedroid stack on ESP-IDF >= 6.1 (with
  * CONFIG_BT_A2DP_CODEC_AAC_ENABLED=y).
@@ -52,6 +57,16 @@ class A2DPEncoderAAC : public A2DPEncoder {
   const char* mime() override { return "audio/aac"; }
 
   uint32_t samples_per_frame() override { return 1024; }
+
+  /// Defines a callback which is called with the negotiated bitrate (in
+  /// bps) before the wrapped encoder is started, so that you can apply it to
+  /// your encoder
+  void set_bitrate_callback(void (*callback)(uint32_t bitrate)) {
+    bitrate_callback = callback;
+  }
+
+  /// Bitrate (in bps) negotiated with the sink (0 if unknown)
+  uint32_t negotiated_bitrate() { return bitrate_negotiated; }
 
   bool begin(const esp_a2d_mcc_t& mcc) override {
     buffer.clear();
@@ -118,6 +133,8 @@ class A2DPEncoderAAC : public A2DPEncoder {
   enum Mode { Undefined, ADTS, Raw };
   static const size_t kAdtsMinHeaderSize = 7;
   uint32_t bitrate;
+  uint32_t bitrate_negotiated = 0;
+  void (*bitrate_callback)(uint32_t bitrate) = nullptr;
   Mode mode = Undefined;
   std::vector<uint8_t> buffer;
 
@@ -146,7 +163,25 @@ class A2DPEncoderAAC : public A2DPEncoder {
       sample_rate_cfg = 8000;
     }
     channels_cfg = (m24.ch & ESP_A2D_M24_CIE_CH_2) ? 2 : 1;
+    bitrate_negotiated =
+        ((uint32_t)(m24.br1 & ESP_A2D_M24_CIE_BR1_MSK) << 16) |
+        ((uint32_t)(m24.br2 & ESP_A2D_M24_CIE_BR2_MSK) << 8) |
+        (uint32_t)(m24.br3 & ESP_A2D_M24_CIE_BR3_MSK);
 #endif
+  }
+
+  /// provides the negotiated bitrate to the bitrate callback
+  void configure(const esp_a2d_mcc_t& mcc) override {
+    uint32_t effective = bitrate_negotiated > 0 ? bitrate_negotiated : bitrate;
+    if (bitrate_callback != nullptr) {
+      bitrate_callback(effective);
+    } else if (bitrate_negotiated > 0 && bitrate_negotiated < bitrate) {
+      ESP_LOGW("A2DPEncoderAAC",
+               "negotiated bitrate %u is lower than %u: use "
+               "set_bitrate_callback() to adjust the encoder",
+               (unsigned)bitrate_negotiated, (unsigned)bitrate);
+    }
+    ESP_LOGI("A2DPEncoderAAC", "bitrate: %u", (unsigned)effective);
   }
 
   static bool is_adts_sync(const uint8_t* data) {

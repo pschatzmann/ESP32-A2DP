@@ -351,8 +351,9 @@ class BluetoothA2DPSource : public BluetoothA2DPCommon {
   bool use_managed_encoder() { return audio_encoder.has_encoders(); }
   /// registers one stream endpoint per encoder added via add_encoder()
   virtual void register_managed_encoder_seps();
-  /// handles the a2dp events which are relevant for the encoder
-  virtual void process_managed_encoder_events(uint16_t event, void* param);
+  /// handles the a2dp events which are relevant for the encoder: returns
+  /// true if the event has been fully processed
+  virtual bool process_managed_encoder_events(uint16_t event, void* param);
   /// starts the encode task (if not already running)
   virtual void managed_encode_start();
   /// stops the encode task and closes the encoder

@@ -63,6 +63,13 @@ AACEncoderFDK aac_encoder;
 A2DPEncoderAAC a2dp_aac(aac_encoder, 192000);
 #endif
 
+#if USE_AAC
+// apply the bitrate negotiated with the sink to the encoder
+void set_aac_bitrate(uint32_t bitrate) {
+  aac_encoder.setBitrate(bitrate);
+}
+#endif
+
 int32_t get_data_frames(Frame *frame, int32_t frame_count) {
   static float m_angle = 0.0;
   float m_amplitude = 10000.0;  // -32,768 to 32,767
@@ -80,6 +87,7 @@ void setup() {
 
 #if USE_AAC
   aac_encoder.setBitrate(192000);
+  a2dp_aac.set_bitrate_callback(set_aac_bitrate);
   a2dp_source.add_encoder(a2dp_aac);
 #endif
   a2dp_source.add_encoder(a2dp_sbc);

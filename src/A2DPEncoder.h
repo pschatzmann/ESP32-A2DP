@@ -78,6 +78,10 @@ class A2DPEncoder {
   /// Max number of encoded frames that can be combined in one media packet
   virtual int max_frames_per_packet() { return 1; }
 
+  /// Bytes of the audio MTU that are needed by the media payload header
+  /// which is added by the stack (e.g. SBC: 1 byte, AAC: LATM header)
+  virtual uint16_t payload_header_size() { return 20; }
+
   /// Defines the sample rate of the PCM provided by the data callbacks
   /// (default 44100). Call before BluetoothA2DPSource::start().
   void set_sample_rate(int rate) { input_sample_rate = rate; }

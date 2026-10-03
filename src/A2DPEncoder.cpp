@@ -21,9 +21,6 @@
 
 // the SBC media payload header has a 4 bit frame counter
 static const int kMaxSbcFramesPerPacket = 15;
-// bytes reserved in the MTU for the media payload header that is added by
-// the stack (SBC: 1 byte; AAC: LATM AudioMuxElement header)
-static const uint16_t kPayloadHeaderReserve = 16;
 
 bool A2DPAudioEncoder::add_encoder(A2DPEncoder& encoder) {
   if (find(encoder.codec_type()) != nullptr) {
@@ -103,8 +100,10 @@ audio_tools::AudioInfo A2DPAudioEncoder::get_audio_info() {
 }
 
 uint16_t A2DPAudioEncoder::max_payload() {
-  if (mtu <= kPayloadHeaderReserve) return 0;
-  return mtu - kPayloadHeaderReserve;
+  // the MTU must also hold the media payload header added by the stack
+  uint16_t reserve = active != nullptr ? active->payload_header_size() : 0;
+  if (mtu <= reserve) return 0;
+  return mtu - reserve;
 }
 
 void A2DPAudioEncoder::write_frame(const uint8_t* data, size_t len,

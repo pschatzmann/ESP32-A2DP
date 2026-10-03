@@ -45,6 +45,9 @@ class A2DPEncoderSBC : public A2DPEncoder {
 
   int max_frames_per_packet() override { return 15; }
 
+  /// the stack adds a 1 byte SBC media payload header
+  uint16_t payload_header_size() override { return 1; }
+
   void build_capability(esp_a2d_mcc_t& mcc) override {
     mcc.type = ESP_A2D_MCT_SBC;
     // we only advertise the sample rate of the provided PCM

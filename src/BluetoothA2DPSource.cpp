@@ -680,7 +680,10 @@ void BluetoothA2DPSource::bt_app_av_sm_hdlr(uint16_t event, void *param) {
            to_state_str(s_a2d_state), event);
   process_user_state_callbacks(event, param);
 #if A2DP_MANAGED_ENCODER_SUPPORTED
-  if (use_managed_encoder()) process_managed_encoder_events(event, param);
+  // informational events of the managed encoder are not passed on to the
+  // state handlers
+  if (use_managed_encoder() && process_managed_encoder_events(event, param))
+    return;
 #endif
 
   /* select handler according to different states */
@@ -1298,7 +1301,7 @@ void BluetoothA2DPSource::handle_sep_reg_state(uint16_t event, void *p_param) {
   }
 }
 
-void BluetoothA2DPSource::process_managed_encoder_events(uint16_t event,
+bool BluetoothA2DPSource::process_managed_encoder_events(uint16_t event,
                                                          void *param) {
   esp_a2d_cb_param_t *a2d = (esp_a2d_cb_param_t *)(param);
   switch (event) {
@@ -1348,11 +1351,28 @@ void BluetoothA2DPSource::process_managed_encoder_events(uint16_t event,
 
     case ESP_A2D_SEP_REG_STATE_EVT:
       handle_sep_reg_state(event, param);
-      break;
+      return true;
+
+    case ESP_A2D_PROF_STATE_EVT:
+      // the stream endpoints are registered in app_a2d_callback()
+      return true;
+
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(6, 0, 1)
+    case ESP_A2D_REPORT_SNK_CODEC_CAPS_EVT:
+    case ESP_A2D_SRC_SET_PREF_MCC_EVT:
+      return true;
+#endif
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(6, 2, 0)
+    case ESP_A2D_REPORT_SNK_ALL_CODEC_CAPS_EVT:
+      ESP_LOGI(BT_AV_TAG, "managed encoder: sink supports %d codecs",
+               (int)a2d->a2d_report_snk_all_codec_caps_stat.sep_num);
+      return true;
+#endif
 
     default:
       break;
   }
+  return false;
 }
 
 void BluetoothA2DPSource::managed_encode_start() {

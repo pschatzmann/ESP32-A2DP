@@ -33,7 +33,7 @@
  * capability. Construct your decoder of choice, include its codec header
  * yourself (e.g. "AudioTools/AudioCodecs/CodecSBC.h"), and register an
  * A2DPDecoderSBC wrapping it via BluetoothA2DPSink::add_decoder().
- * @ingroup a2dp
+ * @ingroup codecs
  * @author Phil Schatzmann
  * @copyright Apache License Version 2
  */

@@ -21,6 +21,12 @@
  * @copyright GPLv3
  */
 
+/**
+ * @defgroup codecs Codecs
+ * @brief Custom decoders (A2DP Sink) and encoders (A2DP Source) that support
+ * additional codecs (e.g. AAC) with the help of the AudioTools library
+ */
+
 #pragma once
 
 // Compile only for ESP32

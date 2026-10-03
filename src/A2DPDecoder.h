@@ -37,7 +37,7 @@ void a2dp_decoder_audio_info_changed(audio_tools::AudioInfo info);
  * one concrete subclass per codec (see A2DPDecoderSBC, A2DPDecoderAAC) and
  * register instances via BluetoothA2DPSink::add_decoder() - stream
  * endpoint registration is driven entirely by what gets registered here.
- * @ingroup a2dp
+ * @ingroup codecs
  * @author Phil Schatzmann
  * @copyright Apache License Version 2
  */
@@ -118,7 +118,7 @@ class A2DPDecoder {
  * BluetoothA2DPSink::add_decoder() and delegates decode operations to
  * whichever one matches the codec negotiated by the connected source - no
  * codec is special-cased here, it is all driven by the registered set.
- * @ingroup a2dp
+ * @ingroup codecs
  * @author Phil Schatzmann
  * @copyright Apache License Version 2
  */

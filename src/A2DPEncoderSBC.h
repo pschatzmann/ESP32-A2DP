@@ -26,7 +26,7 @@
  * SEP capability and configures the encoder (subbands, blocks, allocation
  * method and bitpool) with the parameters negotiated with the sink.
  * Register it via BluetoothA2DPSource::add_encoder().
- * @ingroup a2dp
+ * @ingroup codecs
  * @author Phil Schatzmann
  * @copyright Apache License Version 2
  */

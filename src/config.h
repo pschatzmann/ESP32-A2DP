@@ -5,12 +5,34 @@
 // Only the original ESP32 has the classic Bluetooth (BR/EDR) controller
 // that A2DP relies on - ESP32-S2/S3/C3/... only support BLE.
 #include "sdkconfig.h"
-#if defined(CONFIG_IDF_TARGET_ESP32)
-#  define IS_VALID_PLATFORM true
-#elif defined(CONFIG_IDF_TARGET_ESP32S31)
-#  define IS_VALID_PLATFORM true
+#if defined(CONFIG_IDF_TARGET_ESP32) || defined(CONFIG_IDF_TARGET_ESP32S31)
+#  define A2DP_TARGET_HAS_BT 1
 #else
+#  define A2DP_TARGET_HAS_BT 0
+#endif
+
+// The A2DP implementation needs the classic Bluetooth controller (BR/EDR),
+// the Bluedroid host stack and the A2DP profile. These are only available
+// if they are enabled in the ESP-IDF sdkconfig (menuconfig or
+// sdkconfig.defaults). If one is missing we report it here, mark the platform
+// as invalid and define A2DP_SDKCONFIG_ERROR, so that no further (misleading)
+// missing-header errors are produced.
+#if !A2DP_TARGET_HAS_BT
 #  define IS_VALID_PLATFORM false
+#elif !defined(CONFIG_BT_CLASSIC_ENABLED) || !CONFIG_BT_CLASSIC_ENABLED
+#  define IS_VALID_PLATFORM false
+#  define A2DP_SDKCONFIG_ERROR 1
+#  error "ESP32-A2DP: CONFIG_BT_CLASSIC_ENABLED is not set. Enable 'Bluetooth -> Classic Bluetooth' in the ESP-IDF sdkconfig (menuconfig or sdkconfig.defaults). Note: this target may not provide classic Bluetooth at all."
+#elif !defined(CONFIG_BT_BLUEDROID_ENABLED) || !CONFIG_BT_BLUEDROID_ENABLED
+#  define IS_VALID_PLATFORM false
+#  define A2DP_SDKCONFIG_ERROR 1
+#  error "ESP32-A2DP: CONFIG_BT_BLUEDROID_ENABLED is not set. Enable 'Bluetooth -> Bluedroid' (host stack) in the ESP-IDF sdkconfig (menuconfig or sdkconfig.defaults)."
+#elif !defined(CONFIG_BT_A2DP_ENABLE) || !CONFIG_BT_A2DP_ENABLE
+#  define IS_VALID_PLATFORM false
+#  define A2DP_SDKCONFIG_ERROR 1
+#  error "ESP32-A2DP: CONFIG_BT_A2DP_ENABLE is not set. Enable the A2DP profile ('Bluetooth -> Bluedroid -> A2DP') in the ESP-IDF sdkconfig (menuconfig or sdkconfig.defaults)."
+#else
+#  define IS_VALID_PLATFORM true
 #endif
 
 #ifndef AUTOCONNECT_TRY_NUM
@@ -57,7 +79,7 @@
 // CONFIG_BT_A2DP_USE_EXTERNAL_CODEC=y. If no encoder is added, the source
 // uses the legacy (internal ESP-IDF SBC encoder) data path unchanged.
 #ifndef A2DP_MANAGED_ENCODER_SUPPORTED
-#  define A2DP_MANAGED_ENCODER_SUPPORTED (ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 5, 0) && A2DP_I2S_AUDIOTOOLS)
+#  define A2DP_MANAGED_ENCODER_SUPPORTED (IS_VALID_PLATFORM && ESP_IDF_VERSION >=ESP_IDF_VERSION_VAL(5, 5, 0) && A2DP_I2S_AUDIOTOOLS)
 #endif
 
 // Maximum write size

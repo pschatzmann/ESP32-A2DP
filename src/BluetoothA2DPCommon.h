@@ -31,7 +31,7 @@
 
 // Compile only for ESP32
 #include "config.h"
-#if !IS_VALID_PLATFORM
+#if !IS_VALID_PLATFORM && !defined(A2DP_SDKCONFIG_ERROR)
 #  error "Please read the ESP32-A2DP Wiki about the supported Platforms!"
 #endif
 

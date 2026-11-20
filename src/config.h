@@ -2,8 +2,10 @@
 
 #include "esp_idf_version.h"
 
-// Only the original ESP32 has the classic Bluetooth (BR/EDR) controller
-// that A2DP relies on - ESP32-S2/S3/C3/... only support BLE.
+// A2DP relies on the classic Bluetooth (BR/EDR) controller and the Bluedroid
+// host stack. The original ESP32 and ESP32-S31 are the targets listed here;
+// ESP32-S2/S3/C3/... only support BLE. Whether classic Bluetooth is actually
+// available depends on the SDK build, so it is verified via sdkconfig below.
 #include "sdkconfig.h"
 #if defined(CONFIG_IDF_TARGET_ESP32) || defined(CONFIG_IDF_TARGET_ESP32S31)
 #  define A2DP_TARGET_HAS_BT 1
